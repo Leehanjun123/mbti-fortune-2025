@@ -330,6 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     startUserCountAnimation();
     initKakaoSDK();
     initAds(); // 광고 시스템 초기화
+    handleInviteCode(); // 초대 코드 처리
 });
 
 function initApp() {
@@ -788,6 +789,113 @@ function shareLink() {
         navigator.clipboard.writeText(shareUrl).then(() => {
             showToast('링크가 복사되었어요!');
         });
+    }
+}
+
+// 친구 초대 기능
+function copyInviteCode() {
+    const inviteCode = generateInviteCode();
+    navigator.clipboard.writeText(inviteCode).then(() => {
+        showToast('초대 코드가 복사되었어요! 💝');
+        // 복사 버튼 애니메이션
+        const copyBtn = event.target;
+        copyBtn.textContent = '복사됨 ✓';
+        setTimeout(() => {
+            copyBtn.textContent = '복사';
+        }, 2000);
+    });
+}
+
+function generateInviteCode() {
+    // 사용자별 고유 코드 생성
+    const code = 'MBTI' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    return code;
+}
+
+function shareKakaoInvite() {
+    const inviteCode = generateInviteCode();
+    const shareUrl = `${window.location.origin}?invite=${inviteCode}`;
+    const fortune = app.fortunes[app.mbtiType];
+    
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+        // 카카오톡 앱으로 직접 공유
+        const shareText = `🎁 친구 초대 이벤트!\n\n${app.userName}님이 당신을 2025 MBTI 운세로 초대했어요!\n\n🎯 초대 코드: ${inviteCode}\n💰 친구가 테스트 완료 시 둘 다 보상 획득!\n\n지금 바로 참여하세요!`;
+        
+        if (/mobile/i.test(navigator.userAgent)) {
+            // 모바일: 카카오톡 URL 스킴
+            const kakaoUrl = `kakaolink://send?appkey=${CONFIG.KAKAO_APP_KEY}&appver=1.0&linkver=4.0&text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+            window.location.href = kakaoUrl;
+        } else {
+            // PC: 링크 복사
+            navigator.clipboard.writeText(shareUrl + '\n\n' + shareText);
+            showToast('초대 링크가 복사되었어요! 카카오톡에 붙여넣기 해주세요 📋');
+        }
+        return;
+    }
+    
+    // Kakao SDK 사용
+    Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: '🎁 2025 MBTI 운세 친구 초대',
+            description: `${app.userName}님이 초대했어요! 초대 코드: ${inviteCode}\n테스트 완료 시 둘 다 보상을 받아요!`,
+            imageUrl: `${window.location.origin}/invite-preview.jpg`,
+            link: {
+                mobileWebUrl: shareUrl,
+                webUrl: shareUrl
+            }
+        },
+        buttons: [{
+            title: '지금 참여하기',
+            link: {
+                mobileWebUrl: shareUrl,
+                webUrl: shareUrl
+            }
+        }]
+    });
+}
+
+function shareLinkInvite() {
+    const inviteCode = generateInviteCode();
+    const shareUrl = `${window.location.origin}?invite=${inviteCode}`;
+    const shareText = `🎁 2025 MBTI 운세 친구 초대!\n\n초대 코드: ${inviteCode}\n친구가 테스트 완료 시 둘 다 보상 획득!\n\n`;
+    
+    if (navigator.share) {
+        // Web Share API 사용
+        navigator.share({
+            title: '2025 MBTI 운세 친구 초대',
+            text: shareText,
+            url: shareUrl
+        }).then(() => {
+            showToast('초대장을 보냈어요! 🎉');
+        }).catch((error) => {
+            console.log('공유 취소 또는 오류:', error);
+        });
+    } else {
+        // 클립보드에 복사
+        navigator.clipboard.writeText(shareUrl + '\n\n' + shareText).then(() => {
+            showToast('초대 링크가 복사되었어요! 📋');
+        });
+    }
+}
+
+// 초대 코드 처리
+function handleInviteCode() {
+    const params = new URLSearchParams(window.location.search);
+    const inviteCode = params.get('invite');
+    
+    if (inviteCode) {
+        // 로컬 스토리지에 초대 코드 저장
+        localStorage.setItem('inviteCode', inviteCode);
+        showToast(`초대 코드 ${inviteCode}가 적용되었어요! 🎁`);
+        
+        // 초대 통계 기록
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'invite_accept', {
+                'invite_code': inviteCode,
+                'referrer': document.referrer
+            });
+        }
     }
 }
 

@@ -32,6 +32,7 @@
     
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="mobile-fix.css">
+    <link rel="stylesheet" href="world-class-ui.css">
     
     <!-- Configuration -->
     <script src="config.js"></script>
@@ -359,12 +360,50 @@
                     </div>
                 </div>
                 
-                <!-- 친구 예측 (Julie Zhuo 제안) -->
-                <div class="friend-predict">
-                    <h3 class="section-title">👥 친구들은 날 얼마나 알까?</h3>
-                    <button onclick="createFriendTest()" class="friend-test-btn">
-                        친구 테스트 만들기
-                    </button>
+                <!-- 친구 초대 (World-Class UI) -->
+                <div class="friend-invite-section">
+                    <div class="invite-header">
+                        <h3 class="invite-title">🎁 친구 초대하고 선물 받기</h3>
+                        <p class="invite-subtitle">친구도 행복, 나도 행복한 이벤트</p>
+                    </div>
+                    
+                    <div class="invite-rewards">
+                        <div class="reward-item">
+                            <div class="reward-icon">👥</div>
+                            <div class="reward-text">
+                                <div class="reward-title">친구 1명 초대</div>
+                                <div class="reward-desc">프리미엄 기능 3일 무료</div>
+                            </div>
+                        </div>
+                        <div class="reward-item">
+                            <div class="reward-icon">🎉</div>
+                            <div class="reward-text">
+                                <div class="reward-title">친구 3명 초대</div>
+                                <div class="reward-desc">프리미엄 기능 1주일 무료</div>
+                            </div>
+                        </div>
+                        <div class="reward-item">
+                            <div class="reward-icon">🏆</div>
+                            <div class="reward-text">
+                                <div class="reward-title">친구 5명 초대</div>
+                                <div class="reward-desc">프리미엄 기능 1개월 무료</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="invite-code-box">
+                        <div class="invite-code" id="inviteCode">MBTI2025</div>
+                        <button onclick="copyInviteCode()" class="copy-button">복사</button>
+                    </div>
+                    
+                    <div class="invite-cta">
+                        <button onclick="shareKakaoInvite()" class="invite-share-btn">
+                            <span>💬</span> 카카오톡으로 초대
+                        </button>
+                        <button onclick="shareLinkInvite()" class="invite-share-btn">
+                            <span>🔗</span> 링크 복사
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- 공유 섹션 (최적화) -->
