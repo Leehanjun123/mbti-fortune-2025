@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>2025 내 운명은? - 3분 MBTI 운세</title>
+    <meta name="description" content="2025년 나의 운명은? 3분 만에 알아보는 MBTI별 신년 운세 ✨">
+    <meta property="og:title" content="2025 내 운명은?">
+    <meta property="og:description" content="친구들아 2025년 운세 확인했어? 나 대박이래! 🎯">
+    <meta property="og:image" content="https://mbti2025.com/preview.jpg">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles-v3.css">
+    
+    <!-- Google Analytics (실제 배포 시 활성화) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script> -->
+    
+    <!-- Google AdSense (승인 후 활성화) -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+        crossorigin="anonymous"></script> -->
+    
+    <!-- 카카오 애드핏 (즉시 사용 가능) -->
+    
+    <!-- Kakao AdFit -->
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    
+    <!-- Kakao SDK for JavaScript -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 로딩 화면 -->
+        <div id="loadingScreen" class="screen">
+            <div class="loading-content">
+                <div class="year-animation">2025</div>
+                <div class="loading-text">운명을 불러오는 중...</div>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 시작 화면 (Jony Ive 미니멀리즘) -->
+        <div id="startScreen" class="screen active">
+            <div class="container">
+                <div class="hero-section">
+                    <!-- 부드러운 그라디언트 배경 애니메이션 -->
+                    <div class="gradient-bg"></div>
+                    
+                    <!-- 심플한 메인 메시지 -->
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="year-text">2025</span>
+                            <span class="main-text">내 운명은?</span>
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            3분 만에 알아보는 올해 운세 ✨
+                        </p>
+                        
+                        <!-- 단일 CTA (김성훈 제안) -->
+                        <button class="cta-button pulse" onclick="startJourney()">
+                            <span>시작하기</span>
+                            <div class="button-glow"></div>
+                        </button>
+                        
+                        <!-- 소셜 증명 (Julie Zhuo 제안) -->
+                        <div class="social-proof">
+                            <div class="user-count">
+                                <span id="userCount">127,892</span>명이 확인했어요
+                            </div>
+                            <div class="user-avatars">
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <span class="more">+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 빠른 시작 (최소화) -->
+                <div class="quick-start">
+                    <button onclick="showQuickSelect()" class="ghost-button">
+                        이미 내 MBTI 알아 →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이름 입력 화면 (삭제 - 중복) -->
+
+        <!-- MBTI 빠른 선택 (Patricia Urquiola 감성 디자인) -->
+        <div id="quickSelectScreen" class="screen">
+            <div class="container">
+                <div class="quick-select-header">
+                    <h2>너의 MBTI는 뭐야?</h2>
+                    <p>이미 알고 있다면 선택해줘</p>
+                </div>
+                
+                <div class="mbti-grid-v2">
+                    <div class="mbti-group analysts">
+                        <div class="group-emoji">🧠</div>
+                        <div class="group-title">분석가형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('INTJ')">INTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('INTP')">INTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENTJ')">ENTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENTP')">ENTP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group diplomats">
+                        <div class="group-emoji">💚</div>
+                        <div class="group-title">외교관형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('INFJ')">INFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('INFP')">INFP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENFJ')">ENFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENFP')">ENFP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group sentinels">
+                        <div class="group-emoji">🛡️</div>
+                        <div class="group-title">관리자형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('ISTJ')">ISTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ISFJ')">ISFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESTJ')">ESTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESFJ')">ESFJ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group explorers">
+                        <div class="group-emoji">🎨</div>
+                        <div class="group-title">탐험가형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('ISTP')">ISTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ISFP')">ISFP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESTP')">ESTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESFP')">ESFP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button onclick="goBack()" class="back-button">← 처음으로</button>
+                    <button onclick="startTest()" class="test-button">테스트 하러 가기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 성별 선택 화면 -->
+        <div id="genderScreen" class="screen">
+            <div class="container">
+                <div class="input-section">
+                    <h2 class="section-title">성별을 선택해주세요</h2>
+                    <div class="gender-buttons">
+                        <button onclick="selectGender('male')" class="gender-btn">
+                            <span class="gender-icon">👨</span>
+                            <span>남성</span>
+                        </button>
+                        <button onclick="selectGender('female')" class="gender-btn">
+                            <span class="gender-icon">👩</span>
+                            <span>여성</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 생년 입력 화면 -->
+        <div id="yearScreen" class="screen">
+            <div class="container">
+                <div class="input-section">
+                    <h2 class="section-title">태어난 연도를 입력해주세요</h2>
+                    <div class="year-input-container">
+                        <input type="number" id="birthYear" placeholder="1990" min="1950" max="2010" class="year-input" onkeypress="if(event.key==='Enter') selectYear()">
+                        <button onclick="selectYear()" class="submit-btn">다음</button>
+                    </div>
+                    <p class="input-hint">1950 ~ 2010년 사이로 입력해주세요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이름 입력 화면 -->
+        <div id="nameScreen" class="screen">
+            <div class="container">
+                <div class="input-section">
+                    <h2 class="section-title">이름을 입력해주세요</h2>
+                    <div class="name-input-container">
+                        <input type="text" id="userName" placeholder="홍길동" maxlength="10" class="name-input" onkeypress="if(event.key==='Enter') submitName()">
+                        <button onclick="submitName()" class="submit-btn">운세 보기</button>
+                    </div>
+                    <p class="input-hint">닉네임도 괜찮아요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테스트 화면 (대화형 UI - 김성훈 제안) -->
+        <div id="testScreen" class="screen">
+            <div class="container">
+                <!-- 상단 배너 광고 (카카오 애드핏) -->
+                <div class="ad-banner-top">
+                    <ins class="kakao_ad_area" style="display:none;"
+                        data-ad-unit="DAN-TEST-BANNER"
+                        data-ad-width="320"
+                        data-ad-height="50"></ins>
+                </div>
+                
+                <!-- 프로그레스 (미니멀) -->
+                <div class="test-progress">
+                    <div class="progress-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="progress-text">
+                        <span id="currentQ">1</span> / 12
+                    </div>
+                </div>
+                
+                <!-- 대화형 질문 -->
+                <div class="chat-container">
+                    <div class="chat-bubble">
+                        <div class="chat-avatar">🔮</div>
+                        <div class="chat-content">
+                            <p id="questionText" class="question-text"></p>
+                        </div>
+                    </div>
+                    
+                    <!-- 스와이프 가능한 답변 (모바일 최적화) -->
+                    <div class="answer-container" id="answerContainer">
+                        <!-- 답변이 동적으로 추가됨 -->
+                    </div>
+                </div>
+                
+                <!-- 건너뛰기 옵션 -->
+                <div class="test-footer">
+                    <button onclick="skipQuestion()" class="skip-btn">
+                        이 질문 건너뛰기
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 계산 중 (감성적 로딩) -->
+        <div id="calculatingScreen" class="screen">
+            <div class="container">
+                <div class="calculating-content">
+                    <div class="stars-animation">
+                        <span class="star">⭐</span>
+                        <span class="star">✨</span>
+                        <span class="star">🌟</span>
+                    </div>
+                    <h2 class="calculating-title">
+                        <span id="calcUserName">너의</span> 2025년<br>
+                        운명을 읽는 중...
+                    </h2>
+                    <div class="fortune-preview">
+                        <span class="preview-text" id="previewText"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 화면 (스토리텔링 강화) -->
+        <div id="resultScreen" class="screen">
+            <!-- 상단 배너 광고 (카카오 애드핏) -->
+            <div class="ad-container ad-top">
+                <ins class="kakao_ad_area" style="display:none;" 
+                     data-ad-unit="DAN-test123456" 
+                     data-ad-width="320" 
+                     data-ad-height="50"></ins>
+                <script type="text/javascript">
+                    try {
+                        kakaoAdFit = window.kakaoAdFit || [];
+                        kakaoAdFit.render();
+                    } catch(e) {
+                        console.log('광고 로딩 중...');
+                    }
+                </script>
+            </div>
+            
+            <div class="container result-container">
+                <!-- 헤더 (개인화) -->
+                <div class="result-header">
+                    <div class="result-badge">
+                        <span class="badge-year">2025</span>
+                        <span class="badge-mbti" id="resultMBTI"></span>
+                    </div>
+                    <h1 class="result-title">
+                        <span id="resultUserName">너의</span> 운명
+                    </h1>
+                </div>
+                
+                <!-- 메인 운세 카드 -->
+                <div class="main-fortune-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">🌟 2025년 총운</h3>
+                        <p id="mainFortune" class="fortune-text"></p>
+                        <div class="fortune-score">
+                            <span class="score-label">행운 지수</span>
+                            <div class="score-bar">
+                                <div class="score-fill" id="fortuneScore"></div>
+                            </div>
+                            <span class="score-value" id="scoreValue">88%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 카테고리별 운세 (스와이프 가능) -->
+                <div class="fortune-categories">
+                    <div class="category-tabs">
+                        <button class="tab active" onclick="showCategory('love', this)">💕 연애</button>
+                        <button class="tab" onclick="showCategory('money', this)">💰 금전</button>
+                        <button class="tab" onclick="showCategory('career', this)">🚀 커리어</button>
+                        <button class="tab" onclick="showCategory('health', this)">✨ 건강</button>
+                    </div>
+                    
+                    <div class="category-content" id="categoryContent">
+                        <!-- 카테고리별 내용 동적 로드 -->
+                    </div>
+                </div>
+                
+                <!-- 럭키 아이템 (비주얼 강화) -->
+                <div class="lucky-section">
+                    <h3 class="section-title">🍀 2025 행운 아이템</h3>
+                    <div class="lucky-grid" id="luckyGrid">
+                        <!-- 럭키 아이템 동적 생성 -->
+                    </div>
+                </div>
+                
+                <!-- 친구 예측 (Julie Zhuo 제안) -->
+                <div class="friend-predict">
+                    <h3 class="section-title">👥 친구들은 날 얼마나 알까?</h3>
+                    <button onclick="createFriendTest()" class="friend-test-btn">
+                        친구 테스트 만들기
+                    </button>
+                </div>
+                
+                <!-- 공유 섹션 (최적화) -->
+                <div class="share-section">
+                    <h3 class="share-title">내 운세 자랑하기</h3>
+                    <div class="share-buttons">
+                        <button onclick="shareKakao()" class="share-btn kakao">
+                            <img src="data:image/svg+xml;base64,..." alt="카카오">
+                            카카오톡
+                        </button>
+                        <button onclick="shareInstagram()" class="share-btn instagram">
+                            <img src="data:image/svg+xml;base64,..." alt="인스타">
+                            스토리
+                        </button>
+                        <button onclick="downloadImage()" class="share-btn download">
+                            <span>📸</span>
+                            이미지 저장
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 다시하기 & 더보기 -->
+                <div class="result-actions">
+                    <button onclick="restart()" class="restart-btn">
+                        다른 MBTI 보기
+                    </button>
+                    <button onclick="showPremium()" class="premium-btn">
+                        ⭐ 더 자세한 운세 보기
+                    </button>
+                </div>
+                
+                <!-- 광고 영역 1: 구글 애드센스 (결과 하단) -->
+                <div class="ad-container">
+                    <span class="ad-label">광고</span>
+                    <!-- 구글 애드센스 디스플레이 광고 -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-XXXXXXXXXX"
+                        data-ad-slot="1234567890"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                
+                <!-- 광고 영역 2: 카카오 애드핏 (모바일 최적화) -->
+                <div class="ad-container">
+                    <ins class="kakao_ad_area" style="display:none;"
+                        data-ad-unit="DAN-XXXXXXXXXX"
+                        data-ad-width="320"
+                        data-ad-height="100"></ins>
+                </div>
+            </div>
+        </div>
+
+        <!-- 프리미엄 팝업 -->
+        <div id="premiumModal" class="modal">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closePremium()">×</button>
+                <h2 class="modal-title">🌟 프리미엄 운세</h2>
+                <div class="premium-features">
+                    <div class="feature">✅ 월별 상세 운세</div>
+                    <div class="feature">✅ 연애 궁합 분석</div>
+                    <div class="feature">✅ 맞춤 행운 날짜</div>
+                    <div class="feature">✅ PDF 다운로드</div>
+                </div>
+                <div class="premium-price">
+                    <span class="original">₩9,900</span>
+                    <span class="sale">₩4,900</span>
+                    <span class="badge">새해 특가</span>
+                </div>
+                <button class="premium-buy-btn" onclick="buyPremium()">
+                    구매하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 플로팅 버튼 (데이터 수집) -->
+    <div class="floating-feedback" onclick="openFeedback()">
+        💬
+    </div>
+    
+    <!-- 프리미엄 모달 -->
+    <div id="premiumModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closePremiumModal()">×</button>
+            <h2>🌟 프리미엄 운세 잠금 해제</h2>
+            <div class="premium-features">
+                <div class="feature-item">✅ 2025년 월별 상세 운세</div>
+                <div class="feature-item">✅ 연애/금전/커리어 심화 분석</div>
+                <div class="feature-item">✅ 럭키 아이템 & 컬러 추천</div>
+                <div class="feature-item">✅ 맞춤형 조언 & 행운의 날짜</div>
+                <div class="feature-item">✅ 광고 제거</div>
+            </div>
+            <div class="price-section">
+                <div class="price-tag">
+                    <span class="original-price">₩9,900</span>
+                    <span class="discount-price">₩4,900</span>
+                    <span class="discount-badge">50% 할인</span>
+                </div>
+            </div>
+            <button onclick="purchasePremium()" class="purchase-btn">지금 구매하기</button>
+            <p class="payment-info">안전한 결제 | 즉시 활성화</p>
+        </div>
+    </div>
+
+    <script src="script-v3.js"></script>
+</body>
+</html>
