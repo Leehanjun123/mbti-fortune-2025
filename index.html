@@ -32,6 +32,7 @@
     
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="mobile-fix.css">
+    <link rel="stylesheet" href="simple-fix.css">
     
     <!-- Configuration -->
     <script src="config.js"></script>
@@ -359,12 +360,24 @@
                     </div>
                 </div>
                 
-                <!-- 친구 예측 (Julie Zhuo 제안) -->
+                <!-- 친구 초대 섹션 -->
                 <div class="friend-predict">
-                    <h3 class="section-title">👥 친구들은 날 얼마나 알까?</h3>
-                    <button onclick="createFriendTest()" class="friend-test-btn">
-                        친구 테스트 만들기
-                    </button>
+                    <h3>🎁 친구 초대 이벤트</h3>
+                    <p>친구를 초대하고 함께 2025년 운세를 확인해보세요!</p>
+                    
+                    <div class="invite-code-container">
+                        <div class="invite-code-display" id="inviteCode">MBTI2025</div>
+                        <button class="copy-code-btn" onclick="copyInviteCode()">복사</button>
+                    </div>
+                    
+                    <div class="invite-actions">
+                        <button class="invite-btn" onclick="shareKakaoInvite()">
+                            💬 카카오톡 공유
+                        </button>
+                        <button class="invite-btn" onclick="shareLinkInvite()">
+                            🔗 링크 공유
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- 공유 섹션 (최적화) -->
