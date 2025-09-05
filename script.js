@@ -404,8 +404,8 @@ function selectMBTI(type) {
     app.mbtiType = type;
     localStorage.setItem('lastMBTI', type);
     console.log('MBTI 저장 후 app.mbtiType:', app.mbtiType);
-    // 성별 선택 화면으로 이동
-    showScreen('gender');
+    // 성별 스킵하고 바로 이름 입력으로
+    showScreen('name');
 }
 
 // 성별 선택

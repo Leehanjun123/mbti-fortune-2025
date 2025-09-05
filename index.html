@@ -31,6 +31,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
     
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="mobile-fix.css">
     
     <!-- Configuration -->
     <script src="config.js"></script>
@@ -65,11 +66,21 @@
     
     <!-- 카카오 애드핏 (즉시 사용 가능) -->
     
-    <!-- Kakao AdFit -->
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
-    
-    <!-- Kakao SDK for JavaScript -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <!-- Kakao SDK for JavaScript (지연 로딩) -->
+    <script>
+        // 3초 후 카카오 SDK 로드 (초기 로딩 성능 개선)
+        setTimeout(() => {
+            const script = document.createElement('script');
+            script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+            document.head.appendChild(script);
+            
+            // 애드핏도 지연 로드
+            const adScript = document.createElement('script');
+            adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+            adScript.async = true;
+            document.head.appendChild(adScript);
+        }, 3000);
+    </script>
 </head>
 <body>
     <div id="app">
@@ -196,38 +207,7 @@
             </div>
         </div>
 
-        <!-- 성별 선택 화면 -->
-        <div id="genderScreen" class="screen">
-            <div class="container">
-                <div class="input-section">
-                    <h2 class="section-title">성별을 선택해주세요</h2>
-                    <div class="gender-buttons">
-                        <button onclick="selectGender('male')" class="gender-btn">
-                            <span class="gender-icon">👨</span>
-                            <span>남성</span>
-                        </button>
-                        <button onclick="selectGender('female')" class="gender-btn">
-                            <span class="gender-icon">👩</span>
-                            <span>여성</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 생년 입력 화면 -->
-        <div id="yearScreen" class="screen">
-            <div class="container">
-                <div class="input-section">
-                    <h2 class="section-title">태어난 연도를 입력해주세요</h2>
-                    <div class="year-input-container">
-                        <input type="number" id="birthYear" placeholder="1990" min="1950" max="2010" class="year-input" onkeypress="if(event.key==='Enter') selectYear()">
-                        <button onclick="selectYear()" class="submit-btn">다음</button>
-                    </div>
-                    <p class="input-hint">1950 ~ 2010년 사이로 입력해주세요</p>
-                </div>
-            </div>
-        </div>
+        <!-- 성별, 생년 화면 제거 (사용자 경험 개선) -->
 
         <!-- 이름 입력 화면 -->
         <div id="nameScreen" class="screen">
