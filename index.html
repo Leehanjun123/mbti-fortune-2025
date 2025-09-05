@@ -2,8 +2,20 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>2025 내 운명은? - 3분 MBTI 운세</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MBTI운세">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
+    <!-- Performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="description" content="2025년 나의 운명은? 3분 만에 알아보는 MBTI별 신년 운세 ✨">
     <meta property="og:title" content="2025 내 운명은?">
     <meta property="og:description" content="친구들아 2025년 운세 확인했어? 나 대박이래! 🎯">
@@ -456,7 +468,17 @@
     </div>
     
 
+    <script src="performance.js"></script>
     <script src="analytics.js"></script>
     <script src="script.js"></script>
+    
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
 </body>
 </html>
