@@ -7,22 +7,43 @@
     <meta name="description" content="2025년 나의 운명은? 3분 만에 알아보는 MBTI별 신년 운세 ✨">
     <meta property="og:title" content="2025 내 운명은?">
     <meta property="og:description" content="친구들아 2025년 운세 확인했어? 나 대박이래! 🎯">
-    <meta property="og:image" content="https://mbti2025.com/preview.jpg">
+    <meta property="og:image" content="https://mbti2025.vercel.app/og-image.png">
+    <meta property="og:url" content="https://mbti2025.vercel.app">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="keywords" content="2025 운세, MBTI 운세, 신년 운세, 성격 테스트, 무료 운세">
+    <link rel="canonical" href="https://mbti2025.vercel.app">
     
     <!-- 폰트 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles-v3.css">
+    <link rel="stylesheet" href="styles.css">
     
-    <!-- Google Analytics (실제 배포 시 활성화) -->
-    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- Configuration -->
+    <script src="config.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script> -->
+        gtag('config', CONFIG.GA_TRACKING_ID);
+    </script>
+    
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID'); // 실제 픽셀 ID로 교체
+    </script>
     
     <!-- Google AdSense (승인 후 활성화) -->
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
@@ -434,30 +455,8 @@
         💬
     </div>
     
-    <!-- 프리미엄 모달 -->
-    <div id="premiumModal" class="modal">
-        <div class="modal-content">
-            <button class="modal-close" onclick="closePremiumModal()">×</button>
-            <h2>🌟 프리미엄 운세 잠금 해제</h2>
-            <div class="premium-features">
-                <div class="feature-item">✅ 2025년 월별 상세 운세</div>
-                <div class="feature-item">✅ 연애/금전/커리어 심화 분석</div>
-                <div class="feature-item">✅ 럭키 아이템 & 컬러 추천</div>
-                <div class="feature-item">✅ 맞춤형 조언 & 행운의 날짜</div>
-                <div class="feature-item">✅ 광고 제거</div>
-            </div>
-            <div class="price-section">
-                <div class="price-tag">
-                    <span class="original-price">₩9,900</span>
-                    <span class="discount-price">₩4,900</span>
-                    <span class="discount-badge">50% 할인</span>
-                </div>
-            </div>
-            <button onclick="purchasePremium()" class="purchase-btn">지금 구매하기</button>
-            <p class="payment-info">안전한 결제 | 즉시 활성화</p>
-        </div>
-    </div>
 
-    <script src="script-v3.js"></script>
+    <script src="analytics.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
