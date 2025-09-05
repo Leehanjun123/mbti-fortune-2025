@@ -6,7 +6,7 @@ const CONFIG = {
     APP_URL: 'https://mbti-destiny.site',
     
     // Google Analytics 
-    GA_TRACKING_ID: process.env.GA_TRACKING_ID || 'G-XXXXXXXXXX',
+    GA_TRACKING_ID: 'G-N1BD4K7BV9',
     
     // 카카오 설정
     KAKAO_APP_KEY: '48c0d88498f6ea2f7e8c8f87654321ab', // JavaScript 키 (공개용)
@@ -81,13 +81,7 @@ const CONFIG = {
     }
 };
 
-// 환경변수에서 실제 값 로드 (있으면)
+// 브라우저 환경에서만 사용
 if (typeof window !== 'undefined') {
-    // 브라우저 환경
     window.CONFIG = CONFIG;
-}
-
-if (typeof module !== 'undefined' && module.exports) {
-    // Node.js 환경
-    module.exports = CONFIG;
 }

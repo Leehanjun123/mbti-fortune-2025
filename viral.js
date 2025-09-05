@@ -70,7 +70,7 @@ class ViralGrowthEngine {
         };
         
         this.optimizeShareButtons();
-        this.createShareableContent();
+        // this.createShareableContent(); // 함수 없음 주석처리
     }
     
     // 공유 버튼 최적화
