@@ -3,7 +3,7 @@ const CONFIG = {
     // 기본 설정
     APP_NAME: '2025 MBTI 운세',
     APP_VERSION: '2.1.0',
-    APP_URL: 'https://mbti2025.vercel.app',
+    APP_URL: 'https://mbti-destiny.site',
     
     // Google Analytics 
     GA_TRACKING_ID: process.env.GA_TRACKING_ID || 'G-XXXXXXXXXX',
