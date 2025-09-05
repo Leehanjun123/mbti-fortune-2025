@@ -11,9 +11,9 @@ const CONFIG = {
     // 카카오 설정
     KAKAO_APP_KEY: '48c0d88498f6ea2f7e8c8f87654321ab', // JavaScript 키 (공개용)
     KAKAO_ADFIT_UNITS: {
-        BANNER_TOP: 'DAN-XXXXXXXXXX',
-        BANNER_BOTTOM: 'DAN-YYYYYYYYYY',
-        NATIVE: 'DAN-ZZZZZZZZZZ'
+        BANNER_TOP: 'DAN-cIOtsbRqKgkRvw1X',      // 상단 배너
+        BANNER_MIDDLE: 'DAN-I87IJKlKm1SxmPvG',   // 중간 배너
+        BANNER_BOTTOM: 'DAN-7yyU9mCDVMJTOAgA'    // 하단 배너
     },
     
     // Google AdSense
