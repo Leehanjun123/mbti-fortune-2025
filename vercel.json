@@ -7,7 +7,7 @@
   "rewrites": [
     {
       "source": "/",
-      "destination": "/index-v3.html"
+      "destination": "/index.html"
     }
   ],
   "headers": [
