@@ -179,42 +179,25 @@ class Analytics {
         return 'sess_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
     }
     
-    // 서버로 이벤트 전송 (배치)
+    // 서버로 이벤트 전송 (배치) - 현재는 로컬스토리지만 사용
     sendToServer(event) {
         // 이벤트를 큐에 추가
         const queue = JSON.parse(localStorage.getItem('event_queue') || '[]');
         queue.push(event);
         localStorage.setItem('event_queue', JSON.stringify(queue));
         
-        // 10개 이상 쌓이면 전송
-        if (queue.length >= 10) {
-            this.flushEvents();
-        }
+        // 현재는 서버 없이 로컬에만 저장
+        // 나중에 백엔드 추가시 활성화
     }
     
-    // 이벤트 일괄 전송
+    // 이벤트 일괄 전송 - 현재 비활성화
     async flushEvents() {
+        // 서버 없이는 전송 불가, 로컬스토리지만 사용
         const queue = JSON.parse(localStorage.getItem('event_queue') || '[]');
-        if (queue.length === 0) return;
-        
-        try {
-            // 실제 배포 시 엔드포인트 설정
-            const response = await fetch('/api/analytics', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    events: queue,
-                    session_id: this.sessionId
-                })
-            });
-            
-            if (response.ok) {
-                localStorage.setItem('event_queue', '[]');
-            }
-        } catch (error) {
-            console.error('Failed to send analytics:', error);
+        if (queue.length > 100) {
+            // 100개 넘으면 오래된 것 삭제
+            queue.splice(0, queue.length - 100);
+            localStorage.setItem('event_queue', JSON.stringify(queue));
         }
     }
     

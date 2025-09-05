@@ -44,7 +44,8 @@
         gtag('config', CONFIG.GA_TRACKING_ID);
     </script>
     
-    <!-- Facebook Pixel -->
+    <!-- Facebook Pixel (사용시 활성화) -->
+    <!-- 
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -54,8 +55,9 @@
         t.src=v;s=b.getElementsByTagName(e)[0];
         s.parentNode.insertBefore(t,s)}(window,document,'script',
         'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'YOUR_PIXEL_ID'); // 실제 픽셀 ID로 교체
+        fbq('init', 'YOUR_PIXEL_ID');
     </script>
+    -->
     
     <!-- Google AdSense (승인 후 활성화) -->
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
@@ -390,11 +392,11 @@
                     <h3 class="share-title">내 운세 자랑하기</h3>
                     <div class="share-buttons">
                         <button onclick="shareKakao()" class="share-btn kakao">
-                            <img src="data:image/svg+xml;base64,..." alt="카카오">
+                            <span style="font-size:20px;">💬</span>
                             카카오톡
                         </button>
                         <button onclick="shareInstagram()" class="share-btn instagram">
-                            <img src="data:image/svg+xml;base64,..." alt="인스타">
+                            <span style="font-size:20px;">📸</span>
                             스토리
                         </button>
                         <button onclick="downloadImage()" class="share-btn download">
