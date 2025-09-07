@@ -1,0 +1,15 @@
+/* 광고 영역 숨기기 */
+.ad-banner-top,
+.ad-container,
+.ad-top,
+.kakao_ad_area,
+.adsbygoogle {
+    display: none !important;
+    height: 0 !important;
+    overflow: hidden !important;
+}
+
+/* 광고 라벨 숨기기 */
+.ad-label {
+    display: none !important;
+}
