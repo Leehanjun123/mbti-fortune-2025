@@ -81,6 +81,23 @@
             const adScript = document.createElement('script');
             adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
             adScript.async = true;
+            adScript.onload = () => {
+                // 애드핏 스크립트 로드 완료 후 모든 광고 렌더링
+                try {
+                    // 모든 카카오 광고 영역 찾기
+                    const adAreas = document.querySelectorAll('.kakao_ad_area');
+                    if (adAreas.length > 0) {
+                        console.log(`카카오 애드핏 광고 ${adAreas.length}개 렌더링 시작`);
+                        // kakaoAdFit 초기화 및 렌더링
+                        if (typeof kakaoAdFit !== 'undefined') {
+                            kakaoAdFit.render();
+                            console.log('카카오 애드핏 광고 렌더링 완료');
+                        }
+                    }
+                } catch(e) {
+                    console.log('광고 렌더링 오류:', e);
+                }
+            };
             document.head.appendChild(adScript);
         }, 3000);
     </script>
@@ -303,12 +320,8 @@
                      data-ad-width="320" 
                      data-ad-height="100"></ins>
                 <script type="text/javascript">
-                    try {
-                        kakaoAdFit = window.kakaoAdFit || [];
-                        kakaoAdFit.render();
-                    } catch(e) {
-                        console.log('광고 로딩 중...');
-                    }
+                    // 광고 렌더링은 스크립트 로드 후 자동으로 처리됨
+                    console.log('광고 영역 준비됨');
                 </script>
             </div>
             
