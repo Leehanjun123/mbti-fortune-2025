@@ -71,16 +71,21 @@ class PerformanceOptimizer {
         new PerformanceObserver((entryList) => {
             for (const entry of entryList.getEntries()) {
                 if (!entry.hadRecentInput) {
-                    const firstSessionEntry = clsEntries[0];
-                    const lastSessionEntry = clsEntries[clsEntries.length - 1];
-                    
-                    if (entry.startTime - lastSessionEntry.startTime < 1000 &&
-                        entry.startTime - firstSessionEntry.startTime < 5000) {
-                        clsEntries.push(entry);
-                        clsValue += entry.value;
-                    } else {
+                    if (clsEntries.length === 0) {
                         clsEntries = [entry];
                         clsValue = entry.value;
+                    } else {
+                        const firstSessionEntry = clsEntries[0];
+                        const lastSessionEntry = clsEntries[clsEntries.length - 1];
+                        
+                        if (entry.startTime - lastSessionEntry.startTime < 1000 &&
+                            entry.startTime - firstSessionEntry.startTime < 5000) {
+                            clsEntries.push(entry);
+                            clsValue += entry.value;
+                        } else {
+                            clsEntries = [entry];
+                            clsValue = entry.value;
+                        }
                     }
                     
                     console.log('CLS:', clsValue);
@@ -189,23 +194,8 @@ class PerformanceOptimizer {
         const currentScreen = document.querySelector('.screen.active');
         if (!currentScreen) return;
         
-        let nextResources = [];
-        
-        switch(currentScreen.id) {
-            case 'startScreen':
-                nextResources = ['/api/questions', '/api/mbti-types'];
-                break;
-            case 'testScreen':
-                nextResources = ['/api/fortune-results'];
-                break;
-        }
-        
-        nextResources.forEach(resource => {
-            const link = document.createElement('link');
-            link.rel = 'prefetch';
-            link.href = resource;
-            document.head.appendChild(link);
-        });
+        // API prefetching removed as this is a static site
+        // Resources are embedded in the main JavaScript files
     }
     
     // 이미지 최적화
