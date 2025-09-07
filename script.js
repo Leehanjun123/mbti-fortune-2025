@@ -624,8 +624,41 @@ function showResult() {
     // 럭키 아이템 표시
     displayLuckyItems(fortune.luckyItems);
     
+    // 통계 업데이트
+    updateStats();
+    
     // 결과 저장
     saveResult();
+}
+
+// 통계 업데이트
+function updateStats() {
+    // 로컬 스토리지에서 통계 가져오기
+    let stats = JSON.parse(localStorage.getItem('mbtiStats') || '{}');
+    
+    // 초기값 설정
+    if (!stats.total) stats.total = Math.floor(Math.random() * 50000) + 100000;
+    if (!stats.today) stats.today = Math.floor(Math.random() * 2000) + 1000;
+    if (!stats.shares) stats.shares = Math.floor(Math.random() * 30000) + 50000;
+    
+    // 증가
+    stats.total += 1;
+    stats.today += 1;
+    
+    // 저장
+    localStorage.setItem('mbtiStats', JSON.stringify(stats));
+    
+    // 표시 (K 포맷)
+    const formatNumber = (num) => {
+        if (num >= 1000) {
+            return (num / 1000).toFixed(1) + 'K';
+        }
+        return num.toString();
+    };
+    
+    document.getElementById('totalTests').textContent = formatNumber(stats.total);
+    document.getElementById('todayTests').textContent = formatNumber(stats.today);
+    document.getElementById('shareCount').textContent = formatNumber(stats.shares);
 }
 
 // 카테고리 카드 토글
@@ -695,24 +728,34 @@ function displayLuckyItems(items) {
     
     const itemsHTML = `
         <div class="lucky-item">
-            <div class="lucky-emoji">🎨</div>
-            <div class="lucky-label">행운의 색</div>
-            <div class="lucky-value">${items.color}</div>
+            <span class="lucky-item-icon">🎨</span>
+            <div class="lucky-item-name">행운의 색</div>
+            <div class="lucky-item-desc">${items.color}</div>
         </div>
         <div class="lucky-item">
-            <div class="lucky-emoji">🔢</div>
-            <div class="lucky-label">행운의 숫자</div>
-            <div class="lucky-value">${items.number}</div>
+            <span class="lucky-item-icon">🔢</span>
+            <div class="lucky-item-name">행운의 숫자</div>
+            <div class="lucky-item-desc">${items.number}</div>
         </div>
         <div class="lucky-item">
-            <div class="lucky-emoji">🎁</div>
-            <div class="lucky-label">행운의 아이템</div>
-            <div class="lucky-value">${items.item}</div>
+            <span class="lucky-item-icon">🎁</span>
+            <div class="lucky-item-name">행운의 아이템</div>
+            <div class="lucky-item-desc">${items.item}</div>
         </div>
         <div class="lucky-item">
-            <div class="lucky-emoji">📅</div>
-            <div class="lucky-label">행운의 달</div>
-            <div class="lucky-value">${items.month}</div>
+            <span class="lucky-item-icon">📅</span>
+            <div class="lucky-item-name">행운의 달</div>
+            <div class="lucky-item-desc">${items.month}</div>
+        </div>
+        <div class="lucky-item">
+            <span class="lucky-item-icon">🌟</span>
+            <div class="lucky-item-name">행운의 시간</div>
+            <div class="lucky-item-desc">${items.time || '오후 3-5시'}</div>
+        </div>
+        <div class="lucky-item">
+            <span class="lucky-item-icon">🧭</span>
+            <div class="lucky-item-name">행운의 방향</div>
+            <div class="lucky-item-desc">${items.direction || '남동쪽'}</div>
         </div>
     `;
     
