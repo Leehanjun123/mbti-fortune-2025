@@ -606,14 +606,46 @@ function showResult() {
         scoreValue.textContent = fortune.score + '%';
     }, 500);
     
-    // 첫 번째 카테고리 표시
-    showCategory('love');
+    // 카테고리별 운세 내용 설정
+    document.getElementById('loveFortune').textContent = fortune.love || '당신의 연애운이 상승하고 있습니다. 새로운 만남이나 관계의 발전이 기대됩니다.';
+    document.getElementById('moneyFortune').textContent = fortune.money || '재정 상황이 안정적으로 유지됩니다. 투자보다는 저축에 집중하세요.';
+    document.getElementById('careerFortune').textContent = fortune.career || '커리어에서 중요한 기회가 찾아옵니다. 적극적으로 도전하세요.';
+    document.getElementById('healthFortune').textContent = fortune.health || '건강 관리에 신경 쓰면 좋은 결과가 있을 것입니다. 규칙적인 운동을 시작하세요.';
+    
+    // 카테고리별 별점 설정 (랜덤)
+    const setRating = (id, stars) => {
+        document.getElementById(id).textContent = '⭐'.repeat(stars);
+    };
+    setRating('loveRating', Math.floor(Math.random() * 3) + 3);
+    setRating('moneyRating', Math.floor(Math.random() * 3) + 3);
+    setRating('careerRating', Math.floor(Math.random() * 3) + 3);
+    setRating('healthRating', Math.floor(Math.random() * 3) + 3);
     
     // 럭키 아이템 표시
     displayLuckyItems(fortune.luckyItems);
     
     // 결과 저장
     saveResult();
+}
+
+// 카테고리 카드 토글
+function toggleCategory(card) {
+    const content = card.querySelector('.category-content');
+    const isExpanded = card.classList.contains('expanded');
+    
+    if (isExpanded) {
+        card.classList.remove('expanded');
+        content.style.maxHeight = '0';
+    } else {
+        // 다른 카드 닫기
+        document.querySelectorAll('.category-card.expanded').forEach(c => {
+            c.classList.remove('expanded');
+            c.querySelector('.category-content').style.maxHeight = '0';
+        });
+        
+        card.classList.add('expanded');
+        content.style.maxHeight = content.scrollHeight + 'px';
+    }
 }
 
 // 카테고리 표시

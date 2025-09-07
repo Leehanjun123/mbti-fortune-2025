@@ -35,6 +35,7 @@
     <link rel="stylesheet" href="mobile-fix.css">
     <link rel="stylesheet" href="simple-fix.css">
     <link rel="stylesheet" href="emergency-fix.css">
+    <link rel="stylesheet" href="result-redesign.css">
     <!-- 광고를 숨기려면 아래 주석 해제 -->
     <!-- <link rel="stylesheet" href="hide-ads.css"> -->
     
@@ -355,17 +356,58 @@
                     </div>
                 </div>
                 
-                <!-- 카테고리별 운세 (스와이프 가능) -->
+                <!-- 카테고리별 운세 카드 -->
                 <div class="fortune-categories">
-                    <div class="category-tabs">
-                        <button class="tab active" onclick="showCategory('love', this)">💕 연애</button>
-                        <button class="tab" onclick="showCategory('money', this)">💰 금전</button>
-                        <button class="tab" onclick="showCategory('career', this)">🚀 커리어</button>
-                        <button class="tab" onclick="showCategory('health', this)">✨ 건강</button>
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">💕</span>
+                                <span>연애운</span>
+                            </div>
+                            <div class="category-rating" id="loveRating">⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="loveFortune">
+                            <!-- 연애운 내용 동적 로드 -->
+                        </div>
                     </div>
                     
-                    <div class="category-content" id="categoryContent">
-                        <!-- 카테고리별 내용 동적 로드 -->
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">💰</span>
+                                <span>금전운</span>
+                            </div>
+                            <div class="category-rating" id="moneyRating">⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="moneyFortune">
+                            <!-- 금전운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                    
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">🚀</span>
+                                <span>커리어운</span>
+                            </div>
+                            <div class="category-rating" id="careerRating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="careerFortune">
+                            <!-- 커리어운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                    
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">✨</span>
+                                <span>건강운</span>
+                            </div>
+                            <div class="category-rating" id="healthRating">⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="healthFortune">
+                            <!-- 건강운 내용 동적 로드 -->
+                        </div>
                     </div>
                 </div>
                 
@@ -418,11 +460,14 @@
                 
                 <!-- 다시하기 & 더보기 -->
                 <div class="result-actions">
-                    <button onclick="restart()" class="restart-btn">
-                        다른 MBTI 보기
+                    <button onclick="shareResult()" class="action-button share-button">
+                        📤 결과 공유하기
                     </button>
-                    <button onclick="showPremium()" class="premium-btn">
-                        ⭐ 더 자세한 운세 보기
+                    <button onclick="restart()" class="action-button retry-button">
+                        🔄 다른 MBTI 보기
+                    </button>
+                    <button onclick="showPremium()" class="action-button premium-button" style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #333;">
+                        ⭐ 프리미엄 운세 보기
                     </button>
                 </div>
                 
