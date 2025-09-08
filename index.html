@@ -242,7 +242,7 @@
         .ad-container {
             margin: 20px auto;
             text-align: center;
-            min-height: 100px;
+            min-height: 50px;
             width: 100%;
             max-width: 320px;
             overflow: visible !important;
@@ -259,6 +259,16 @@
             position: relative !important;
             z-index: 100 !important;
             background: white;
+        }
+        
+        /* 각 광고 크기별 설정 */
+        .kakao_ad_area[data-ad-unit="DAN-cIOtsbRqKgkRvw1X"] {
+            height: 50px !important;
+        }
+        
+        .kakao_ad_area[data-ad-unit="DAN-I87IJKlKm1SxmPvG"], 
+        .kakao_ad_area[data-ad-unit="DAN-7yyU9mCDVMJTOAgA"] {
+            height: 100px !important;
         }
         
         /* 광고 iframe 강제 표시 */
@@ -375,11 +385,15 @@
     <!-- Kakao AdFit -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     <script>
-        // www → non-www 리다이렉트 (강제)
-        if (window.location.hostname === 'www.mbti-destiny.site') {
-            console.log('🔄 www 도메인 감지 - mbti-destiny.site로 리다이렉트');
-            window.location.href = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
-        }
+        // www → non-www 리다이렉트 (즉시 실행)
+        (function() {
+            if (window.location.hostname === 'www.mbti-destiny.site') {
+                console.log('🔄 www 도메인 감지 - mbti-destiny.site로 리다이렉트');
+                var newUrl = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
+                window.location.replace(newUrl);
+                return;
+            }
+        })();
         
         // adsbykakao 객체 초기화
         window.adsbykakao = window.adsbykakao || [];
@@ -391,10 +405,10 @@
             <!-- 상단 광고 영역 -->
             <div class="ad-container">
                 <ins class="kakao_ad_area" 
-                     style="display:block;width:320px;height:100px;" 
+                     style="display:block;width:320px;height:50px;" 
                      data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
                      data-ad-width="320" 
-                     data-ad-height="100"></ins>
+                     data-ad-height="50"></ins>
             </div>
             
             <!-- 시작 화면 -->
