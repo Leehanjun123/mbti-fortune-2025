@@ -1,0 +1,236 @@
+/* 통합 수정 CSS - 모든 화면 레이아웃 정리 */
+
+/* 전체 앱 컨테이너 */
+#app {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 바디 스크롤 방지 */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+}
+
+/* 모든 화면 기본 설정 */
+.screen {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.screen.active {
+    display: block;
+}
+
+/* 로딩 화면 */
+#loadingScreen {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 99999;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+#loadingScreen.hidden {
+    display: none !important;
+}
+
+.loading-content {
+    text-align: center;
+    color: white;
+    padding: 20px;
+}
+
+/* 시작 화면 */
+#startScreen {
+    display: none;
+    background: white;
+    overflow: hidden;
+}
+
+#startScreen.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#startScreen .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#startScreen .hero-section {
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+/* 퀵 선택 화면 */
+#quickSelectScreen {
+    background: white;
+    padding: 20px;
+}
+
+#quickSelectScreen.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 테스트 화면 */
+#testScreen {
+    background: white;
+    padding-top: 20px;
+}
+
+#testScreen.active {
+    display: block;
+    overflow-y: auto;
+}
+
+/* 이름 입력 화면 */
+#nameScreen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+#nameScreen.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 결과 화면 */
+#resultScreen {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+#resultScreen.active {
+    display: block;
+    overflow-y: auto;
+}
+
+/* 컨테이너 정리 */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.result-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 그라디언트 배경 */
+.gradient-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0.1;
+    z-index: -1;
+}
+
+/* 히어로 콘텐츠 */
+.hero-content {
+    position: relative;
+    z-index: 1;
+    padding: 40px 20px;
+}
+
+.hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* CTA 버튼 */
+.cta-button {
+    display: inline-block;
+    padding: 16px 48px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .container {
+        padding: 16px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+    
+    .cta-button {
+        padding: 14px 40px;
+        font-size: 1rem;
+    }
+}
+
+/* 스크롤바 숨기기 */
+::-webkit-scrollbar {
+    width: 0;
+    background: transparent;
+}
+
+* {
+    scrollbar-width: none;
+}
+
+/* iOS 안전 영역 */
+@supports (padding: env(safe-area-inset-top)) {
+    .screen {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
