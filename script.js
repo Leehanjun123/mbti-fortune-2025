@@ -747,34 +747,28 @@ function displayLuckyItems(items) {
     
     const itemsHTML = `
         <div class="lucky-item">
-            <span class="lucky-item-icon">🎨</span>
-            <div class="lucky-item-name">행운의 색</div>
-            <div class="lucky-item-desc">${items.color}</div>
+            <div class="lucky-item-emoji">🎨</div>
+            <div class="lucky-item-text">${items.color}</div>
         </div>
         <div class="lucky-item">
-            <span class="lucky-item-icon">🔢</span>
-            <div class="lucky-item-name">행운의 숫자</div>
-            <div class="lucky-item-desc">${items.number}</div>
+            <div class="lucky-item-emoji">🔢</div>
+            <div class="lucky-item-text">${items.number}</div>
         </div>
         <div class="lucky-item">
-            <span class="lucky-item-icon">🎁</span>
-            <div class="lucky-item-name">행운의 아이템</div>
-            <div class="lucky-item-desc">${items.item}</div>
+            <div class="lucky-item-emoji">🎁</div>
+            <div class="lucky-item-text">${items.item}</div>
         </div>
         <div class="lucky-item">
-            <span class="lucky-item-icon">📅</span>
-            <div class="lucky-item-name">행운의 달</div>
-            <div class="lucky-item-desc">${items.month}</div>
+            <div class="lucky-item-emoji">📅</div>
+            <div class="lucky-item-text">${items.month}</div>
         </div>
         <div class="lucky-item">
-            <span class="lucky-item-icon">🌟</span>
-            <div class="lucky-item-name">행운의 시간</div>
-            <div class="lucky-item-desc">${items.time || '오후 3-5시'}</div>
+            <div class="lucky-item-emoji">🌟</div>
+            <div class="lucky-item-text">${items.time || '오후 3-5시'}</div>
         </div>
         <div class="lucky-item">
-            <span class="lucky-item-icon">🧭</span>
-            <div class="lucky-item-name">행운의 방향</div>
-            <div class="lucky-item-desc">${items.direction || '남동쪽'}</div>
+            <div class="lucky-item-emoji">🧭</div>
+            <div class="lucky-item-text">${items.direction || '남동쪽'}</div>
         </div>
     `;
     
@@ -826,7 +820,15 @@ function copyInviteCode() {
     }
     
     navigator.clipboard.writeText(inviteCode).then(() => {
-        showToast('초대 코드가 복사되었어요! 💝');
+        // 복사 성공 토스트
+        const toast = document.createElement('div');
+        toast.className = 'copy-success';
+        toast.textContent = '✓ 초대 코드가 복사되었어요!';
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.remove();
+        }, 2000);
+        
         // 복사 버튼 애니메이션
         const copyBtn = document.querySelector('.copy-code-btn');
         if (copyBtn) {
@@ -1447,6 +1449,44 @@ function loadNativeAds() {
         }
     }
 }
+
+// 광고 렌더링 함수 추가
+function renderKakaoAds() {
+    console.log('카카오 애드핏 광고 렌더링 시작');
+    
+    // 모든 카카오 광고 영역 활성화
+    const kakaoAds = document.querySelectorAll('.kakao_ad_area');
+    kakaoAds.forEach(ad => {
+        ad.style.display = 'block';
+    });
+    
+    // kakaoAdFit 렌더링 시도
+    if (typeof kakaoAdFit !== 'undefined') {
+        try {
+            kakaoAdFit.render();
+            console.log('카카오 애드핏 렌더링 완료');
+        } catch(e) {
+            console.log('카카오 애드핏 렌더링 실패:', e);
+        }
+    } else {
+        // 3초 후 재시도
+        setTimeout(() => {
+            if (typeof kakaoAdFit !== 'undefined') {
+                kakaoAdFit.render();
+                console.log('카카오 애드핏 재렌더링 완료');
+            }
+        }, 3000);
+    }
+}
+
+// 결과 화면 표시할 때 광고도 렌더링
+const originalShowResult = showResult;
+showResult = function() {
+    originalShowResult();
+    setTimeout(() => {
+        renderKakaoAds();
+    }, 500);
+};
 
 // 초기 실행
 handleURLParams();
