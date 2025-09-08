@@ -465,12 +465,13 @@
                 </div>
                 
                 <!-- 중간 광고 영역 -->
-                <div class="ad-container">
+                <div class="ad-container" id="middleAd" style="display:none;">
                     <ins class="kakao_ad_area" 
                          style="display:block;width:320px;height:100px;" 
                          data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
                          data-ad-width="320" 
-                         data-ad-height="100"></ins>
+                         data-ad-height="100"
+                         data-ad-type="middle"></ins>
                     <div class="ad-placeholder">광고 영역</div>
                 </div>
                 
@@ -534,12 +535,13 @@
                 </div>
                 
                 <!-- 하단 광고 영역 -->
-                <div class="ad-container" style="margin-top: 20px;">
+                <div class="ad-container" id="bottomAd" style="margin-top: 20px; display:none;">
                     <ins class="kakao_ad_area" 
                          style="display:block;width:320px;height:100px;" 
                          data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
                          data-ad-width="320" 
-                         data-ad-height="100"></ins>
+                         data-ad-height="100"
+                         data-ad-type="bottom"></ins>
                 </div>
             </div>
         </div>
@@ -626,15 +628,21 @@
                 // 결과 화면 표시
                 showScreen('resultScreen');
                 
-                // 결과 화면 표시 후 광고 재렌더링
+                // 결과 화면 광고 표시 및 렌더링
                 setTimeout(() => {
-                    // 모든 광고를 다시 렌더링하기 위해 data-rendered 속성 제거
-                    document.querySelectorAll('.kakao_ad_area').forEach(area => {
-                        area.removeAttribute('data-rendered');
+                    // 중간, 하단 광고 표시
+                    document.getElementById('middleAd').style.display = 'block';
+                    document.getElementById('bottomAd').style.display = 'block';
+                    
+                    // 중간, 하단 광고만 다시 렌더링
+                    document.querySelectorAll('.kakao_ad_area[data-ad-type="middle"], .kakao_ad_area[data-ad-type="bottom"]').forEach(area => {
+                        if (!area.getAttribute('data-rendered')) {
+                            console.log(`결과 화면 광고 렌더링: ${area.getAttribute('data-ad-unit')}`);
+                            window.adsbykakao.push({});
+                            area.setAttribute('data-rendered', 'true');
+                        }
                     });
-                    console.log('결과 화면 광고 렌더링 시도');
-                    renderAds();
-                }, 1000);
+                }, 500);
             }, 2000);
         }
         
@@ -684,16 +692,17 @@
         }
         
         // 광고 렌더링
-        function renderAds() {
+        function renderAds(onlyTop = false) {
             // adsbykakao 객체 확인
             if (!window.adsbykakao) {
                 window.adsbykakao = [];
             }
             
             try {
-                // 모든 광고 영역에 대해 push 실행
-                const adAreas = document.querySelectorAll('.kakao_ad_area');
-                console.log(`광고 영역 ${adAreas.length}개 발견`);
+                // 상단 광고만 렌더링하거나 모든 광고 렌더링
+                const selector = onlyTop ? '.kakao_ad_area:not([data-ad-type])' : '.kakao_ad_area';
+                const adAreas = document.querySelectorAll(selector);
+                console.log(`광고 영역 ${adAreas.length}개 발견 (onlyTop: ${onlyTop})`);
                 
                 adAreas.forEach((area, index) => {
                     // 이미 렌더링된 광고는 건너뛰기
@@ -727,10 +736,10 @@
                 console.log('adsbykakao 객체 생성됨');
             }
             
-            // 초기 광고 렌더링
+            // 초기에는 상단 광고만 렌더링
             setTimeout(() => {
-                console.log('초기 광고 렌더링 시도');
-                renderAds();
+                console.log('초기 광고 렌더링 시도 (상단만)');
+                renderAds(true);
             }, 500);
         });
         
