@@ -240,16 +240,32 @@
         
         /* 광고 영역 */
         .ad-container {
-            background: #f7fafc;
-            border: 2px dashed #cbd5e0;
-            border-radius: 12px;
-            padding: 20px;
-            margin: 30px 0;
+            margin: 20px auto;
             text-align: center;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            min-height: 50px;
+            width: 100%;
+            max-width: 320px;
+            overflow: visible !important;
+            position: relative;
+        }
+        
+        /* Kakao 광고 강제 표시 */
+        .kakao_ad_area {
+            display: block !important;
+            width: 320px !important;
+            margin: 0 auto !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+            position: relative !important;
+            z-index: 100 !important;
+            background: white;
+        }
+        
+        /* 광고 iframe 강제 표시 */
+        .kakao_ad_area iframe {
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
         }
         
         .ad-placeholder {
@@ -368,7 +384,8 @@
         <div class="container">
             <!-- 상단 광고 영역 -->
             <div class="ad-container">
-                <ins class="kakao_ad_area" style="display:block;" 
+                <ins class="kakao_ad_area" 
+                     style="display:block;width:320px;height:50px;" 
                      data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
                      data-ad-width="320" 
                      data-ad-height="50"></ins>
@@ -449,7 +466,8 @@
                 
                 <!-- 중간 광고 영역 -->
                 <div class="ad-container">
-                    <ins class="kakao_ad_area" style="display:block;" 
+                    <ins class="kakao_ad_area" 
+                         style="display:block;width:320px;height:100px;" 
                          data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
                          data-ad-width="320" 
                          data-ad-height="100"></ins>
@@ -517,7 +535,8 @@
                 
                 <!-- 하단 광고 영역 -->
                 <div class="ad-container" style="margin-top: 20px;">
-                    <ins class="kakao_ad_area" style="display:block;" 
+                    <ins class="kakao_ad_area" 
+                         style="display:block;width:320px;height:50px;" 
                          data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
                          data-ad-width="320" 
                          data-ad-height="50"></ins>
