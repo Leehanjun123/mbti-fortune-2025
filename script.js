@@ -352,9 +352,27 @@ document.addEventListener('DOMContentLoaded', () => {
 function initApp() {
     console.log('🎯 앱 초기화 시작');
     
-    // 모든 화면 강제 숨김 (초기화)
+    // 강제 스크롤 방지 설정
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100vw';
+    document.body.style.height = '100vh';
+    document.body.style.top = '0';
+    document.body.style.left = '0';
+    
+    document.documentElement.style.overflow = 'hidden';
+    document.documentElement.style.position = 'fixed';
+    
+    // 모든 화면 강제 숨김 및 완전 격리 (초기화)
     document.querySelectorAll('.screen').forEach(screen => {
         screen.style.display = 'none';
+        screen.style.visibility = 'hidden';
+        screen.style.position = 'fixed';
+        screen.style.top = '0';
+        screen.style.left = '0';
+        screen.style.width = '100vw';
+        screen.style.height = '100vh';
+        screen.style.overflow = 'hidden';
         screen.classList.remove('active');
     });
     
@@ -554,24 +572,85 @@ window.addEventListener('unhandledrejection', (e) => {
     ErrorBoundary.handleError(new Error(e.reason), 'Unhandled Promise Rejection');
 });
 
+// 🔒 스크롤 완전 차단 시스템
+function preventScroll(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}
+
+// 모든 스크롤 이벤트 차단
+window.addEventListener('wheel', preventScroll, { passive: false });
+window.addEventListener('touchmove', preventScroll, { passive: false });
+window.addEventListener('scroll', preventScroll, { passive: false });
+document.addEventListener('wheel', preventScroll, { passive: false });
+document.addEventListener('touchmove', preventScroll, { passive: false });
+document.addEventListener('scroll', preventScroll, { passive: false });
+
+// 키보드 스크롤도 차단 (Page Up/Down, 화살표키 등)
+document.addEventListener('keydown', (e) => {
+    const scrollKeys = [32, 33, 34, 35, 36, 37, 38, 39, 40]; // space, pageup, pagedown, end, home, arrows
+    if (scrollKeys.includes(e.keyCode)) {
+        // 단, 입력 필드에서는 허용
+        if (!e.target.matches('input, textarea')) {
+            e.preventDefault();
+            return false;
+        }
+    }
+});
+
+// body 스크롤 강제 리셋
+setInterval(() => {
+    if (document.body.scrollTop !== 0) document.body.scrollTop = 0;
+    if (document.documentElement.scrollTop !== 0) document.documentElement.scrollTop = 0;
+    if (window.pageYOffset !== 0) window.scrollTo(0, 0);
+}, 100);
+
 // 🚀 화면 전환 (완전 격리 시스템 + Error Boundary)
 function showScreen(screenId) {
     try {
         console.log(`🔄 화면 전환: ${app.currentScreen} → ${screenId}`);
         
-        // 1단계: 모든 화면 완전 숨기기
+        // 0단계: body와 html 스크롤 강제 방지
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.position = 'fixed';
+        
+        // 1단계: 모든 화면 완전 숨기기 및 스크롤 리셋
         document.querySelectorAll('.screen').forEach(screen => {
             screen.classList.remove('active');
-            screen.style.display = 'none'; // 강제 숨김
+            screen.style.display = 'none';
+            screen.style.visibility = 'hidden';
+            screen.style.position = 'fixed';
+            screen.style.top = '0';
+            screen.style.left = '0';
+            screen.style.overflow = 'hidden';
             screen.scrollTop = 0;
         });
         
         // 2단계: 타겟 화면만 표시
         const targetScreen = document.getElementById(screenId + 'Screen');
         if (targetScreen) {
-            targetScreen.style.display = 'block'; // 강제 표시
+            targetScreen.style.display = 'block';
+            targetScreen.style.visibility = 'visible';
+            targetScreen.style.position = 'fixed';
+            targetScreen.style.top = '0';
+            targetScreen.style.left = '0';
+            targetScreen.style.width = '100vw';
+            targetScreen.style.height = '100vh';
+            targetScreen.style.overflow = 'hidden';
             targetScreen.classList.add('active');
             targetScreen.scrollTop = 0;
+            
+            // 컨테이너는 내부 스크롤 허용
+            const container = targetScreen.querySelector('.container');
+            if (container) {
+                container.style.overflowY = 'auto';
+                container.style.overflowX = 'hidden';
+                container.style.height = '100vh';
+                container.scrollTop = 0;
+            }
             
             // 접근성: 스크린 리더에 화면 변경 알림
             AccessibilityManager.announceToScreenReader(`${screenId} 화면으로 이동했습니다.`);
