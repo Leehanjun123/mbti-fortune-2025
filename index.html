@@ -350,8 +350,8 @@
     </style>
     
     <!-- 카카오 SDK -->
-    <!-- Kakao SDK - 실제 사용시 주석 해제 및 앱 키 설정 필요 -->
-    <!-- <script src="https://developers.kakao.com/sdk/js/kakao.js"></script> -->
+    <!-- Kakao SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 <body>
     <div class="app">
@@ -431,11 +431,11 @@
                 
                 <!-- 광고 영역 -->
                 <div class="ad-container">
-                    <!-- Kakao 광고 - 실제 사용시 주석 해제 및 광고 단위 ID 설정 필요 -->
-                    <!-- <ins class="kakao_ad_area" style="display:none;" 
-                         data-ad-unit="DAN-YOUR-AD-UNIT" 
+                    <!-- Kakao 광고 -->
+                    <ins class="kakao_ad_area" style="display:none;" 
+                         data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
                          data-ad-width="320" 
-                         data-ad-height="100"></ins> -->
+                         data-ad-height="100"></ins>
                     <div class="ad-placeholder">광고 영역</div>
                 </div>
                 
@@ -603,9 +603,7 @@
                 return;
             }
             if (!Kakao.isInitialized()) {
-                // Kakao.init('YOUR_KAKAO_APP_KEY'); // 실제 앱 키로 교체 필요
-                alert('카카오톡 공유는 준비 중입니다.');
-                return;
+                Kakao.init('48c0d88498f6ea2f7e8c8f87654321ab');
             }
             
             const shareText = `나의 2025년 ${selectedMBTI} 운세를 확인했어요! 당신도 확인해보세요 🔮`;
@@ -631,8 +629,7 @@
         
         // 광고 렌더링
         function renderAds() {
-            // 카카오 애드핏 비활성화 - 실제 사용시 주석 해제
-            /*
+            // 카카오 애드핏 렌더링
             if (typeof window.adsbykakao !== 'undefined') {
                 try {
                     window.adsbykakao.push({});
@@ -641,8 +638,6 @@
                     console.log('광고 렌더링 실패:', e);
                 }
             }
-            */
-            console.log('광고 시스템 비활성화 상태');
         }
         
         // 페이지 로드 시 초기화
