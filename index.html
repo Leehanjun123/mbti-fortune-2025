@@ -382,18 +382,13 @@
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     
-    <!-- Kakao AdFit -->
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <!-- Kakao AdFit - 지연 로딩 -->
     <script>
-        // www → non-www 리다이렉트 (즉시 실행)
-        (function() {
-            if (window.location.hostname === 'www.mbti-destiny.site') {
-                console.log('🔄 www 도메인 감지 - mbti-destiny.site로 리다이렉트');
-                var newUrl = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
-                window.location.replace(newUrl);
-                return;
-            }
-        })();
+        // 도메인 확인 - 리다이렉트 대신 경고 표시
+        if (window.location.hostname === 'www.mbti-destiny.site') {
+            console.warn('⚠️ www 서브도메인에서 실행 중 - 광고가 제대로 표시되지 않을 수 있습니다');
+            console.log('✅ 정상 작동을 위해서는 https://mbti-destiny.site 로 접속하세요');
+        }
         
         // adsbykakao 객체 초기화
         window.adsbykakao = window.adsbykakao || [];
@@ -768,11 +763,21 @@
                 console.log('adsbykakao 객체 생성됨');
             }
             
-            // 초기 광고 렌더링 (더 긴 대기 시간)
-            setTimeout(() => {
-                console.log('🚀 초기 광고 렌더링 시도');
-                renderAds();
-            }, 2000);
+            // Kakao AdFit 스크립트 동적 로드 및 초기 광고 렌더링
+            const adScript = document.createElement('script');
+            adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+            adScript.async = true;
+            adScript.onload = () => {
+                console.log('🚀 AdFit 스크립트 로드 완료');
+                setTimeout(() => {
+                    console.log('🚀 초기 광고 렌더링 시도');
+                    renderAds();
+                }, 1000);
+            };
+            adScript.onerror = () => {
+                console.error('❌ AdFit 스크립트 로드 실패');
+            };
+            document.head.appendChild(adScript);
         });
         
         // 전체 페이지 로드 완료 후
