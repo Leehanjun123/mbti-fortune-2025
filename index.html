@@ -241,11 +241,21 @@
                             3분 만에 알아보는 올해 운세 ✨
                         </p>
                         
-                        <!-- 단일 CTA (김성훈 제안) -->
-                        <button class="cta-button pulse" onclick="startJourney()">
-                            <span>시작하기</span>
-                            <div class="button-glow"></div>
-                        </button>
+                        <!-- Steve Jobs 스타일: 단일 마법 버튼 -->
+                        <div class="magic-button-container">
+                            <button class="magic-button pulse-magic" onclick="startMagicalJourney()">
+                                <div class="button-content">
+                                    <span class="main-text">✨ 내 운명 확인하기</span>
+                                    <span class="sub-text">3분이면 충분해요</span>
+                                </div>
+                                <div class="button-shimmer"></div>
+                            </button>
+                            
+                            <!-- 세련된 MBTI 직접 선택 옵션 -->
+                            <button class="text-button" onclick="showMBTISelect()">
+                                이미 MBTI를 알고 있어요 →
+                            </button>
+                        </div>
                         
                         <!-- 소셜 증명 (Julie Zhuo 제안) -->
                         <div class="social-proof">
@@ -612,25 +622,90 @@
             </div>
         </div>
 
-        <!-- 프리미엄 팝업 -->
+        <!-- Jeff Bezos 스타일: 강력한 프리미엄 가치 제안 -->
         <div id="premiumModal" class="modal">
-            <div class="modal-content">
+            <div class="modal-content premium-enhanced">
                 <button class="modal-close" onclick="closePremium()">×</button>
-                <h2 class="modal-title">🌟 프리미엄 운세</h2>
-                <div class="premium-features">
-                    <div class="feature">✅ 월별 상세 운세</div>
-                    <div class="feature">✅ 연애 궁합 분석</div>
-                    <div class="feature">✅ 맞춤 행운 날짜</div>
-                    <div class="feature">✅ PDF 다운로드</div>
+                
+                <!-- 긴급성 메시지 -->
+                <div class="urgency-banner">
+                    🔥 24시간 한정 70% 할인 🔥
+                    <div class="countdown-timer" id="countdownTimer">23:59:59</div>
                 </div>
-                <div class="premium-price">
-                    <span class="original">₩9,900</span>
-                    <span class="sale">₩4,900</span>
-                    <span class="badge">새해 특가</span>
+                
+                <h2 class="modal-title">✨ 2025 완벽한 한 해를 위한 프리미엄 운세</h2>
+                
+                <!-- 소셜 증명 -->
+                <div class="social-proof-premium">
+                    <span class="proof-badge">🏆 2,847명이 이미 구매</span>
+                    <span class="proof-rating">⭐⭐⭐⭐⭐ 4.9/5.0</span>
                 </div>
-                <button class="premium-buy-btn" onclick="buyPremium()">
-                    구매하기
-                </button>
+                
+                <div class="premium-features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">📅</span>
+                        <h3>365일 맞춤 운세</h3>
+                        <p>매일 업데이트되는 개인 맞춤 운세</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💕</span>
+                        <h3>MBTI 궁합 분석</h3>
+                        <p>연인, 친구, 동료와의 완벽한 궁합</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💰</span>
+                        <h3>재테크 행운일</h3>
+                        <p>투자와 로또 최적의 타이밍</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📱</span>
+                        <h3>위젯 & 알림</h3>
+                        <p>매일 아침 운세 푸시 알림</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎁</span>
+                        <h3>친구 선물하기</h3>
+                        <p>소중한 사람에게 운세 선물</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h3>AI 분석 리포트</h3>
+                        <p>당신만의 운세 패턴 분석</p>
+                    </div>
+                </div>
+                
+                <!-- 가격 섹션 -->
+                <div class="premium-pricing">
+                    <div class="price-box">
+                        <span class="original-price">₩9,900</span>
+                        <span class="arrow">→</span>
+                        <span class="final-price">₩2,900</span>
+                        <span class="save-badge">70% SAVE</span>
+                    </div>
+                    <p class="price-note">⚡ 일시불 결제 / 평생 이용권</p>
+                </div>
+                
+                <!-- 보증 배지 -->
+                <div class="guarantee-badges">
+                    <span class="badge">✅ 100% 환불 보증</span>
+                    <span class="badge">🔒 안전한 결제</span>
+                    <span class="badge">📞 24시간 고객지원</span>
+                </div>
+                
+                <!-- CTA 버튼들 -->
+                <div class="premium-actions">
+                    <button class="premium-buy-btn primary" onclick="buyPremium()">
+                        🎯 지금 바로 시작하기
+                    </button>
+                    <button class="premium-gift-btn" onclick="giftPremium()">
+                        🎁 친구에게 선물하기
+                    </button>
+                </div>
+                
+                <!-- 후기 미리보기 -->
+                <div class="review-preview">
+                    <p>"정말 신기하게 맞아요! 매일 확인하고 있어요" - 김*진님</p>
+                </div>
             </div>
         </div>
     </div>
@@ -641,6 +716,8 @@
     </div>
     
 
+    <script src="config.js"></script>
+    <script src="performance.js"></script>
     <script src="script.js"></script>
     
     <!-- Service Worker Registration -->

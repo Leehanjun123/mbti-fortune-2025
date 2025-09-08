@@ -14,90 +14,78 @@ const app = {
     // Accessibility State
     announceTimer: null,
     
-    // MBTI 질문 데이터 (개선된 버전)
+    // 🎯 감정 기반 질문 시스템 (Julie Zhuo 제안) - 8문항으로 최적화
     questions: [
         {
-            text: "2025년 새해 파티, 너의 모습은?",
+            emotion: 'excitement',
+            visual: '🎊',
+            text: "2025년 첫날 아침, 가장 끌리는 선택은?",
             answers: [
-                { text: "🎉 파티의 중심에서 분위기 주도!", value: 'E' },
-                { text: "😌 조용히 친한 사람들과 대화", value: 'I' }
+                { text: "🎉 친구들과 시끌벅적 브런치", value: 'E', emotion: 'social' },
+                { text: "🌅 혼자 조용히 일출 감상", value: 'I', emotion: 'peaceful' }
             ]
         },
         {
-            text: "새해 계획을 세울 때 너는?",
+            emotion: 'planning',
+            visual: '🎯',
+            text: "올해 가장 이루고 싶은 꿈은?",
             answers: [
-                { text: "📊 구체적인 목표와 일정 작성", value: 'S' },
-                { text: "✨ 큰 그림과 비전 중심으로", value: 'N' }
+                { text: "📊 구체적 목표와 실행 계획", value: 'S', emotion: 'structured' },
+                { text: "✨ 큰 비전과 무한한 가능성", value: 'N', emotion: 'dreamy' }
             ]
         },
         {
-            text: "친구가 2025년 걱정을 털어놓을 때",
+            emotion: 'empathy',
+            visual: '💕',
+            text: "소중한 사람이 힘들어할 때",
             answers: [
-                { text: "💡 논리적으로 해결책 제시", value: 'T' },
-                { text: "🤗 공감하며 위로해주기", value: 'F' }
+                { text: "💡 실질적인 해결책 제시", value: 'T', emotion: 'practical' },
+                { text: "🤗 따뜻한 공감과 위로", value: 'F', emotion: 'caring' }
             ]
         },
         {
-            text: "2025년 여행 계획은?",
+            emotion: 'adventure',
+            visual: '🗺️',
+            text: "2025년 특별한 여행을 간다면?",
             answers: [
-                { text: "📅 미리 예약하고 일정 짜기", value: 'J' },
-                { text: "🎲 즉흥적으로 떠나기", value: 'P' }
+                { text: "📅 완벽한 일정과 예약", value: 'J', emotion: 'prepared' },
+                { text: "🎲 즉흥적인 모험 여행", value: 'P', emotion: 'spontaneous' }
             ]
         },
         {
-            text: "주말 오후, 너의 충전 방법은?",
+            emotion: 'energy',
+            visual: '🔋',
+            text: "에너지 충전하는 방법은?",
             answers: [
-                { text: "👥 친구들과 카페나 맛집 투어", value: 'E' },
-                { text: "🏠 혼자 넷플릭스나 책 읽기", value: 'I' }
+                { text: "👥 사람들과 신나게 놀기", value: 'E', emotion: 'social' },
+                { text: "🏠 혼자만의 힐링 타임", value: 'I', emotion: 'solitary' }
             ]
         },
         {
-            text: "선물을 고를 때 중요한 건?",
+            emotion: 'perspective',
+            visual: '🔮',
+            text: "미래를 그려볼 때 나는?",
             answers: [
-                { text: "🎁 실용적이고 필요한 것", value: 'S' },
-                { text: "💝 의미있고 특별한 것", value: 'N' }
+                { text: "🎯 현실적으로 가능한 목표", value: 'S', emotion: 'realistic' },
+                { text: "🌟 상상력 가득한 큰 꿈", value: 'N', emotion: 'visionary' }
             ]
         },
         {
-            text: "의견 충돌이 생겼을 때",
+            emotion: 'decision',
+            visual: '⚖️',
+            text: "중요한 선택의 순간에는?",
             answers: [
-                { text: "📌 팩트와 논리로 설득", value: 'T' },
-                { text: "💭 서로의 감정 고려하며 대화", value: 'F' }
+                { text: "📊 논리와 데이터로 판단", value: 'T', emotion: 'logical' },
+                { text: "❤️ 마음의 소리를 따라", value: 'F', emotion: 'intuitive' }
             ]
         },
         {
-            text: "새로운 프로젝트를 시작할 때",
+            emotion: 'lifestyle',
+            visual: '🎨',
+            text: "일상의 행복을 찾는 방법은?",
             answers: [
-                { text: "📋 체계적인 계획부터 세우기", value: 'J' },
-                { text: "🚀 일단 시작하고 유연하게 진행", value: 'P' }
-            ]
-        },
-        {
-            text: "스트레스 받을 때 너는?",
-            answers: [
-                { text: "🗣️ 사람들과 수다로 풀기", value: 'E' },
-                { text: "🧘 혼자만의 시간으로 회복", value: 'I' }
-            ]
-        },
-        {
-            text: "새로운 것을 배울 때",
-            answers: [
-                { text: "📚 기초부터 차근차근", value: 'S' },
-                { text: "🎯 전체 개념 파악 먼저", value: 'N' }
-            ]
-        },
-        {
-            text: "중요한 결정을 내릴 때",
-            answers: [
-                { text: "🧮 장단점 분석 후 결정", value: 'T' },
-                { text: "❤️ 마음이 끌리는 대로", value: 'F' }
-            ]
-        },
-        {
-            text: "일상의 루틴에 대한 생각은?",
-            answers: [
-                { text: "⏰ 안정적이고 좋아", value: 'J' },
-                { text: "🌈 변화가 있어야 재밌지", value: 'P' }
+                { text: "✅ 계획대로 완수하는 성취감", value: 'J', emotion: 'accomplished' },
+                { text: "🌈 예상 못한 즐거운 순간", value: 'P', emotion: 'surprised' }
             ]
         }
     ],
@@ -677,13 +665,47 @@ function showScreen(screenId) {
 }
 
 // 여정 시작 - 이름 입력부터
-function startJourney() {
-    console.log('🚀 시작하기 버튼 클릭됨!');
+// 🎯 마법같은 여정 시작 (Steve Jobs 스타일)
+function startMagicalJourney() {
+    console.log('✨ 마법같은 여정 시작!');
     console.log('현재 앱 상태:', app);
     
-    // 이름 입력 화면으로 즉시 이동
+    // 바로 테스트로 시작 (이름은 나중에)
+    console.log('감정적 몰입을 위해 바로 테스트 시작!');
+    app.skipNameInput = true;
+    showScreen('test');
+    
+    // 감정적 온보딩 메시지
+    setTimeout(() => {
+        AccessibilityManager.announceToScreenReader('당신의 2025년 운명을 찾아가는 여정이 시작됩니다');
+    }, 500);
+}
+
+// 🧭 테스트 경로 선택 (MBTI 모르는 경우)
+function startTest() {
+    console.log('🧭 테스트 경로 선택됨!');
+    console.log('현재 앱 상태:', app);
+    
+    // 이름 입력 화면으로 이동 (기존 플로우)
     console.log('이름 입력 화면으로 이동 중...');
     showScreen('name');
+}
+
+// ⚡ MBTI 직접 선택 경로 (MBTI 이미 아는 경우)  
+function showMBTISelect() {
+    console.log('⚡ MBTI 직접 선택 경로 선택됨!');
+    console.log('현재 앱 상태:', app);
+    
+    // MBTI 선택 화면으로 이동
+    console.log('MBTI 선택 화면으로 이동 중...');
+    showScreen('quickSelect');
+}
+
+// 기존 호환성 유지
+function startJourney() {
+    console.log('🚀 시작하기 버튼 클릭됨!');
+    // 기본적으로 테스트 경로로 이동
+    startTest();
     
     // 추가 확인
     setTimeout(() => {
@@ -1777,13 +1799,32 @@ function renderKakaoAds() {
             return;
         }
         
-        // 모든 카카오 광고 영역 활성화
+        // 모든 카카오 광고 영역 활성화 및 가시성 보장
         const kakaoAds = document.querySelectorAll('.kakao_ad_area');
         console.log(`광고 영역 ${kakaoAds.length}개 처리 중...`);
         
         kakaoAds.forEach((ad, index) => {
+            // 강력한 가시성 보장
             ad.style.display = 'block';
-            console.log(`광고 영역 ${index + 1} 표시됨`);
+            ad.style.visibility = 'visible';
+            ad.style.opacity = '1';
+            ad.style.position = 'relative';
+            ad.style.zIndex = '1000';
+            ad.style.transform = 'none';
+            ad.style.clip = 'none';
+            ad.style.clipPath = 'none';
+            
+            // 부모 컨테이너도 가시성 보장
+            const container = ad.closest('.ad-container, .ad-banner-top');
+            if (container) {
+                container.style.display = 'block';
+                container.style.visibility = 'visible';
+                container.style.opacity = '1';
+                container.style.position = 'relative';
+                container.style.zIndex = '1000';
+            }
+            
+            console.log(`광고 영역 ${index + 1} 완전 가시화 완료`);
         });
         
         // 🚀 스마트 adsbykakao 객체 대기 및 렌더링 시스템
@@ -1820,7 +1861,28 @@ function renderKakaoAds() {
             tryRender();
         }
         
-        // 스마트 렌더링 시작
+        // 광고 가시성 강제 보장 (Intersection Observer 대응)
+        setTimeout(() => {
+            kakaoAds.forEach((ad, index) => {
+                // viewport 내 위치 강제 설정
+                const rect = ad.getBoundingClientRect();
+                console.log(`광고 영역 ${index + 1} 위치:`, {
+                    top: rect.top,
+                    left: rect.left,
+                    width: rect.width,
+                    height: rect.height,
+                    visible: rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth
+                });
+                
+                // 만약 완전히 화면 밖에 있다면 위치 조정
+                if (rect.top < 0 || rect.top > window.innerHeight) {
+                    ad.scrollIntoView({ behavior: 'instant', block: 'center' });
+                    console.log(`광고 영역 ${index + 1} 뷰포트 내로 이동 완료`);
+                }
+            });
+        }, 500);
+        
+        // 스마트 렌더링 시작  
         waitForAdsbykakaoAndRender();
     } catch(error) {
         console.log('광고 렌더링 오류:', error.message);
