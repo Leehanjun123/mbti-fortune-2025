@@ -1207,6 +1207,19 @@ function restart() {
     showScreen('start');
 }
 
+// 푸터 링크 함수들
+function showPrivacy() {
+    alert('개인정보처리방침\n\n본 서비스는 사용자의 개인정보를 수집하지 않습니다.\n입력하신 이름은 결과 표시용으로만 사용되며 저장되지 않습니다.');
+}
+
+function showTerms() {
+    alert('이용약관\n\n본 서비스는 재미를 위한 것으로 실제 운세와는 무관합니다.\n모든 콘텐츠는 엔터테인먼트 목적으로 제공됩니다.');
+}
+
+function showContact() {
+    window.open('mailto:support@mbti-destiny.site?subject=2025 MBTI 운세 문의', '_blank');
+}
+
 // URL 파라미터 처리 (친구 테스트)
 function handleURLParams() {
     const params = new URLSearchParams(window.location.search);
