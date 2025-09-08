@@ -465,7 +465,7 @@
                 </div>
                 
                 <!-- 중간 광고 영역 -->
-                <div class="ad-container" id="middleAd" style="display:none;">
+                <div class="ad-container" id="middleAd">
                     <ins class="kakao_ad_area" 
                          style="display:block;width:320px;height:100px;" 
                          data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
@@ -535,7 +535,7 @@
                 </div>
                 
                 <!-- 하단 광고 영역 -->
-                <div class="ad-container" id="bottomAd" style="margin-top: 20px; display:none;">
+                <div class="ad-container" id="bottomAd" style="margin-top: 20px;">
                     <ins class="kakao_ad_area" 
                          style="display:block;width:320px;height:100px;" 
                          data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
@@ -628,21 +628,25 @@
                 // 결과 화면 표시
                 showScreen('resultScreen');
                 
-                // 결과 화면 광고 표시 및 렌더링
+                // 결과 화면에서 중간/하단 광고 재렌더링 (화면이 보이는 상태에서)
                 setTimeout(() => {
-                    // 중간, 하단 광고 표시
-                    document.getElementById('middleAd').style.display = 'block';
-                    document.getElementById('bottomAd').style.display = 'block';
+                    console.log('결과 화면 광고 렌더링 시도');
+                    // 중간, 하단 광고 재렌더링
+                    const middleAd = document.querySelector('.kakao_ad_area[data-ad-type="middle"]');
+                    const bottomAd = document.querySelector('.kakao_ad_area[data-ad-type="bottom"]');
                     
-                    // 중간, 하단 광고만 다시 렌더링
-                    document.querySelectorAll('.kakao_ad_area[data-ad-type="middle"], .kakao_ad_area[data-ad-type="bottom"]').forEach(area => {
-                        if (!area.getAttribute('data-rendered')) {
-                            console.log(`결과 화면 광고 렌더링: ${area.getAttribute('data-ad-unit')}`);
-                            window.adsbykakao.push({});
-                            area.setAttribute('data-rendered', 'true');
-                        }
-                    });
-                }, 500);
+                    // 기존 렌더링 상태 초기화
+                    if (middleAd) {
+                        middleAd.removeAttribute('data-rendered');
+                        window.adsbykakao.push({});
+                        console.log('중간 광고 재렌더링: DAN-I87IJKlKm1SxmPvG');
+                    }
+                    if (bottomAd) {
+                        bottomAd.removeAttribute('data-rendered');
+                        window.adsbykakao.push({});
+                        console.log('하단 광고 재렌더링: DAN-7yyU9mCDVMJTOAgA');
+                    }
+                }, 1500);
             }, 2000);
         }
         
@@ -736,11 +740,11 @@
                 console.log('adsbykakao 객체 생성됨');
             }
             
-            // 초기에는 상단 광고만 렌더링
+            // 초기에는 모든 광고 렌더링 (모두 보이는 상태)
             setTimeout(() => {
-                console.log('초기 광고 렌더링 시도 (상단만)');
-                renderAds(true);
-            }, 500);
+                console.log('초기 광고 렌더링 시도');
+                renderAds(false);
+            }, 1000);
         });
         
         // 전체 페이지 로드 완료 후
@@ -750,8 +754,12 @@
             // 추가 렌더링 시도
             setTimeout(() => {
                 console.log('추가 광고 렌더링 시도');
-                renderAds();
-            }, 2000);
+                // 모든 광고 재렌더링
+                document.querySelectorAll('.kakao_ad_area').forEach(area => {
+                    area.removeAttribute('data-rendered');
+                });
+                renderAds(false);
+            }, 3000);
         });
     </script>
 </body>
