@@ -910,11 +910,16 @@ function shareLinkInvite() {
 
 // 카카오 SDK 초기화
 function initKakaoSDK() {
-    // 카카오 JavaScript 키
-    const kakaoKey = 'f537696494115d340642edd997dcbca0';
-    if (window.Kakao && !window.Kakao.isInitialized()) {
-        window.Kakao.init(kakaoKey);
-        console.log('카카오 SDK 초기화 완료');
+    try {
+        // 카카오 JavaScript 키
+        const kakaoKey = 'f537696494115d340642edd997dcbca0';
+        if (window.Kakao && !window.Kakao.isInitialized()) {
+            window.Kakao.init(kakaoKey);
+            console.log('카카오 SDK 초기화 완료');
+        }
+    } catch (error) {
+        console.log('카카오 SDK 초기화 실패 (무시됨):', error.message);
+        // SDK 실패해도 앱은 정상 작동
     }
 }
 

@@ -77,14 +77,21 @@
     <script>
         // 3초 후 카카오 SDK 로드 (초기 로딩 성능 개선)
         setTimeout(() => {
+            // 카카오 SDK 로드 (에러 처리 포함)
             const script = document.createElement('script');
             script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+            script.onerror = () => {
+                console.log('카카오 SDK 로드 실패 - 폴백 모드 사용');
+            };
             document.head.appendChild(script);
             
-            // 애드핏도 지연 로드
+            // 애드핏도 지연 로드 (에러 처리 포함)
             const adScript = document.createElement('script');
             adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
             adScript.async = true;
+            adScript.onerror = () => {
+                console.log('애드핏 스크립트 로드 실패 - 광고 없이 진행');
+            };
             adScript.onload = () => {
                 // 애드핏 스크립트 로드 완료 후 모든 광고 렌더링
                 try {
@@ -99,11 +106,19 @@
                         }
                     }
                 } catch(e) {
-                    console.log('광고 렌더링 오류:', e);
+                    console.log('광고 렌더링 오류 (무시됨):', e.message);
                 }
             };
             document.head.appendChild(adScript);
         }, 3000);
+        
+        // 글로벌 에러 핸들러로 429 오류 무시
+        window.addEventListener('error', function(e) {
+            if (e.message && e.message.includes('429')) {
+                e.preventDefault();
+                return true;
+            }
+        });
     </script>
 </head>
 <body>
