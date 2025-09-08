@@ -375,9 +375,10 @@
     <!-- Kakao AdFit -->
     <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
     <script>
-        // www → non-www 리다이렉트
+        // www → non-www 리다이렉트 (강제)
         if (window.location.hostname === 'www.mbti-destiny.site') {
-            window.location.replace('https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash);
+            console.log('🔄 www 도메인 감지 - mbti-destiny.site로 리다이렉트');
+            window.location.href = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
         }
         
         // adsbykakao 객체 초기화
