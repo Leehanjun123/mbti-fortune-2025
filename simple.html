@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 MBTI 운세 - 심플 버전</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .mbti-btn {
+            padding: 10px;
+            border: 2px solid #ddd;
+            background: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .mbti-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .ad-space {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 10px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 시작 화면 -->
+        <div id="start" class="screen active">
+            <h1>🔮 2025 MBTI 운세</h1>
+            <p>당신의 MBTI 유형으로<br>2025년 운세를 확인해보세요!</p>
+            <button onclick="showScreen('select')">시작하기</button>
+        </div>
+        
+        <!-- MBTI 선택 -->
+        <div id="select" class="screen">
+            <h1>MBTI 선택</h1>
+            <p>당신의 MBTI를 선택하세요</p>
+            <div class="mbti-grid">
+                <button class="mbti-btn" onclick="selectMBTI('INTJ')">INTJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('INTP')">INTP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ENTJ')">ENTJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ENTP')">ENTP</button>
+                <button class="mbti-btn" onclick="selectMBTI('INFJ')">INFJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('INFP')">INFP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ENFJ')">ENFJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ENFP')">ENFP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ISTJ')">ISTJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ISFJ')">ISFJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ESTJ')">ESTJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ESFJ')">ESFJ</button>
+                <button class="mbti-btn" onclick="selectMBTI('ISTP')">ISTP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ISFP')">ISFP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ESTP')">ESTP</button>
+                <button class="mbti-btn" onclick="selectMBTI('ESFP')">ESFP</button>
+            </div>
+        </div>
+        
+        <!-- 이름 입력 -->
+        <div id="name" class="screen">
+            <h1>이름 입력</h1>
+            <p>당신의 이름을 알려주세요</p>
+            <input type="text" id="nameInput" placeholder="이름을 입력하세요">
+            <button onclick="showResult()">결과 보기</button>
+        </div>
+        
+        <!-- 결과 -->
+        <div id="result" class="screen">
+            <h1>🎊 2025년 운세</h1>
+            <div class="ad-space">광고 영역 (카카오 애드핏)</div>
+            <div class="result">
+                <h2 id="resultName">홍길동</h2>
+                <h3 id="resultMBTI">INTJ</h3>
+                <p id="resultFortune">2025년은 당신에게 특별한 한 해가 될 것입니다. 새로운 기회가 찾아오고, 그동안의 노력이 결실을 맺을 거예요.</p>
+            </div>
+            <button onclick="restart()">다시 하기</button>
+        </div>
+    </div>
+    
+    <script>
+        let selectedMBTI = '';
+        let userName = '';
+        
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
+            });
+            document.getElementById(screenId).classList.add('active');
+        }
+        
+        function selectMBTI(mbti) {
+            selectedMBTI = mbti;
+            showScreen('name');
+        }
+        
+        function showResult() {
+            userName = document.getElementById('nameInput').value || '당신';
+            document.getElementById('resultName').textContent = userName + '님의';
+            document.getElementById('resultMBTI').textContent = selectedMBTI;
+            
+            const fortunes = {
+                'INTJ': '전략적 사고가 빛을 발하는 한 해! 큰 프로젝트에서 성공할 가능성이 높습니다.',
+                'INFJ': '직관력이 정확해지는 해. 숨겨진 기회를 발견하게 될 거예요.',
+                'ENFP': '새로운 모험이 가득한 해! 예상치 못한 행운이 찾아올 거예요.',
+                'ISTJ': '꾸준함이 결실을 맺는 해. 안정적인 성장을 경험하게 됩니다.'
+            };
+            
+            document.getElementById('resultFortune').textContent = 
+                fortunes[selectedMBTI] || '2025년은 특별한 변화와 성장의 해가 될 것입니다!';
+            
+            showScreen('result');
+        }
+        
+        function restart() {
+            selectedMBTI = '';
+            userName = '';
+            document.getElementById('nameInput').value = '';
+            showScreen('start');
+        }
+    </script>
+</body>
+</html>
