@@ -403,6 +403,7 @@ function showScreen(screenId) {
 
 // 여정 시작 - MBTI 선택 화면으로
 function startJourney() {
+    console.log('시작하기 버튼 클릭됨');
     showScreen('quickSelect');
 }
 
