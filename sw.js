@@ -1,25 +1,15 @@
-// Service Worker - v2.3.0
-const CACHE_NAME = 'mbti-fortune-v2.3.0';
+// Service Worker - v3.0.0 (Clean Version)
+const CACHE_NAME = 'mbti-fortune-v3.0.0';
 const RUNTIME_CACHE = 'runtime-cache';
 
 // 캐시할 정적 자원들
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/styles.css',
-  '/mobile-fix.css',
-  '/simple-fix.css',
-  '/emergency-fix.css',
-  '/result-redesign.css',
-  '/bottom-redesign.css',
+  '/app.css',
   '/script.js',
   '/config.js',
-  '/analytics.js',
-  '/viral.js',
-  '/monetization.js',
-  '/performance.js',
   '/manifest.json'
-  // Google Fonts는 CORS 때문에 제외 (런타임에 캐시)
 ];
 
 // 캐시 우선순위 전략

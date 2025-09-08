@@ -329,7 +329,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initApp();
     startUserCountAnimation();
     initKakaoSDK();
-    initAds(); // 광고 시스템 초기화
 });
 
 function initApp() {
