@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 함수 검증 시스템</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #0f0;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        .function-test {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .function-name {
+            color: #0ff;
+            font-size: 12px;
+        }
+        .status {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #0f0;
+            color: #000;
+        }
+        .status.error {
+            background: #f00;
+            color: #fff;
+        }
+        .summary {
+            background: #000;
+            border: 2px solid #0f0;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .summary-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 20px;
+        }
+        .stat {
+            font-size: 24px;
+        }
+        .stat.success { color: #0f0; }
+        .stat.error { color: #f00; }
+        button {
+            background: #0f0;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0ff;
+        }
+        .console {
+            background: #000;
+            border: 1px solid #0f0;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        .console-line {
+            margin: 2px 0;
+        }
+        .console-error {
+            color: #f00;
+        }
+        .console-success {
+            color: #0f0;
+        }
+        .console-info {
+            color: #0ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚡ MBTI 운세 앱 - 함수 검증 시스템</h1>
+        
+        <div class="summary">
+            <h2>검증 결과</h2>
+            <div class="summary-stats">
+                <div>
+                    <div class="stat success" id="successCount">0</div>
+                    <div>정상</div>
+                </div>
+                <div>
+                    <div class="stat error" id="errorCount">0</div>
+                    <div>오류</div>
+                </div>
+                <div>
+                    <div class="stat" id="totalCount">0</div>
+                    <div>전체</div>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <button onclick="validateAll()">🔍 전체 검증</button>
+                <button onclick="testAllFunctions()">▶️ 모든 함수 실행</button>
+                <button onclick="clearConsole()">🗑️ 콘솔 초기화</button>
+            </div>
+        </div>
+        
+        <h3>함수 상태</h3>
+        <div class="test-grid" id="functionGrid"></div>
+        
+        <h3>실시간 콘솔</h3>
+        <div class="console" id="console"></div>
+    </div>
+    
+    <script>
+        // 검증할 모든 함수 목록
+        const functions = [
+            'startMagicalJourney',
+            'showMBTISelect',
+            'showQuickSelect',
+            'goBack',
+            'submitName',
+            'selectMBTI',
+            'selectAnswer',
+            'skipQuestion',
+            'startTest',
+            'restart',
+            'shareResult',
+            'shareKakao',
+            'toggleCategory',
+            'showPremium',
+            'closePremium',
+            'buyPremium',
+            'giftPremium',
+            'openFeedback',
+            'copyInviteCode',
+            'shareKakaoInvite',
+            'shareLinkInvite',
+            'showTerms',
+            'showPrivacy',
+            'showContact'
+        ];
+        
+        let results = { success: 0, error: 0 };
+        
+        function log(message, type = 'info') {
+            const console = document.getElementById('console');
+            const line = document.createElement('div');
+            line.className = `console-line console-${type}`;
+            const timestamp = new Date().toLocaleTimeString();
+            line.textContent = `[${timestamp}] ${message}`;
+            console.appendChild(line);
+            console.scrollTop = console.scrollHeight;
+        }
+        
+        function validateAll() {
+            results = { success: 0, error: 0 };
+            const grid = document.getElementById('functionGrid');
+            grid.innerHTML = '';
+            
+            log('========== 함수 검증 시작 ==========', 'info');
+            
+            // iframe으로 앱 로드
+            const iframe = document.createElement('iframe');
+            iframe.src = '/index.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            iframe.onload = () => {
+                const win = iframe.contentWindow;
+                
+                functions.forEach(funcName => {
+                    const item = document.createElement('div');
+                    item.className = 'function-test';
+                    
+                    const name = document.createElement('span');
+                    name.className = 'function-name';
+                    name.textContent = funcName;
+                    
+                    const status = document.createElement('span');
+                    status.className = 'status';
+                    
+                    if (typeof win[funcName] === 'function') {
+                        status.className += ' success';
+                        status.textContent = 'OK';
+                        results.success++;
+                        log(`✅ ${funcName} - 정의됨`, 'success');
+                    } else {
+                        status.className += ' error';
+                        status.textContent = 'MISSING';
+                        results.error++;
+                        log(`❌ ${funcName} - 정의되지 않음!`, 'error');
+                    }
+                    
+                    item.appendChild(name);
+                    item.appendChild(status);
+                    grid.appendChild(item);
+                });
+                
+                // 결과 업데이트
+                document.getElementById('successCount').textContent = results.success;
+                document.getElementById('errorCount').textContent = results.error;
+                document.getElementById('totalCount').textContent = functions.length;
+                
+                log(`========== 검증 완료: ${results.success}/${functions.length} ==========`, 
+                    results.error === 0 ? 'success' : 'error');
+                
+                // iframe 제거
+                document.body.removeChild(iframe);
+            };
+        }
+        
+        function testAllFunctions() {
+            log('========== 함수 실행 테스트 ==========', 'info');
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = '/index.html';
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+            
+            iframe.onload = () => {
+                const win = iframe.contentWindow;
+                
+                functions.forEach(funcName => {
+                    if (typeof win[funcName] === 'function') {
+                        try {
+                            // 함수 실행 (인자가 필요한 함수들 처리)
+                            if (funcName === 'selectMBTI') {
+                                win[funcName]('INTJ');
+                            } else if (funcName === 'selectAnswer') {
+                                win[funcName]('E');
+                            } else if (funcName === 'toggleCategory') {
+                                // 카테고리 토글은 인자 필요
+                                return;
+                            } else {
+                                win[funcName]();
+                            }
+                            log(`▶️ ${funcName}() 실행 성공`, 'success');
+                        } catch (e) {
+                            log(`⚠️ ${funcName}() 실행 오류: ${e.message}`, 'error');
+                        }
+                    }
+                });
+                
+                setTimeout(() => {
+                    document.body.removeChild(iframe);
+                    log('========== 실행 테스트 완료 ==========', 'info');
+                }, 2000);
+            };
+        }
+        
+        function clearConsole() {
+            document.getElementById('console').innerHTML = '';
+            log('콘솔 초기화됨', 'info');
+        }
+        
+        // 페이지 로드시 자동 검증
+        window.onload = () => {
+            log('검증 시스템 준비 완료', 'success');
+            setTimeout(validateAll, 500);
+        };
+    </script>
+</body>
+</html>

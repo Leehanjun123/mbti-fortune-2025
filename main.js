@@ -205,6 +205,15 @@ const TestManager = {
         }
     },
     
+    skipQuestion() {
+        // 랜덤 답변 선택
+        const currentQ = this.questions[AppState.currentQuestion];
+        if (currentQ) {
+            const randomAnswer = currentQ.answers[Math.floor(Math.random() * currentQ.answers.length)];
+            this.selectAnswer(randomAnswer.value);
+        }
+    },
+    
     calculateResult() {
         const counts = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
         
@@ -554,7 +563,68 @@ window.toggleCategory = window.MBTIApp.toggleCategory;
 
 // 추가 필요한 함수들
 window.skipQuestion = function() {
+    console.log('질문 건너뛰기');
     TestManager.skipQuestion();
+};
+
+window.showPremium = function() {
+    console.log('프리미엄 모달 표시');
+    const modal = document.getElementById('premiumModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    }
+};
+
+window.closePremium = function() {
+    console.log('프리미엄 모달 닫기');
+    const modal = document.getElementById('premiumModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+};
+
+window.buyPremium = function() {
+    console.log('프리미엄 구매');
+    alert('프리미엄 기능은 준비 중입니다!');
+};
+
+window.giftPremium = function() {
+    console.log('프리미엄 선물');
+    alert('선물 기능은 준비 중입니다!');
+};
+
+window.openFeedback = function() {
+    console.log('피드백 열기');
+    alert('의견을 보내주세요: mbti2025@example.com');
+};
+
+// 나머지 누락된 함수들
+window.copyInviteCode = function() {
+    const code = 'MBTI2025';
+    navigator.clipboard.writeText(code);
+    alert('초대 코드가 복사되었습니다: ' + code);
+};
+
+window.shareKakaoInvite = function() {
+    window.shareKakao();
+};
+
+window.shareLinkInvite = function() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url);
+    alert('링크가 복사되었습니다!');
+};
+
+window.showTerms = function() {
+    alert('이용약관 페이지');
+};
+
+window.showPrivacy = function() {
+    alert('개인정보처리방침 페이지');
+};
+
+window.showContact = function() {
+    alert('문의하기: mbti2025@example.com');
 };
 
 window.startTest = function() {
