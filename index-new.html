@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 MBTI 운세 - 당신의 운명을 확인하세요</title>
+    
+    <!-- SEO -->
+    <meta name="description" content="2025년 MBTI별 운세를 무료로 확인하세요. 연애운, 금전운, 직업운까지!">
+    <meta property="og:title" content="2025 MBTI 운세">
+    <meta property="og:description" content="내 MBTI 유형으로 보는 2025년 운세 🔮">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* 컨테이너 */
+        .app {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* 화면 관리 */
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        /* 타이포그래피 */
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #718096;
+            font-size: 1.1rem;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        /* 버튼 스타일 */
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        /* MBTI 그리드 */
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin: 30px 0;
+        }
+        
+        .mbti-btn {
+            padding: 20px 10px;
+            border: 2px solid #e2e8f0;
+            background: white;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .mbti-btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+        
+        .mbti-btn:hover:before {
+            left: 0;
+        }
+        
+        .mbti-btn:hover {
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+        }
+        
+        .mbti-btn span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 입력 필드 */
+        .input-group {
+            margin: 30px 0;
+        }
+        
+        .input-label {
+            display: block;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 14px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        /* 결과 카드 */
+        .result-card {
+            background: #f7fafc;
+            border-radius: 16px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .mbti-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .fortune-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .fortune-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .fortune-text {
+            color: #4a5568;
+            line-height: 1.8;
+        }
+        
+        /* 광고 영역 */
+        .ad-container {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .ad-placeholder {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        /* 공유 버튼 */
+        .share-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        
+        .share-btn {
+            background: #ffc93c;
+            color: #2d3748;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 8px;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 201, 60, 0.4);
+        }
+        
+        /* 로딩 애니메이션 */
+        .loading {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* 반응형 */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .mbti-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* 프리미엄 배너 */
+        .premium-banner {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .premium-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .premium-price {
+            font-size: 2rem;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+        
+        .premium-btn {
+            background: white;
+            color: #f6d365;
+            padding: 10px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+    
+    <!-- 카카오 SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+</head>
+<body>
+    <div class="app">
+        <div class="container">
+            <!-- 시작 화면 -->
+            <div id="startScreen" class="screen active">
+                <h1>🔮 2025 MBTI 운세</h1>
+                <p class="subtitle">
+                    당신의 MBTI 유형으로<br>
+                    2025년 운세를 확인해보세요!<br>
+                    <strong>3분이면 충분합니다</strong>
+                </p>
+                <button class="btn-primary" onclick="showScreen('selectScreen')">
+                    ✨ 내 운명 확인하기
+                </button>
+            </div>
+            
+            <!-- MBTI 선택 화면 -->
+            <div id="selectScreen" class="screen">
+                <h1>MBTI 선택</h1>
+                <p class="subtitle">당신의 MBTI 유형을 선택하세요</p>
+                
+                <div class="mbti-grid">
+                    <button class="mbti-btn" onclick="selectMBTI('INTJ')"><span>INTJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('INTP')"><span>INTP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENTJ')"><span>ENTJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENTP')"><span>ENTP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('INFJ')"><span>INFJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('INFP')"><span>INFP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENFJ')"><span>ENFJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENFP')"><span>ENFP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ISTJ')"><span>ISTJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ISFJ')"><span>ISFJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ESTJ')"><span>ESTJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ESFJ')"><span>ESFJ</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ISTP')"><span>ISTP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ISFP')"><span>ISFP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ESTP')"><span>ESTP</span></button>
+                    <button class="mbti-btn" onclick="selectMBTI('ESFP')"><span>ESFP</span></button>
+                </div>
+                
+                <button class="btn-primary" onclick="startTest()" style="background: #cbd5e0; box-shadow: none;">
+                    잘 모르겠어요 (테스트 하기)
+                </button>
+            </div>
+            
+            <!-- 이름 입력 화면 -->
+            <div id="nameScreen" class="screen">
+                <h1>이름 입력</h1>
+                <p class="subtitle">당신의 이름을 알려주세요</p>
+                
+                <div class="input-group">
+                    <label class="input-label" for="nameInput">이름</label>
+                    <input type="text" id="nameInput" class="input-field" placeholder="홍길동" maxlength="20">
+                </div>
+                
+                <button class="btn-primary" onclick="showResult()">
+                    결과 확인하기
+                </button>
+            </div>
+            
+            <!-- 로딩 화면 -->
+            <div id="loadingScreen" class="screen">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <h2>운세를 분석하고 있습니다...</h2>
+                    <p class="subtitle">잠시만 기다려주세요</p>
+                </div>
+            </div>
+            
+            <!-- 결과 화면 -->
+            <div id="resultScreen" class="screen">
+                <div class="result-header">
+                    <div class="mbti-badge" id="resultMBTI">INTJ</div>
+                    <h1><span id="resultName">홍길동</span>님의 2025년 운세</h1>
+                </div>
+                
+                <!-- 광고 영역 -->
+                <div class="ad-container">
+                    <ins class="kakao_ad_area" style="display:none;" 
+                         data-ad-unit="DAN-YOUR-AD-UNIT" 
+                         data-ad-width="320" 
+                         data-ad-height="100"></ins>
+                    <div class="ad-placeholder">광고 영역</div>
+                </div>
+                
+                <!-- 총운 -->
+                <div class="fortune-section">
+                    <div class="fortune-title">
+                        🌟 2025년 총운
+                    </div>
+                    <div class="fortune-text" id="overallFortune">
+                        2025년은 당신에게 특별한 한 해가 될 것입니다.
+                    </div>
+                </div>
+                
+                <!-- 연애운 -->
+                <div class="fortune-section">
+                    <div class="fortune-title">
+                        💕 연애운
+                    </div>
+                    <div class="fortune-text" id="loveFortune">
+                        사랑이 넘치는 한 해가 될 것입니다.
+                    </div>
+                </div>
+                
+                <!-- 금전운 -->
+                <div class="fortune-section">
+                    <div class="fortune-title">
+                        💰 금전운
+                    </div>
+                    <div class="fortune-text" id="moneyFortune">
+                        재물운이 상승하는 시기입니다.
+                    </div>
+                </div>
+                
+                <!-- 직업운 -->
+                <div class="fortune-section">
+                    <div class="fortune-title">
+                        💼 직업운
+                    </div>
+                    <div class="fortune-text" id="careerFortune">
+                        커리어에서 큰 성장이 있을 것입니다.
+                    </div>
+                </div>
+                
+                <!-- 프리미엄 배너 -->
+                <div class="premium-banner">
+                    <div class="premium-title">🎁 더 자세한 운세를 원하시나요?</div>
+                    <div class="premium-price">₩4,900</div>
+                    <button class="premium-btn" onclick="showPremium()">
+                        프리미엄 운세 보기
+                    </button>
+                </div>
+                
+                <!-- 공유 버튼 -->
+                <div class="share-section">
+                    <button class="share-btn" onclick="shareKakao()">
+                        카카오톡 공유
+                    </button>
+                    <button class="btn-primary" onclick="restart()">
+                        다시 하기
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 전역 변수
+        let selectedMBTI = '';
+        let userName = '';
+        
+        // MBTI별 운세 데이터
+        const fortunes = {
+            'INTJ': {
+                overall: '2025년은 당신의 전략적 사고가 빛을 발하는 해입니다. 그동안 준비해온 계획들이 하나씩 결실을 맺기 시작할 것입니다.',
+                love: '지적인 대화를 나눌 수 있는 특별한 인연을 만날 가능성이 높습니다. 평소보다 조금 더 마음을 열어보세요.',
+                money: '투자 수익이 기대되는 한 해입니다. 특히 장기 투자와 부동산 쪽에서 좋은 기회가 올 수 있습니다.',
+                career: '리더십을 발휘할 기회가 많아집니다. 당신의 비전과 체계적인 접근이 인정받을 것입니다.'
+            },
+            'INFJ': {
+                overall: '2025년은 당신의 직관력이 특히 정확해지는 해입니다. 숨겨진 기회들을 발견하게 될 것입니다.',
+                love: '진정한 소울메이트를 만날 수 있는 해입니다. 깊은 감정적 연결을 경험하게 될 것입니다.',
+                money: '예상치 못한 곳에서 수익이 발생할 수 있습니다. 직관을 믿고 행동하세요.',
+                career: '창작 활동이나 상담 관련 분야에서 특별한 재능을 발휘할 것입니다.'
+            },
+            'ENFP': {
+                overall: '2025년은 모험과 새로운 경험이 가득한 해가 될 것입니다. 예상치 못한 기회들이 연속으로 찾아올 것입니다.',
+                love: '여러 인연 중에서 선택해야 하는 행복한 고민이 생길 것입니다. 직감을 믿고 선택하세요.',
+                money: '다양한 수입원이 생길 수 있습니다. 여러 분야에 관심을 가지는 것이 도움이 될 것입니다.',
+                career: '새로운 분야에 도전할 기회가 올 것입니다. 변화를 두려워하지 말고 과감하게 도전하세요.'
+            },
+            'ISTJ': {
+                overall: '2025년은 꾸준함이 결실을 맺는 해입니다. 그동안의 노력이 인정받고 안정적인 성과를 거둘 것입니다.',
+                love: '오래된 인연이 새롭게 발전하거나, 신뢰할 수 있는 새로운 인연을 만날 것입니다.',
+                money: '저축과 투자에서 안정적인 수익을 얻을 것입니다. 계획적인 소비가 중요합니다.',
+                career: '승진이나 이직의 기회가 있을 것입니다. 당신의 성실함이 빛을 발할 때입니다.'
+            }
+        };
+        
+        // 화면 전환 함수
+        function showScreen(screenId) {
+            // 모든 화면 숨기기
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // 선택한 화면 표시
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+            }
+        }
+        
+        // MBTI 선택
+        function selectMBTI(mbti) {
+            selectedMBTI = mbti;
+            showScreen('nameScreen');
+        }
+        
+        // 테스트 시작 (추후 구현)
+        function startTest() {
+            alert('테스트 기능은 준비 중입니다. MBTI를 직접 선택해주세요!');
+        }
+        
+        // 결과 표시
+        function showResult() {
+            userName = document.getElementById('nameInput').value.trim() || '당신';
+            
+            // 로딩 화면 표시
+            showScreen('loadingScreen');
+            
+            // 2초 후 결과 표시
+            setTimeout(() => {
+                // 결과 데이터 설정
+                document.getElementById('resultName').textContent = userName;
+                document.getElementById('resultMBTI').textContent = selectedMBTI;
+                
+                // 운세 데이터 가져오기
+                const fortune = fortunes[selectedMBTI] || fortunes['INTJ'];
+                document.getElementById('overallFortune').textContent = fortune.overall;
+                document.getElementById('loveFortune').textContent = fortune.love;
+                document.getElementById('moneyFortune').textContent = fortune.money;
+                document.getElementById('careerFortune').textContent = fortune.career;
+                
+                // 결과 화면 표시
+                showScreen('resultScreen');
+                
+                // 광고 렌더링 시도
+                renderAds();
+            }, 2000);
+        }
+        
+        // 다시 시작
+        function restart() {
+            selectedMBTI = '';
+            userName = '';
+            document.getElementById('nameInput').value = '';
+            showScreen('startScreen');
+        }
+        
+        // 카카오톡 공유
+        function shareKakao() {
+            if (window.Kakao && !Kakao.isInitialized()) {
+                Kakao.init('YOUR_KAKAO_APP_KEY'); // 실제 앱 키로 교체 필요
+            }
+            
+            const shareText = `나의 2025년 ${selectedMBTI} 운세를 확인했어요! 당신도 확인해보세요 🔮`;
+            
+            // 카카오톡 공유 또는 링크 복사
+            if (navigator.share) {
+                navigator.share({
+                    title: '2025 MBTI 운세',
+                    text: shareText,
+                    url: window.location.href
+                });
+            } else {
+                // 링크 복사
+                navigator.clipboard.writeText(window.location.href);
+                alert('링크가 복사되었습니다!');
+            }
+        }
+        
+        // 프리미엄 표시
+        function showPremium() {
+            alert('프리미엄 기능은 준비 중입니다!');
+        }
+        
+        // 광고 렌더링
+        function renderAds() {
+            // 카카오 애드핏이 로드되었을 때
+            if (typeof window.adsbykakao !== 'undefined') {
+                try {
+                    window.adsbykakao.push({});
+                    document.querySelector('.ad-placeholder').style.display = 'none';
+                } catch(e) {
+                    console.log('광고 렌더링 실패:', e);
+                }
+            }
+        }
+        
+        // 페이지 로드 시 초기화
+        window.addEventListener('DOMContentLoaded', function() {
+            // 카카오 애드핏 스크립트 로드
+            const script = document.createElement('script');
+            script.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+            script.async = true;
+            document.body.appendChild(script);
+        });
+    </script>
+</body>
+</html>

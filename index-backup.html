@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>2025 내 운명은? - 3분 MBTI 운세</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="MBTI운세">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
+    <!-- Performance -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="description" content="2025년 나의 운명은? 3분 만에 알아보는 MBTI별 신년 운세 ✨">
+    <meta property="og:title" content="2025 내 운명은?">
+    <meta property="og:description" content="친구들아 2025년 운세 확인했어? 나 대박이래! 🎯">
+    <meta property="og:image" content="https://mbti-destiny.site/og-image.png">
+    <meta property="og:url" content="https://mbti-destiny.site">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="keywords" content="2025 운세, MBTI 운세, 신년 운세, 성격 테스트, 무료 운세">
+    <link rel="canonical" href="https://mbti-destiny.site">
+    
+    <!-- 폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap" rel="stylesheet">
+    
+    <!-- 완벽히 수정된 CSS -->
+    <link rel="stylesheet" href="style-fixed.css">
+    <!-- 광고를 숨기려면 아래 주석 해제 -->
+    <!-- <link rel="stylesheet" href="hide-ads.css"> -->
+    
+    <!-- Configuration -->
+    <script src="config.js"></script>
+    
+    <!-- 광고 최적화 (429 에러 차단) -->
+    <script src="ad-optimizer.js"></script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', CONFIG.GA_TRACKING_ID);
+    </script>
+    
+    <!-- Facebook Pixel (사용시 활성화) -->
+    <!-- 
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window,document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'YOUR_PIXEL_ID');
+    </script>
+    -->
+    
+    <!-- Google AdSense (승인 후 활성화) -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
+        crossorigin="anonymous"></script> -->
+    
+    <!-- 카카오 애드핏 스마트 로딩 -->
+    <script>
+        console.log('스마트 광고 로딩 시작');
+        
+        // 광고 로딩 상태 관리
+        window.adLoadState = {
+            attempts: 0,
+            maxAttempts: 3,
+            retryDelay: 5000, // 5초
+            loaded: false
+        };
+        
+        // 스마트 광고 로딩 함수
+        function loadAdsWithRetry(delay = 0) {
+            setTimeout(() => {
+                if (window.adLoadState.attempts >= window.adLoadState.maxAttempts) {
+                    console.log('광고 로딩 최대 시도 횟수 초과 - 광고 없이 진행');
+                    return;
+                }
+                
+                window.adLoadState.attempts++;
+                console.log(`광고 로딩 시도 ${window.adLoadState.attempts}/${window.adLoadState.maxAttempts}`);
+                
+                // 카카오 SDK 로드
+                const kakaoScript = document.createElement('script');
+                kakaoScript.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+                kakaoScript.onerror = () => {
+                    console.log('카카오 SDK 로드 실패 - 재시도 예정');
+                    if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                        loadAdsWithRetry(window.adLoadState.retryDelay);
+                    }
+                };
+                document.head.appendChild(kakaoScript);
+                
+                // 애드핏 스크립트 로드
+                const adScript = document.createElement('script');
+                adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+                adScript.async = true;
+                
+                adScript.onerror = (e) => {
+                    console.log(`광고 로딩 실패 (시도 ${window.adLoadState.attempts}) - 재시도 예정`);
+                    
+                    // 429 에러 특별 처리
+                    if (e && e.target && e.target.src && e.target.src.includes('kas')) {
+                        console.log('카카오 애드핏 429 에러 감지 - 지연 후 재시도');
+                        window.adLoadState.retryDelay = Math.min(window.adLoadState.retryDelay * 2, 30000); // 최대 30초
+                    }
+                    
+                    // 재시도 로직
+                    if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                        setTimeout(() => loadAdsWithRetry(), window.adLoadState.retryDelay);
+                    } else {
+                        console.log('광고 로딩 최종 실패 - 앱 정상 작동');
+                    }
+                };
+                
+                adScript.onload = () => {
+                    console.log('✅ 광고 스크립트 로딩 성공!');
+                    window.adLoadState.loaded = true;
+                    
+                    // adsbykakao 객체 강제 초기화 (안전장치)
+                    setTimeout(() => {
+                        if (typeof window.adsbykakao === 'undefined') {
+                            console.log('🔧 adsbykakao 객체 수동 초기화');
+                            window.adsbykakao = [];
+                        }
+                    }, 100);
+                    
+                    try {
+                        // 광고 렌더링
+                        const adAreas = document.querySelectorAll('.kakao_ad_area');
+                        console.log(`광고 영역 ${adAreas.length}개 발견`);
+                        
+                        adAreas.forEach((ad, index) => {
+                            ad.style.display = 'block';
+                            console.log(`광고 영역 ${index + 1} 활성화`);
+                        });
+                        
+                        // 카카오 애드핏 올바른 렌더링 방식
+                        if (typeof window.adsbykakao !== 'undefined') {
+                            window.adsbykakao.push({});
+                            console.log('🎉 카카오 애드핏 렌더링 완료!');
+                        } else if (typeof kakaoAdFit !== 'undefined') {
+                            // 대안 방식
+                            try {
+                                if (kakaoAdFit.render && typeof kakaoAdFit.render === 'function') {
+                                    kakaoAdFit.render();
+                                } else {
+                                    // 수동 렌더링
+                                    window.adsbykakao = window.adsbykakao || [];
+                                    window.adsbykakao.push({});
+                                }
+                                console.log('🎉 카카오 애드핏 렌더링 완료!');
+                            } catch(renderError) {
+                                console.log('렌더링 방식 변경:', renderError.message);
+                                window.adsbykakao = window.adsbykakao || [];
+                                window.adsbykakao.push({});
+                            }
+                        }
+                    } catch(error) {
+                        console.log('광고 렌더링 중 오류:', error.message);
+                        // 렌더링 실패해도 재시도
+                        if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                            setTimeout(() => loadAdsWithRetry(), window.adLoadState.retryDelay);
+                        }
+                    }
+                };
+                
+                document.head.appendChild(adScript);
+                
+            }, delay);
+        }
+        
+        // 앱 로딩 완료 후 광고 로딩 시작 (앱 기능 우선)
+        setTimeout(() => {
+            loadAdsWithRetry();
+        }, 3000);
+        
+        // 모든 광고 관련 에러 완전 차단 (사용자 경험 우선)
+        window.addEventListener('error', function(e) {
+            const errorMessage = e.message || '';
+            const errorSource = e.filename || '';
+            
+            // 429, 카카오 수집기, 애드핏, Retry-After 관련 모든 에러 차단
+            if (errorMessage.includes('429') || 
+                errorMessage.includes('Retry-After') ||
+                errorMessage.includes('unsafe header') ||
+                errorSource.includes('aem-kakao-collector') ||
+                errorSource.includes('ba.min.js') ||
+                errorMessage.includes('kakao') ||
+                errorSource.includes('kas.kakao') ||
+                errorMessage.includes('adsbykakao')) {
+                
+                e.preventDefault();
+                e.stopPropagation();
+                console.log(`🔇 광고 관련 에러 차단: ${errorMessage}`);
+                return true;
+            }
+        });
+        
+        // 리소스 로딩 에러도 차단
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && e.reason.toString().includes('429')) {
+                e.preventDefault();
+                console.log('🔇 429 Promise rejection 차단');
+                return true;
+            }
+        });
+        
+        // 페이지 언로드시 광고 정리
+        window.addEventListener('beforeunload', function() {
+            console.log('페이지 종료 - 광고 정리');
+        });
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- 로딩 화면 -->
+        <div id="loadingScreen" class="screen">
+            <div class="loading-content">
+                <div class="year-animation">2025</div>
+                <div class="loading-text">운명을 불러오는 중...</div>
+                <div class="loading-bar">
+                    <div class="loading-progress"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 시작 화면 (Jony Ive 미니멀리즘) -->
+        <div id="startScreen" class="screen">
+            <div class="container">
+                <div class="hero-section">
+                    <!-- 부드러운 그라디언트 배경 애니메이션 -->
+                    <div class="gradient-bg"></div>
+                    
+                    <!-- 심플한 메인 메시지 -->
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="year-text">2025</span>
+                            <span class="main-text">내 운명은?</span>
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            3분 만에 알아보는 올해 운세 ✨
+                        </p>
+                        
+                        <!-- Steve Jobs 스타일: 단일 마법 버튼 -->
+                        <div class="magic-button-container">
+                            <button class="magic-button pulse-magic" onclick="startMagicalJourney()">
+                                <div class="button-content">
+                                    <span class="main-text">✨ 내 운명 확인하기</span>
+                                    <span class="sub-text">3분이면 충분해요</span>
+                                </div>
+                                <div class="button-shimmer"></div>
+                            </button>
+                            
+                            <!-- 세련된 MBTI 직접 선택 옵션 -->
+                            <button class="text-button" onclick="showMBTISelect()">
+                                이미 MBTI를 알고 있어요 →
+                            </button>
+                        </div>
+                        
+                        <!-- 소셜 증명 (Julie Zhuo 제안) -->
+                        <div class="social-proof">
+                            <div class="user-count">
+                                <span id="userCount">127,892</span>명이 확인했어요
+                            </div>
+                            <div class="user-avatars">
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <div class="avatar"></div>
+                                <span class="more">+</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 빠른 시작 (최소화) -->
+                <div class="quick-start">
+                    <button onclick="showQuickSelect()" class="ghost-button">
+                        이미 내 MBTI 알아 →
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이름 입력 화면 (삭제 - 중복) -->
+
+        <!-- MBTI 빠른 선택 (Patricia Urquiola 감성 디자인) -->
+        <div id="quickSelectScreen" class="screen">
+            <div class="container">
+                <div class="quick-select-header">
+                    <h2>너의 MBTI는 뭐야?</h2>
+                    <p>이미 알고 있다면 선택해줘</p>
+                </div>
+                
+                <div class="mbti-grid-v2">
+                    <div class="mbti-group analysts">
+                        <div class="group-emoji">🧠</div>
+                        <div class="group-title">분석가형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('INTJ')">INTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('INTP')">INTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENTJ')">ENTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENTP')">ENTP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group diplomats">
+                        <div class="group-emoji">💚</div>
+                        <div class="group-title">외교관형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('INFJ')">INFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('INFP')">INFP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENFJ')">ENFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ENFP')">ENFP</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group sentinels">
+                        <div class="group-emoji">🛡️</div>
+                        <div class="group-title">관리자형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('ISTJ')">ISTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ISFJ')">ISFJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESTJ')">ESTJ</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESFJ')">ESFJ</button>
+                        </div>
+                    </div>
+                    
+                    <div class="mbti-group explorers">
+                        <div class="group-emoji">🎨</div>
+                        <div class="group-title">탐험가형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="selectMBTI('ISTP')">ISTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ISFP')">ISFP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESTP')">ESTP</button>
+                            <button class="mbti-btn" onclick="selectMBTI('ESFP')">ESFP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button onclick="goBack()" class="back-button">← 처음으로</button>
+                    <button onclick="startTest()" class="test-button">테스트 하러 가기</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 성별, 생년 화면 제거 (사용자 경험 개선) -->
+
+        <!-- 이름 입력 화면 -->
+        <div id="nameScreen" class="screen">
+            <div class="container">
+                <div class="input-section">
+                    <h2 class="section-title">이름을 입력해주세요</h2>
+                    <div class="name-input-container">
+                        <input type="text" id="nameInput" placeholder="홍길동" maxlength="10" class="name-input" onkeypress="if(event.key==='Enter') submitName()">
+                        <button onclick="submitName()" class="submit-btn">운세 보기</button>
+                    </div>
+                    <p class="input-hint">닉네임도 괜찮아요</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 테스트 화면 (대화형 UI - 김성훈 제안) -->
+        <div id="testScreen" class="screen">
+            <div class="container">
+                <!-- 상단 배너 광고 (카카오 애드핏) -->
+                <div class="ad-banner-top">
+                    <ins class="kakao_ad_area" style="display:none;"
+                        data-ad-unit="DAN-cIOtsbRqKgkRvw1X"
+                        data-ad-width="320"
+                        data-ad-height="50"></ins>
+                </div>
+                
+                <!-- 프로그레스 (미니멀) -->
+                <div class="test-progress">
+                    <div class="progress-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <div class="progress-text">
+                        <span id="currentQ">1</span> / 12
+                    </div>
+                </div>
+                
+                <!-- 대화형 질문 -->
+                <div class="chat-container" id="questionContainer">
+                    <!-- 질문과 답변이 동적으로 렌더링됨 -->
+                </div>
+                
+                <!-- 건너뛰기 옵션 -->
+                <div class="test-footer">
+                    <button onclick="skipQuestion()" class="skip-btn">
+                        이 질문 건너뛰기
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 계산 중 (감성적 로딩) -->
+        <div id="calculatingScreen" class="screen">
+            <div class="container">
+                <div class="calculating-content">
+                    <div class="stars-animation">
+                        <span class="star">⭐</span>
+                        <span class="star">✨</span>
+                        <span class="star">🌟</span>
+                    </div>
+                    <h2 class="calculating-title">
+                        <span id="calcUserName">너의</span> 2025년<br>
+                        운명을 읽는 중...
+                    </h2>
+                    <div class="fortune-preview">
+                        <span class="preview-text" id="previewText"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 결과 화면 (스토리텔링 강화) -->
+        <div id="resultScreen" class="screen">
+            <!-- 상단 배너 광고 (카카오 애드핏) -->
+            <div class="ad-container ad-top" style="min-height: 100px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+                <ins class="kakao_ad_area" style="display:block;" 
+                     data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
+                     data-ad-width="320" 
+                     data-ad-height="100"></ins>
+                <!-- 광고 로드 전 플레이스홀더 -->
+                <div style="color: #999; font-size: 14px;">광고 영역</div>
+            </div>
+            
+            <div class="container result-container">
+                <!-- 헤더 (개인화) -->
+                <div class="result-header">
+                    <div class="result-badge">
+                        <span class="badge-year">2025</span>
+                        <span class="badge-mbti" id="userMBTI"></span>
+                    </div>
+                    <h1 class="result-title">
+                        <span id="userName">너의</span> 운명
+                    </h1>
+                </div>
+                
+                <!-- 메인 운세 카드 -->
+                <div class="main-fortune-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <h3 class="card-title">🌟 2025년 총운</h3>
+                        <p id="overallFortune" class="fortune-text"></p>
+                        <div class="fortune-score">
+                            <span class="score-label">행운 지수</span>
+                            <div class="score-bar">
+                                <div class="score-fill" id="fortuneScore"></div>
+                            </div>
+                            <span class="score-value" id="scoreValue">88%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 카테고리별 운세 카드 -->
+                <div class="fortune-categories">
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">💕</span>
+                                <span>연애운</span>
+                            </div>
+                            <div class="category-rating" id="loveRating">⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="loveFortune">
+                            <!-- 연애운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                    
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">💰</span>
+                                <span>금전운</span>
+                            </div>
+                            <div class="category-rating" id="moneyRating">⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="moneyFortune">
+                            <!-- 금전운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                    
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">🚀</span>
+                                <span>커리어운</span>
+                            </div>
+                            <div class="category-rating" id="careerRating">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="careerFortune">
+                            <!-- 커리어운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                    
+                    <div class="category-card" onclick="toggleCategory(this)">
+                        <div class="category-header">
+                            <div class="category-title">
+                                <span class="category-icon">✨</span>
+                                <span>건강운</span>
+                            </div>
+                            <div class="category-rating" id="healthRating">⭐⭐⭐⭐</div>
+                        </div>
+                        <div class="category-content" id="healthFortune">
+                            <!-- 건강운 내용 동적 로드 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 럭키 아이템 (비주얼 강화) -->
+                <div class="lucky-section">
+                    <h3 class="section-title">🍀 2025 행운 아이템</h3>
+                    <div class="lucky-grid" id="luckyGrid">
+                        <!-- 럭키 아이템 동적 생성 -->
+                    </div>
+                </div>
+                
+                <!-- 친구 초대 섹션 -->
+                <div class="friend-predict">
+                    <h3>🎁 친구 초대 이벤트</h3>
+                    <p>친구를 초대하고 함께 2025년 운세를 확인해보세요!</p>
+                    
+                    <div class="invite-code-container">
+                        <div class="invite-code-display" id="inviteCode">MBTI2025</div>
+                        <button class="copy-code-btn" onclick="copyInviteCode()">복사</button>
+                    </div>
+                    
+                    <div class="invite-actions">
+                        <button class="invite-btn" onclick="shareKakaoInvite()">
+                            💬 카카오톡 공유
+                        </button>
+                        <button class="invite-btn" onclick="shareLinkInvite()">
+                            🔗 링크 공유
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 통계 섹션 -->
+                <div class="stats-section">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-value" id="totalTests">152K</span>
+                            <span class="stat-label">총 테스트</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="todayTests">3.2K</span>
+                            <span class="stat-label">오늘 테스트</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="shareCount">89K</span>
+                            <span class="stat-label">공유 횟수</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 액션 버튼 영역 -->
+                <div class="result-actions">
+                    <button onclick="shareKakao()" class="action-button share-button">
+                        💬 카카오톡 공유
+                    </button>
+                    <button onclick="restart()" class="action-button retry-button">
+                        🔄 다른 MBTI 보기
+                    </button>
+                    <button onclick="showPremium()" class="action-button premium-button" style="background: linear-gradient(135deg, #ffd700, #ffed4e); color: #333;">
+                        ⭐ 프리미엄 운세 보기
+                    </button>
+                </div>
+                
+                <!-- 광고 영역 1: 구글 애드센스 (결과 하단) -->
+                <div class="ad-container">
+                    <span class="ad-label">광고</span>
+                    <!-- 구글 애드센스 디스플레이 광고 -->
+                    <ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-XXXXXXXXXX"
+                        data-ad-slot="1234567890"
+                        data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+                
+                <!-- 광고 영역 2: 카카오 애드핏 (모바일 최적화) -->
+                <div class="ad-container">
+                    <ins class="kakao_ad_area" style="display:none;"
+                        data-ad-unit="DAN-7yyU9mCDVMJTOAgA"
+                        data-ad-width="320"
+                        data-ad-height="100"></ins>
+                </div>
+                
+                <!-- 푸터 -->
+                <div class="result-footer">
+                    <div class="footer-links">
+                        <a href="#" class="footer-link" onclick="showPrivacy(); return false;">개인정보처리방침</a>
+                        <a href="#" class="footer-link" onclick="showTerms(); return false;">이용약관</a>
+                        <a href="#" class="footer-link" onclick="showContact(); return false;">문의하기</a>
+                    </div>
+                    <div class="copyright">
+                        © 2025 MBTI 운세. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jeff Bezos 스타일: A/B 테스트 최적화된 프리미엄 모달 -->
+        <div id="premiumModal" class="modal">
+            <div class="modal-content premium-enhanced">
+                <button class="modal-close" onclick="closePremium()">×</button>
+                
+                <!-- 긴급성 + 희소성 메시지 -->
+                <div class="urgency-banner">
+                    🎯 오늘만 특가 87% 할인 🎯
+                    <div class="limited-offer">⚡ 남은 시간: <span id="countdownTimer">23:59:59</span></div>
+                    <div class="stock-pressure">🔴 오늘 할인가 <span id="remainingStock">17</span>개 남음!</div>
+                </div>
+                
+                <h2 class="modal-title">🎁 2025년 완전한 성공을 위한<br>프리미엄 운세 패키지</h2>
+                
+                <!-- 강화된 소셜 증명 -->
+                <div class="social-proof-premium">
+                    <div class="proof-stats">
+                        <span class="proof-badge">🏆 <span id="buyerCount">3,247</span>명이 이미 구매</span>
+                        <span class="proof-rating">⭐⭐⭐⭐⭐ 4.9/5.0 (1,832 리뷰)</span>
+                    </div>
+                    <div class="recent-buyers">
+                        <span class="buyer-alert">📢 김*영님이 방금 구매하셨습니다!</span>
+                    </div>
+                </div>
+                
+                <div class="premium-features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">📅</span>
+                        <h3>365일 맞춤 운세</h3>
+                        <p>매일 업데이트되는 개인 맞춤 운세</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💕</span>
+                        <h3>MBTI 궁합 분석</h3>
+                        <p>연인, 친구, 동료와의 완벽한 궁합</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💰</span>
+                        <h3>재테크 행운일</h3>
+                        <p>투자와 로또 최적의 타이밍</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📱</span>
+                        <h3>위젯 & 알림</h3>
+                        <p>매일 아침 운세 푸시 알림</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎁</span>
+                        <h3>친구 선물하기</h3>
+                        <p>소중한 사람에게 운세 선물</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">📊</span>
+                        <h3>AI 분석 리포트</h3>
+                        <p>당신만의 운세 패턴 분석</p>
+                    </div>
+                </div>
+                
+                <!-- 가격 섹션 (Jeff Bezos 가치 전달 최적화) -->
+                <div class="premium-pricing">
+                    <div class="value-comparison">
+                        <div class="competitor-price">
+                            <span class="label">타 운세앱</span>
+                            <span class="price">월 ₩9,900</span>
+                        </div>
+                        <div class="our-price">
+                            <span class="label">우리 가격 (평생)</span>
+                            <div class="price-box">
+                                <span class="original-price">₩19,900</span>
+                                <span class="arrow">→</span>
+                                <span class="final-price">₩2,900</span>
+                                <span class="save-badge">87% 할인!</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="value-props">
+                        <div class="value-item">💰 월 구독료 없음 (평생 이용)</div>
+                        <div class="value-item">🎯 1회 결제로 모든 기능 무제한</div>
+                        <div class="value-item">⚡ 오늘만 87% 특가 제공</div>
+                    </div>
+                </div>
+                
+                <!-- 강화된 보증 배지 -->
+                <div class="guarantee-badges">
+                    <div class="main-guarantee">
+                        <span class="guarantee-icon">💯</span>
+                        <span class="guarantee-text">30일 무조건 환불보장<br><small>만족하지 않으면 100% 환불</small></span>
+                    </div>
+                    <div class="sub-guarantees">
+                        <span class="badge">🔒 SSL 보안결제</span>
+                        <span class="badge">📞 실시간 고객지원</span>
+                        <span class="badge">⚡ 즉시 이용 가능</span>
+                    </div>
+                </div>
+                
+                <!-- CTA 버튼들 (전환율 최적화) -->
+                <div class="premium-actions">
+                    <button class="premium-buy-btn primary mega-cta" onclick="buyPremium()">
+                        🎯 87% 할인가로 평생 이용하기
+                        <span class="cta-subtext">원가 복구까지 <span id="ctaCountdown">23:59:59</span></span>
+                    </button>
+                    
+                    <div class="alt-actions">
+                        <button class="premium-gift-btn" onclick="giftPremium()">
+                            🎁 소중한 사람에게 선물하기
+                        </button>
+                        <button class="free-trial-btn" onclick="startFreeTrial()">
+                            📱 7일 무료체험 먼저 해보기
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 후기 미리보기 -->
+                <div class="review-preview">
+                    <p>"정말 신기하게 맞아요! 매일 확인하고 있어요" - 김*진님</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 플로팅 버튼 (데이터 수집) -->
+    <div class="floating-feedback" onclick="openFeedback()">
+        💬
+    </div>
+    
+
+    <!-- 메인 스크립트 -->
+    <script src="main.js"></script>
+    
+    <!-- 초기화 -->
+    <script>
+        // main.js가 모든 초기화를 처리
+        console.log('✅ MBTI 운세 앱 준비 완료');
+    </script>
+    
+    <!-- Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
+        }
+    </script>
+</body>
+</html>
