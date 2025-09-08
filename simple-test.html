@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>간단한 스크롤 테스트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            font-family: 'Pretendard', -apple-system, sans-serif;
+        }
+
+        #app {
+            width: 100vw !important;
+            height: 100vh !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            overflow: hidden !important;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .screen {
+            display: none !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            overflow: hidden !important;
+            z-index: 1;
+        }
+
+        .screen.active {
+            display: block !important;
+            z-index: 10 !important;
+        }
+
+        .screen .container {
+            width: 100% !important;
+            height: 100vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+            padding: 20px !important;
+            box-sizing: border-box !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .year-text {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffd700, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .main-text {
+            font-size: 3rem;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin: 2rem 0;
+        }
+
+        .magic-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 100px;
+            padding: 1.75rem 4rem;
+            cursor: pointer;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            box-shadow: 0 10px 40px rgba(103, 126, 234, 0.3);
+            margin: 1rem auto;
+        }
+
+        .magic-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(103, 126, 234, 0.4);
+        }
+
+        .text-button {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-top: 1rem;
+        }
+
+        .debug-info {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            z-index: 9999;
+        }
+
+        .quick-select-header {
+            text-align: center;
+            color: #333;
+            padding: 2rem;
+        }
+
+        .quick-select-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .mbti-options {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mbti-btn {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            color: #333;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .mbti-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .back-button {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 2rem;
+        }
+
+        .back-button:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .name-input {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto 1rem;
+        }
+
+        .submit-btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 디버그 정보 -->
+        <div class="debug-info" id="debugInfo">
+            현재 화면: <span id="currentScreenInfo">start</span><br>
+            스크롤 방지: <span id="scrollInfo">✅</span><br>
+            브라우저: <span id="browserInfo"></span>
+        </div>
+
+        <!-- 시작 화면 -->
+        <div id="startScreen" class="screen active">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>
+                        <div class="year-text">2025</div>
+                        <div class="main-text">내 운명은?</div>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        3분 만에 알아보는 올해 운세 ✨
+                    </p>
+                    
+                    <div>
+                        <button class="magic-button" onclick="startTest()">
+                            ✨ 내 운명 확인하기
+                        </button>
+                        <br>
+                        <button class="text-button" onclick="showMBTISelect()">
+                            이미 MBTI를 알고 있어요 →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MBTI 선택 화면 -->
+        <div id="quickSelectScreen" class="screen">
+            <div class="container">
+                <div class="quick-select-header">
+                    <h2>너의 MBTI는 뭐야?</h2>
+                    <p>이미 알고 있다면 선택해줘</p>
+                </div>
+                
+                <div class="mbti-options">
+                    <button class="mbti-btn" onclick="selectMBTI('INTJ')">INTJ</button>
+                    <button class="mbti-btn" onclick="selectMBTI('INTP')">INTP</button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENTJ')">ENTJ</button>
+                    <button class="mbti-btn" onclick="selectMBTI('ENTP')">ENTP</button>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button onclick="goBack()" class="back-button">← 처음으로</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이름 입력 화면 -->
+        <div id="nameScreen" class="screen">
+            <div class="container">
+                <div style="text-align: center; padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+                    <h2 style="color: white; margin-bottom: 2rem;">이름을 입력해주세요</h2>
+                    <div>
+                        <input type="text" id="userName" placeholder="홍길동" class="name-input">
+                        <br>
+                        <button onclick="submitName()" class="submit-btn">운세 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 디버그 정보 업데이트
+        document.getElementById('browserInfo').textContent = navigator.userAgent.includes('Chrome') ? 'Chrome' : 
+                                                            navigator.userAgent.includes('Safari') ? 'Safari' : 'Other';
+
+        // 앱 상태
+        const app = {
+            currentScreen: 'start',
+            userName: '',
+            mbtiType: '',
+            skipTest: false
+        };
+
+        // 화면 전환 함수
+        function showScreen(screenId) {
+            console.log(`🔄 화면 전환: ${app.currentScreen} → ${screenId}`);
+            
+            // 강제 스크롤 방지 재적용
+            document.body.style.overflow = 'hidden';
+            document.body.style.position = 'fixed';
+            document.documentElement.style.overflow = 'hidden';
+            
+            // 모든 화면 완전 숨기기
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+                screen.style.display = 'none';
+                screen.style.visibility = 'hidden';
+            });
+            
+            // 타겟 화면만 표시
+            const targetScreen = document.getElementById(screenId + 'Screen');
+            if (targetScreen) {
+                targetScreen.style.display = 'block';
+                targetScreen.style.visibility = 'visible';
+                targetScreen.classList.add('active');
+                
+                app.currentScreen = screenId;
+                document.getElementById('currentScreenInfo').textContent = screenId;
+                console.log(`✅ ${screenId} 화면 활성화 완료`);
+            } else {
+                console.error(`❌ ${screenId}Screen 요소를 찾을 수 없음`);
+            }
+        }
+
+        // 테스트 함수들
+        function startTest() {
+            console.log('✨ 테스트 시작!');
+            showScreen('name');
+        }
+
+        function showMBTISelect() {
+            console.log('⚡ MBTI 직접 선택!');
+            showScreen('quickSelect');
+        }
+
+        function selectMBTI(type) {
+            console.log(`MBTI 선택: ${type}`);
+            app.mbtiType = type;
+            app.skipTest = true;
+            showScreen('name');
+        }
+
+        function goBack() {
+            console.log('← 처음으로');
+            app.mbtiType = '';
+            app.skipTest = false;
+            showScreen('start');
+        }
+
+        function submitName() {
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (name.length > 0) {
+                app.userName = name;
+                console.log(`이름 입력: ${name}`);
+                
+                if (app.skipTest && app.mbtiType) {
+                    alert(`✅ ${name}님의 ${app.mbtiType} 운세!\n빠른 선택 경로가 정상 작동합니다!`);
+                } else {
+                    alert(`✅ ${name}님, 테스트 시작!\n일반 경로가 정상 작동합니다!`);
+                }
+            } else {
+                alert('이름을 입력해주세요.');
+            }
+        }
+
+        // 스크롤 이벤트 감지
+        let scrollAttempts = 0;
+        window.addEventListener('scroll', function(e) {
+            scrollAttempts++;
+            console.log(`⚠️ 스크롤 시도 감지됨 (${scrollAttempts}번째)`);
+            window.scrollTo(0, 0);
+            e.preventDefault();
+        });
+
+        document.addEventListener('touchmove', function(e) {
+            console.log('⚠️ 터치 스크롤 시도 감지');
+            e.preventDefault();
+        }, { passive: false });
+
+        console.log('🎯 간단한 테스트 앱 시작');
+    </script>
+</body>
+</html>

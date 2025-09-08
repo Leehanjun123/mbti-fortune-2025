@@ -319,23 +319,25 @@ const app = {
     }
 };
 
-// 초기화
-document.addEventListener('DOMContentLoaded', () => {
-    try {
-        // 🚀 Enterprise-Grade 초기화
-        initApp();
-        startUserCountAnimation();
-        initKakaoSDK();
-        
-        // 접근성 시스템 초기화
-        AccessibilityManager.addFocusIndicators();
-        AccessibilityManager.enhanceKeyboardNavigation();
-        
-        console.log('✅ Enterprise-Grade 초기화 완료');
-    } catch (error) {
-        ErrorBoundary.handleError(error, 'DOMContentLoaded');
-    }
-});
+// 초기화는 HTML에서 window.onload로 수행함
+// 중복 실행 방지를 위해 주석 처리
+
+// document.addEventListener('DOMContentLoaded', () => {
+//     try {
+//         // 🚀 Enterprise-Grade 초기화
+//         initApp();
+//         startUserCountAnimation();
+//         initKakaoSDK();
+//         
+//         // 접근성 시스템 초기화
+//         AccessibilityManager.addFocusIndicators();
+//         AccessibilityManager.enhanceKeyboardNavigation();
+//         
+//         console.log('✅ Enterprise-Grade 초기화 완료');
+//     } catch (error) {
+//         ErrorBoundary.handleError(error, 'DOMContentLoaded');
+//     }
+// });
 
 function initApp() {
     console.log('🎯 앱 초기화 시작');
@@ -670,10 +672,10 @@ function startMagicalJourney() {
     console.log('✨ 마법같은 여정 시작!');
     console.log('현재 앱 상태:', app);
     
-    // 바로 테스트로 시작 (이름은 나중에)
-    console.log('감정적 몰입을 위해 바로 테스트 시작!');
-    app.skipNameInput = true;
-    showScreen('test');
+    // 테스트로 바로 시작 (MBTI를 모르는 경우)
+    console.log('MBTI 테스트로 시작');
+    app.skipNameInput = false; // 이름 입력은 테스트 후에
+    startTest(); // 테스트 시작
     
     // 감정적 온보딩 메시지
     setTimeout(() => {
@@ -696,9 +698,9 @@ function showMBTISelect() {
     console.log('⚡ MBTI 직접 선택 경로 선택됨!');
     console.log('현재 앱 상태:', app);
     
-    // MBTI 선택 화면으로 이동
-    console.log('MBTI 선택 화면으로 이동 중...');
-    showScreen('quickSelect');
+    // MBTI 빠른 선택 화면으로 이동
+    console.log('MBTI 빠른 선택 화면으로 이동 중...');
+    showQuickSelect(); // 기존 함수 재활용
 }
 
 // 기존 호환성 유지
@@ -777,8 +779,9 @@ function submitName() {
             showCalculating();
         } else {
             // 일반 경로 - 테스트 시작
-            console.log('일반 경로 - 테스트 시작');
-            startTest();
+            console.log('일반 경로 - 테스트 화면으로');
+            showScreen('test');
+            loadQuestion();
         }
     } else {
         alert('이름을 입력해주세요.');

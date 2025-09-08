@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 운세 앱 디버그</title>
+    <link rel="stylesheet" href="app-final.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 로딩 화면 -->
+        <div id="loadingScreen" class="screen active">
+            <div class="loading-content">
+                <div class="year-animation">2025</div>
+                <div class="loading-text">운명을 불러오는 중...</div>
+            </div>
+        </div>
+
+        <!-- 시작 화면 -->
+        <div id="startScreen" class="screen">
+            <div class="container">
+                <div class="hero-section">
+                    <div class="hero-content">
+                        <h1 class="hero-title">
+                            <span class="year-text">2025</span>
+                            <span class="main-text">내 운명은?</span>
+                        </h1>
+                        
+                        <p class="hero-subtitle">
+                            3분 만에 알아보는 올해 운세 ✨
+                        </p>
+                        
+                        <div class="magic-button-container">
+                            <button class="magic-button" onclick="testStartMagicalJourney()">
+                                <div class="button-content">
+                                    <span class="main-text">✨ 내 운명 확인하기</span>
+                                    <span class="sub-text">3분이면 충분해요</span>
+                                </div>
+                            </button>
+                            
+                            <button class="text-button" onclick="testShowMBTISelect()">
+                                이미 MBTI를 알고 있어요 →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MBTI 선택 화면 -->
+        <div id="quickSelectScreen" class="screen">
+            <div class="container">
+                <div class="quick-select-header">
+                    <h2>너의 MBTI는 뭐야?</h2>
+                    <p>이미 알고 있다면 선택해줘</p>
+                </div>
+                
+                <div class="mbti-grid-v2">
+                    <div class="mbti-group">
+                        <div class="group-title">분석가형</div>
+                        <div class="mbti-options">
+                            <button class="mbti-btn" onclick="testSelectMBTI('INTJ')">INTJ</button>
+                            <button class="mbti-btn" onclick="testSelectMBTI('INTP')">INTP</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <button onclick="testGoBack()" class="back-button">← 처음으로</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 이름 입력 화면 -->
+        <div id="nameScreen" class="screen">
+            <div class="container">
+                <div class="input-section">
+                    <h2 class="section-title">이름을 입력해주세요</h2>
+                    <div class="name-input-container">
+                        <input type="text" id="userName" placeholder="홍길동" class="name-input">
+                        <button onclick="testSubmitName()" class="submit-btn">운세 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="performance.js"></script>
+    
+    <!-- 간단한 테스트 스크립트 -->
+    <script>
+        console.log('🔍 디버그 테스트 시작');
+        
+        // 기본 앱 상태
+        const app = {
+            currentScreen: 'loading',
+            userName: '',
+            mbtiType: '',
+            skipTest: false
+        };
+
+        // 화면 전환 함수
+        function showScreen(screenId) {
+            console.log(`화면 전환: ${app.currentScreen} → ${screenId}`);
+            
+            // 모든 화면 숨기기
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+                screen.style.display = 'none';
+            });
+            
+            // 타겟 화면 보이기
+            const targetScreen = document.getElementById(screenId + 'Screen');
+            if (targetScreen) {
+                targetScreen.style.display = 'block';
+                targetScreen.classList.add('active');
+                app.currentScreen = screenId;
+                console.log(`✅ ${screenId} 화면 활성화`);
+            } else {
+                console.error(`❌ ${screenId}Screen 요소를 찾을 수 없음`);
+            }
+        }
+
+        // 테스트 함수들
+        function testStartMagicalJourney() {
+            console.log('✨ Magic 버튼 클릭!');
+            showScreen('name');
+        }
+
+        function testShowMBTISelect() {
+            console.log('⚡ MBTI 직접 선택 클릭!');
+            showScreen('quickSelect');
+        }
+
+        function testSelectMBTI(type) {
+            console.log(`MBTI 선택: ${type}`);
+            app.mbtiType = type;
+            app.skipTest = true;
+            showScreen('name');
+        }
+
+        function testGoBack() {
+            console.log('← 처음으로 버튼 클릭!');
+            showScreen('start');
+        }
+
+        function testSubmitName() {
+            const nameInput = document.getElementById('userName');
+            const name = nameInput.value.trim();
+            
+            if (name.length > 0) {
+                app.userName = name;
+                console.log(`이름 입력: ${name}`);
+                
+                if (app.skipTest && app.mbtiType) {
+                    console.log('✅ 빠른 경로: MBTI 선택됨, 결과로 이동');
+                    alert(`${name}님의 ${app.mbtiType} 운세를 보여드릴 예정입니다!`);
+                } else {
+                    console.log('✅ 일반 경로: 테스트 시작');
+                    alert(`${name}님, 테스트를 시작할 예정입니다!`);
+                }
+            } else {
+                alert('이름을 입력해주세요.');
+            }
+        }
+
+        // 2초 후 시작 화면으로 이동
+        setTimeout(() => {
+            console.log('⚡ 로딩 완료, 시작 화면으로 전환');
+            showScreen('start');
+        }, 2000);
+    </script>
+</body>
+</html>
