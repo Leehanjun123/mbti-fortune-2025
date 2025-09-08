@@ -625,15 +625,15 @@
                 // 결과 화면 표시
                 showScreen('resultScreen');
                 
-                // 결과 화면에서 모든 광고 재렌더링
+                // 결과 화면에서 광고 재렌더링 (긴 대기 시간)
                 setTimeout(() => {
-                    console.log('결과 화면 광고 렌더링 시도');
-                    // 기존 렌더링 상태 초기화 후 전체 재렌더링
+                    console.log('🎯 결과 화면 광고 렌더링 시도');
+                    // 기존 렌더링 상태 초기화
                     document.querySelectorAll('.kakao_ad_area').forEach(area => {
                         area.removeAttribute('data-rendered');
                     });
-                    renderAds(false);
-                }, 1000);
+                    renderAds();
+                }, 3000);
             }, 2000);
         }
         
@@ -682,11 +682,16 @@
             alert('프리미엄 기능은 준비 중입니다!');
         }
         
-        // 광고 렌더링 - 상단 광고와 동일한 방식
+        // 광고 렌더링 - 디버깅 강화
         function renderAds() {
+            console.log('=== 광고 렌더링 시작 ===');
+            console.log('현재 도메인:', window.location.hostname);
+            console.log('adsbykakao 객체:', typeof window.adsbykakao);
+            
             // adsbykakao 객체 확인
             if (!window.adsbykakao) {
                 window.adsbykakao = [];
+                console.log('⚠️ adsbykakao 객체 생성함');
             }
             
             try {
@@ -695,20 +700,41 @@
                 console.log(`광고 영역 ${adAreas.length}개 발견`);
                 
                 adAreas.forEach((area, index) => {
+                    const adUnit = area.getAttribute('data-ad-unit');
+                    const isVisible = area.offsetParent !== null;
+                    const isRendered = area.getAttribute('data-rendered');
+                    
+                    console.log(`광고 ${index + 1} 상태:`, {
+                        adUnit: adUnit,
+                        visible: isVisible,
+                        rendered: isRendered,
+                        width: area.offsetWidth,
+                        height: area.offsetHeight
+                    });
+                    
                     // 이미 렌더링된 광고는 건너뛰기
-                    if (!area.getAttribute('data-rendered')) {
-                        const adUnit = area.getAttribute('data-ad-unit');
-                        console.log(`광고 ${index + 1} 렌더링: ${adUnit}`);
+                    if (!isRendered) {
+                        console.log(`➡️ 광고 ${index + 1} 렌더링 시도: ${adUnit}`);
                         
                         // adsbykakao에 push
                         window.adsbykakao.push({});
                         area.setAttribute('data-rendered', 'true');
+                        
+                        // 2초 후 렌더링 결과 확인
+                        setTimeout(() => {
+                            const hasContent = area.children.length > 0 || area.innerHTML.trim().length > 0;
+                            console.log(`광고 ${index + 1} 렌더링 결과:`, {
+                                adUnit: adUnit,
+                                hasContent: hasContent,
+                                innerHTML: area.innerHTML.substring(0, 100) + '...'
+                            });
+                        }, 2000);
                     }
                 });
                 
-                console.log('adsbykakao.push 완료:', window.adsbykakao.length);
+                console.log('adsbykakao.push 완료, 총 길이:', window.adsbykakao.length);
             } catch(e) {
-                console.log('광고 렌더링 오류:', e);
+                console.error('❌ 광고 렌더링 오류:', e);
             }
         }
         
@@ -722,11 +748,11 @@
                 console.log('adsbykakao 객체 생성됨');
             }
             
-            // 초기 광고 렌더링
+            // 초기 광고 렌더링 (더 긴 대기 시간)
             setTimeout(() => {
-                console.log('초기 광고 렌더링 시도');
+                console.log('🚀 초기 광고 렌더링 시도');
                 renderAds();
-            }, 1000);
+            }, 2000);
         });
         
         // 전체 페이지 로드 완료 후
