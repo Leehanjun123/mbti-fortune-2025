@@ -1,5 +1,5 @@
-// Service Worker - v2.1.0
-const CACHE_NAME = 'mbti-fortune-v2.1.0';
+// Service Worker - v2.2.0
+const CACHE_NAME = 'mbti-fortune-v2.2.0';
 const RUNTIME_CACHE = 'runtime-cache';
 
 // 캐시할 정적 자원들
@@ -7,11 +7,19 @@ const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/styles.css',
+  '/mobile-fix.css',
+  '/simple-fix.css',
+  '/emergency-fix.css',
+  '/result-redesign.css',
+  '/bottom-redesign.css',
   '/script.js',
   '/config.js',
   '/analytics.js',
-  '/manifest.json',
-  'https://fonts.googleapis.com/css2?family=Pretendard:wght@400;600;800;900&display=swap'
+  '/viral.js',
+  '/monetization.js',
+  '/performance.js',
+  '/manifest.json'
+  // Google Fonts는 CORS 때문에 제외 (런타임에 캐시)
 ];
 
 // 캐시 우선순위 전략
@@ -68,6 +76,22 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const { request } = event;
   const url = new URL(request.url);
+  
+  // 외부 도메인 요청은 네트워크로 직접 전달
+  if (!url.origin.includes('localhost') && !url.origin.includes('mbti-destiny.site')) {
+    // Google Fonts, 카카오 등 외부 리소스는 no-cors 모드로
+    if (url.origin.includes('fonts.googleapis.com') || url.origin.includes('fonts.gstatic.com')) {
+      event.respondWith(
+        fetch(request, { mode: 'cors' }).catch(() => {
+          console.log('[SW] External font failed, continuing without cache');
+          return new Response('', { status: 200 });
+        })
+      );
+      return;
+    }
+    // 다른 외부 리소스는 그냥 통과
+    return;
+  }
   
   // 캐시 전략 결정
   if (isMatch(url, CACHE_STRATEGIES.cacheFirst)) {

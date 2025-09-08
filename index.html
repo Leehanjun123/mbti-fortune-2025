@@ -99,6 +99,12 @@
                     const adAreas = document.querySelectorAll('.kakao_ad_area');
                     if (adAreas.length > 0) {
                         console.log(`카카오 애드핏 광고 ${adAreas.length}개 렌더링 시작`);
+                        
+                        // 광고 영역 표시 (display:none 제거)
+                        adAreas.forEach(ad => {
+                            ad.style.display = 'block';
+                        });
+                        
                         // kakaoAdFit 초기화 및 렌더링
                         if (typeof kakaoAdFit !== 'undefined') {
                             kakaoAdFit.render();
