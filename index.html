@@ -384,10 +384,13 @@
     
     <!-- Kakao AdFit - 지연 로딩 -->
     <script>
-        // 도메인 확인 - 리다이렉트 대신 경고 표시
-        if (window.location.hostname === 'www.mbti-destiny.site') {
-            console.warn('⚠️ www 서브도메인에서 실행 중 - 광고가 제대로 표시되지 않을 수 있습니다');
-            console.log('✅ 정상 작동을 위해서는 https://mbti-destiny.site 로 접속하세요');
+        // 임시 강제 리다이렉트 (DNS 전파 완료까지)
+        if (window.location.hostname === 'www.mbti-destiny.site' && !sessionStorage.getItem('redirected')) {
+            sessionStorage.setItem('redirected', 'true');
+            console.log('🔄 강제 리다이렉트 실행');
+            setTimeout(() => {
+                window.location.href = 'https://mbti-destiny.site' + window.location.pathname + window.location.search;
+            }, 100);
         }
         
         // adsbykakao 객체 초기화
