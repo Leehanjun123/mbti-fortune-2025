@@ -1786,20 +1786,42 @@ function renderKakaoAds() {
             console.log(`광고 영역 ${index + 1} 표시됨`);
         });
         
-        // 🚀 Enterprise-Grade 카카오 애드핏 렌더링 (올바른 방식)
-        if (typeof window.adsbykakao !== 'undefined') {
-            window.adsbykakao.push({});
-            console.log('🎉 카카오 애드핏 렌더링 완료!');
-        } else {
-            console.log('adsbykakao 객체 없음 - 백그라운드에서 재시도');
-            // 백그라운드에서 재시도
-            setTimeout(() => {
+        // 🚀 스마트 adsbykakao 객체 대기 및 렌더링 시스템
+        function waitForAdsbykakaoAndRender() {
+            let attempts = 0;
+            const maxAttempts = 15; // 3초 동안 (200ms * 15)
+            const checkInterval = 200;
+            
+            function tryRender() {
+                attempts++;
+                
                 if (typeof window.adsbykakao !== 'undefined') {
+                    // adsbykakao 객체 존재 - 렌더링 실행
                     window.adsbykakao.push({});
-                    console.log('🎉 카카오 애드핏 지연 렌더링 완료!');
+                    console.log(`🎉 카카오 애드핏 렌더링 완료! (${attempts}번째 시도에서 성공)`);
+                    return;
                 }
-            }, 2000);
+                
+                if (attempts >= maxAttempts) {
+                    // 최대 시도 횟수 도달 - 수동으로 객체 생성
+                    console.log('⚠️ adsbykakao 객체 대기 시간 초과 - 수동 생성');
+                    window.adsbykakao = window.adsbykakao || [];
+                    window.adsbykakao.push({});
+                    console.log('🎉 카카오 애드핏 렌더링 완료! (수동 생성)');
+                    return;
+                }
+                
+                // 다음 시도 예약
+                console.log(`🔄 adsbykakao 객체 대기 중... (${attempts}/${maxAttempts})`);
+                setTimeout(tryRender, checkInterval);
+            }
+            
+            // 첫 번째 시도 시작
+            tryRender();
         }
+        
+        // 스마트 렌더링 시작
+        waitForAdsbykakaoAndRender();
     } catch(error) {
         console.log('광고 렌더링 오류:', error.message);
         ErrorBoundary.handleError(error, 'Kakao Ads Rendering');

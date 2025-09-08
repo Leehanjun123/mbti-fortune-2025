@@ -118,6 +118,14 @@
                     console.log('✅ 광고 스크립트 로딩 성공!');
                     window.adLoadState.loaded = true;
                     
+                    // adsbykakao 객체 강제 초기화 (안전장치)
+                    setTimeout(() => {
+                        if (typeof window.adsbykakao === 'undefined') {
+                            console.log('🔧 adsbykakao 객체 수동 초기화');
+                            window.adsbykakao = [];
+                        }
+                    }, 100);
+                    
                     try {
                         // 광고 렌더링
                         const adAreas = document.querySelectorAll('.kakao_ad_area');
