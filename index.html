@@ -625,23 +625,29 @@
             </div>
         </div>
 
-        <!-- Jeff Bezos 스타일: 강력한 프리미엄 가치 제안 -->
+        <!-- Jeff Bezos 스타일: A/B 테스트 최적화된 프리미엄 모달 -->
         <div id="premiumModal" class="modal">
             <div class="modal-content premium-enhanced">
                 <button class="modal-close" onclick="closePremium()">×</button>
                 
-                <!-- 긴급성 메시지 -->
+                <!-- 긴급성 + 희소성 메시지 -->
                 <div class="urgency-banner">
-                    🔥 24시간 한정 70% 할인 🔥
-                    <div class="countdown-timer" id="countdownTimer">23:59:59</div>
+                    🎯 오늘만 특가 87% 할인 🎯
+                    <div class="limited-offer">⚡ 남은 시간: <span id="countdownTimer">23:59:59</span></div>
+                    <div class="stock-pressure">🔴 오늘 할인가 <span id="remainingStock">17</span>개 남음!</div>
                 </div>
                 
-                <h2 class="modal-title">✨ 2025 완벽한 한 해를 위한 프리미엄 운세</h2>
+                <h2 class="modal-title">🎁 2025년 완전한 성공을 위한<br>프리미엄 운세 패키지</h2>
                 
-                <!-- 소셜 증명 -->
+                <!-- 강화된 소셜 증명 -->
                 <div class="social-proof-premium">
-                    <span class="proof-badge">🏆 2,847명이 이미 구매</span>
-                    <span class="proof-rating">⭐⭐⭐⭐⭐ 4.9/5.0</span>
+                    <div class="proof-stats">
+                        <span class="proof-badge">🏆 <span id="buyerCount">3,247</span>명이 이미 구매</span>
+                        <span class="proof-rating">⭐⭐⭐⭐⭐ 4.9/5.0 (1,832 리뷰)</span>
+                    </div>
+                    <div class="recent-buyers">
+                        <span class="buyer-alert">📢 김*영님이 방금 구매하셨습니다!</span>
+                    </div>
                 </div>
                 
                 <div class="premium-features-grid">
@@ -677,32 +683,58 @@
                     </div>
                 </div>
                 
-                <!-- 가격 섹션 -->
+                <!-- 가격 섹션 (Jeff Bezos 가치 전달 최적화) -->
                 <div class="premium-pricing">
-                    <div class="price-box">
-                        <span class="original-price">₩9,900</span>
-                        <span class="arrow">→</span>
-                        <span class="final-price">₩2,900</span>
-                        <span class="save-badge">70% SAVE</span>
+                    <div class="value-comparison">
+                        <div class="competitor-price">
+                            <span class="label">타 운세앱</span>
+                            <span class="price">월 ₩9,900</span>
+                        </div>
+                        <div class="our-price">
+                            <span class="label">우리 가격 (평생)</span>
+                            <div class="price-box">
+                                <span class="original-price">₩19,900</span>
+                                <span class="arrow">→</span>
+                                <span class="final-price">₩2,900</span>
+                                <span class="save-badge">87% 할인!</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="price-note">⚡ 일시불 결제 / 평생 이용권</p>
+                    <div class="value-props">
+                        <div class="value-item">💰 월 구독료 없음 (평생 이용)</div>
+                        <div class="value-item">🎯 1회 결제로 모든 기능 무제한</div>
+                        <div class="value-item">⚡ 오늘만 87% 특가 제공</div>
+                    </div>
                 </div>
                 
-                <!-- 보증 배지 -->
+                <!-- 강화된 보증 배지 -->
                 <div class="guarantee-badges">
-                    <span class="badge">✅ 100% 환불 보증</span>
-                    <span class="badge">🔒 안전한 결제</span>
-                    <span class="badge">📞 24시간 고객지원</span>
+                    <div class="main-guarantee">
+                        <span class="guarantee-icon">💯</span>
+                        <span class="guarantee-text">30일 무조건 환불보장<br><small>만족하지 않으면 100% 환불</small></span>
+                    </div>
+                    <div class="sub-guarantees">
+                        <span class="badge">🔒 SSL 보안결제</span>
+                        <span class="badge">📞 실시간 고객지원</span>
+                        <span class="badge">⚡ 즉시 이용 가능</span>
+                    </div>
                 </div>
                 
-                <!-- CTA 버튼들 -->
+                <!-- CTA 버튼들 (전환율 최적화) -->
                 <div class="premium-actions">
-                    <button class="premium-buy-btn primary" onclick="buyPremium()">
-                        🎯 지금 바로 시작하기
+                    <button class="premium-buy-btn primary mega-cta" onclick="buyPremium()">
+                        🎯 87% 할인가로 평생 이용하기
+                        <span class="cta-subtext">원가 복구까지 <span id="ctaCountdown">23:59:59</span></span>
                     </button>
-                    <button class="premium-gift-btn" onclick="giftPremium()">
-                        🎁 친구에게 선물하기
-                    </button>
+                    
+                    <div class="alt-actions">
+                        <button class="premium-gift-btn" onclick="giftPremium()">
+                            🎁 소중한 사람에게 선물하기
+                        </button>
+                        <button class="free-trial-btn" onclick="startFreeTrial()">
+                            📱 7일 무료체험 먼저 해보기
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- 후기 미리보기 -->

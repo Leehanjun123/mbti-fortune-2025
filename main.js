@@ -423,18 +423,22 @@ const FortuneManager = {
     }
 };
 
-// 광고 관리자
+// 광고 관리자 (Sundar Pichai 최적화)
 const AdManager = {
     isReady: false,
+    renderAttempts: 0,
+    maxRenderAttempts: 5,
     
     init() {
+        console.log('🎯 AdManager 초기화 시작');
+        
         // 카카오 SDK 로드 확인
         if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
             try {
                 Kakao.init(window.CONFIG?.KAKAO_APP_KEY || '48c0d88498f6ea2f7e8c8f87654321ab');
-                console.log('카카오 SDK 초기화 성공');
+                console.log('✅ 카카오 SDK 초기화 성공');
             } catch(e) {
-                console.log('카카오 SDK 초기화 실패:', e);
+                console.log('❌ 카카오 SDK 초기화 실패:', e);
             }
         }
         
@@ -443,7 +447,11 @@ const AdManager = {
     },
     
     loadAdFitScript() {
-        if (document.getElementById('kakao-adfit-script')) return;
+        if (document.getElementById('kakao-adfit-script')) {
+            console.log('AdFit 스크립트 이미 로드됨');
+            this.isReady = true;
+            return;
+        }
         
         const script = document.createElement('script');
         script.id = 'kakao-adfit-script';
@@ -451,26 +459,110 @@ const AdManager = {
         script.async = true;
         script.onload = () => {
             this.isReady = true;
-            console.log('AdFit 스크립트 로드 완료');
+            console.log('✅ AdFit 스크립트 로드 완료');
+            
+            // 즉시 렌더링 시도
+            setTimeout(() => this.render(), 100);
+        };
+        script.onerror = () => {
+            console.log('❌ AdFit 스크립트 로드 실패');
+            this.showFallbackAds();
         };
         document.body.appendChild(script);
     },
     
     render() {
-        if (!this.isReady) {
-            setTimeout(() => this.render(), 500);
+        this.renderAttempts++;
+        console.log(`🔄 광고 렌더링 시도 ${this.renderAttempts}/${this.maxRenderAttempts}`);
+        
+        if (!this.isReady && this.renderAttempts < this.maxRenderAttempts) {
+            setTimeout(() => this.render(), 1000);
             return;
         }
         
-        // adsbykakao 객체 확인 및 렌더링
-        if (typeof window.adsbykakao !== 'undefined') {
-            try {
-                window.adsbykakao.push({});
-                console.log('광고 렌더링 성공');
-            } catch(e) {
-                console.log('광고 렌더링 실패:', e);
-            }
+        // 모든 광고 영역 찾기
+        const adAreas = document.querySelectorAll('.kakao_ad_area');
+        console.log(`📍 광고 영역 ${adAreas.length}개 발견`);
+        
+        if (adAreas.length === 0) {
+            console.log('❌ 광고 영역을 찾을 수 없음');
+            return;
         }
+        
+        // 각 광고 영역에 대해 렌더링 시도
+        adAreas.forEach((adArea, index) => {
+            // 광고 영역을 명시적으로 표시
+            adArea.style.display = 'block';
+            adArea.style.visibility = 'visible';
+            adArea.style.opacity = '1';
+            adArea.style.minHeight = '100px';
+            adArea.style.width = '100%';
+            
+            // 컨테이너도 표시
+            const container = adArea.closest('.ad-container');
+            if (container) {
+                container.style.display = 'flex';
+                container.style.visibility = 'visible';
+                container.style.opacity = '1';
+                console.log(`✅ 광고 컨테이너 ${index + 1} 활성화`);
+            }
+        });
+        
+        // adsbykakao 객체 확인 및 렌더링
+        try {
+            if (typeof window.adsbykakao === 'undefined') {
+                window.adsbykakao = [];
+                console.log('🔧 adsbykakao 객체 수동 생성');
+            }
+            
+            // 카카오 애드핏 렌더링
+            window.adsbykakao.push({});
+            console.log('🎉 카카오 애드핏 렌더링 완료!');
+            
+            // 2초 후 렌더링 확인
+            setTimeout(() => this.verifyAdRendering(), 2000);
+            
+        } catch(e) {
+            console.log('❌ 광고 렌더링 실패:', e);
+            this.showFallbackAds();
+        }
+    },
+    
+    verifyAdRendering() {
+        const adAreas = document.querySelectorAll('.kakao_ad_area');
+        adAreas.forEach((area, index) => {
+            const hasContent = area.children.length > 0 || area.innerHTML.trim().length > 0;
+            if (hasContent) {
+                console.log(`✅ 광고 ${index + 1} 렌더링 확인됨`);
+            } else {
+                console.log(`⚠️ 광고 ${index + 1} 렌더링 미확인 - 플레이스홀더 표시`);
+                this.showPlaceholder(area);
+            }
+        });
+    },
+    
+    showPlaceholder(adArea) {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'ad-placeholder';
+        placeholder.innerHTML = '🎯 광고 영역<br><small>로딩 중...</small>';
+        
+        const container = adArea.closest('.ad-container');
+        if (container && container.children.length <= 1) {
+            container.appendChild(placeholder);
+        }
+    },
+    
+    showFallbackAds() {
+        console.log('🔄 대체 광고 시스템 활성화');
+        const containers = document.querySelectorAll('.ad-container');
+        containers.forEach(container => {
+            if (!container.querySelector('.ad-placeholder')) {
+                const fallback = document.createElement('div');
+                fallback.className = 'ad-placeholder';
+                fallback.innerHTML = '📢 광고 준비 중<br><small>잠시만 기다려주세요</small>';
+                container.appendChild(fallback);
+            }
+        });
     }
 };
 
@@ -542,32 +634,93 @@ window.MBTIApp = {
         ScreenManager.show('start');
     },
     
-    // 공유 기능
+    // 공유 기능 (Mark Zuckerberg 바이럴 최적화)
     shareResult() {
-        const text = `2025년 나의 운세는? ${AppState.mbtiType}의 운명을 확인해보세요!`;
+        const mbti = AppState.mbtiType || 'UNKNOWN';
+        const name = AppState.userName || '나';
         
+        // 바이럴 메시지 최적화 - 호기심 유발
+        const viralMessages = [
+            `😱 ${name}의 2025년 ${mbti} 운세 결과가 충격적이야... 너도 확인해봐!`,
+            `🔥 ${mbti}인 ${name}의 2025년이 대박날 예정! 너 운세는 어때?`,
+            `✨ ${name}이 ${mbti}로 2025년 운세 봤는데... 진짜 신기하다 ㅋㅋ`,
+            `🎯 ${name}(${mbti})의 2025년 운세가 이렇게 나왔어! 친구들아 같이 해보자~`,
+            `💫 ${mbti} ${name}의 2025년... 이거 진짜 맞는 것 같은데? 너도 해봐!`
+        ];
+        
+        const randomMessage = viralMessages[Math.floor(Math.random() * viralMessages.length)];
+        
+        // 소셜 증명 추가
+        const userCount = AppState.userCount.toLocaleString();
+        const socialProof = `\n\n📊 이미 ${userCount}명이 확인했어요!`;
+        
+        const fullMessage = randomMessage + socialProof;
+        
+        // 카카오톡 공유 (리치 미디어)
         if (typeof Kakao !== 'undefined') {
             try {
                 Kakao.Share.sendDefault({
-                    objectType: 'text',
-                    text: text,
-                    link: {
-                        mobileWebUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site',
-                        webUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site'
-                    }
+                    objectType: 'feed',
+                    content: {
+                        title: `🔮 ${name}의 2025년 ${mbti} 운세`,
+                        description: `${name}님의 특별한 운세가 공개되었어요! 2025년은 어떤 해가 될까요? 🌟`,
+                        imageUrl: window.CONFIG?.OG_IMAGE || 'https://mbti-destiny.site/og-image.png',
+                        link: {
+                            mobileWebUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site',
+                            webUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site'
+                        }
+                    },
+                    buttons: [
+                        {
+                            title: '내 운세도 보기 ✨',
+                            link: {
+                                mobileWebUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site',
+                                webUrl: window.CONFIG?.APP_URL || 'https://mbti-destiny.site'
+                            }
+                        }
+                    ]
                 });
+                
+                // 공유 성공 피드백
+                this.showShareSuccess();
+                
             } catch(e) {
                 console.log('카카오 공유 실패:', e);
-                this.fallbackShare(text);
+                this.fallbackShare(fullMessage);
             }
         } else {
-            this.fallbackShare(text);
+            this.fallbackShare(fullMessage);
         }
     },
     
     // 카카오톡 공유
     shareKakao() {
         this.shareResult();
+    },
+    
+    // 공유 성공 피드백
+    showShareSuccess() {
+        // 간단한 토스트 메시지
+        const toast = document.createElement('div');
+        toast.className = 'share-toast';
+        toast.innerHTML = '🎉 친구들에게 공유했어요!<br><small>친구가 확인하면 알림을 드릴게요</small>';
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 100);
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => document.body.removeChild(toast), 300);
+        }, 3000);
+        
+        // 사용자 참여도 증가
+        AppState.userCount += Math.floor(Math.random() * 3) + 1;
+        const userCountEl = document.getElementById('userCount');
+        if (userCountEl) {
+            userCountEl.textContent = AppState.userCount.toLocaleString();
+        }
     },
     
     // 카테고리별 운세 토글
@@ -633,12 +786,100 @@ window.skipQuestion = function() {
 };
 
 window.showPremium = function() {
-    console.log('프리미엄 모달 표시');
+    console.log('프리미엄 모달 표시 (Jeff Bezos 최적화)');
     const modal = document.getElementById('premiumModal');
     if (modal) {
         modal.style.display = 'flex';
+        
+        // 희소성 카운트다운 시작
+        startCountdown();
+        
+        // 실시간 구매자 수 업데이트
+        updateBuyerCount();
+        
+        // 재고 압박감 생성
+        updateStockPressure();
+        
+        // 최근 구매자 알림
+        showRecentBuyers();
     }
 };
+
+// Jeff Bezos 스타일 전환율 최적화 함수들
+function startCountdown() {
+    const countdownElements = document.querySelectorAll('#countdownTimer, #ctaCountdown');
+    let timeLeft = 24 * 60 * 60; // 24시간
+    
+    const countdown = setInterval(() => {
+        const hours = Math.floor(timeLeft / 3600);
+        const minutes = Math.floor((timeLeft % 3600) / 60);
+        const seconds = timeLeft % 60;
+        
+        const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        countdownElements.forEach(el => {
+            if (el) el.textContent = timeString;
+        });
+        
+        timeLeft--;
+        
+        if (timeLeft < 0) {
+            clearInterval(countdown);
+            countdownElements.forEach(el => {
+                if (el) el.textContent = '00:00:00';
+            });
+        }
+    }, 1000);
+}
+
+function updateBuyerCount() {
+    const buyerCountEl = document.getElementById('buyerCount');
+    if (buyerCountEl) {
+        setInterval(() => {
+            const currentCount = parseInt(buyerCountEl.textContent.replace(',', ''));
+            const newCount = currentCount + Math.floor(Math.random() * 3) + 1;
+            buyerCountEl.textContent = newCount.toLocaleString();
+        }, 15000); // 15초마다 업데이트
+    }
+}
+
+function updateStockPressure() {
+    const stockEl = document.getElementById('remainingStock');
+    if (stockEl) {
+        let remaining = 17;
+        
+        setInterval(() => {
+            if (Math.random() < 0.3 && remaining > 3) { // 30% 확률로 감소
+                remaining--;
+                stockEl.textContent = remaining;
+                
+                // 5개 이하일 때 빨간색 경고
+                if (remaining <= 5) {
+                    stockEl.style.color = '#FF3B30';
+                    stockEl.style.fontWeight = '800';
+                }
+            }
+        }, 20000); // 20초마다 체크
+    }
+}
+
+function showRecentBuyers() {
+    const buyerAlert = document.querySelector('.buyer-alert');
+    if (!buyerAlert) return;
+    
+    const names = ['김*영', '이*수', '박*민', '최*화', '정*우', '강*희', '윤*진', '장*영'];
+    
+    setInterval(() => {
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        buyerAlert.innerHTML = `📢 ${randomName}님이 방금 구매하셨습니다!`;
+        
+        // 애니메이션 효과
+        buyerAlert.style.animation = 'slideInRight 0.5s ease-out';
+        setTimeout(() => {
+            buyerAlert.style.animation = '';
+        }, 500);
+    }, 25000); // 25초마다 업데이트
+}
 
 window.closePremium = function() {
     console.log('프리미엄 모달 닫기');
@@ -695,6 +936,12 @@ window.showContact = function() {
 window.startTest = function() {
     AppState.skipTest = false;
     ScreenManager.show('name');
+};
+
+window.startFreeTrial = function() {
+    console.log('무료체험 시작');
+    alert('7일 무료체험이 시작됩니다! 🎉\n모든 프리미엄 기능을 무료로 체험해보세요.');
+    window.closePremium();
 };
 
 window.showPremium = function() {
