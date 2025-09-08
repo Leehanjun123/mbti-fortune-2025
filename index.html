@@ -357,7 +357,11 @@
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
     
     <!-- Kakao AdFit -->
-    <script src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script>
+        // adsbykakao 객체 초기화
+        window.adsbykakao = window.adsbykakao || [];
+    </script>
 </head>
 <body>
     <div class="app">
@@ -662,68 +666,65 @@
         
         // 광고 렌더링
         function renderAds() {
-            // 카카오 애드핏 렌더링
-            if (typeof window.adsbykakao !== 'undefined') {
-                try {
-                    // 모든 광고 영역에 대해 push 실행
-                    const adAreas = document.querySelectorAll('.kakao_ad_area');
-                    console.log(`광고 영역 ${adAreas.length}개 발견`);
-                    
-                    adAreas.forEach((area, index) => {
-                        // 이미 렌더링된 광고는 건너뛰기
-                        if (!area.getAttribute('data-rendered')) {
-                            console.log(`광고 ${index + 1} 렌더링 시도: ${area.getAttribute('data-ad-unit')}`);
-                            window.adsbykakao.push({});
-                            area.setAttribute('data-rendered', 'true');
-                        }
-                    });
-                    
-                    // 광고 플레이스홀더 숨기기
-                    const placeholders = document.querySelectorAll('.ad-placeholder');
-                    placeholders.forEach(p => p.style.display = 'none');
-                } catch(e) {
-                    // 429 에러는 정상적인 rate limiting이므로 무시
-                    if (!e.message?.includes('429')) {
-                        console.log('광고 렌더링 오류:', e);
+            // adsbykakao 객체 확인
+            if (!window.adsbykakao) {
+                window.adsbykakao = [];
+            }
+            
+            try {
+                // 모든 광고 영역에 대해 push 실행
+                const adAreas = document.querySelectorAll('.kakao_ad_area');
+                console.log(`광고 영역 ${adAreas.length}개 발견`);
+                
+                adAreas.forEach((area, index) => {
+                    // 이미 렌더링된 광고는 건너뛰기
+                    if (!area.getAttribute('data-rendered')) {
+                        const adUnit = area.getAttribute('data-ad-unit');
+                        console.log(`광고 ${index + 1} 렌더링: ${adUnit}`);
+                        
+                        // adsbykakao에 push
+                        window.adsbykakao.push({});
+                        area.setAttribute('data-rendered', 'true');
                     }
-                }
-            } else {
-                console.log('adsbykakao 객체가 아직 준비되지 않음');
+                });
+                
+                // 광고 플레이스홀더 숨기기
+                const placeholders = document.querySelectorAll('.ad-placeholder');
+                placeholders.forEach(p => p.style.display = 'none');
+                
+                console.log('adsbykakao.push 완료:', window.adsbykakao.length);
+            } catch(e) {
+                console.log('광고 렌더링 오류:', e);
             }
         }
         
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
             console.log('DOM 로드 완료');
-            // 초기 광고 렌더링 시도
+            
+            // adsbykakao 객체 강제 생성
+            if (!window.adsbykakao) {
+                window.adsbykakao = [];
+                console.log('adsbykakao 객체 생성됨');
+            }
+            
+            // 초기 광고 렌더링
             setTimeout(() => {
                 console.log('초기 광고 렌더링 시도');
                 renderAds();
-            }, 1000);
+            }, 500);
         });
         
         // 전체 페이지 로드 완료 후
         window.addEventListener('load', function() {
             console.log('페이지 로드 완료');
+            
+            // 추가 렌더링 시도
             setTimeout(() => {
                 console.log('추가 광고 렌더링 시도');
                 renderAds();
             }, 2000);
         });
-        
-        // adsbykakao 객체 감지
-        let checkCount = 0;
-        const checkAds = setInterval(() => {
-            checkCount++;
-            if (window.adsbykakao) {
-                console.log('adsbykakao 객체 발견!');
-                clearInterval(checkAds);
-                renderAds();
-            } else if (checkCount > 10) {
-                console.log('adsbykakao 객체를 찾을 수 없음');
-                clearInterval(checkAds);
-            }
-        }, 500);
     </script>
 </body>
 </html>
