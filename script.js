@@ -339,24 +339,23 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initApp() {
-    // 로딩 화면 표시 및 자동 전환
-    const loadingScreen = document.getElementById('loadingScreen');
-    const startScreen = document.getElementById('startScreen');
+    console.log('앱 초기화 시작');
     
-    // 로딩 화면 활성화
-    if (loadingScreen) {
-        loadingScreen.style.display = 'flex';
-        loadingScreen.classList.add('active');
-    }
-    
+    // 로딩 화면은 이미 표시되어 있음 (HTML에서)
     // 2초 후 시작 화면으로 전환
     setTimeout(() => {
+        console.log('로딩 완료, 시작 화면으로 전환');
+        
+        // 로딩 화면 숨기기
+        const loadingScreen = document.getElementById('loadingScreen');
         if (loadingScreen) {
-            loadingScreen.style.display = 'none';
-            loadingScreen.classList.remove('active');
+            loadingScreen.classList.add('hidden');
         }
+        
+        // 시작 화면 표시
+        const startScreen = document.getElementById('startScreen');
         if (startScreen) {
-            startScreen.style.display = 'block';
+            startScreen.style.display = 'flex';
             startScreen.classList.add('active');
         }
     }, 2000);
