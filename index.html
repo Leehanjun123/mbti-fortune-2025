@@ -352,6 +352,9 @@
     <!-- 카카오 SDK -->
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    
+    <!-- Kakao AdFit -->
+    <script src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </head>
 <body>
     <div class="app">
@@ -597,8 +600,11 @@
                 // 결과 화면 표시
                 showScreen('resultScreen');
                 
-                // 광고 렌더링 시도
-                renderAds();
+                // 결과 화면에서 광고 다시 렌더링
+                setTimeout(() => {
+                    adsRendered = false;  // 리셋하여 다시 렌더링 가능하게
+                    renderAds();
+                }, 500);
             }, 2000);
         }
         
@@ -648,18 +654,24 @@
         }
         
         // 광고 렌더링
+        let adsRendered = false;
         function renderAds() {
             // 카카오 애드핏 렌더링 - 모든 광고 영역
-            if (typeof window.adsbykakao !== 'undefined') {
+            if (typeof window.adsbykakao !== 'undefined' && !adsRendered) {
                 try {
                     // 각 광고 영역마다 push
-                    const adCount = document.querySelectorAll('.kakao_ad_area').length;
-                    for(let i = 0; i < adCount; i++) {
-                        window.adsbykakao.push({});
-                    }
+                    const adAreas = document.querySelectorAll('.kakao_ad_area');
+                    adAreas.forEach(area => {
+                        // 이미 렌더링된 광고는 건너뛰기
+                        if (!area.getAttribute('data-rendered')) {
+                            window.adsbykakao.push({});
+                            area.setAttribute('data-rendered', 'true');
+                        }
+                    });
                     // 광고 플레이스홀더 숨기기
                     const placeholders = document.querySelectorAll('.ad-placeholder');
                     placeholders.forEach(p => p.style.display = 'none');
+                    adsRendered = true;
                 } catch(e) {
                     // 429 에러는 정상적인 rate limiting이므로 무시
                     if (!e.message?.includes('429')) {
@@ -671,12 +683,18 @@
         
         // 페이지 로드 시 초기화
         window.addEventListener('DOMContentLoaded', function() {
-            // 카카오 애드핏 스크립트 로드
-            const script = document.createElement('script');
-            script.src = '//t1.daumcdn.net/kas/static/ba.min.js';
-            script.async = true;
-            script.onerror = () => console.log('광고 스크립트 로드 실패 - 정상적인 현상일 수 있음');
-            document.body.appendChild(script);
+            // 광고 스크립트가 이미 로드되었으므로 바로 렌더링
+            setTimeout(() => {
+                console.log('광고 초기화 시작');
+                renderAds();
+            }, 500);
+        });
+        
+        // adsbykakao가 준비되면 광고 렌더링
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                renderAds();
+            }, 1000);
         });
     </script>
 </body>
