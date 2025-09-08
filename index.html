@@ -356,6 +356,14 @@
 <body>
     <div class="app">
         <div class="container">
+            <!-- 상단 광고 영역 -->
+            <div class="ad-container">
+                <ins class="kakao_ad_area" style="display:none;" 
+                     data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
+                     data-ad-width="320" 
+                     data-ad-height="50"></ins>
+            </div>
+            
             <!-- 시작 화면 -->
             <div id="startScreen" class="screen active">
                 <h1>🔮 2025 MBTI 운세</h1>
@@ -429,9 +437,8 @@
                     <h1><span id="resultName">홍길동</span>님의 2025년 운세</h1>
                 </div>
                 
-                <!-- 광고 영역 -->
+                <!-- 중간 광고 영역 -->
                 <div class="ad-container">
-                    <!-- Kakao 광고 -->
                     <ins class="kakao_ad_area" style="display:none;" 
                          data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
                          data-ad-width="320" 
@@ -496,6 +503,14 @@
                     <button class="btn-primary" onclick="restart()">
                         다시 하기
                     </button>
+                </div>
+                
+                <!-- 하단 광고 영역 -->
+                <div class="ad-container" style="margin-top: 20px;">
+                    <ins class="kakao_ad_area" style="display:none;" 
+                         data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
+                         data-ad-width="320" 
+                         data-ad-height="50"></ins>
                 </div>
             </div>
         </div>
@@ -629,11 +644,17 @@
         
         // 광고 렌더링
         function renderAds() {
-            // 카카오 애드핏 렌더링
+            // 카카오 애드핏 렌더링 - 모든 광고 영역
             if (typeof window.adsbykakao !== 'undefined') {
                 try {
-                    window.adsbykakao.push({});
-                    document.querySelector('.ad-placeholder').style.display = 'none';
+                    // 각 광고 영역마다 push
+                    const adCount = document.querySelectorAll('.kakao_ad_area').length;
+                    for(let i = 0; i < adCount; i++) {
+                        window.adsbykakao.push({});
+                    }
+                    // 광고 플레이스홀더 숨기기
+                    const placeholders = document.querySelectorAll('.ad-placeholder');
+                    placeholders.forEach(p => p.style.display = 'none');
                 } catch(e) {
                     console.log('광고 렌더링 실패:', e);
                 }
