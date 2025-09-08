@@ -339,17 +339,14 @@ function initApp() {
     setTimeout(() => {
         console.log('로딩 완료, 시작 화면으로 전환');
         
-        // 로딩 화면 숨기기
+        // showScreen 함수를 사용해서 일관성 있게 처리
         const loadingScreen = document.getElementById('loadingScreen');
         if (loadingScreen) {
-            loadingScreen.classList.add('hidden');
+            loadingScreen.classList.remove('active');
+            loadingScreen.style.display = 'none';
         }
         
-        // 시작 화면 표시
-        const startScreen = document.getElementById('startScreen');
-        if (startScreen) {
-            startScreen.classList.add('active');
-        }
+        showScreen('start');
     }, 2000);
     
     // 엔터키 이벤트 설정 (삭제 - submitName으로 대체)
@@ -400,10 +397,11 @@ function showScreen(screenId) {
     }
 }
 
-// 여정 시작 - MBTI 선택 화면으로
+// 여정 시작 - 이름 입력부터
 function startJourney() {
     console.log('시작하기 버튼 클릭됨');
-    showScreen('quickSelect');
+    // 이름 입력 화면으로
+    showScreen('name');
 }
 
 // 이름 건너뛰기 (삭제 - 더 이상 사용하지 않음)
@@ -414,17 +412,22 @@ function startJourney() {
 
 // MBTI 빠른 선택 화면
 function showQuickSelect() {
+    console.log('MBTI 빠른 선택 화면으로 이동');
+    // 빠른 선택을 위해 바로 MBTI 선택 화면으로
     showScreen('quickSelect');
 }
 
-// MBTI 선택
+// MBTI 선택 (빠른 선택)
 function selectMBTI(type) {
     console.log('MBTI 선택:', type);
     app.mbtiType = type;
     localStorage.setItem('lastMBTI', type);
-    console.log('MBTI 저장 후 app.mbtiType:', app.mbtiType);
-    // 성별 스킵하고 바로 이름 입력으로
+    
+    // 이름 입력 화면으로
     showScreen('name');
+    
+    // 이름 입력 후 바로 결과로 가도록 설정
+    app.skipTest = true;
 }
 
 // 성별 선택
@@ -455,14 +458,17 @@ function submitName() {
         app.userName = name;
         localStorage.setItem('userName', app.userName);
         
-        console.log('submitName - app 상태:', {
-            mbtiType: app.mbtiType,
-            userName: app.userName,
-            gender: app.gender,
-            birthYear: app.birthYear
-        });
+        console.log('submitName - 이름 저장:', app.userName);
         
-        showCalculating();  // 계산 화면으로
+        // MBTI가 이미 선택되었으면 (빠른 선택 경로) 바로 결과로
+        if (app.skipTest && app.mbtiType) {
+            console.log('빠른 선택 경로 - 바로 계산 화면으로');
+            showCalculating();
+        } else {
+            // 일반 경로 - 테스트 시작
+            console.log('일반 경로 - 테스트 시작');
+            startTest();
+        }
     } else {
         alert('이름을 입력해주세요.');
     }
@@ -560,14 +566,14 @@ function calculateMBTI() {
 // 계산 중 화면
 function showCalculating() {
     // 사용자 정보가 모두 입력되었는지 확인
-    if (!app.mbtiType || !app.userName) {
-        console.error('사용자 정보가 부족합니다:', {
-            mbtiType: app.mbtiType,
-            userName: app.userName,
-            gender: app.gender,
-            birthYear: app.birthYear
-        });
+    if (!app.mbtiType) {
+        console.log('MBTI가 선택되지 않음, 테스트 화면으로 이동');
+        startTest();
         return;
+    }
+    
+    if (!app.userName) {
+        app.userName = '당신';  // 기본값 설정
     }
     
     showScreen('calculating');
