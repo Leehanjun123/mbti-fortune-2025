@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Enterprise Grade Test</title>
+    <link rel="stylesheet" href="app-final.css">
+</head>
+<body>
+    <div id="test-container">
+        <h1>🚀 Enterprise-Grade Features Test</h1>
+        
+        <div class="test-section">
+            <h2>Error Boundary Test</h2>
+            <button onclick="testErrorBoundary()" class="main-button">Trigger Test Error</button>
+        </div>
+        
+        <div class="test-section">
+            <h2>Accessibility Test</h2>
+            <button class="main-button" tabindex="0">Focus Test Button</button>
+            <input type="text" placeholder="Keyboard Navigation Test" />
+        </div>
+        
+        <div class="test-section">
+            <h2>Screen Reader Announcements</h2>
+            <button onclick="testScreenReader()" class="main-button">Test Screen Reader</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        function testErrorBoundary() {
+            try {
+                throw new Error('Test error for boundary system');
+            } catch (error) {
+                ErrorBoundary.handleError(error, 'Manual Test');
+            }
+        }
+        
+        function testScreenReader() {
+            AccessibilityManager.announceToScreenReader('테스트 메시지가 스크린 리더에 전달되었습니다.', 'assertive');
+        }
+        
+        // Add some test styles
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                #test-container {
+                    max-width: 600px;
+                    margin: 50px auto;
+                    padding: 20px;
+                    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+                }
+                .test-section {
+                    margin: 30px 0;
+                    padding: 20px;
+                    border: 1px solid #ddd;
+                    border-radius: 10px;
+                    background: #f9f9f9;
+                }
+                .test-section h2 {
+                    margin-top: 0;
+                    color: #333;
+                }
+                input {
+                    width: 100%;
+                    padding: 10px;
+                    margin-top: 10px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>

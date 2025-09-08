@@ -1,4 +1,4 @@
-// v2.0 - Enhanced JavaScript with Expert Recommendations
+// v3.0 - Enterprise-Grade JavaScript with Security & Accessibility
 const app = {
     currentScreen: 'start',
     userName: '',
@@ -6,6 +6,13 @@ const app = {
     testAnswers: [],
     currentQuestion: 0,
     userCount: 127892,
+    
+    // Error Boundary System
+    errorCount: 0,
+    maxErrors: 3,
+    
+    // Accessibility State
+    announceTimer: null,
     
     // MBTI 질문 데이터 (개선된 버전)
     questions: [
@@ -326,26 +333,43 @@ const app = {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    initApp();
-    startUserCountAnimation();
-    initKakaoSDK();
+    try {
+        // 🚀 Enterprise-Grade 초기화
+        initApp();
+        startUserCountAnimation();
+        initKakaoSDK();
+        
+        // 접근성 시스템 초기화
+        AccessibilityManager.addFocusIndicators();
+        AccessibilityManager.enhanceKeyboardNavigation();
+        
+        console.log('✅ Enterprise-Grade 초기화 완료');
+    } catch (error) {
+        ErrorBoundary.handleError(error, 'DOMContentLoaded');
+    }
 });
 
 function initApp() {
-    console.log('앱 초기화 시작');
+    console.log('🎯 앱 초기화 시작');
     
-    // 로딩 화면은 이미 표시되어 있음 (HTML에서)
-    // 2초 후 시작 화면으로 전환
+    // 모든 화면 강제 숨김 (초기화)
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.style.display = 'none';
+        screen.classList.remove('active');
+    });
+    
+    // 2초 후 로딩 완료
     setTimeout(() => {
-        console.log('로딩 완료, 시작 화면으로 전환');
+        console.log('⚡ 로딩 완료, 시작 화면으로 전환');
         
-        // showScreen 함수를 사용해서 일관성 있게 처리
+        // 로딩 화면 완전 제거
         const loadingScreen = document.getElementById('loadingScreen');
         if (loadingScreen) {
-            loadingScreen.classList.remove('active');
+            loadingScreen.classList.add('hidden');
             loadingScreen.style.display = 'none';
         }
         
+        // 시작 화면 활성화
         showScreen('start');
     }, 2000);
     
@@ -369,9 +393,16 @@ function hideLoading() {
     loadingScreen.classList.remove('active');
 }
 
-// 사용자 수 애니메이션
+// 사용자 수 애니메이션 (메모리 누수 방지)
+let userCountInterval;
+
 function startUserCountAnimation() {
-    setInterval(() => {
+    // 기존 인터벌 정리
+    if (userCountInterval) {
+        clearInterval(userCountInterval);
+    }
+    
+    userCountInterval = setInterval(() => {
         app.userCount += Math.floor(Math.random() * 5) + 1;
         const countElement = document.getElementById('userCount');
         if (countElement) {
@@ -380,28 +411,207 @@ function startUserCountAnimation() {
     }, 5000);
 }
 
-// 화면 전환
-function showScreen(screenId) {
-    // 모든 화면 숨기기
-    document.querySelectorAll('.screen').forEach(screen => {
-        screen.classList.remove('active');
-        screen.scrollTop = 0;
-    });
+function stopUserCountAnimation() {
+    if (userCountInterval) {
+        clearInterval(userCountInterval);
+        userCountInterval = null;
+    }
+}
+
+// 페이지 언로드 시 정리
+window.addEventListener('beforeunload', () => {
+    stopUserCountAnimation();
+    if (app.announceTimer) clearTimeout(app.announceTimer);
+});
+
+// 🔐 Enterprise-Grade Error Boundary System
+const ErrorBoundary = {
+    handleError(error, context = 'Unknown') {
+        app.errorCount++;
+        
+        const errorInfo = {
+            message: error.message,
+            stack: error.stack,
+            context: context,
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            url: window.location.href
+        };
+        
+        console.error(`[Error Boundary] ${context}:`, errorInfo);
+        
+        // 치명적 오류 처리
+        if (app.errorCount >= app.maxErrors) {
+            this.showFallbackUI();
+            return;
+        }
+        
+        // 사용자 친화적 오류 알림
+        this.showErrorNotification(error.message);
+    },
     
-    // 타겟 화면 표시
-    const targetScreen = document.getElementById(screenId + 'Screen');
-    if (targetScreen) {
-        targetScreen.classList.add('active');
-        targetScreen.scrollTop = 0;
-        app.currentScreen = screenId;
+    showErrorNotification(message) {
+        const notification = document.createElement('div');
+        notification.className = 'error-notification';
+        notification.innerHTML = `
+            <div class="error-content">
+                <span class="error-icon">⚠️</span>
+                <span class="error-text">일시적인 오류가 발생했습니다. 다시 시도해주세요.</span>
+                <button class="error-close" onclick="this.parentElement.parentElement.remove()">&times;</button>
+            </div>
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentElement) {
+                notification.remove();
+            }
+        }, 5000);
+    },
+    
+    showFallbackUI() {
+        document.body.innerHTML = `
+            <div class="fallback-ui">
+                <div class="fallback-content">
+                    <h1>🔧 시스템 점검 중</h1>
+                    <p>죄송합니다. 일시적인 시스템 오류가 발생했습니다.</p>
+                    <p>잠시 후 다시 시도해주세요.</p>
+                    <button onclick="window.location.reload()" class="retry-button">다시 시도</button>
+                </div>
+            </div>
+        `;
+    }
+};
+
+// 🎯 Accessibility Enhancement System
+const AccessibilityManager = {
+    announceToScreenReader(text, priority = 'polite') {
+        if (app.announceTimer) clearTimeout(app.announceTimer);
+        
+        const announcer = document.getElementById('screen-reader-announcer') || 
+            this.createAnnouncer();
+        
+        app.announceTimer = setTimeout(() => {
+            announcer.textContent = text;
+            announcer.setAttribute('aria-live', priority);
+        }, 100);
+    },
+    
+    createAnnouncer() {
+        const announcer = document.createElement('div');
+        announcer.id = 'screen-reader-announcer';
+        announcer.className = 'sr-only';
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        document.body.appendChild(announcer);
+        return announcer;
+    },
+    
+    enhanceKeyboardNavigation() {
+        // Tab 순서 개선
+        const interactiveElements = document.querySelectorAll('button, input, [role="button"]');
+        interactiveElements.forEach((element, index) => {
+            if (!element.getAttribute('tabindex')) {
+                element.setAttribute('tabindex', '0');
+            }
+        });
+        
+        // Enter 키로 버튼 클릭
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.getAttribute('role') === 'button') {
+                e.target.click();
+            }
+        });
+    },
+    
+    addFocusIndicators() {
+        const style = document.createElement('style');
+        style.textContent = `
+            .focus-visible {
+                outline: 3px solid #4f46e5;
+                outline-offset: 2px;
+            }
+            
+            button:focus-visible,
+            [role="button"]:focus-visible,
+            input:focus-visible {
+                outline: 3px solid #4f46e5;
+                outline-offset: 2px;
+                box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+            }
+        `;
+        document.head.appendChild(style);
+    }
+};
+
+// 글로벌 오류 핸들러
+window.addEventListener('error', (e) => {
+    ErrorBoundary.handleError(e.error, 'Global Error');
+});
+
+window.addEventListener('unhandledrejection', (e) => {
+    ErrorBoundary.handleError(new Error(e.reason), 'Unhandled Promise Rejection');
+});
+
+// 🚀 화면 전환 (완전 격리 시스템 + Error Boundary)
+function showScreen(screenId) {
+    try {
+        console.log(`🔄 화면 전환: ${app.currentScreen} → ${screenId}`);
+        
+        // 1단계: 모든 화면 완전 숨기기
+        document.querySelectorAll('.screen').forEach(screen => {
+            screen.classList.remove('active');
+            screen.style.display = 'none'; // 강제 숨김
+            screen.scrollTop = 0;
+        });
+        
+        // 2단계: 타겟 화면만 표시
+        const targetScreen = document.getElementById(screenId + 'Screen');
+        if (targetScreen) {
+            targetScreen.style.display = 'block'; // 강제 표시
+            targetScreen.classList.add('active');
+            targetScreen.scrollTop = 0;
+            
+            // 접근성: 스크린 리더에 화면 변경 알림
+            AccessibilityManager.announceToScreenReader(`${screenId} 화면으로 이동했습니다.`);
+            
+            // 키보드 네비게이션 향상
+            AccessibilityManager.enhanceKeyboardNavigation();
+            
+            app.currentScreen = screenId;
+            console.log(`✅ ${screenId} 화면 활성화 완료`);
+            
+            // 화면별 후처리
+            setTimeout(() => {
+                if (screenId === 'result') {
+                    renderKakaoAds();
+                }
+            }, 500);
+        } else {
+            console.error(`❌ ${screenId}Screen 요소를 찾을 수 없음`);
+            throw new Error(`Screen element not found: ${screenId}Screen`);
+        }
+    } catch (error) {
+        ErrorBoundary.handleError(error, `showScreen(${screenId})`);
     }
 }
 
 // 여정 시작 - 이름 입력부터
 function startJourney() {
-    console.log('시작하기 버튼 클릭됨');
-    // 이름 입력 화면으로
+    console.log('🚀 시작하기 버튼 클릭됨!');
+    console.log('현재 앱 상태:', app);
+    
+    // 이름 입력 화면으로 즉시 이동
+    console.log('이름 입력 화면으로 이동 중...');
     showScreen('name');
+    
+    // 추가 확인
+    setTimeout(() => {
+        const nameScreen = document.getElementById('nameScreen');
+        console.log('nameScreen 요소:', nameScreen);
+        console.log('nameScreen 클래스:', nameScreen?.className);
+    }, 100);
 }
 
 // 이름 건너뛰기 (삭제 - 더 이상 사용하지 않음)
@@ -1248,10 +1458,18 @@ function showFriendTestStart() {
     const startScreen = document.getElementById('startScreen');
     const heroTitle = startScreen.querySelector('.hero-title');
     
-    heroTitle.innerHTML = `
-        <span class="year-text">2025</span>
-        <span class="main-text">${app.targetUser}의 MBTI는?</span>
-    `;
+    // XSS 보안 강화: innerHTML 대신 DOM 조작 사용
+    const yearSpan = document.createElement('span');
+    yearSpan.className = 'year-text';
+    yearSpan.textContent = '2025';
+    
+    const mainSpan = document.createElement('span');
+    mainSpan.className = 'main-text';
+    mainSpan.textContent = `${app.targetUser}의 MBTI는?`;
+    
+    heroTitle.innerHTML = ''; // 기존 내용 안전하게 제거
+    heroTitle.appendChild(yearSpan);
+    heroTitle.appendChild(mainSpan);
     
     const subtitle = startScreen.querySelector('.hero-subtitle');
     subtitle.textContent = `친구가 ${app.targetMBTI}일 확률을 알아보세요!`;
@@ -1469,43 +1687,69 @@ function loadNativeAds() {
     }
 }
 
-// 광고 렌더링 함수 추가
+// 스마트 광고 렌더링 함수
 function renderKakaoAds() {
-    console.log('카카오 애드핏 광고 렌더링 시작');
-    
-    // 모든 카카오 광고 영역 활성화
-    const kakaoAds = document.querySelectorAll('.kakao_ad_area');
-    kakaoAds.forEach(ad => {
-        ad.style.display = 'block';
-    });
-    
-    // kakaoAdFit 렌더링 시도
-    if (typeof kakaoAdFit !== 'undefined') {
-        try {
-            kakaoAdFit.render();
-            console.log('카카오 애드핏 렌더링 완료');
-        } catch(e) {
-            console.log('카카오 애드핏 렌더링 실패:', e);
+    try {
+        console.log('🎯 광고 렌더링 시작');
+        
+        // 광고 로딩 상태 확인
+        if (!window.adLoadState || !window.adLoadState.loaded) {
+            console.log('광고 스크립트 미로드 - 렌더링 스킵');
+            return;
         }
-    } else {
-        // 3초 후 재시도
-        setTimeout(() => {
-            if (typeof kakaoAdFit !== 'undefined') {
-                kakaoAdFit.render();
-                console.log('카카오 애드핏 재렌더링 완료');
-            }
-        }, 3000);
+        
+        // 모든 카카오 광고 영역 활성화
+        const kakaoAds = document.querySelectorAll('.kakao_ad_area');
+        console.log(`광고 영역 ${kakaoAds.length}개 처리 중...`);
+        
+        kakaoAds.forEach((ad, index) => {
+            ad.style.display = 'block';
+            console.log(`광고 영역 ${index + 1} 표시됨`);
+        });
+        
+        // 🚀 Enterprise-Grade 카카오 애드핏 렌더링 (올바른 방식)
+        if (typeof window.adsbykakao !== 'undefined') {
+            window.adsbykakao.push({});
+            console.log('🎉 카카오 애드핏 렌더링 완료!');
+        } else {
+            console.log('adsbykakao 객체 없음 - 백그라운드에서 재시도');
+            // 백그라운드에서 재시도
+            setTimeout(() => {
+                if (typeof window.adsbykakao !== 'undefined') {
+                    window.adsbykakao.push({});
+                    console.log('🎉 카카오 애드핏 지연 렌더링 완료!');
+                }
+            }, 2000);
+        }
+    } catch(error) {
+        console.log('광고 렌더링 오류:', error.message);
+        ErrorBoundary.handleError(error, 'Kakao Ads Rendering');
+        // 오류 발생시에도 앱은 정상 동작
     }
 }
 
-// 결과 화면 표시할 때 광고도 렌더링
-const originalShowResult = showResult;
-showResult = function() {
-    originalShowResult();
+// 결과 화면에서 광고 강제 재렌더링
+function forceAdRefresh() {
+    console.log('결과 화면 광고 새로고침');
     setTimeout(() => {
         renderKakaoAds();
-    }, 500);
-};
+    }, 1000);
+}
+
+// showResult 함수에 광고 렌더링 추가
+const originalShowResult = showResult;
+if (typeof showResult === 'function') {
+    showResult = function() {
+        originalShowResult.call(this);
+        console.log('결과 화면 표시 완료 - 광고 렌더링 시작');
+        
+        // 결과 화면 표시 후 광고 렌더링
+        setTimeout(() => {
+            renderKakaoAds();
+            forceAdRefresh();
+        }, 1000);
+    };
+}
 
 // 초기 실행
 handleURLParams();

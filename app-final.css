@@ -34,6 +34,8 @@ html, body {
     line-height: 1.6;
     color: var(--dark);
     background: var(--light);
+    overflow: hidden; /* 스크롤 완전 차단 */
+    position: fixed; /* 모바일에서도 스크롤 방지 */
 }
 
 /* ===== 레이아웃 ===== */
@@ -49,16 +51,22 @@ html, body {
     padding: 2rem;
 }
 
-/* ===== 화면 전환 시스템 ===== */
+/* ===== 화면 전환 시스템 (완전 격리) ===== */
 .screen {
     display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    min-height: 100vh;
-    position: relative;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1;
 }
 
 .screen.active {
     display: block;
+    z-index: 10;
     animation: fadeIn 0.5s ease;
 }
 
@@ -78,7 +86,11 @@ html, body {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 9999;
+    z-index: 99999; /* 최고 우선순위 */
+}
+
+#loadingScreen.hidden {
+    display: none !important;
 }
 
 .loading-content {
@@ -181,6 +193,8 @@ html, body {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 10;
 }
 
 .cta-button:hover {
@@ -931,3 +945,175 @@ html, body {
 .mb-1 { margin-bottom: 0.5rem; }
 .mb-2 { margin-bottom: 1rem; }
 .mb-3 { margin-bottom: 1.5rem; }
+
+/* =========================
+   ENTERPRISE ERROR HANDLING
+   ========================= */
+.error-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(255, 107, 107, 0.3);
+    animation: slideInRight 0.4s ease-out;
+    max-width: 350px;
+}
+
+.error-content {
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.error-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+
+.error-text {
+    flex: 1;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.error-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.error-close:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.fallback-ui {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.fallback-content {
+    text-align: center;
+    color: white;
+    max-width: 400px;
+    padding: 40px;
+}
+
+.fallback-content h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.fallback-content p {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    opacity: 0.8;
+    line-height: 1.6;
+}
+
+.retry-button {
+    background: rgba(255,255,255,0.2);
+    border: 2px solid rgba(255,255,255,0.3);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+}
+
+.retry-button:hover {
+    background: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.5);
+    transform: translateY(-2px);
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* =========================
+   ACCESSIBILITY ENHANCEMENTS
+   ========================= */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Enhanced focus indicators */
+button:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+.mbti-card:focus-visible {
+    outline: 3px solid #4f46e5 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2) !important;
+}
+
+/* 고대비 모드 지원 */
+@media (prefers-contrast: high) {
+    .main-button,
+    .mbti-card,
+    .fortune-categories {
+        border: 2px solid currentColor !important;
+    }
+    
+    .category-tab {
+        border: 1px solid currentColor !important;
+    }
+}
+
+/* 움직임 줄이기 선호 */
+@media (prefers-reduced-motion: reduce) {
+    .bounce, .pulse, .fade-in, .slide-up,
+    .fadeInUp, .slideInLeft, .bounceIn, .cardEntry, .modalSlideUp {
+        animation: none !important;
+        transition: none !important;
+    }
+    
+    .main-button, .mbti-card, .category-tab {
+        transition: none !important;
+    }
+    
+    .loading-spinner {
+        animation: none !important;
+    }
+}

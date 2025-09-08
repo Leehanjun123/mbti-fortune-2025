@@ -67,59 +67,138 @@
     <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX"
         crossorigin="anonymous"></script> -->
     
-    <!-- 카카오 애드핏 (즉시 사용 가능) -->
-    
-    <!-- Kakao SDK for JavaScript (지연 로딩) -->
+    <!-- 카카오 애드핏 스마트 로딩 -->
     <script>
-        // 3초 후 카카오 SDK 로드 (초기 로딩 성능 개선)
-        setTimeout(() => {
-            // 카카오 SDK 로드 (에러 처리 포함)
-            const script = document.createElement('script');
-            script.src = 'https://developers.kakao.com/sdk/js/kakao.js';
-            script.onerror = () => {
-                console.log('카카오 SDK 로드 실패 - 폴백 모드 사용');
-            };
-            document.head.appendChild(script);
-            
-            // 애드핏도 지연 로드 (에러 처리 포함)
-            const adScript = document.createElement('script');
-            adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
-            adScript.async = true;
-            adScript.onerror = () => {
-                console.log('애드핏 스크립트 로드 실패 - 광고 없이 진행');
-            };
-            adScript.onload = () => {
-                // 애드핏 스크립트 로드 완료 후 모든 광고 렌더링
-                try {
-                    // 모든 카카오 광고 영역 찾기
-                    const adAreas = document.querySelectorAll('.kakao_ad_area');
-                    if (adAreas.length > 0) {
-                        console.log(`카카오 애드핏 광고 ${adAreas.length}개 렌더링 시작`);
+        console.log('스마트 광고 로딩 시작');
+        
+        // 광고 로딩 상태 관리
+        window.adLoadState = {
+            attempts: 0,
+            maxAttempts: 3,
+            retryDelay: 5000, // 5초
+            loaded: false
+        };
+        
+        // 스마트 광고 로딩 함수
+        function loadAdsWithRetry(delay = 0) {
+            setTimeout(() => {
+                if (window.adLoadState.attempts >= window.adLoadState.maxAttempts) {
+                    console.log('광고 로딩 최대 시도 횟수 초과 - 광고 없이 진행');
+                    return;
+                }
+                
+                window.adLoadState.attempts++;
+                console.log(`광고 로딩 시도 ${window.adLoadState.attempts}/${window.adLoadState.maxAttempts}`);
+                
+                // 카카오 SDK 로드
+                const kakaoScript = document.createElement('script');
+                kakaoScript.src = 'https://developers.kakao.com/sdk/js/kakao.js';
+                kakaoScript.onerror = () => {
+                    console.log('카카오 SDK 로드 실패 - 재시도 예정');
+                    if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                        loadAdsWithRetry(window.adLoadState.retryDelay);
+                    }
+                };
+                document.head.appendChild(kakaoScript);
+                
+                // 애드핏 스크립트 로드
+                const adScript = document.createElement('script');
+                adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+                adScript.async = true;
+                
+                adScript.onerror = (e) => {
+                    console.log(`광고 로딩 실패 (시도 ${window.adLoadState.attempts}) - 재시도 예정`);
+                    // 429 에러나 기타 로딩 실패시 재시도
+                    if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                        setTimeout(() => loadAdsWithRetry(), window.adLoadState.retryDelay);
+                    }
+                };
+                
+                adScript.onload = () => {
+                    console.log('✅ 광고 스크립트 로딩 성공!');
+                    window.adLoadState.loaded = true;
+                    
+                    try {
+                        // 광고 렌더링
+                        const adAreas = document.querySelectorAll('.kakao_ad_area');
+                        console.log(`광고 영역 ${adAreas.length}개 발견`);
                         
-                        // 광고 영역 표시 (display:none 제거)
-                        adAreas.forEach(ad => {
+                        adAreas.forEach((ad, index) => {
                             ad.style.display = 'block';
+                            console.log(`광고 영역 ${index + 1} 활성화`);
                         });
                         
-                        // kakaoAdFit 초기화 및 렌더링
-                        if (typeof kakaoAdFit !== 'undefined') {
-                            kakaoAdFit.render();
-                            console.log('카카오 애드핏 광고 렌더링 완료');
+                        // 카카오 애드핏 올바른 렌더링 방식
+                        if (typeof window.adsbykakao !== 'undefined') {
+                            window.adsbykakao.push({});
+                            console.log('🎉 카카오 애드핏 렌더링 완료!');
+                        } else if (typeof kakaoAdFit !== 'undefined') {
+                            // 대안 방식
+                            try {
+                                if (kakaoAdFit.render && typeof kakaoAdFit.render === 'function') {
+                                    kakaoAdFit.render();
+                                } else {
+                                    // 수동 렌더링
+                                    window.adsbykakao = window.adsbykakao || [];
+                                    window.adsbykakao.push({});
+                                }
+                                console.log('🎉 카카오 애드핏 렌더링 완료!');
+                            } catch(renderError) {
+                                console.log('렌더링 방식 변경:', renderError.message);
+                                window.adsbykakao = window.adsbykakao || [];
+                                window.adsbykakao.push({});
+                            }
+                        }
+                    } catch(error) {
+                        console.log('광고 렌더링 중 오류:', error.message);
+                        // 렌더링 실패해도 재시도
+                        if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
+                            setTimeout(() => loadAdsWithRetry(), window.adLoadState.retryDelay);
                         }
                     }
-                } catch(e) {
-                    console.log('광고 렌더링 오류 (무시됨):', e.message);
-                }
-            };
-            document.head.appendChild(adScript);
+                };
+                
+                document.head.appendChild(adScript);
+                
+            }, delay);
+        }
+        
+        // 앱 로딩 완료 후 광고 로딩 시작 (앱 기능 우선)
+        setTimeout(() => {
+            loadAdsWithRetry();
         }, 3000);
         
-        // 글로벌 에러 핸들러로 429 오류 무시
+        // 모든 광고 관련 에러 완전 차단 (사용자 경험 우선)
         window.addEventListener('error', function(e) {
-            if (e.message && e.message.includes('429')) {
+            const errorMessage = e.message || '';
+            const errorSource = e.filename || '';
+            
+            // 429, 카카오 수집기, 애드핏 관련 모든 에러 차단
+            if (errorMessage.includes('429') || 
+                errorSource.includes('aem-kakao-collector') ||
+                errorSource.includes('ba.min.js') ||
+                errorMessage.includes('kakao') ||
+                errorSource.includes('kas.kakao')) {
+                
                 e.preventDefault();
+                e.stopPropagation();
+                console.log(`🔇 광고 관련 에러 차단: ${errorMessage}`);
                 return true;
             }
+        });
+        
+        // 리소스 로딩 에러도 차단
+        window.addEventListener('unhandledrejection', function(e) {
+            if (e.reason && e.reason.toString().includes('429')) {
+                e.preventDefault();
+                console.log('🔇 429 Promise rejection 차단');
+                return true;
+            }
+        });
+        
+        // 페이지 언로드시 광고 정리
+        window.addEventListener('beforeunload', function() {
+            console.log('페이지 종료 - 광고 정리');
         });
     </script>
 </head>

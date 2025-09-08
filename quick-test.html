@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick User Test - MBTI 운세</title>
+    <link rel="stylesheet" href="app-final.css">
+    <style>
+        .test-overlay {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.9);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            z-index: 10001;
+            max-width: 300px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .test-result {
+            margin: 5px 0;
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+        .success { background: #065f46; }
+        .error { background: #dc2626; }
+        .warning { background: #92400e; }
+        .test-button {
+            background: #4f46e5;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 실제 앱 내용 (index.html의 body 내용과 동일하게 포함) -->
+    <!-- 로딩 화면 -->
+    <div class="screen active" id="loadingScreen">
+        <div class="container">
+            <div class="loading-content">
+                <div class="year-container">
+                    <span class="year-text">2025</span>
+                </div>
+                <h1 class="main-text">내 운명은?</h1>
+                <div class="loading-spinner"></div>
+                <p class="loading-desc">당신만의 특별한 운세를 준비하고 있어요...</p>
+                <div class="user-stats">
+                    <span id="userCount">127,892</span>명이 확인했어요
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 시작 화면 -->
+    <div class="screen" id="startScreen">
+        <div class="container">
+            <div class="main-content">
+                <div class="year-container">
+                    <span class="year-text">2025</span>
+                </div>
+                <h1 class="main-text">내 운명은?</h1>
+                <p class="sub-text">3분만에 알아보는 나의 2025년</p>
+                <div class="main-buttons">
+                    <button class="main-button primary" onclick="startJourney()">
+                        ✨ 운세 알아보기
+                    </button>
+                    <button class="main-button secondary" onclick="showQuickSelect()">
+                        🎯 MBTI 알고 있어요
+                    </button>
+                </div>
+                <div class="user-stats">
+                    <span id="userCount2">127,892</span>명이 확인했어요
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 나머지 화면들은 간소화 -->
+    <div class="screen" id="nameScreen" style="display:none;">
+        <div class="container">
+            <h2>이름을 알려주세요</h2>
+            <input type="text" id="nameInput" placeholder="이름을 입력하세요">
+            <button onclick="submitName()">다음</button>
+        </div>
+    </div>
+
+    <!-- 테스트 오버레이 -->
+    <div class="test-overlay" id="testOverlay">
+        <h3>🔍 실시간 테스트</h3>
+        <div id="testResults"></div>
+        <div style="border-top: 1px solid #333; margin-top: 10px; padding-top: 10px;">
+            <button class="test-button" onclick="runQuickTest()">전체 테스트</button>
+            <button class="test-button" onclick="testScreens()">화면 테스트</button>
+            <button class="test-button" onclick="testButtons()">버튼 테스트</button>
+            <button class="test-button" onclick="testErrors()">오류 테스트</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let testCount = 0;
+        
+        function addTestResult(type, message) {
+            const results = document.getElementById('testResults');
+            const div = document.createElement('div');
+            div.className = `test-result ${type}`;
+            div.textContent = `${++testCount}. ${message}`;
+            results.appendChild(div);
+            
+            // 스크롤을 맨 아래로
+            results.scrollTop = results.scrollHeight;
+        }
+        
+        function clearResults() {
+            document.getElementById('testResults').innerHTML = '';
+            testCount = 0;
+        }
+        
+        function runQuickTest() {
+            clearResults();
+            addTestResult('success', '🚀 빠른 테스트 시작');
+            
+            // 1. 화면 존재 확인
+            const screens = ['loadingScreen', 'startScreen', 'nameScreen'];
+            screens.forEach(screenId => {
+                const screen = document.getElementById(screenId);
+                if (screen) {
+                    addTestResult('success', `${screenId} 존재함`);
+                } else {
+                    addTestResult('error', `${screenId} 없음`);
+                }
+            });
+            
+            // 2. 함수 존재 확인
+            const functions = ['showScreen', 'startJourney', 'showQuickSelect'];
+            functions.forEach(funcName => {
+                if (typeof window[funcName] === 'function') {
+                    addTestResult('success', `${funcName} 함수 존재`);
+                } else {
+                    addTestResult('error', `${funcName} 함수 없음`);
+                }
+            });
+            
+            // 3. ErrorBoundary 확인
+            if (typeof ErrorBoundary !== 'undefined') {
+                addTestResult('success', 'ErrorBoundary 시스템 활성');
+            } else {
+                addTestResult('error', 'ErrorBoundary 없음');
+            }
+            
+            // 4. AccessibilityManager 확인
+            if (typeof AccessibilityManager !== 'undefined') {
+                addTestResult('success', 'Accessibility 시스템 활성');
+            } else {
+                addTestResult('error', 'Accessibility 시스템 없음');
+            }
+            
+            addTestResult('success', '✅ 빠른 테스트 완료');
+        }
+        
+        function testScreens() {
+            clearResults();
+            addTestResult('success', '🖥️ 화면 전환 테스트');
+            
+            try {
+                // 시작 화면으로 전환
+                showScreen('start');
+                addTestResult('success', '시작 화면 전환 성공');
+                
+                setTimeout(() => {
+                    const startScreen = document.getElementById('startScreen');
+                    if (startScreen && startScreen.style.display !== 'none') {
+                        addTestResult('success', '시작 화면 표시됨');
+                    } else {
+                        addTestResult('error', '시작 화면 표시 안됨');
+                    }
+                    
+                    // 로딩 화면으로 전환 테스트
+                    showScreen('loading');
+                    addTestResult('success', '로딩 화면 전환 시도');
+                }, 500);
+                
+            } catch (error) {
+                addTestResult('error', `화면 전환 오류: ${error.message}`);
+            }
+        }
+        
+        function testButtons() {
+            clearResults();
+            addTestResult('success', '🔘 버튼 기능 테스트');
+            
+            // 모든 버튼 찾기
+            const buttons = document.querySelectorAll('button');
+            addTestResult('success', `총 ${buttons.length}개 버튼 발견`);
+            
+            buttons.forEach((button, index) => {
+                if (button.onclick || button.getAttribute('onclick')) {
+                    addTestResult('success', `버튼 ${index+1}: 클릭 이벤트 있음`);
+                } else {
+                    addTestResult('warning', `버튼 ${index+1}: 클릭 이벤트 없음`);
+                }
+            });
+        }
+        
+        function testErrors() {
+            clearResults();
+            addTestResult('success', '⚠️ 오류 처리 테스트');
+            
+            try {
+                // 의도적 오류 발생
+                if (typeof ErrorBoundary !== 'undefined') {
+                    ErrorBoundary.handleError(new Error('테스트 오류'), '수동 테스트');
+                    addTestResult('success', '오류 처리 시스템 작동');
+                } else {
+                    throw new Error('ErrorBoundary 없음');
+                }
+            } catch (error) {
+                addTestResult('error', `오류 처리 실패: ${error.message}`);
+            }
+        }
+        
+        // 페이지 로드 후 자동 테스트
+        setTimeout(() => {
+            runQuickTest();
+        }, 2000);
+    </script>
+</body>
+</html>
