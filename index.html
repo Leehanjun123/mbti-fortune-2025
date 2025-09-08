@@ -238,6 +238,17 @@
             line-height: 1.8;
         }
         
+        /* 상단 광고 */
+        .top-ad {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        
         /* 광고 영역 */
         .ad-container {
             margin: 20px auto;
@@ -400,6 +411,17 @@
 </head>
 <body>
     <div class="app">
+        <!-- 상단 광고: 브랜드 인식 최적 -->
+        <div class="top-ad">
+            <div class="ad-container">
+                <ins class="kakao_ad_area" 
+                     style="display:block;width:320px;height:50px;" 
+                     data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
+                     data-ad-width="320" 
+                     data-ad-height="50"></ins>
+            </div>
+        </div>
+
         <div class="container">
             <!-- 모든 광고 영역 - 항상 보이는 위치 -->
             <div class="ad-container">
@@ -500,6 +522,15 @@
                 </div>
                 
                 
+                <!-- 중간 광고: 콘텐츠 사이 자연스러운 위치 -->
+                <div class="ad-container" style="margin: 30px 0;">
+                    <ins class="kakao_ad_area" 
+                         style="display:block;width:320px;height:100px;" 
+                         data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
+                         data-ad-width="320" 
+                         data-ad-height="100"></ins>
+                </div>
+                
                 <!-- 총운 -->
                 <div class="fortune-section">
                     <div class="fortune-title">
@@ -559,6 +590,14 @@
                     </button>
                 </div>
                 
+                <!-- 하단 광고: 사용자 행동 완료 후 -->
+                <div class="ad-container" style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
+                    <ins class="kakao_ad_area" 
+                         style="display:block;width:320px;height:100px;" 
+                         data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
+                         data-ad-width="320" 
+                         data-ad-height="100"></ins>
+                </div>
             </div>
         </div>
     </div>
@@ -771,21 +810,23 @@
                 console.log('adsbykakao 객체 생성됨');
             }
             
-            // Kakao AdFit 스크립트 동적 로드 및 초기 광고 렌더링
-            const adScript = document.createElement('script');
-            adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
-            adScript.async = true;
-            adScript.onload = () => {
-                console.log('🚀 AdFit 스크립트 로드 완료');
-                setTimeout(() => {
-                    console.log('🚀 초기 광고 렌더링 시도');
-                    renderAds();
-                }, 1000);
-            };
-            adScript.onerror = () => {
-                console.error('❌ AdFit 스크립트 로드 실패');
-            };
-            document.head.appendChild(adScript);
+            // 페이지 로드 완료 후 AdFit 스크립트 로드 (사용자 경험 우선)
+            setTimeout(() => {
+                const adScript = document.createElement('script');
+                adScript.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+                adScript.async = true;
+                adScript.onload = () => {
+                    console.log('🚀 AdFit 스크립트 로드 완료');
+                    setTimeout(() => {
+                        console.log('🚀 초기 광고 렌더링 시도');
+                        renderAds();
+                    }, 500);
+                };
+                adScript.onerror = () => {
+                    console.error('❌ AdFit 스크립트 로드 실패');
+                };
+                document.head.appendChild(adScript);
+            }, 2000); // 2초 후에 광고 스크립트 로드
         });
         
         // 전체 페이지 로드 완료 후
