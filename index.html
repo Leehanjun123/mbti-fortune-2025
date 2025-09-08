@@ -437,15 +437,13 @@
         <!-- 결과 화면 (스토리텔링 강화) -->
         <div id="resultScreen" class="screen">
             <!-- 상단 배너 광고 (카카오 애드핏) -->
-            <div class="ad-container ad-top">
-                <ins class="kakao_ad_area" style="display:none;" 
+            <div class="ad-container ad-top" style="min-height: 100px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; margin: 10px 0;">
+                <ins class="kakao_ad_area" style="display:block;" 
                      data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
                      data-ad-width="320" 
                      data-ad-height="100"></ins>
-                <script type="text/javascript">
-                    // 광고 렌더링은 스크립트 로드 후 자동으로 처리됨
-                    console.log('광고 영역 준비됨');
-                </script>
+                <!-- 광고 로드 전 플레이스홀더 -->
+                <div style="color: #999; font-size: 14px;">광고 영역</div>
             </div>
             
             <div class="container result-container">

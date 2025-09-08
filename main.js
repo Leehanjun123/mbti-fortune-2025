@@ -365,17 +365,61 @@ const FortuneManager = {
     },
     
     generate() {
-        const mbti = AppState.mbtiType;
+        const mbti = AppState.mbtiType || 'INTJ';
         const name = AppState.userName || '당신';
         const fortune = this.fortunes[mbti] || this.fortunes['INTJ'];
         
-        document.getElementById('userName').textContent = name;
-        document.getElementById('userMBTI').textContent = mbti;
-        document.getElementById('overallFortune').textContent = fortune.overall;
-        document.getElementById('loveFortune').textContent = fortune.love;
-        document.getElementById('moneyFortune').textContent = fortune.money;
-        document.getElementById('careerFortune').textContent = fortune.career;
-        document.getElementById('healthFortune').textContent = fortune.health;
+        console.log('운세 생성:', { mbti, name, fortune });
+        
+        // 안전하게 요소 업데이트
+        const updateElement = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.textContent = text;
+                console.log(`✅ ${id} 업데이트: ${text.substring(0, 30)}...`);
+            } else {
+                console.error(`❌ ${id} 요소를 찾을 수 없음`);
+            }
+        };
+        
+        updateElement('userName', name);
+        updateElement('userMBTI', mbti);
+        updateElement('overallFortune', fortune.overall);
+        
+        // innerHTML 사용하여 카테고리 운세 업데이트
+        const updateCategory = (id, text) => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.innerHTML = text;
+                console.log(`✅ ${id} 카테고리 업데이트`);
+            }
+        };
+        
+        updateCategory('loveFortune', fortune.love);
+        updateCategory('moneyFortune', fortune.money);
+        updateCategory('careerFortune', fortune.career);
+        updateCategory('healthFortune', fortune.health);
+        
+        // 점수 애니메이션
+        this.animateScores();
+    },
+    
+    animateScores() {
+        // 각 카테고리별 점수 (랜덤)
+        const categories = ['love', 'money', 'career', 'health'];
+        categories.forEach(category => {
+            const score = 70 + Math.floor(Math.random() * 30); // 70-99점
+            const scoreBar = document.querySelector(`#${category}Score .score-fill`);
+            if (scoreBar) {
+                setTimeout(() => {
+                    scoreBar.style.width = score + '%';
+                }, 500);
+            }
+            const scoreText = document.querySelector(`#${category}ScoreText`);
+            if (scoreText) {
+                scoreText.textContent = score + '점';
+            }
+        });
     }
 };
 
@@ -458,10 +502,16 @@ window.MBTIApp = {
         const nameInput = document.getElementById('nameInput');
         if (nameInput && nameInput.value.trim()) {
             AppState.userName = nameInput.value.trim();
+            console.log('이름 입력됨:', AppState.userName);
+            console.log('skipTest:', AppState.skipTest);
+            console.log('MBTI Type:', AppState.mbtiType);
             
-            if (AppState.skipTest) {
+            if (AppState.skipTest && AppState.mbtiType) {
+                // MBTI를 이미 선택한 경우 바로 결과로
+                FortuneManager.generate();
                 ScreenManager.show('result');
             } else {
+                // 테스트 진행
                 ScreenManager.show('test');
             }
         }
@@ -469,6 +519,7 @@ window.MBTIApp = {
     
     // MBTI 직접 선택
     selectMBTI(mbti) {
+        console.log('MBTI 선택됨:', mbti);
         AppState.mbtiType = mbti;
         AppState.skipTest = true;
         ScreenManager.show('name');
@@ -521,16 +572,30 @@ window.MBTIApp = {
     
     // 카테고리별 운세 토글
     toggleCategory(element) {
+        if (!element) return;
+        
         const content = element.querySelector('.category-content');
+        if (!content) return;
+        
         const isExpanded = element.classList.contains('expanded');
         
         if (isExpanded) {
             element.classList.remove('expanded');
             content.style.maxHeight = '0';
         } else {
+            // 다른 카테고리 닫기
+            document.querySelectorAll('.category-card.expanded').forEach(card => {
+                card.classList.remove('expanded');
+                const cardContent = card.querySelector('.category-content');
+                if (cardContent) cardContent.style.maxHeight = '0';
+            });
+            
+            // 현재 카테고리 열기
             element.classList.add('expanded');
             content.style.maxHeight = content.scrollHeight + 'px';
         }
+        
+        console.log('카테고리 토글:', element.querySelector('.category-title')?.textContent);
     },
     
     fallbackShare(text) {
