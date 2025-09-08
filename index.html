@@ -384,13 +384,14 @@
     
     <!-- Kakao AdFit - 지연 로딩 -->
     <script>
-        // 임시 강제 리다이렉트 (DNS 전파 완료까지)
-        if (window.location.hostname === 'www.mbti-destiny.site' && !sessionStorage.getItem('redirected')) {
-            sessionStorage.setItem('redirected', 'true');
-            console.log('🔄 강제 리다이렉트 실행');
-            setTimeout(() => {
-                window.location.href = 'https://mbti-destiny.site' + window.location.pathname + window.location.search;
-            }, 100);
+        // 강제 리다이렉트 (즉시 실행)
+        if (window.location.hostname === 'www.mbti-destiny.site') {
+            console.log('🔄 www 도메인 감지 - 즉시 리다이렉트 실행!');
+            var targetUrl = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
+            console.log('리다이렉트 대상:', targetUrl);
+            window.location.replace(targetUrl);
+            // 리다이렉트 중이므로 스크립트 실행 중단
+            throw new Error('Redirecting...');
         }
         
         // adsbykakao 객체 초기화
@@ -722,13 +723,12 @@
                     const isVisible = area.offsetParent !== null;
                     const isRendered = area.getAttribute('data-rendered');
                     
-                    console.log(`광고 ${index + 1} 상태:`, {
-                        adUnit: adUnit,
-                        visible: isVisible,
-                        rendered: isRendered,
-                        width: area.offsetWidth,
-                        height: area.offsetHeight
-                    });
+                    // 상세 정보 개별 출력
+                    console.log(`광고 ${index + 1} 상태:`);
+                    console.log(`  - 광고단위: ${adUnit}`);
+                    console.log(`  - 가시성: ${isVisible}`);
+                    console.log(`  - 렌더링됨: ${isRendered}`);
+                    console.log(`  - 크기: ${area.offsetWidth}x${area.offsetHeight}`);
                     
                     // 이미 렌더링된 광고는 건너뛰기
                     if (!isRendered) {
@@ -741,11 +741,16 @@
                         // 2초 후 렌더링 결과 확인
                         setTimeout(() => {
                             const hasContent = area.children.length > 0 || area.innerHTML.trim().length > 0;
-                            console.log(`광고 ${index + 1} 렌더링 결과:`, {
-                                adUnit: adUnit,
-                                hasContent: hasContent,
-                                innerHTML: area.innerHTML.substring(0, 100) + '...'
-                            });
+                            console.log(`\n=== 광고 ${index + 1} 렌더링 결과 ===`);
+                            console.log(`광고단위: ${adUnit}`);
+                            console.log(`콘텐츠 있음: ${hasContent}`);
+                            console.log(`자식 요소 수: ${area.children.length}`);
+                            console.log(`HTML 길이: ${area.innerHTML.length}`);
+                            if (hasContent) {
+                                console.log(`HTML 미리보기: ${area.innerHTML.substring(0, 150)}...`);
+                            } else {
+                                console.log(`⚠️ 광고 콘텐츠가 생성되지 않았습니다.`);
+                            }
                         }, 2000);
                     }
                 });
