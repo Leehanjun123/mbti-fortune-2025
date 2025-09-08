@@ -326,6 +326,12 @@ const app = {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', () => {
+    // 바디 스크롤 방지
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed';
+    document.body.style.width = '100%';
+    document.body.style.height = '100vh';
+    
     initApp();
     startUserCountAnimation();
     initKakaoSDK();
@@ -373,12 +379,19 @@ function startUserCountAnimation() {
 function showScreen(screenId) {
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
+        // 스크롤 위치 리셋
+        screen.scrollTop = 0;
     });
     
     const targetScreen = document.getElementById(screenId + 'Screen');
     if (targetScreen) {
         targetScreen.classList.add('active');
+        targetScreen.scrollTop = 0; // 새 화면도 스크롤 리셋
         app.currentScreen = screenId;
+        
+        // 바디 스크롤 방지
+        document.body.style.overflow = 'hidden';
+        document.body.style.position = 'fixed';
     }
 }
 
