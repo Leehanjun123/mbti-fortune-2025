@@ -326,12 +326,6 @@ const app = {
 
 // 초기화
 document.addEventListener('DOMContentLoaded', () => {
-    // 바디 스크롤 방지
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
-    document.body.style.width = '100%';
-    document.body.style.height = '100vh';
-    
     initApp();
     startUserCountAnimation();
     initKakaoSDK();
@@ -355,7 +349,6 @@ function initApp() {
         // 시작 화면 표시
         const startScreen = document.getElementById('startScreen');
         if (startScreen) {
-            startScreen.style.display = 'flex';
             startScreen.classList.add('active');
         }
     }, 2000);
@@ -393,21 +386,18 @@ function startUserCountAnimation() {
 
 // 화면 전환
 function showScreen(screenId) {
+    // 모든 화면 숨기기
     document.querySelectorAll('.screen').forEach(screen => {
         screen.classList.remove('active');
-        // 스크롤 위치 리셋
         screen.scrollTop = 0;
     });
     
+    // 타겟 화면 표시
     const targetScreen = document.getElementById(screenId + 'Screen');
     if (targetScreen) {
         targetScreen.classList.add('active');
-        targetScreen.scrollTop = 0; // 새 화면도 스크롤 리셋
+        targetScreen.scrollTop = 0;
         app.currentScreen = screenId;
-        
-        // 바디 스크롤 방지
-        document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
     }
 }
 
