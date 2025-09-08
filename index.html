@@ -108,9 +108,18 @@
                 
                 adScript.onerror = (e) => {
                     console.log(`광고 로딩 실패 (시도 ${window.adLoadState.attempts}) - 재시도 예정`);
-                    // 429 에러나 기타 로딩 실패시 재시도
+                    
+                    // 429 에러 특별 처리
+                    if (e && e.target && e.target.src && e.target.src.includes('kas')) {
+                        console.log('카카오 애드핏 429 에러 감지 - 지연 후 재시도');
+                        window.adLoadState.retryDelay = Math.min(window.adLoadState.retryDelay * 2, 30000); // 최대 30초
+                    }
+                    
+                    // 재시도 로직
                     if (window.adLoadState.attempts < window.adLoadState.maxAttempts) {
                         setTimeout(() => loadAdsWithRetry(), window.adLoadState.retryDelay);
+                    } else {
+                        console.log('광고 로딩 최종 실패 - 앱 정상 작동');
                     }
                 };
                 
@@ -181,12 +190,15 @@
             const errorMessage = e.message || '';
             const errorSource = e.filename || '';
             
-            // 429, 카카오 수집기, 애드핏 관련 모든 에러 차단
+            // 429, 카카오 수집기, 애드핏, Retry-After 관련 모든 에러 차단
             if (errorMessage.includes('429') || 
+                errorMessage.includes('Retry-After') ||
+                errorMessage.includes('unsafe header') ||
                 errorSource.includes('aem-kakao-collector') ||
                 errorSource.includes('ba.min.js') ||
                 errorMessage.includes('kakao') ||
-                errorSource.includes('kas.kakao')) {
+                errorSource.includes('kas.kakao') ||
+                errorMessage.includes('adsbykakao')) {
                 
                 e.preventDefault();
                 e.stopPropagation();
@@ -353,7 +365,7 @@
                 <div class="input-section">
                     <h2 class="section-title">이름을 입력해주세요</h2>
                     <div class="name-input-container">
-                        <input type="text" id="userName" placeholder="홍길동" maxlength="10" class="name-input" onkeypress="if(event.key==='Enter') submitName()">
+                        <input type="text" id="nameInput" placeholder="홍길동" maxlength="10" class="name-input" onkeypress="if(event.key==='Enter') submitName()">
                         <button onclick="submitName()" class="submit-btn">운세 보기</button>
                     </div>
                     <p class="input-hint">닉네임도 괜찮아요</p>
@@ -386,18 +398,8 @@
                 </div>
                 
                 <!-- 대화형 질문 -->
-                <div class="chat-container">
-                    <div class="chat-bubble">
-                        <div class="chat-avatar">🔮</div>
-                        <div class="chat-content">
-                            <p id="questionText" class="question-text"></p>
-                        </div>
-                    </div>
-                    
-                    <!-- 스와이프 가능한 답변 (모바일 최적화) -->
-                    <div class="answer-container" id="answerContainer">
-                        <!-- 답변이 동적으로 추가됨 -->
-                    </div>
+                <div class="chat-container" id="questionContainer">
+                    <!-- 질문과 답변이 동적으로 렌더링됨 -->
                 </div>
                 
                 <!-- 건너뛰기 옵션 -->
@@ -448,10 +450,10 @@
                 <div class="result-header">
                     <div class="result-badge">
                         <span class="badge-year">2025</span>
-                        <span class="badge-mbti" id="resultMBTI"></span>
+                        <span class="badge-mbti" id="userMBTI"></span>
                     </div>
                     <h1 class="result-title">
-                        <span id="resultUserName">너의</span> 운명
+                        <span id="userName">너의</span> 운명
                     </h1>
                 </div>
                 
@@ -460,7 +462,7 @@
                     <div class="card-glow"></div>
                     <div class="card-content">
                         <h3 class="card-title">🌟 2025년 총운</h3>
-                        <p id="mainFortune" class="fortune-text"></p>
+                        <p id="overallFortune" class="fortune-text"></p>
                         <div class="fortune-score">
                             <span class="score-label">행운 지수</span>
                             <div class="score-bar">

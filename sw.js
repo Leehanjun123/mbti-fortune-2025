@@ -1,13 +1,13 @@
-// Service Worker - v3.0.0 (Clean Version)
-const CACHE_NAME = 'mbti-fortune-v3.0.0';
+// Service Worker - v3.1.0 (Fixed Version)
+const CACHE_NAME = 'mbti-fortune-v3.1.0';
 const RUNTIME_CACHE = 'runtime-cache';
 
 // 캐시할 정적 자원들
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/app.css',
-  '/script.js',
+  '/app-final.css',
+  '/main.js',
   '/config.js',
   '/manifest.json'
 ];

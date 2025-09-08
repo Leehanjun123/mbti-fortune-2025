@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 운세 앱 테스트 (수정 완료)</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .test-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .test-section h2 {
+            color: #ffd700;
+            border-bottom: 2px solid #ffd700;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .test-btn {
+            background: linear-gradient(135deg, #ffd700, #ffed4a);
+            color: #333;
+            border: none;
+            padding: 12px 24px;
+            margin: 8px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .test-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .test-btn:active {
+            transform: translateY(0);
+        }
+
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .status.success {
+            background: rgba(46, 204, 113, 0.2);
+            border-left: 4px solid #2ecc71;
+        }
+
+        .status.error {
+            background: rgba(231, 76, 60, 0.2);
+            border-left: 4px solid #e74c3c;
+        }
+
+        .status.warning {
+            background: rgba(241, 196, 15, 0.2);
+            border-left: 4px solid #f1c40f;
+        }
+
+        .info {
+            background: rgba(52, 152, 219, 0.2);
+            border-left: 4px solid #3498db;
+        }
+
+        .code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        #console {
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            height: 200px;
+            overflow-y: auto;
+            margin-top: 20px;
+            border: 1px solid #333;
+        }
+
+        .iframe-container {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: block;
+        }
+
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .controls button {
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔧 MBTI 운세 앱 수정 완료 테스트</h1>
+        
+        <div class="status info">
+            <strong>📋 수정 완료 항목:</strong><br>
+            ✅ HTML과 JavaScript ID 불일치 수정<br>
+            ✅ Service Worker 캐시 파일명 수정<br>
+            ✅ 429 에러 및 Retry-After 헤더 에러 처리<br>
+            ✅ 누락된 함수들 추가<br>
+            ✅ 전체 MBTI 타입 운세 데이터 추가
+        </div>
+
+        <div class="test-section">
+            <h2>🧪 기능 테스트</h2>
+            
+            <div class="controls">
+                <button class="test-btn" onclick="loadApp()">앱 로드</button>
+                <button class="test-btn" onclick="testStartButton()">시작 버튼 테스트</button>
+                <button class="test-btn" onclick="testMBTISelect()">MBTI 선택 테스트</button>
+                <button class="test-btn" onclick="testNameInput()">이름 입력 테스트</button>
+                <button class="test-btn" onclick="testFullFlow()">전체 플로우 테스트</button>
+            </div>
+        </div>
+
+        <div class="iframe-container">
+            <iframe id="appFrame" src="/index.html"></iframe>
+        </div>
+
+        <div class="test-section">
+            <h2>📊 테스트 결과</h2>
+            <div id="testResults"></div>
+        </div>
+
+        <div class="test-section">
+            <h2>💻 콘솔 로그</h2>
+            <div id="console"></div>
+        </div>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function log(message, type = 'info') {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            console.innerHTML += `<div style="color: ${getLogColor(type)}">[${timestamp}] ${message}</div>`;
+            console.scrollTop = console.scrollHeight;
+        }
+
+        function getLogColor(type) {
+            switch(type) {
+                case 'success': return '#00ff00';
+                case 'error': return '#ff0000';
+                case 'warning': return '#ffff00';
+                default: return '#00ff00';
+            }
+        }
+
+        function addTestResult(test, result, details = '') {
+            testResults.push({ test, result, details });
+            updateTestResults();
+        }
+
+        function updateTestResults() {
+            const container = document.getElementById('testResults');
+            container.innerHTML = testResults.map(r => 
+                `<div class="status ${r.result ? 'success' : 'error'}">
+                    <strong>${r.test}:</strong> ${r.result ? '✅ 통과' : '❌ 실패'}
+                    ${r.details ? `<br><small>${r.details}</small>` : ''}
+                </div>`
+            ).join('');
+        }
+
+        function loadApp() {
+            log('앱 로딩 시작...', 'info');
+            document.getElementById('appFrame').src = '/index.html?' + Date.now();
+            
+            setTimeout(() => {
+                try {
+                    const frame = document.getElementById('appFrame');
+                    const frameWindow = frame.contentWindow;
+                    
+                    if (frameWindow && frameWindow.MBTIApp) {
+                        log('✅ 앱 로드 성공 - MBTIApp 객체 발견', 'success');
+                        addTestResult('앱 로드', true, 'MBTIApp 객체가 정상적으로 로드됨');
+                    } else {
+                        log('❌ 앱 로드 실패 - MBTIApp 객체 없음', 'error');
+                        addTestResult('앱 로드', false, 'MBTIApp 객체를 찾을 수 없음');
+                    }
+                } catch(e) {
+                    log(`❌ 앱 로드 테스트 중 에러: ${e.message}`, 'error');
+                    addTestResult('앱 로드', false, `에러: ${e.message}`);
+                }
+            }, 3000);
+        }
+
+        function testStartButton() {
+            log('시작 버튼 테스트 시작...', 'info');
+            
+            try {
+                const frame = document.getElementById('appFrame');
+                const frameWindow = frame.contentWindow;
+                const frameDoc = frame.contentDocument;
+                
+                const startBtn = frameDoc.querySelector('button[onclick="startMagicalJourney()"]');
+                
+                if (startBtn) {
+                    log('✅ 시작 버튼 발견', 'success');
+                    
+                    // 버튼 클릭 시뮬레이션
+                    if (typeof frameWindow.startMagicalJourney === 'function') {
+                        frameWindow.startMagicalJourney();
+                        log('✅ startMagicalJourney 함수 실행 성공', 'success');
+                        addTestResult('시작 버튼', true, '함수가 정상적으로 존재하고 실행됨');
+                    } else {
+                        log('❌ startMagicalJourney 함수가 존재하지 않음', 'error');
+                        addTestResult('시작 버튼', false, 'startMagicalJourney 함수가 정의되지 않음');
+                    }
+                } else {
+                    log('❌ 시작 버튼을 찾을 수 없음', 'error');
+                    addTestResult('시작 버튼', false, '시작 버튼 요소를 찾을 수 없음');
+                }
+            } catch(e) {
+                log(`❌ 시작 버튼 테스트 중 에러: ${e.message}`, 'error');
+                addTestResult('시작 버튼', false, `에러: ${e.message}`);
+            }
+        }
+
+        function testMBTISelect() {
+            log('MBTI 선택 테스트 시작...', 'info');
+            
+            try {
+                const frame = document.getElementById('appFrame');
+                const frameWindow = frame.contentWindow;
+                const frameDoc = frame.contentDocument;
+                
+                const mbtiBtn = frameDoc.querySelector('button[onclick*="selectMBTI"]');
+                
+                if (mbtiBtn) {
+                    log('✅ MBTI 선택 버튼 발견', 'success');
+                    
+                    if (typeof frameWindow.selectMBTI === 'function') {
+                        frameWindow.selectMBTI('INTJ');
+                        log('✅ selectMBTI 함수 실행 성공', 'success');
+                        addTestResult('MBTI 선택', true, 'selectMBTI 함수가 정상적으로 작동');
+                    } else {
+                        log('❌ selectMBTI 함수가 존재하지 않음', 'error');
+                        addTestResult('MBTI 선택', false, 'selectMBTI 함수가 정의되지 않음');
+                    }
+                } else {
+                    log('❌ MBTI 선택 버튼을 찾을 수 없음', 'error');
+                    addTestResult('MBTI 선택', false, 'MBTI 선택 버튼을 찾을 수 없음');
+                }
+            } catch(e) {
+                log(`❌ MBTI 선택 테스트 중 에러: ${e.message}`, 'error');
+                addTestResult('MBTI 선택', false, `에러: ${e.message}`);
+            }
+        }
+
+        function testNameInput() {
+            log('이름 입력 테스트 시작...', 'info');
+            
+            try {
+                const frame = document.getElementById('appFrame');
+                const frameWindow = frame.contentWindow;
+                const frameDoc = frame.contentDocument;
+                
+                const nameInput = frameDoc.querySelector('#nameInput');
+                
+                if (nameInput) {
+                    log('✅ 이름 입력 필드 발견 (ID: nameInput)', 'success');
+                    
+                    if (typeof frameWindow.submitName === 'function') {
+                        log('✅ submitName 함수 존재 확인', 'success');
+                        addTestResult('이름 입력', true, 'nameInput ID와 submitName 함수가 정상 작동');
+                    } else {
+                        log('❌ submitName 함수가 존재하지 않음', 'error');
+                        addTestResult('이름 입력', false, 'submitName 함수가 정의되지 않음');
+                    }
+                } else {
+                    log('❌ nameInput ID를 가진 요소를 찾을 수 없음', 'error');
+                    addTestResult('이름 입력', false, 'nameInput ID 요소가 존재하지 않음');
+                }
+            } catch(e) {
+                log(`❌ 이름 입력 테스트 중 에러: ${e.message}`, 'error');
+                addTestResult('이름 입력', false, `에러: ${e.message}`);
+            }
+        }
+
+        function testFullFlow() {
+            log('전체 플로우 테스트 시작...', 'info');
+            let step = 0;
+            const steps = ['로드', 'MBTI 선택', '이름 입력', '결과 표시'];
+            
+            function nextStep() {
+                if (step >= steps.length) {
+                    log('✅ 전체 플로우 테스트 완료!', 'success');
+                    addTestResult('전체 플로우', true, '모든 단계가 정상적으로 진행됨');
+                    return;
+                }
+                
+                log(`📍 단계 ${step + 1}: ${steps[step]}`, 'info');
+                
+                try {
+                    const frame = document.getElementById('appFrame');
+                    const frameWindow = frame.contentWindow;
+                    
+                    switch(step) {
+                        case 0: // 로드 확인
+                            if (frameWindow.MBTIApp) {
+                                log('✅ 앱 로드 확인', 'success');
+                                step++;
+                                setTimeout(nextStep, 1000);
+                            } else {
+                                throw new Error('앱이 로드되지 않음');
+                            }
+                            break;
+                            
+                        case 1: // MBTI 선택
+                            frameWindow.selectMBTI('INTJ');
+                            log('✅ MBTI 선택 (INTJ)', 'success');
+                            step++;
+                            setTimeout(nextStep, 1000);
+                            break;
+                            
+                        case 2: // 이름 입력
+                            const nameInput = frame.contentDocument.querySelector('#nameInput');
+                            if (nameInput) {
+                                nameInput.value = '테스트';
+                                frameWindow.submitName();
+                                log('✅ 이름 입력 및 제출', 'success');
+                                step++;
+                                setTimeout(nextStep, 2000);
+                            } else {
+                                throw new Error('이름 입력 필드를 찾을 수 없음');
+                            }
+                            break;
+                            
+                        case 3: // 결과 확인
+                            const resultScreen = frame.contentDocument.querySelector('#resultScreen');
+                            if (resultScreen && resultScreen.classList.contains('active')) {
+                                log('✅ 결과 화면 표시 확인', 'success');
+                                step++;
+                                nextStep();
+                            } else {
+                                log('⚠️ 결과 화면이 아직 표시되지 않음', 'warning');
+                                setTimeout(nextStep, 1000);
+                            }
+                            break;
+                    }
+                } catch(e) {
+                    log(`❌ 단계 ${step + 1} 실패: ${e.message}`, 'error');
+                    addTestResult('전체 플로우', false, `단계 ${step + 1}에서 실패: ${e.message}`);
+                }
+            }
+            
+            nextStep();
+        }
+
+        // 페이지 로드 시 자동 테스트
+        window.addEventListener('load', () => {
+            log('🚀 테스트 환경 초기화 완료', 'success');
+            setTimeout(loadApp, 1000);
+        });
+
+        // iframe 에러 감지
+        document.getElementById('appFrame').addEventListener('error', (e) => {
+            log(`❌ iframe 로드 에러: ${e.message}`, 'error');
+        });
+    </script>
+</body>
+</html>
