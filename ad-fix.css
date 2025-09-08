@@ -1,0 +1,65 @@
+/* 카카오 애드핏 광고 가시성 수정 */
+
+/* 광고 영역 최소 높이 보장 */
+.kakao_ad_area {
+    display: block !important;
+    min-height: 50px;
+    width: 100%;
+    background: #f5f5f5;
+    text-align: center;
+    position: relative;
+}
+
+/* 광고 로드 전 플레이스홀더 */
+.kakao_ad_area:empty::after {
+    content: '광고 로딩중...';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 12px;
+}
+
+/* 광고 컨테이너 최소 높이 */
+.ad-container {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-top {
+    min-height: 100px;
+}
+
+/* 테스트 화면 광고 */
+#testScreen .ad-banner-top {
+    min-height: 60px;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.95);
+    margin-bottom: 10px;
+}
+
+/* 결과 화면 광고 */
+#resultScreen .ad-container {
+    min-height: 100px;
+    margin: 20px auto;
+}
+
+/* 광고가 로드되면 배경 제거 */
+.kakao_ad_area:not(:empty) {
+    background: transparent;
+}
+
+.kakao_ad_area:not(:empty)::after {
+    display: none;
+}
+
+/* 반응형 광고 크기 */
+@media (max-width: 768px) {
+    .kakao_ad_area {
+        max-width: 100%;
+        width: 100%;
+    }
+}

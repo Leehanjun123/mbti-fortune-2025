@@ -339,9 +339,26 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initApp() {
-    // 초기 로딩 애니메이션
+    // 로딩 화면 표시 및 자동 전환
+    const loadingScreen = document.getElementById('loadingScreen');
+    const startScreen = document.getElementById('startScreen');
+    
+    // 로딩 화면 활성화
+    if (loadingScreen) {
+        loadingScreen.style.display = 'flex';
+        loadingScreen.classList.add('active');
+    }
+    
+    // 2초 후 시작 화면으로 전환
     setTimeout(() => {
-        hideLoading();
+        if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+            loadingScreen.classList.remove('active');
+        }
+        if (startScreen) {
+            startScreen.style.display = 'block';
+            startScreen.classList.add('active');
+        }
     }, 2000);
     
     // 엔터키 이벤트 설정 (삭제 - submitName으로 대체)
