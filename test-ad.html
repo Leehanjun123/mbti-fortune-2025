@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카카오 광고 테스트</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .ad-test {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 카카오 광고 기본 테스트</h1>
+    
+    <div class="ad-test">
+        <h3>광고 1번 - 50px</h3>
+        <ins class="kakao_ad_area" 
+             style="display:block;width:320px;height:50px;" 
+             data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
+             data-ad-width="320" 
+             data-ad-height="50"></ins>
+    </div>
+    
+    <div class="ad-test">
+        <h3>광고 2번 - 100px</h3>
+        <ins class="kakao_ad_area" 
+             style="display:block;width:320px;height:100px;" 
+             data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
+             data-ad-width="320" 
+             data-ad-height="100"></ins>
+    </div>
+    
+    <div class="ad-test">
+        <h3>광고 3번 - 100px</h3>
+        <ins class="kakao_ad_area" 
+             style="display:block;width:320px;height:100px;" 
+             data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
+             data-ad-width="320" 
+             data-ad-height="100"></ins>
+    </div>
+
+    <script>
+        // adsbykakao 객체 초기화
+        window.adsbykakao = window.adsbykakao || [];
+        
+        // DOM 로드 완료 후 실행
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 카카오 광고 테스트 시작');
+            console.log('도메인:', window.location.hostname);
+            
+            // AdFit 스크립트 로드
+            const script = document.createElement('script');
+            script.src = '//t1.daumcdn.net/kas/static/ba.min.js';
+            script.async = true;
+            script.onload = function() {
+                console.log('✅ AdFit 스크립트 로드 완료');
+                
+                // 모든 광고 영역 렌더링
+                const adAreas = document.querySelectorAll('.kakao_ad_area');
+                console.log(`광고 영역 ${adAreas.length}개 발견`);
+                
+                adAreas.forEach((area, index) => {
+                    const adUnit = area.getAttribute('data-ad-unit');
+                    console.log(`광고 ${index + 1} 렌더링 시도: ${adUnit}`);
+                    window.adsbykakao.push({});
+                });
+                
+                // 3초 후 결과 확인
+                setTimeout(() => {
+                    adAreas.forEach((area, index) => {
+                        const hasContent = area.children.length > 0 || area.innerHTML.trim().length > 0;
+                        console.log(`광고 ${index + 1} 렌더링 결과: ${hasContent ? '성공' : '실패'}`);
+                    });
+                }, 3000);
+            };
+            script.onerror = function() {
+                console.error('❌ AdFit 스크립트 로드 실패');
+            };
+            document.head.appendChild(script);
+        });
+    </script>
+</body>
+</html>

@@ -21,10 +21,11 @@
         }
         
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             overflow-x: hidden;
+            font-display: swap; /* 폰트 로딩 최적화 */
         }
         
         /* 컨테이너 */
@@ -387,6 +388,51 @@
             cursor: pointer;
             margin-top: 10px;
         }
+        
+        /* 맥락적 광고 스타일 */
+        .contextual-ad {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+        
+        .bottom-ad {
+            margin: 40px 0 20px 0;
+            padding: 20px 0;
+            text-align: center;
+        }
+        
+        .ad-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        .ad-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            margin: 0 auto 20px;
+        }
+        
+        /* 광고 컨테이너 */
+        .ad-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        /* 카카오 광고 스타일 조정 */
+        .kakao_ad_area {
+            margin: 0 auto !important;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
     </style>
     
     <!-- 카카오 SDK -->
@@ -395,15 +441,8 @@
     
     <!-- Kakao AdFit - 지연 로딩 -->
     <script>
-        // 강제 리다이렉트 (즉시 실행)
-        if (window.location.hostname === 'www.mbti-destiny.site') {
-            console.log('🔄 www 도메인 감지 - 즉시 리다이렉트 실행!');
-            var targetUrl = 'https://mbti-destiny.site' + window.location.pathname + window.location.search + window.location.hash;
-            console.log('리다이렉트 대상:', targetUrl);
-            window.location.replace(targetUrl);
-            // 리다이렉트 중이므로 스크립트 실행 중단
-            throw new Error('Redirecting...');
-        }
+        // 서버 레벨 리다이렉트 사용 (vercel.json에서 처리)
+        console.log('🌐 도메인:', window.location.hostname);
         
         // adsbykakao 객체 초기화
         window.adsbykakao = window.adsbykakao || [];
@@ -411,19 +450,11 @@
 </head>
 <body>
     <div class="app">
-        <!-- 상단 광고: 브랜드 인식 최적 -->
-        <div class="top-ad">
-            <div class="ad-container">
-                <ins class="kakao_ad_area" 
-                     style="display:block;width:320px;height:50px;" 
-                     data-ad-unit="DAN-cIOtsbRqKgkRvw1X" 
-                     data-ad-width="320" 
-                     data-ad-height="50"></ins>
-            </div>
-        </div>
+        <!-- 상단 광고 제거: Steve Jobs 철학 적용 -->
 
         <div class="container">
-            <!-- 모든 광고 영역 - 항상 보이는 위치 -->
+            
+            <!-- 기본 광고 영역 - 항상 보이는 위치 -->
             <div class="ad-container">
                 <ins class="kakao_ad_area" 
                      style="display:block;width:320px;height:50px;" 
@@ -514,6 +545,7 @@
                 </div>
             </div>
             
+            
             <!-- 결과 화면 -->
             <div id="resultScreen" class="screen">
                 <div class="result-header">
@@ -522,14 +554,6 @@
                 </div>
                 
                 
-                <!-- 중간 광고: 콘텐츠 사이 자연스러운 위치 -->
-                <div class="ad-container" style="margin: 30px 0;">
-                    <ins class="kakao_ad_area" 
-                         style="display:block;width:320px;height:100px;" 
-                         data-ad-unit="DAN-I87IJKlKm1SxmPvG" 
-                         data-ad-width="320" 
-                         data-ad-height="100"></ins>
-                </div>
                 
                 <!-- 총운 -->
                 <div class="fortune-section">
@@ -590,14 +614,6 @@
                     </button>
                 </div>
                 
-                <!-- 하단 광고: 사용자 행동 완료 후 -->
-                <div class="ad-container" style="margin-top: 40px; border-top: 1px solid #e2e8f0; padding-top: 30px;">
-                    <ins class="kakao_ad_area" 
-                         style="display:block;width:320px;height:100px;" 
-                         data-ad-unit="DAN-7yyU9mCDVMJTOAgA" 
-                         data-ad-width="320" 
-                         data-ad-height="100"></ins>
-                </div>
             </div>
         </div>
     </div>
@@ -647,6 +663,22 @@
             if (targetScreen) {
                 targetScreen.classList.add('active');
             }
+            
+            // 화면 전환 후 광고 렌더링 재시도
+            setTimeout(() => {
+                console.log(`🔄 화면 전환 후 광고 렌더링 재시도: ${screenId}`);
+                // 렌더링되지 않은 광고 영역들만 다시 시도
+                const unrenderedAds = document.querySelectorAll('.kakao_ad_area:not([data-rendered="true"])');
+                if (unrenderedAds.length > 0) {
+                    console.log(`미렌더링 광고 ${unrenderedAds.length}개 발견, 렌더링 시도`);
+                    unrenderedAds.forEach((area, index) => {
+                        const adUnit = area.getAttribute('data-ad-unit');
+                        console.log(`➡️ 광고 렌더링: ${adUnit}`);
+                        window.adsbykakao.push({});
+                        area.setAttribute('data-rendered', 'true');
+                    });
+                }
+            }, 500);
         }
         
         // MBTI 선택
@@ -682,6 +714,7 @@
                 
                 // 결과 화면 표시
                 showScreen('resultScreen');
+                
                 
                 // 결과 화면에서 광고 재렌더링 (긴 대기 시간)
                 setTimeout(() => {
@@ -826,7 +859,7 @@
                     console.error('❌ AdFit 스크립트 로드 실패');
                 };
                 document.head.appendChild(adScript);
-            }, 2000); // 2초 후에 광고 스크립트 로드
+            }, 1500); // 1.5초로 단축
         });
         
         // 전체 페이지 로드 완료 후
