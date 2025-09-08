@@ -716,68 +716,19 @@
     </div>
     
 
-    <script src="config.js"></script>
-    <script src="performance.js"></script>
-    <script src="script.js"></script>
+    <!-- 메인 스크립트 -->
+    <script src="main.js"></script>
     
-    <!-- App Initialization -->
+    <!-- 초기화 -->
     <script>
-        // 앱 초기화 이벤트
-        window.addEventListener('load', function() {
-            console.log('🚀 페이지 로드 완료 - 앱 초기화 시작');
-            try {
-                // 모든 초기화 함수 실행
-                if (typeof initApp === 'function') {
-                    initApp();
-                }
-                if (typeof startUserCountAnimation === 'function') {
-                    startUserCountAnimation();
-                }
-                if (typeof initKakaoSDK === 'function') {
-                    initKakaoSDK();
-                }
-                
-                // 접근성 시스템 초기화 
-                if (typeof AccessibilityManager !== 'undefined') {
-                    AccessibilityManager.addFocusIndicators();
-                    AccessibilityManager.enhanceKeyboardNavigation();
-                }
-                
-                console.log('✅ 완전한 앱 초기화 완료');
-            } catch (error) {
-                console.error('❌ 앱 초기화 오류:', error);
-                // 에러 발생시 최소한 시작 화면은 보여주기
-                setTimeout(() => {
-                    const startScreen = document.getElementById('startScreen');
-                    if (startScreen) {
-                        startScreen.style.display = 'block';
-                        startScreen.classList.add('active');
-                    }
-                    const loadingScreen = document.getElementById('loadingScreen');
-                    if (loadingScreen) {
-                        loadingScreen.style.display = 'none';
-                    }
-                }, 2000);
-            }
-        });
-        
-        // DOM이 준비되면 바로 초기화 (보험용)
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('🎯 DOM 준비 완료');
-            // 로딩 화면만 먼저 활성화
-            const loadingScreen = document.getElementById('loadingScreen');
-            if (loadingScreen) {
-                loadingScreen.style.display = 'flex';
-                loadingScreen.classList.add('active');
-            }
-        });
+        // main.js가 모든 초기화를 처리
+        console.log('✅ MBTI 운세 앱 준비 완료');
     </script>
     
-    <!-- Service Worker Registration -->
+    <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js');
+            navigator.serviceWorker.register('/sw.js').catch(() => {});
             });
         }
     </script>

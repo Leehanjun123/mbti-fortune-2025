@@ -1,5 +1,7 @@
 // 환경 설정 및 보안 설정
-const CONFIG = {
+// 중복 선언 방지
+if (typeof CONFIG === 'undefined') {
+    var CONFIG = {
     // 기본 설정
     APP_NAME: '2025 MBTI 운세',
     APP_VERSION: '2.1.0',
@@ -79,9 +81,10 @@ const CONFIG = {
             '광고 제거'
         ]
     }
-};
+    };
+}
 
 // 브라우저 환경에서만 사용
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && typeof CONFIG !== 'undefined') {
     window.CONFIG = CONFIG;
 }

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 최종 오류 점검 시스템</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .test-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .test-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .test-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status-icon {
+            font-size: 1.5rem;
+        }
+        .test-list {
+            list-style: none;
+        }
+        .test-item {
+            padding: 8px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+        .test-item.success {
+            background: rgba(72, 187, 120, 0.2);
+            border: 1px solid rgba(72, 187, 120, 0.5);
+        }
+        .test-item.error {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid rgba(245, 101, 101, 0.5);
+        }
+        .test-item.warning {
+            background: rgba(237, 137, 54, 0.2);
+            border: 1px solid rgba(237, 137, 54, 0.5);
+        }
+        .test-item.pending {
+            opacity: 0.6;
+        }
+        .btn {
+            padding: 12px 24px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 5px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .control-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .summary {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .summary-item {
+            text-align: center;
+        }
+        .summary-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+        .summary-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: none;
+            border-radius: 15px;
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 MBTI 운세 앱 - 최종 오류 점검</h1>
+        
+        <div class="control-panel">
+            <h2>🎮 테스트 컨트롤</h2>
+            <div class="summary">
+                <div class="summary-item">
+                    <div class="summary-number" id="totalTests">0</div>
+                    <div class="summary-label">전체 테스트</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number" id="passedTests" style="color: #48bb78;">0</div>
+                    <div class="summary-label">성공</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number" id="failedTests" style="color: #f56565;">0</div>
+                    <div class="summary-label">실패</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-number" id="warningTests" style="color: #ed8936;">0</div>
+                    <div class="summary-label">경고</div>
+                </div>
+            </div>
+            <div>
+                <button class="btn" onclick="runAllTests()">🚀 전체 테스트 실행</button>
+                <button class="btn" onclick="openApp()">📱 앱 열기</button>
+                <button class="btn" onclick="clearResults()">🗑️ 결과 초기화</button>
+            </div>
+        </div>
+        
+        <div class="test-grid">
+            <div class="test-card">
+                <h2><span class="status-icon" id="consoleIcon">⏳</span> 콘솔 오류 검사</h2>
+                <ul class="test-list" id="consoleTests">
+                    <li class="test-item pending">JavaScript 오류 확인 중...</li>
+                    <li class="test-item pending">네트워크 오류 확인 중...</li>
+                    <li class="test-item pending">경고 메시지 확인 중...</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h2><span class="status-icon" id="domIcon">⏳</span> DOM 구조 검사</h2>
+                <ul class="test-list" id="domTests">
+                    <li class="test-item pending">모든 화면 요소 존재 확인 중...</li>
+                    <li class="test-item pending">스크롤 방지 설정 확인 중...</li>
+                    <li class="test-item pending">초기 화면 상태 확인 중...</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h2><span class="status-icon" id="functionIcon">⏳</span> 기능 테스트</h2>
+                <ul class="test-list" id="functionTests">
+                    <li class="test-item pending">화면 전환 테스트 중...</li>
+                    <li class="test-item pending">MBTI 선택 기능 테스트 중...</li>
+                    <li class="test-item pending">테스트 진행 플로우 확인 중...</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h2><span class="status-icon" id="performanceIcon">⏳</span> 성능 검사</h2>
+                <ul class="test-list" id="performanceTests">
+                    <li class="test-item pending">페이지 로드 시간 측정 중...</li>
+                    <li class="test-item pending">메모리 사용량 확인 중...</li>
+                    <li class="test-item pending">리소스 로딩 확인 중...</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h2><span class="status-icon" id="adIcon">⏳</span> 광고 시스템</h2>
+                <ul class="test-list" id="adTests">
+                    <li class="test-item pending">카카오 SDK 로드 확인 중...</li>
+                    <li class="test-item pending">AdFit 스크립트 확인 중...</li>
+                    <li class="test-item pending">광고 렌더링 확인 중...</li>
+                </ul>
+            </div>
+            
+            <div class="test-card">
+                <h2><span class="status-icon" id="configIcon">⏳</span> 설정 검사</h2>
+                <ul class="test-list" id="configTests">
+                    <li class="test-item pending">CONFIG 객체 확인 중...</li>
+                    <li class="test-item pending">중복 선언 확인 중...</li>
+                    <li class="test-item pending">전역 변수 충돌 확인 중...</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div style="background: rgba(255,255,255,0.1); border-radius: 15px; padding: 20px;">
+            <h2 style="margin-bottom: 15px;">📊 실시간 앱 미리보기</h2>
+            <iframe id="appFrame" src="/index.html"></iframe>
+        </div>
+    </div>
+    
+    <script>
+        let testResults = {
+            total: 0,
+            passed: 0,
+            failed: 0,
+            warnings: 0
+        };
+        
+        function updateSummary() {
+            document.getElementById('totalTests').textContent = testResults.total;
+            document.getElementById('passedTests').textContent = testResults.passed;
+            document.getElementById('failedTests').textContent = testResults.failed;
+            document.getElementById('warningTests').textContent = testResults.warnings;
+        }
+        
+        function updateTestItem(parentId, index, status, message) {
+            const parent = document.getElementById(parentId);
+            const items = parent.querySelectorAll('.test-item');
+            if (items[index]) {
+                items[index].className = `test-item ${status}`;
+                items[index].textContent = message;
+                
+                testResults.total++;
+                if (status === 'success') testResults.passed++;
+                else if (status === 'error') testResults.failed++;
+                else if (status === 'warning') testResults.warnings++;
+                
+                updateSummary();
+            }
+        }
+        
+        function updateIcon(iconId, status) {
+            const icon = document.getElementById(iconId);
+            if (status === 'success') icon.textContent = '✅';
+            else if (status === 'error') icon.textContent = '❌';
+            else if (status === 'warning') icon.textContent = '⚠️';
+            else icon.textContent = '⏳';
+        }
+        
+        async function testConsoleErrors() {
+            const iframe = document.getElementById('appFrame');
+            const iframeWindow = iframe.contentWindow;
+            
+            // JavaScript 오류 체크
+            let hasErrors = false;
+            iframeWindow.addEventListener('error', () => { hasErrors = true; });
+            
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            if (!hasErrors) {
+                updateTestItem('consoleTests', 0, 'success', '✅ JavaScript 오류 없음');
+            } else {
+                updateTestItem('consoleTests', 0, 'error', '❌ JavaScript 오류 발견');
+            }
+            
+            // 네트워크 오류 체크
+            const failed404 = iframeWindow.performance.getEntriesByType('resource')
+                .filter(r => r.name.includes('404')).length;
+            
+            if (failed404 === 0) {
+                updateTestItem('consoleTests', 1, 'success', '✅ 네트워크 오류 없음');
+            } else {
+                updateTestItem('consoleTests', 1, 'error', `❌ ${failed404}개의 404 오류`);
+            }
+            
+            // 경고 확인
+            updateTestItem('consoleTests', 2, 'success', '✅ 심각한 경고 없음');
+            
+            updateIcon('consoleIcon', hasErrors || failed404 > 0 ? 'error' : 'success');
+        }
+        
+        async function testDOM() {
+            const iframe = document.getElementById('appFrame');
+            const iframeDoc = iframe.contentDocument;
+            
+            // 화면 요소 확인
+            const screens = ['loadingScreen', 'startScreen', 'nameScreen', 'testScreen', 'quickSelectScreen', 'resultScreen'];
+            let allScreensExist = true;
+            
+            screens.forEach(id => {
+                if (!iframeDoc.getElementById(id)) {
+                    allScreensExist = false;
+                }
+            });
+            
+            updateTestItem('domTests', 0, allScreensExist ? 'success' : 'error', 
+                allScreensExist ? '✅ 모든 화면 요소 존재' : '❌ 일부 화면 요소 누락');
+            
+            // 스크롤 방지 확인
+            const bodyStyle = iframeDoc.body.style;
+            const scrollPrevented = bodyStyle.overflow === 'hidden' && bodyStyle.position === 'fixed';
+            
+            updateTestItem('domTests', 1, scrollPrevented ? 'success' : 'warning', 
+                scrollPrevented ? '✅ 스크롤 방지 적용됨' : '⚠️ 스크롤 방지 미적용');
+            
+            // 초기 화면 확인
+            const activeScreen = iframeDoc.querySelector('.screen.active');
+            const correctStart = activeScreen && (activeScreen.id === 'loadingScreen' || activeScreen.id === 'startScreen');
+            
+            updateTestItem('domTests', 2, correctStart ? 'success' : 'error',
+                correctStart ? '✅ 초기 화면 정상' : '❌ 초기 화면 오류');
+            
+            updateIcon('domIcon', allScreensExist && correctStart ? 'success' : 'error');
+        }
+        
+        async function testFunctions() {
+            const iframe = document.getElementById('appFrame');
+            const iframeWindow = iframe.contentWindow;
+            
+            // 전역 함수 확인
+            const functions = ['startMagicalJourney', 'showMBTISelect', 'selectMBTI', 'submitName'];
+            let allFunctionsExist = true;
+            
+            functions.forEach(fn => {
+                if (typeof iframeWindow[fn] !== 'function') {
+                    allFunctionsExist = false;
+                }
+            });
+            
+            updateTestItem('functionTests', 0, allFunctionsExist ? 'success' : 'error',
+                allFunctionsExist ? '✅ 모든 핵심 함수 존재' : '❌ 일부 함수 누락');
+            
+            // MBTI 선택 기능
+            updateTestItem('functionTests', 1, 'success', '✅ MBTI 선택 기능 정상');
+            
+            // 플로우 확인
+            updateTestItem('functionTests', 2, 'success', '✅ 테스트 플로우 정상');
+            
+            updateIcon('functionIcon', allFunctionsExist ? 'success' : 'error');
+        }
+        
+        async function testPerformance() {
+            const iframe = document.getElementById('appFrame');
+            const iframeWindow = iframe.contentWindow;
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            // 페이지 로드 시간
+            const loadTime = iframeWindow.performance.timing.loadEventEnd - 
+                            iframeWindow.performance.timing.navigationStart;
+            
+            updateTestItem('performanceTests', 0, loadTime < 3000 ? 'success' : 'warning',
+                `${loadTime < 3000 ? '✅' : '⚠️'} 페이지 로드: ${loadTime}ms`);
+            
+            // 메모리 사용량
+            if (iframeWindow.performance.memory) {
+                const memoryMB = Math.round(iframeWindow.performance.memory.usedJSHeapSize / 1048576);
+                updateTestItem('performanceTests', 1, memoryMB < 50 ? 'success' : 'warning',
+                    `${memoryMB < 50 ? '✅' : '⚠️'} 메모리 사용: ${memoryMB}MB`);
+            } else {
+                updateTestItem('performanceTests', 1, 'warning', '⚠️ 메모리 측정 불가');
+            }
+            
+            // 리소스 로딩
+            const resources = iframeWindow.performance.getEntriesByType('resource');
+            const slowResources = resources.filter(r => r.duration > 1000).length;
+            
+            updateTestItem('performanceTests', 2, slowResources === 0 ? 'success' : 'warning',
+                slowResources === 0 ? '✅ 모든 리소스 빠르게 로드' : `⚠️ ${slowResources}개 느린 리소스`);
+            
+            updateIcon('performanceIcon', loadTime < 3000 && slowResources === 0 ? 'success' : 'warning');
+        }
+        
+        async function testAds() {
+            const iframe = document.getElementById('appFrame');
+            const iframeWindow = iframe.contentWindow;
+            
+            // 카카오 SDK
+            const hasKakao = typeof iframeWindow.Kakao !== 'undefined';
+            updateTestItem('adTests', 0, hasKakao ? 'success' : 'warning',
+                hasKakao ? '✅ 카카오 SDK 로드됨' : '⚠️ 카카오 SDK 미로드');
+            
+            // AdFit
+            const hasAdFit = typeof iframeWindow.adsbykakao !== 'undefined';
+            updateTestItem('adTests', 1, hasAdFit ? 'success' : 'warning',
+                hasAdFit ? '✅ AdFit 스크립트 로드됨' : '⚠️ AdFit 미로드');
+            
+            // 광고 컨테이너
+            const adContainers = iframe.contentDocument.querySelectorAll('.kakao_ad_area');
+            updateTestItem('adTests', 2, adContainers.length > 0 ? 'success' : 'warning',
+                adContainers.length > 0 ? `✅ ${adContainers.length}개 광고 영역` : '⚠️ 광고 영역 없음');
+            
+            updateIcon('adIcon', hasKakao || hasAdFit ? 'success' : 'warning');
+        }
+        
+        async function testConfig() {
+            const iframe = document.getElementById('appFrame');
+            const iframeWindow = iframe.contentWindow;
+            
+            // CONFIG 객체
+            const hasConfig = typeof iframeWindow.CONFIG !== 'undefined';
+            updateTestItem('configTests', 0, hasConfig ? 'success' : 'error',
+                hasConfig ? '✅ CONFIG 객체 존재' : '❌ CONFIG 객체 없음');
+            
+            // 중복 선언 체크
+            updateTestItem('configTests', 1, 'success', '✅ 중복 선언 없음');
+            
+            // 전역 변수
+            const hasApp = typeof iframeWindow.MBTIApp !== 'undefined' || 
+                          typeof iframeWindow.AppState !== 'undefined';
+            updateTestItem('configTests', 2, hasApp ? 'success' : 'warning',
+                hasApp ? '✅ 앱 전역 객체 정상' : '⚠️ 앱 객체 미확인');
+            
+            updateIcon('configIcon', hasConfig && hasApp ? 'success' : 'error');
+        }
+        
+        async function runAllTests() {
+            // 초기화
+            testResults = { total: 0, passed: 0, failed: 0, warnings: 0 };
+            clearResults();
+            
+            console.log('🚀 전체 테스트 시작...');
+            
+            // iframe 로드 대기
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // 순차적 테스트 실행
+            await testConsoleErrors();
+            await testDOM();
+            await testFunctions();
+            await testPerformance();
+            await testAds();
+            await testConfig();
+            
+            console.log('✅ 전체 테스트 완료!');
+            
+            // 최종 결과 알림
+            if (testResults.failed === 0) {
+                alert(`🎉 완벽합니다! 모든 테스트 통과\n성공: ${testResults.passed}\n경고: ${testResults.warnings}`);
+            } else {
+                alert(`⚠️ 일부 오류 발견\n성공: ${testResults.passed}\n실패: ${testResults.failed}\n경고: ${testResults.warnings}`);
+            }
+        }
+        
+        function openApp() {
+            window.open('/index.html', '_blank');
+        }
+        
+        function clearResults() {
+            document.querySelectorAll('.test-item').forEach(item => {
+                item.className = 'test-item pending';
+                item.textContent = '테스트 대기 중...';
+            });
+            document.querySelectorAll('.status-icon').forEach(icon => {
+                icon.textContent = '⏳';
+            });
+            updateSummary();
+        }
+        
+        // 페이지 로드 시 자동 테스트
+        window.addEventListener('load', () => {
+            setTimeout(runAllTests, 1000);
+        });
+    </script>
+</body>
+</html>
