@@ -1638,7 +1638,7 @@
         let gameScore = 0;
         let highScore = localStorage.getItem('highScore') || 0;
 
-        // MBTI 질문 데이터
+        // MBTI 질문 데이터 (mbti-test-logic.js에서 가져옴)
         const questions = [
             {
                 text: "새로운 사람들을 만날 때 나는...",
@@ -1647,7 +1647,83 @@
                     { text: "조용히 관찰하고 천천히 다가간다", value: 'I' }
                 ]
             },
-            // ... 12개 질문
+            {
+                text: "정보를 처리할 때 나는...",
+                answers: [
+                    { text: "구체적인 사실과 세부사항에 집중한다", value: 'S' },
+                    { text: "전체적인 패턴과 가능성을 본다", value: 'N' }
+                ]
+            },
+            {
+                text: "결정을 내릴 때 나는...",
+                answers: [
+                    { text: "논리와 일관성을 우선시한다", value: 'T' },
+                    { text: "사람과 감정을 우선시한다", value: 'F' }
+                ]
+            },
+            {
+                text: "일상생활에서 나는...",
+                answers: [
+                    { text: "계획을 세우고 그대로 실행한다", value: 'J' },
+                    { text: "상황에 따라 유연하게 대처한다", value: 'P' }
+                ]
+            },
+            {
+                text: "주말을 보낼 때 나는...",
+                answers: [
+                    { text: "친구들과 활발하게 시간을 보낸다", value: 'E' },
+                    { text: "혼자만의 시간을 충분히 갖는다", value: 'I' }
+                ]
+            },
+            {
+                text: "문제 해결을 할 때 나는...",
+                answers: [
+                    { text: "경험과 실용적인 방법을 활용한다", value: 'S' },
+                    { text: "창의적이고 혁신적인 방법을 찾는다", value: 'N' }
+                ]
+            },
+            {
+                text: "갈등 상황에서 나는...",
+                answers: [
+                    { text: "객관적이고 공정한 해결책을 찾는다", value: 'T' },
+                    { text: "모든 사람이 만족할 방법을 찾는다", value: 'F' }
+                ]
+            },
+            {
+                text: "새 프로젝트를 시작할 때 나는...",
+                answers: [
+                    { text: "체계적인 계획부터 세운다", value: 'J' },
+                    { text: "일단 시작하고 진행하면서 조정한다", value: 'P' }
+                ]
+            },
+            {
+                text: "에너지를 충전할 때 나는...",
+                answers: [
+                    { text: "사람들과 함께 시간을 보낸다", value: 'E' },
+                    { text: "혼자만의 조용한 시간이 필요하다", value: 'I' }
+                ]
+            },
+            {
+                text: "일할 때 나는...",
+                answers: [
+                    { text: "정확하고 세밀한 작업을 선호한다", value: 'S' },
+                    { text: "큰 그림과 미래 비전을 중시한다", value: 'N' }
+                ]
+            },
+            {
+                text: "피드백을 줄 때 나는...",
+                answers: [
+                    { text: "솔직하고 직접적으로 말한다", value: 'T' },
+                    { text: "상대방의 기분을 배려해서 전달한다", value: 'F' }
+                ]
+            },
+            {
+                text: "마감이 있는 일을 할 때 나는...",
+                answers: [
+                    { text: "미리미리 준비해서 여유있게 완료한다", value: 'J' },
+                    { text: "마감 직전의 압박감 속에서 집중한다", value: 'P' }
+                ]
+            }
         ];
 
         // 유명인 MBTI 데이터
@@ -1656,7 +1732,17 @@
             { name: "유재석", mbti: "ENFP", emoji: "🎭" },
             { name: "손흥민", mbti: "ISFP", emoji: "⚽" },
             { name: "BTS RM", mbti: "ENFP", emoji: "🎵" },
-            { name: "박명수", mbti: "ESTP", emoji: "😂" }
+            { name: "박명수", mbti: "ESTP", emoji: "😂" },
+            { name: "이효리", mbti: "ESFP", emoji: "💃" },
+            { name: "강호동", mbti: "ESFJ", emoji: "🎪" },
+            { name: "김연아", mbti: "ISFJ", emoji: "⛸️" },
+            { name: "이승기", mbti: "ISFJ", emoji: "🎬" },
+            { name: "정우성", mbti: "INFJ", emoji: "🎭" },
+            { name: "공유", mbti: "INFP", emoji: "🎬" },
+            { name: "송중기", mbti: "ESFJ", emoji: "💫" },
+            { name: "박보영", mbti: "ESFP", emoji: "🌟" },
+            { name: "이종석", mbti: "INTJ", emoji: "🎯" },
+            { name: "수지", mbti: "ISFP", emoji: "🌸" }
         ];
 
         // 테스트 시작
@@ -1670,7 +1756,26 @@
 
         // 질문 표시
         function showQuestion() {
-            // 구현...
+            if (currentQuestion >= questions.length) {
+                calculateResult();
+                return;
+            }
+            
+            const question = questions[currentQuestion];
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('questionNumber').textContent = 
+                `질문 ${currentQuestion + 1}/${questions.length}`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            // 답변 버튼 업데이트
+            const answerButtons = document.querySelectorAll('.answer-btn');
+            answerButtons[0].textContent = question.answers[0].text;
+            answerButtons[1].textContent = question.answers[1].text;
+            
+            answerButtons[0].setAttribute('onclick', `selectAnswer('${question.answers[0].value}')`);
+            answerButtons[1].setAttribute('onclick', `selectAnswer('${question.answers[1].value}')`);
         }
 
         // 답변 선택
@@ -1678,12 +1783,12 @@
             answers[value]++;
             currentQuestion++;
             
-            if (currentQuestion === 6) {
+            if (currentQuestion === Math.floor(questions.length / 2)) {
                 document.getElementById('midAd').style.display = 'block';
                 refreshAds();
             }
             
-            if (currentQuestion < 12) {
+            if (currentQuestion < questions.length) {
                 showQuestion();
             } else {
                 calculateResult();
