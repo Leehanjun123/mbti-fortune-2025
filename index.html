@@ -99,6 +99,12 @@
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
         }
 
         .notification-bell {
@@ -1139,7 +1145,7 @@
 
     <!-- 상단 헤더 -->
     <header class="header">
-        <div class="logo">MBTI Universe</div>
+        <div class="logo" onclick="goHome()" title="메인화면으로 돌아가기">MBTI Universe</div>
         <div class="notification-bell" onclick="showNotifications()">
             🔔
             <span class="notification-badge" id="notificationBadge">3</span>
@@ -2044,6 +2050,12 @@
             }
         }
 
+        // 메인화면으로 돌아가기
+        function goHome() {
+            showSection('home');
+            showToast('메인화면으로 돌아왔습니다! 🏠');
+        }
+        
         // 섹션 전환
         function showSection(section) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -2198,6 +2210,13 @@
                     gtag('event', 'engagement_time', {
                         value: duration
                     });
+                }
+            });
+            
+            // 키보드 단축키 (메인화면 돌아가기)
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    goHome();
                 }
             });
             
