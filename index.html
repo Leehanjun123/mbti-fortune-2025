@@ -1638,7 +1638,7 @@
     
     <script>
         // 전역 변수
-        let currentMBTI = localStorage.getItem('currentMBTI') || 'INTJ';
+        let currentMBTI = localStorage.getItem('currentMBTI') || null;
         let currentQuestion = 0;
         let answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
         let gameScore = 0;
@@ -2087,9 +2087,12 @@
 
         function showCompatibility() {
             if (!currentMBTI) {
-                showToast('먼저 테스트를 완료해주세요!');
-                startTest();
-                return;
+                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
+                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
+                    currentMBTI = selected.toUpperCase();
+                    localStorage.setItem('currentMBTI', currentMBTI);
+                    showToast(`${currentMBTI} 설정 완료! 🎉`);
+                } else return;
             }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
@@ -2097,9 +2100,12 @@
 
         function showFortune() {
             if (!currentMBTI) {
-                showToast('먼저 테스트를 완료해주세요!');
-                startTest();
-                return;
+                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
+                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
+                    currentMBTI = selected.toUpperCase();
+                    localStorage.setItem('currentMBTI', currentMBTI);
+                    showToast(`${currentMBTI} 설정 완료! 🎉`);
+                } else return;
             }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
@@ -2107,8 +2113,21 @@
         }
 
         function showChat() {
+            if (!currentMBTI) {
+                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
+                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
+                    currentMBTI = selected.toUpperCase();
+                    localStorage.setItem('currentMBTI', currentMBTI);
+                    showToast(`${currentMBTI} 설정 완료! 🎉`);
+                } else return;
+            }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('chatSection').classList.add('active');
+            
+            // 랜덤 상대방 연결
+            const partners = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+            const randomPartner = partners[Math.floor(Math.random() * partners.length)];
+            document.querySelector('.chat-title').textContent = `${currentMBTI} ↔ ${randomPartner} 채팅`;
         }
 
         function showStats() {
