@@ -22,9 +22,9 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
         crossorigin="anonymous"></script>
     
-    <!-- Firebase (채팅용) -->
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    <!-- Firebase (채팅용) - 호환성 버전으로 변경 -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -2148,8 +2148,6 @@
     <div class="toast" id="toast"></div>
 
     <!-- MBTI 테스트 로직 -->
-    <script src="mbti-test-logic.js"></script>
-    <script src="additional-features.js"></script>
     
     <script>
         // 전역 변수
@@ -2796,7 +2794,7 @@
 
         // MBTI 설정 관련 함수들
         let quizAnswers = [];
-        let currentQuestion = 0;
+        let mbtiCurrentQuestion = 0;
         
         const mbtiQuestions = [
             {
@@ -2857,34 +2855,34 @@
             document.getElementById('mbtiSelector').style.display = 'none';
             document.getElementById('mbtiQuiz').style.display = 'none';
             quizAnswers = [];
-            currentQuestion = 0;
+            mbtiCurrentQuestion = 0;
         }
 
         function startQuiz() {
             quizAnswers = [];
-            currentQuestion = 0;
+            mbtiCurrentQuestion = 0;
             showQuestion();
         }
 
         function showQuestion() {
-            const question = mbtiQuestions[currentQuestion];
+            const question = mbtiQuestions[mbtiCurrentQuestion];
             document.getElementById('questionTitle').textContent = question.question;
             document.getElementById('answerA').textContent = question.A.text;
             document.getElementById('answerB').textContent = question.B.text;
-            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/8`;
+            document.getElementById('questionCounter').textContent = `${mbtiCurrentQuestion + 1}/8`;
             
-            const progress = ((currentQuestion + 1) / 8) * 100;
+            const progress = ((mbtiCurrentQuestion + 1) / 8) * 100;
             document.getElementById('quizProgress').style.width = progress + '%';
         }
 
         function selectQuizAnswer(choice) {
-            const question = mbtiQuestions[currentQuestion];
+            const question = mbtiQuestions[mbtiCurrentQuestion];
             const answer = choice === 'E' ? question.A.value : question.B.value;
             quizAnswers.push(answer);
             
-            currentQuestion++;
+            mbtiCurrentQuestion++;
             
-            if (currentQuestion < mbtiQuestions.length) {
+            if (mbtiCurrentQuestion < mbtiQuestions.length) {
                 showQuestion();
             } else {
                 calculateMBTI();
