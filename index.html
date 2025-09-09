@@ -3350,7 +3350,75 @@
             }
         };
 
+        // ====== 3D 벡터 클래스 ======
+        class Vector3D {
+            constructor(x = 0, y = 0, z = 0) {
+                this.x = x;
+                this.y = y;
+                this.z = z;
+            }
+        }
+        
+        // ====== MBTI 차원 정의 ======
+        const MBTIDimensions = {
+            'Ne': { name: '가능성의 차원', color: '#667eea', ambient: '#2a2a3e' },
+            'Ni': { name: '통찰의 차원', color: '#764ba2', ambient: '#3a2a4e' },
+            'Se': { name: '감각의 차원', color: '#f093fb', ambient: '#4a3a5e' },
+            'Si': { name: '기억의 차원', color: '#4facfe', ambient: '#2a3a4e' },
+            'Te': { name: '효율의 차원', color: '#43e97b', ambient: '#2a4a3e' },
+            'Ti': { name: '논리의 차원', color: '#38f9d7', ambient: '#2a4a4e' },
+            'Fe': { name: '조화의 차원', color: '#fa709a', ambient: '#4a2a3e' },
+            'Fi': { name: '가치의 차원', color: '#fee140', ambient: '#4a3a2e' }
+        };
+        
+        // ParticleSystem 클래스
+        class ParticleSystem {
+            constructor() {
+                this.particles = [];
+            }
+            
+            update(deltaTime) {
+                // 파티클 업데이트 로직
+            }
+            
+            render(ctx) {
+                // 파티클 렌더링 로직
+            }
+        }
+        
         // ====== 메인 RPG-FPS 게임 엔진 ======
+        // Game3D 객체 정의 (RPGFPSEngine과 호환성을 위해)
+        const Game3D = {
+            // 기본 속성들
+            isRunning: false,
+            isPaused: false,
+            score: 0,
+            level: 1,
+            currentDimension: 'Ne',
+            worldSize: 100,
+            
+            // 플레이어
+            player: {
+                position: { x: 0, y: 0, z: 0 },
+                velocity: { x: 0, y: 0, z: 0 },
+                energy: 100,
+                cooldowns: [0, 0, 0, 0],
+                mbtiType: 'ENFP'
+            },
+            
+            // 게임 오브젝트들
+            crystals: [],
+            obstacles: [],
+            platforms: [],
+            particles: null,
+            
+            // 오디오
+            audioContext: null,
+            
+            // 시간
+            lastTime: 0
+        };
+        
         const RPGFPSEngine = {
             // 렌더링 시스템
             canvas: null, ctx: null, minimap: null, minimapCtx: null,
@@ -3678,9 +3746,21 @@
             }
         }
         
-        // 게임 시작 함수 (호환성)
+        // 게임 시작 함수 (호환성) - 나중에 정의될 startGame3DUnified를 호출
         function startGame3D() {
-            startRPGFPS();
+            // Game3D 객체가 정의되었는지 확인
+            if (typeof Game3D === 'undefined' || typeof startGame3DUnified === 'undefined') {
+                console.error('Game3D 또는 startGame3DUnified가 아직 정의되지 않았습니다.');
+                // 잠시 후 다시 시도
+                setTimeout(() => {
+                    if (typeof startGame3DUnified !== 'undefined') {
+                        startGame3DUnified();
+                    }
+                }, 100);
+                return;
+            }
+            // 통합된 게임 시작 함수 호출
+            startGame3DUnified();
         }
         
         // RPG-FPS 게임 시작
@@ -4620,43 +4700,40 @@
             oscillator.stop(Game3D.audioContext.currentTime + duration);
         }
 
-        // 게임 시작
-        function startGame3D() {
-            if (Game3D.isRunning) return;
-            
+        // 게임 시작 (Game3D와 RPGFPSEngine 통합)
+        function startGame3DUnified() {
             // MBTI 확인
             if (!currentMBTI) {
                 showToast('❌ 먼저 MBTI를 설정해주세요!');
                 return;
             }
             
-            // 게임 상태 초기화
-            Game3D.score = 0; Game3D.level = 1; Game3D.currentDimension = 'Ne';
-            Game3D.player.position = new Vector3D(0, 0, 0);
-            Game3D.player.velocity = new Vector3D(0, 0, 0);
-            Game3D.player.energy = 100; Game3D.player.cooldowns = [0, 0, 0, 0];
-            Game3D.crystals = []; Game3D.obstacles = []; Game3D.platforms = [];
+            // 두 엔진 모두 초기화
+            if (Game3D.isRunning || RPGFPSEngine.state.isRunning) return;
+            
+            // Game3D 초기화
+            Game3D.isRunning = true;
+            Game3D.isPaused = false;
+            Game3D.score = 0;
+            Game3D.level = 1;
+            Game3D.currentDimension = 'Ne';
+            Game3D.player.mbtiType = currentMBTI;
+            Game3D.player.energy = 100;
+            Game3D.crystals = [];
+            Game3D.obstacles = [];
+            Game3D.platforms = [];
             Game3D.particles = new ParticleSystem();
             
-            // 현재 사용자 MBTI 기반 설정
-            Game3D.player.mbtiType = currentMBTI;
+            // RPGFPSEngine도 시작
+            startRPGFPS();
             
-            generateLevel();
-            updateGameUI();
-            
+            // UI 업데이트
             document.getElementById('gameOverlay3D').style.display = 'none';
             document.getElementById('gameStartBtn').style.display = 'none';
             document.getElementById('gamePauseBtn').style.display = 'block';
             
-            Game3D.isRunning = true; Game3D.isPaused = false;
-            Game3D.lastTime = performance.now();
-            
-            // 게임 시작 안내
-            showToast(`🎮 ${currentMBTI} 어드벤처 시작! 당신의 크리스탈을 찾아보세요!`);
-            
-            gameLoop3D();
-            
-            console.log(`${currentMBTI} 3D MBTI 게임 시작!`);
+            showToast(`🎮 ${currentMBTI} 어드벤처 시작!`);
+            console.log(`${currentMBTI} 게임 시작!`);
         }
 
         // 레벨 생성 (동적 레벨 생성)
