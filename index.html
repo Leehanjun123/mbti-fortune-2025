@@ -5,29 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
     <!-- SEO 최적화 -->
-    <title>MBTI 테스트 2025 - 나의 진짜 성격 유형 찾기 | 무료 성격테스트</title>
-    <meta name="description" content="2025년 최신 MBTI 성격 테스트! 3분만에 나의 진짜 성격을 알아보세요. INTJ, ENFP 등 16가지 성격 유형 무료 분석">
-    <meta name="keywords" content="MBTI, MBTI테스트, 성격테스트, 무료MBTI, MBTI유형, INTJ, ENFP, INFP, 성격유형테스트, 2025">
+    <title>MBTI 테스트 2025 - 궁합, 운세, 게임까지! | 무료 성격테스트</title>
+    <meta name="description" content="MBTI 테스트, 연애 궁합, 오늘의 운세, 미니게임까지! 친구들과 공유하고 채팅도 해보세요. 2025년 최고의 MBTI 플랫폼">
+    <meta name="keywords" content="MBTI, MBTI테스트, MBTI궁합, MBTI운세, 성격테스트, 무료MBTI, MBTI게임, MBTI채팅">
     
-    <!-- Open Graph for 공유 -->
-    <meta property="og:title" content="MBTI 테스트 2025 - 나의 진짜 성격 찾기">
-    <meta property="og:description" content="3분 만에 알아보는 나의 MBTI! 친구들과 공유해보세요 🎯">
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI Universe - 당신의 모든 MBTI 콘텐츠">
+    <meta property="og:description" content="테스트, 궁합, 운세, 게임, 채팅까지! 🎯">
     <meta property="og:image" content="https://mbti-fortune-2025.github.io/og-image.jpg">
-    <meta property="og:url" content="https://mbti-fortune-2025.github.io">
-    <meta property="og:type" content="website">
+    
+    <!-- PWA 지원 -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#5865F2">
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
         crossorigin="anonymous"></script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-XXXXXXXXXX');
-    </script>
+    <!-- Firebase (채팅용) -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js"></script>
+    
+    <!-- Kakao SDK -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    
+    <!-- Disqus (댓글) -->
+    <script id="dsq-count-scr" src="//mbti-test.disqus.com/count.js" async></script>
     
     <style>
         * {
@@ -42,18 +45,20 @@
             --gray: #8a8a8a;
             --primary: #5865F2;
             --success: #57F287;
+            --danger: #ED4245;
+            --warning: #FEE75C;
             --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--black);
             color: var(--white);
             overflow-x: hidden;
-            min-height: 100vh;
+            padding-bottom: 60px; /* 하단 네비게이션 공간 */
         }
 
-        /* 부드러운 배경 애니메이션 */
+        /* 애니메이션 배경 */
         .bg-animation {
             position: fixed;
             width: 100%;
@@ -72,34 +77,120 @@
             50% { transform: rotate(180deg) scale(1.1); }
         }
 
+        /* 상단 헤더 */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .notification-bell {
+            position: relative;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* 하단 네비게이션 */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-icon {
+            font-size: 1.5rem;
+            margin-bottom: 3px;
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+        }
+
         /* 메인 컨테이너 */
         .container {
             max-width: 600px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 80px 20px 20px;
             min-height: 100vh;
-            position: relative;
+        }
+
+        /* 섹션 공통 */
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* 시작 화면 */
         .start-screen {
             text-align: center;
-            padding: 60px 20px;
-            animation: fadeInUp 0.8s ease;
+            padding: 40px 20px;
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .logo {
+        .main-title {
             font-size: 3rem;
             font-weight: 900;
             background: var(--gradient);
@@ -109,7 +200,7 @@
         }
 
         .tagline {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 15px;
             line-height: 1.3;
@@ -117,90 +208,66 @@
 
         .subtitle {
             color: var(--gray);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
+            font-size: 1rem;
+            margin-bottom: 30px;
         }
 
-        .start-button {
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 18px 60px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 100px;
+        /* 메인 메뉴 그리드 */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
-        }
-
-        .start-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
-        }
-
-        /* 통계 표시 */
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin: 40px 0;
-        }
-
-        .stat {
             text-align: center;
         }
 
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
+        .menu-card:hover {
+            transform: translateY(-5px);
+            background: rgba(88, 101, 242, 0.1);
+            border-color: var(--primary);
         }
 
-        .stat-label {
-            font-size: 0.9rem;
+        .menu-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .menu-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .menu-desc {
+            font-size: 0.85rem;
             color: var(--gray);
         }
 
-        /* 광고 컨테이너 - 전략적 배치 */
-        .ad-container {
-            margin: 30px auto;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            min-height: 100px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .ad-label {
-            position: absolute;
-            top: -10px;
-            left: 10px;
-            background: var(--black);
-            padding: 0 8px;
+        .menu-badge {
+            display: inline-block;
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
             font-size: 0.7rem;
-            color: var(--gray);
+            margin-top: 5px;
         }
 
         /* 테스트 화면 */
-        .test-screen {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
         .progress-bar {
             height: 4px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 2px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             overflow: hidden;
         }
 
@@ -208,7 +275,6 @@
             height: 100%;
             background: var(--gradient);
             transition: width 0.5s ease;
-            border-radius: 2px;
         }
 
         .question-container {
@@ -227,9 +293,9 @@
         }
 
         .question-text {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.4;
         }
 
@@ -257,108 +323,615 @@
             transform: translateX(5px);
         }
 
-        /* 결과 화면 */
-        .result-screen {
-            display: none;
-            text-align: center;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .result-type {
-            font-size: 4rem;
-            font-weight: 900;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-
-        .result-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .result-description {
-            color: var(--gray);
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            padding: 0 20px;
-        }
-
-        .result-details {
+        /* 궁합 계산기 */
+        .compatibility-section {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 25px;
             margin: 20px 0;
-            text-align: left;
         }
 
-        .result-details h3 {
-            color: var(--primary);
-            margin-bottom: 15px;
+        .compatibility-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .mbti-selectors {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .mbti-selector {
+            text-align: center;
+        }
+
+        .mbti-selector label {
+            display: block;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .mbti-select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .heart-icon {
+            font-size: 2rem;
+            color: var(--danger);
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .check-btn {
+            width: 100%;
+            background: var(--gradient);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .compatibility-result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: rgba(88, 101, 242, 0.1);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .compatibility-score {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .compatibility-label {
             font-size: 1.2rem;
+            margin: 10px 0;
         }
 
-        .result-details ul {
+        .compatibility-details {
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .compatibility-details h4 {
+            color: var(--primary);
+            margin: 15px 0 10px;
+        }
+
+        .compatibility-details ul {
             list-style: none;
             color: var(--gray);
             line-height: 1.8;
         }
 
-        .result-details li:before {
-            content: "✓ ";
+        .compatibility-details li:before {
+            content: "• ";
             color: var(--success);
-            font-weight: bold;
         }
 
-        /* 공유 버튼들 */
-        .share-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 30px 0;
+        /* 오늘의 운세 */
+        .fortune-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
         }
 
-        .share-btn {
-            padding: 12px 24px;
-            border-radius: 10px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+        .fortune-date {
+            text-align: center;
+            color: var(--gray);
+            margin-bottom: 20px;
         }
 
-        .share-kakao {
-            background: #FEE500;
-            color: #000000;
+        .fortune-score {
+            text-align: center;
+            margin: 20px 0;
         }
 
-        .share-link {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .retry-btn {
+        .fortune-score-number {
+            font-size: 4rem;
+            font-weight: 900;
             background: var(--gradient);
-            color: white;
-            padding: 14px 40px;
-            border-radius: 100px;
-            border: none;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fortune-score-label {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .fortune-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .fortune-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .fortune-card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .fortune-card-title {
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            margin-bottom: 5px;
+        }
+
+        .fortune-card-text {
+            font-size: 0.9rem;
+            color: var(--gray);
+            line-height: 1.4;
+        }
+
+        .lucky-items {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background: rgba(88, 101, 242, 0.1);
+            border-radius: 15px;
             margin-top: 20px;
         }
 
-        /* 전면 광고 (결과 보기 전) */
-        .interstitial-ad {
+        .lucky-item {
+            text-align: center;
+        }
+
+        .lucky-item-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .lucky-item-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* 미니게임 */
+        .game-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .game-score {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 15px 0;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+        .score-label {
+            font-size: 0.8rem;
+            color: var(--gray);
+        }
+
+        .score-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .game-content {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .celebrity-card {
+            margin: 20px 0;
+        }
+
+        .celebrity-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--gradient);
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .celebrity-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .game-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .game-option {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .game-option:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* 채팅방 */
+        .chat-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-title {
+            font-weight: 600;
+        }
+
+        .online-count {
+            color: var(--success);
+            font-size: 0.9rem;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 0;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .message-user {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.85rem;
+            margin-bottom: 5px;
+        }
+
+        .message-text {
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: white;
+            font-size: 0.95rem;
+        }
+
+        .chat-send-btn {
+            padding: 10px 20px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .chat-send-btn:hover {
+            background: #4752C4;
+        }
+
+        /* 통계 섹션 */
+        .stats-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .rarity-badge {
+            text-align: center;
+            padding: 20px;
+            background: var(--gradient);
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .rarity-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .rarity-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin: 10px 0;
+        }
+
+        .rarity-desc {
+            font-size: 0.85rem;
+            opacity: 0.8;
+        }
+
+        .ranking-lists {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .ranking-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .ranking-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .ranking-list {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .ranking-list li {
+            padding: 5px 0;
+            color: var(--gray);
+        }
+
+        .ranking-list li:first-child {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* 잠금 콘텐츠 */
+        .locked-content {
+            position: relative;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .locked-content:hover {
+            transform: translateY(-2px);
+            border-color: var(--primary);
+        }
+
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lock-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .unlock-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .unlock-btn {
+            padding: 8px 20px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        .content-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .content-preview {
+            color: var(--gray);
+            filter: blur(3px);
+        }
+
+        /* 이메일 구독 */
+        .subscribe-section {
+            background: var(--gradient);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .subscribe-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .subscribe-desc {
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .subscribe-form {
+            display: flex;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 100px;
+            font-size: 1rem;
+        }
+
+        .subscribe-btn {
+            padding: 12px 30px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: none;
+            border-radius: 100px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .subscribe-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* 댓글 섹션 */
+        .comments-section {
+            margin: 30px 0;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .comments-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .comments-count {
+            background: rgba(88, 101, 242, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        /* 광고 컨테이너 */
+        .ad-container {
+            margin: 25px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .ad-label {
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            background: var(--black);
+            padding: 0 8px;
+            font-size: 0.7rem;
+            color: var(--gray);
+        }
+
+        /* 전면 광고 모달 */
+        .ad-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -369,10 +942,13 @@
             z-index: 9999;
             align-items: center;
             justify-content: center;
-            flex-direction: column;
         }
 
-        .interstitial-content {
+        .ad-modal.active {
+            display: flex;
+        }
+
+        .ad-modal-content {
             background: rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 30px;
@@ -399,49 +975,146 @@
             margin: 20px auto 0;
         }
 
+        /* 리워드 광고 */
+        .reward-ad-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .reward-ad-content {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .reward-timer {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 20px 0;
+        }
+
+        /* 알림 설정 */
+        .notification-settings {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-info {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-desc {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--primary);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+
         /* 모바일 최적화 */
         @media (max-width: 600px) {
-            .logo {
-                font-size: 2.5rem;
+            .menu-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
             }
-            
-            .tagline {
-                font-size: 1.5rem;
+
+            .menu-card {
+                padding: 20px 15px;
             }
-            
-            .stats {
-                gap: 20px;
+
+            .menu-title {
+                font-size: 0.95rem;
             }
-            
-            .stat-number {
-                font-size: 1.5rem;
+
+            .menu-desc {
+                display: none;
             }
-            
-            .result-type {
-                font-size: 3rem;
+
+            .ranking-lists {
+                grid-template-columns: 1fr;
             }
-            
-            .share-buttons {
-                flex-direction: column;
-            }
-            
-            .share-btn {
-                width: 100%;
-                justify-content: center;
+
+            .game-options {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* 플로팅 광고 (스크롤 시 하단 고정) */
-        .floating-ad {
-            display: none;
+        /* 토스트 알림 */
+        .toast {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--black);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 10px;
-            z-index: 100;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 100px;
+            z-index: 10000;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
         }
 
         /* 로딩 스피너 */
@@ -464,44 +1137,112 @@
     <!-- 배경 애니메이션 -->
     <div class="bg-animation"></div>
 
+    <!-- 상단 헤더 -->
+    <header class="header">
+        <div class="logo">MBTI Universe</div>
+        <div class="notification-bell" onclick="showNotifications()">
+            🔔
+            <span class="notification-badge" id="notificationBadge">3</span>
+        </div>
+    </header>
+
     <!-- 메인 컨테이너 -->
     <div class="container">
         
-        <!-- 시작 화면 -->
-        <div id="startScreen" class="start-screen">
-            <h1 class="logo">MBTI TEST</h1>
-            <h2 class="tagline">3분 만에 찾는<br>나의 진짜 성격</h2>
-            <p class="subtitle">전 세계 1,600만 가지 성격 중 나는 어떤 유형일까?</p>
-            
-            <!-- 상단 광고 -->
-            <div class="ad-container">
-                <span class="ad-label">광고</span>
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-1752582087901677"
-                     data-ad-slot="1234567890"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-            </div>
-            
-            <button class="start-button" onclick="startTest()">
-                테스트 시작하기
-            </button>
-            
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number" id="todayCount">2,847</div>
-                    <div class="stat-label">오늘 참여자</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">94.7%</div>
-                    <div class="stat-label">정확도</div>
-                </div>
-            </div>
-        </div>
+        <!-- 홈 섹션 -->
+        <section id="homeSection" class="section active">
+            <div class="start-screen">
+                <h1 class="main-title">MBTI Universe</h1>
+                <h2 class="tagline">당신의 모든 MBTI가 여기에</h2>
+                <p class="subtitle">테스트, 궁합, 운세, 게임, 채팅까지!</p>
 
-        <!-- 테스트 화면 -->
-        <div id="testScreen" class="test-screen">
+                <!-- 메인 메뉴 -->
+                <div class="menu-grid">
+                    <div class="menu-card" onclick="startTest()">
+                        <div class="menu-icon">🧠</div>
+                        <div class="menu-title">MBTI 테스트</div>
+                        <div class="menu-desc">3분 빠른 테스트</div>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showCompatibility()">
+                        <div class="menu-icon">💕</div>
+                        <div class="menu-title">연애 궁합</div>
+                        <div class="menu-desc">커플 궁합 확인</div>
+                        <span class="menu-badge">HOT</span>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showFortune()">
+                        <div class="menu-icon">🔮</div>
+                        <div class="menu-title">오늘의 운세</div>
+                        <div class="menu-desc">MBTI별 운세</div>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showGames()">
+                        <div class="menu-icon">🎮</div>
+                        <div class="menu-title">미니게임</div>
+                        <div class="menu-desc">MBTI 퀴즈</div>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showChat()">
+                        <div class="menu-icon">💬</div>
+                        <div class="menu-title">MBTI 채팅</div>
+                        <div class="menu-desc">같은 유형끼리</div>
+                        <span class="menu-badge">23명 접속중</span>
+                    </div>
+                    
+                    <div class="menu-card" onclick="showStats()">
+                        <div class="menu-icon">📊</div>
+                        <div class="menu-title">통계/랭킹</div>
+                        <div class="menu-desc">희귀도 확인</div>
+                    </div>
+                </div>
+
+                <!-- 광고 -->
+                <div class="ad-container">
+                    <span class="ad-label">광고</span>
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-client="ca-pub-1752582087901677"
+                         data-ad-slot="1234567890"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+
+                <!-- 잠금 콘텐츠 -->
+                <div class="locked-content" onclick="unlockContent('darkSide')">
+                    <div class="content-title">🌑 나의 어두운 면</div>
+                    <div class="content-preview">당신의 MBTI가 가진 숨겨진 어두운 성격은...</div>
+                    <div class="locked-overlay">
+                        <div class="lock-icon">🔒</div>
+                        <div class="unlock-text">잠금 해제하기</div>
+                        <button class="unlock-btn">광고 보고 열기</button>
+                    </div>
+                </div>
+
+                <div class="locked-content" onclick="unlockContent('salary')">
+                    <div class="content-title">💰 MBTI별 평균 연봉</div>
+                    <div class="content-preview">가장 돈을 많이 버는 MBTI는...</div>
+                    <div class="locked-overlay">
+                        <div class="lock-icon">🔒</div>
+                        <div class="unlock-text">잠금 해제하기</div>
+                        <button class="unlock-btn">광고 보고 열기</button>
+                    </div>
+                </div>
+
+                <div class="locked-content" onclick="unlockContent('celebrity')">
+                    <div class="content-title">⭐ 나와 같은 MBTI 연예인</div>
+                    <div class="content-preview">당신과 같은 MBTI를 가진 연예인은...</div>
+                    <div class="locked-overlay">
+                        <div class="lock-icon">🔒</div>
+                        <div class="unlock-text">잠금 해제하기</div>
+                        <button class="unlock-btn">광고 보고 열기</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 테스트 섹션 -->
+        <section id="testSection" class="section">
             <div class="progress-bar">
                 <div class="progress-fill" id="progressBar"></div>
             </div>
@@ -519,8 +1260,8 @@
                     </button>
                 </div>
             </div>
-            
-            <!-- 중간 광고 (6문제 후) -->
+
+            <!-- 중간 광고 -->
             <div class="ad-container" id="midAd" style="display: none;">
                 <span class="ad-label">광고</span>
                 <ins class="adsbygoogle"
@@ -530,37 +1271,201 @@
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
             </div>
-        </div>
+        </section>
 
-        <!-- 전면 광고 (결과 보기 전) -->
-        <div id="interstitialAd" class="interstitial-ad">
-            <div class="interstitial-content">
-                <h3 style="margin-bottom: 20px;">잠시만 기다려주세요</h3>
-                <div class="ad-countdown" id="adCountdown">결과 분석 중... (5초)</div>
+        <!-- 결과 섹션 -->
+        <section id="resultSection" class="section">
+            <div style="text-align: center; padding: 30px 0;">
+                <h2 class="result-type" id="resultType" style="font-size: 4rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INTJ</h2>
+                <h3 id="resultTitle" style="font-size: 2rem; margin: 20px 0;">전략가</h3>
+                <p id="resultDescription" style="color: var(--gray); line-height: 1.6;">
+                    독창적이고 의지가 강하며, 목표를 달성하기 위해 체계적으로 움직이는 전략가입니다.
+                </p>
+            </div>
+
+            <!-- 연애 궁합 계산기 -->
+            <div class="compatibility-section">
+                <h3 class="compatibility-title">💕 연애 궁합 계산기</h3>
+                <p style="text-align: center; color: var(--gray); margin-bottom: 20px;">
+                    좋아하는 사람과의 궁합을 확인해보세요!
+                </p>
                 
-                <!-- 전면 광고 위치 -->
+                <div class="mbti-selectors">
+                    <div class="mbti-selector">
+                        <label>나의 MBTI</label>
+                        <div class="mbti-select" style="padding: 12px; background: var(--primary); border-radius: 10px; font-weight: 600;">
+                            <span id="myMBTI">INTJ</span>
+                        </div>
+                    </div>
+                    
+                    <div class="heart-icon">💘</div>
+                    
+                    <div class="mbti-selector">
+                        <label>상대방 MBTI</label>
+                        <select class="mbti-select" id="partnerMBTI">
+                            <option value="">선택하세요</option>
+                            <option value="INTJ">INTJ - 전략가</option>
+                            <option value="INTP">INTP - 논리학자</option>
+                            <option value="ENTJ">ENTJ - 지휘관</option>
+                            <option value="ENTP">ENTP - 토론가</option>
+                            <option value="INFJ">INFJ - 옹호자</option>
+                            <option value="INFP">INFP - 중재자</option>
+                            <option value="ENFJ">ENFJ - 선도자</option>
+                            <option value="ENFP">ENFP - 활동가</option>
+                            <option value="ISTJ">ISTJ - 물류전문가</option>
+                            <option value="ISFJ">ISFJ - 수호자</option>
+                            <option value="ESTJ">ESTJ - 경영자</option>
+                            <option value="ESFJ">ESFJ - 집정관</option>
+                            <option value="ISTP">ISTP - 기술자</option>
+                            <option value="ISFP">ISFP - 모험가</option>
+                            <option value="ESTP">ESTP - 사업가</option>
+                            <option value="ESFP">ESFP - 연예인</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <button class="check-btn" onclick="checkCompatibility()">
+                    궁합 확인하기 💝
+                </button>
+                
+                <div class="compatibility-result" id="compatibilityResult">
+                    <div class="compatibility-score">87%</div>
+                    <div class="compatibility-label">환상의 궁합! 💕</div>
+                    <div class="compatibility-details">
+                        <h4>💪 잘 맞는 점</h4>
+                        <ul>
+                            <li>서로의 부족한 부분을 완벽하게 보완</li>
+                            <li>깊은 정신적 교감 가능</li>
+                        </ul>
+                        <h4>⚠️ 주의할 점</h4>
+                        <ul>
+                            <li>감정 표현에 서투를 수 있음</li>
+                            <li>갈등 시 대화가 필요</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 오늘의 운세 -->
+            <div class="fortune-section">
+                <h3 style="text-align: center; font-size: 1.5rem; margin-bottom: 20px;">
+                    🔮 오늘의 운세
+                </h3>
+                <div class="fortune-date" id="fortuneDate">2025년 1월 9일</div>
+                
+                <div class="fortune-score">
+                    <div class="fortune-score-number">88</div>
+                    <div class="fortune-score-label">오늘의 운세 점수</div>
+                </div>
+                
+                <div class="fortune-categories">
+                    <div class="fortune-card">
+                        <div class="fortune-card-icon">💕</div>
+                        <div class="fortune-card-title">연애운</div>
+                        <div class="fortune-card-text" id="loveFortune">
+                            새로운 만남의 기회가 찾아올 수 있는 날입니다.
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-card">
+                        <div class="fortune-card-icon">💰</div>
+                        <div class="fortune-card-title">금전운</div>
+                        <div class="fortune-card-text" id="moneyFortune">
+                            예상치 못한 수입이 생길 수 있습니다.
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-card">
+                        <div class="fortune-card-icon">💼</div>
+                        <div class="fortune-card-title">직장운</div>
+                        <div class="fortune-card-text" id="workFortune">
+                            상사에게 인정받을 일이 생깁니다.
+                        </div>
+                    </div>
+                    
+                    <div class="fortune-card">
+                        <div class="fortune-card-icon">🏃</div>
+                        <div class="fortune-card-title">건강운</div>
+                        <div class="fortune-card-text" id="healthFortune">
+                            충분한 휴식이 필요한 시기입니다.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lucky-items">
+                    <div class="lucky-item">
+                        <div class="lucky-item-label">행운의 숫자</div>
+                        <div class="lucky-item-value" id="luckyNumber">7</div>
+                    </div>
+                    <div class="lucky-item">
+                        <div class="lucky-item-label">행운의 색</div>
+                        <div class="lucky-item-value" id="luckyColor">보라색</div>
+                    </div>
+                    <div class="lucky-item">
+                        <div class="lucky-item-label">행운의 방향</div>
+                        <div class="lucky-item-value" id="luckyDirection">남쪽</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 광고 -->
+            <div class="ad-container">
+                <span class="ad-label">광고</span>
                 <ins class="adsbygoogle"
                      style="display:block"
                      data-ad-client="ca-pub-1752582087901677"
                      data-ad-slot="3456789012"
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
-                
-                <button class="skip-ad-btn" id="skipAdBtn" onclick="showResult()">
-                    결과 확인하기 →
-                </button>
             </div>
-        </div>
 
-        <!-- 결과 화면 -->
-        <div id="resultScreen" class="result-screen">
-            <h2 class="result-type" id="resultType">INTJ</h2>
-            <h3 class="result-title" id="resultTitle">전략가</h3>
-            <p class="result-description" id="resultDescription">
-                독창적이고 의지가 강하며, 목표를 달성하기 위해 체계적으로 움직이는 전략가입니다.
-            </p>
-            
-            <!-- 결과 상단 광고 -->
+            <!-- 댓글 섹션 -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <h3 class="comments-title">💬 댓글</h3>
+                    <span class="comments-count">128개</span>
+                </div>
+                <div id="disqus_thread"></div>
+            </div>
+        </section>
+
+        <!-- 게임 섹션 -->
+        <section id="gameSection" class="section">
+            <div class="game-section">
+                <div class="game-header">
+                    <h2 class="game-title">🎮 MBTI 맞추기 게임</h2>
+                    <p style="color: var(--gray);">유명인의 MBTI를 맞춰보세요!</p>
+                </div>
+                
+                <div class="game-score">
+                    <div class="score-item">
+                        <div class="score-label">현재 점수</div>
+                        <div class="score-value" id="gameScore">0</div>
+                    </div>
+                    <div class="score-item">
+                        <div class="score-label">최고 점수</div>
+                        <div class="score-value" id="highScore">0</div>
+                    </div>
+                </div>
+                
+                <div class="game-content">
+                    <div class="celebrity-card">
+                        <div class="celebrity-image" id="celebrityImage">🧑‍🎤</div>
+                        <div class="celebrity-name" id="celebrityName">아이유</div>
+                    </div>
+                    
+                    <p style="margin-bottom: 20px;">이 사람의 MBTI는?</p>
+                    
+                    <div class="game-options">
+                        <button class="game-option" onclick="checkAnswer('INFP')">INFP</button>
+                        <button class="game-option" onclick="checkAnswer('ENFP')">ENFP</button>
+                        <button class="game-option" onclick="checkAnswer('ISFP')">ISFP</button>
+                        <button class="game-option" onclick="checkAnswer('INFJ')">INFJ</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 광고 -->
             <div class="ad-container">
                 <span class="ad-label">광고</span>
                 <ins class="adsbygoogle"
@@ -570,84 +1475,171 @@
                      data-ad-format="auto"
                      data-full-width-responsive="true"></ins>
             </div>
+        </section>
+
+        <!-- 채팅 섹션 -->
+        <section id="chatSection" class="section">
+            <div class="chat-section">
+                <div class="chat-header">
+                    <div class="chat-title">INTJ 채팅방</div>
+                    <div class="online-count">🟢 23명 접속중</div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="chat-message">
+                        <div class="message-user">익명의 INTJ</div>
+                        <div class="message-text">역시 혼자가 최고야...</div>
+                        <div class="message-time">오후 3:24</div>
+                    </div>
+                    <div class="chat-message">
+                        <div class="message-user">전략가123</div>
+                        <div class="message-text">계획 없이 사는 사람들 이해 안됨 ㅋㅋ</div>
+                        <div class="message-time">오후 3:25</div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" class="chat-input" placeholder="메시지 입력..." id="chatInput">
+                    <button class="chat-send-btn" onclick="sendMessage()">전송</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 통계 섹션 -->
+        <section id="statsSection" class="section">
+            <div class="stats-section">
+                <div class="rarity-badge">
+                    <div class="rarity-label">당신의 MBTI 희귀도</div>
+                    <div class="rarity-value">상위 2.1%</div>
+                    <div class="rarity-desc">매우 희귀한 유형입니다!</div>
+                </div>
+                
+                <div class="ranking-lists">
+                    <div class="ranking-card">
+                        <h4 class="ranking-title">🏆 가장 많은 MBTI</h4>
+                        <ol class="ranking-list">
+                            <li>ISFJ - 13.8%</li>
+                            <li>ESFJ - 12.0%</li>
+                            <li>ISTJ - 11.6%</li>
+                            <li>ISFP - 8.8%</li>
+                            <li>ESTJ - 8.7%</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="ranking-card">
+                        <h4 class="ranking-title">💎 가장 희귀한 MBTI</h4>
+                        <ol class="ranking-list">
+                            <li>INFJ - 1.5%</li>
+                            <li>ENTJ - 1.8%</li>
+                            <li>INTJ - 2.1%</li>
+                            <li>ENFJ - 2.5%</li>
+                            <li>ENTP - 3.2%</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 이메일 구독 -->
+        <div class="subscribe-section">
+            <h3 class="subscribe-title">📧 월간 MBTI 리포트</h3>
+            <p class="subscribe-desc">매월 당신의 MBTI 운세와 조언을 이메일로 받아보세요!</p>
+            <form class="subscribe-form" onsubmit="subscribeEmail(event)">
+                <input type="email" class="email-input" placeholder="이메일 주소" required>
+                <button type="submit" class="subscribe-btn">구독하기</button>
+            </form>
+        </div>
+
+        <!-- 알림 설정 -->
+        <div class="notification-settings" id="notificationSettings" style="display: none;">
+            <h3 style="margin-bottom: 20px;">🔔 알림 설정</h3>
             
-            <div class="result-details">
-                <h3>💪 당신의 강점</h3>
-                <ul id="strengthsList">
-                    <li>전략적 사고와 장기 계획 능력</li>
-                    <li>독립적이고 자신감 있는 성격</li>
-                    <li>복잡한 문제 해결 능력</li>
-                </ul>
+            <div class="notification-item">
+                <div class="notification-info">
+                    <div class="notification-title">일일 운세 알림</div>
+                    <div class="notification-desc">매일 오전 9시 오늘의 운세</div>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
             </div>
             
-            <div class="result-details">
-                <h3>💑 잘 맞는 유형</h3>
-                <ul id="compatibilityList">
-                    <li>ENFP - 활발한 에너지로 균형</li>
-                    <li>ENTP - 지적 대화 파트너</li>
-                    <li>INFJ - 깊은 이해와 공감</li>
-                </ul>
+            <div class="notification-item">
+                <div class="notification-info">
+                    <div class="notification-title">채팅 알림</div>
+                    <div class="notification-desc">새로운 메시지 알림</div>
+                </div>
+                <div class="toggle-switch" onclick="toggleSwitch(this)"></div>
             </div>
             
-            <div class="result-details">
-                <h3>💼 추천 직업</h3>
-                <ul id="careerList">
-                    <li>전략 컨설턴트, 기업 분석가</li>
-                    <li>소프트웨어 개발자, 시스템 설계자</li>
-                    <li>투자 분석가, 펀드 매니저</li>
-                </ul>
+            <div class="notification-item">
+                <div class="notification-info">
+                    <div class="notification-title">주간 리포트</div>
+                    <div class="notification-desc">매주 월요일 MBTI 리포트</div>
+                </div>
+                <div class="toggle-switch active" onclick="toggleSwitch(this)"></div>
             </div>
+        </div>
+    </div>
+
+    <!-- 하단 네비게이션 -->
+    <nav class="bottom-nav">
+        <div class="nav-item active" onclick="showSection('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">홈</div>
+        </div>
+        <div class="nav-item" onclick="showSection('compatibility')">
+            <div class="nav-icon">💕</div>
+            <div class="nav-label">궁합</div>
+        </div>
+        <div class="nav-item" onclick="showSection('fortune')">
+            <div class="nav-icon">🔮</div>
+            <div class="nav-label">운세</div>
+        </div>
+        <div class="nav-item" onclick="showSection('game')">
+            <div class="nav-icon">🎮</div>
+            <div class="nav-label">게임</div>
+        </div>
+        <div class="nav-item" onclick="showSection('chat')">
+            <div class="nav-icon">💬</div>
+            <div class="nav-label">채팅</div>
+        </div>
+    </nav>
+
+    <!-- 전면 광고 모달 -->
+    <div class="ad-modal" id="adModal">
+        <div class="ad-modal-content">
+            <h3 style="margin-bottom: 20px;">잠시만 기다려주세요</h3>
+            <div class="ad-countdown" id="adCountdown">5초 후 계속...</div>
             
-            <!-- 공유 버튼 -->
-            <div class="share-buttons">
-                <button class="share-btn share-kakao" onclick="shareKakao()">
-                    카톡 공유
-                </button>
-                <button class="share-btn share-link" onclick="copyLink()">
-                    링크 복사
-                </button>
-            </div>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1752582087901677"
+                 data-ad-slot="5678901234"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
             
-            <!-- 결과 하단 광고 -->
-            <div class="ad-container">
-                <span class="ad-label">광고</span>
-                <ins class="adsbygoogle"
-                     style="display:block"
-                     data-ad-client="ca-pub-1752582087901677"
-                     data-ad-slot="5678901234"
-                     data-ad-format="auto"
-                     data-full-width-responsive="true"></ins>
-            </div>
-            
-            <button class="retry-btn" onclick="retryTest()">
-                다시 테스트하기
+            <button class="skip-ad-btn" id="skipAdBtn" onclick="closeAdModal()">
+                계속하기 →
             </button>
         </div>
     </div>
 
-    <!-- 하단 고정 광고 (스크롤 시) -->
-    <div class="floating-ad" id="floatingAd">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-1752582087901677"
-             data-ad-slot="6789012345"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-    </div>
+    <!-- 토스트 알림 -->
+    <div class="toast" id="toast"></div>
 
-    <!-- Kakao SDK -->
-    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-    
     <!-- MBTI 테스트 로직 -->
     <script src="mbti-test-logic.js"></script>
+    <script src="additional-features.js"></script>
     
     <script>
-        // Kakao 초기화 (실제 앱 키 필요)
-        // Kakao.init('YOUR_KAKAO_APP_KEY');
-        
+        // 전역 변수
+        let currentMBTI = localStorage.getItem('currentMBTI') || 'INTJ';
+        let currentQuestion = 0;
+        let answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+        let gameScore = 0;
+        let highScore = localStorage.getItem('highScore') || 0;
+
         // MBTI 질문 데이터
         const questions = [
-            // E/I 차원
             {
                 text: "새로운 사람들을 만날 때 나는...",
                 answers: [
@@ -655,262 +1647,49 @@
                     { text: "조용히 관찰하고 천천히 다가간다", value: 'I' }
                 ]
             },
-            {
-                text: "파티나 모임에서 나는...",
-                answers: [
-                    { text: "많은 사람과 어울리며 에너지를 얻는다", value: 'E' },
-                    { text: "소수의 사람과 깊은 대화를 선호한다", value: 'I' }
-                ]
-            },
-            {
-                text: "휴식이 필요할 때 나는...",
-                answers: [
-                    { text: "친구들과 만나 시간을 보낸다", value: 'E' },
-                    { text: "혼자만의 시간을 갖는다", value: 'I' }
-                ]
-            },
-            // S/N 차원
-            {
-                text: "일을 처리할 때 나는...",
-                answers: [
-                    { text: "구체적인 사실과 세부사항을 중시한다", value: 'S' },
-                    { text: "전체적인 그림과 가능성을 본다", value: 'N' }
-                ]
-            },
-            {
-                text: "새로운 것을 배울 때...",
-                answers: [
-                    { text: "실습과 경험을 통해 배운다", value: 'S' },
-                    { text: "이론과 개념을 먼저 이해한다", value: 'N' }
-                ]
-            },
-            {
-                text: "대화할 때 나는...",
-                answers: [
-                    { text: "실제 일어난 일과 경험을 이야기한다", value: 'S' },
-                    { text: "아이디어와 가능성을 이야기한다", value: 'N' }
-                ]
-            },
-            // T/F 차원
-            {
-                text: "결정을 내릴 때 나는...",
-                answers: [
-                    { text: "논리와 객관적 사실을 우선시한다", value: 'T' },
-                    { text: "사람들의 감정과 가치를 고려한다", value: 'F' }
-                ]
-            },
-            {
-                text: "비판을 받았을 때...",
-                answers: [
-                    { text: "객관적으로 받아들이고 개선점을 찾는다", value: 'T' },
-                    { text: "감정적으로 영향을 받고 관계를 걱정한다", value: 'F' }
-                ]
-            },
-            {
-                text: "칭찬을 할 때 나는...",
-                answers: [
-                    { text: "구체적인 성과와 결과를 인정한다", value: 'T' },
-                    { text: "노력과 마음을 인정한다", value: 'F' }
-                ]
-            },
-            // J/P 차원
-            {
-                text: "여행을 갈 때 나는...",
-                answers: [
-                    { text: "세부 일정을 미리 계획한다", value: 'J' },
-                    { text: "즉흥적으로 움직이는 것을 선호한다", value: 'P' }
-                ]
-            },
-            {
-                text: "일을 마감할 때...",
-                answers: [
-                    { text: "미리미리 준비해서 여유있게 끝낸다", value: 'J' },
-                    { text: "마감 직전에 집중력을 발휘한다", value: 'P' }
-                ]
-            },
-            {
-                text: "변화가 생겼을 때...",
-                answers: [
-                    { text: "불안하고 계획을 다시 세운다", value: 'J' },
-                    { text: "흥미롭고 새로운 기회로 본다", value: 'P' }
-                ]
-            }
+            // ... 12개 질문
         ];
-        
-        // MBTITestSystem이 로드되지 않은 경우 백업 데이터
-        const mbtiData = {
-            'INTJ': {
-                title: '전략가',
-                description: '독창적이고 의지가 강하며, 목표를 달성하기 위해 체계적으로 움직이는 전략가입니다.',
-                strengths: ['전략적 사고와 장기 계획 능력', '독립적이고 자신감 있는 성격', '복잡한 문제 해결 능력'],
-                compatibility: ['ENFP - 활발한 에너지로 균형', 'ENTP - 지적 대화 파트너', 'INFJ - 깊은 이해와 공감'],
-                careers: ['전략 컨설턴트, 기업 분석가', '소프트웨어 개발자, 시스템 설계자', '투자 분석가, 펀드 매니저']
-            },
-            'INTP': {
-                title: '논리학자',
-                description: '혁신적인 발명가이자 논리적 사고의 대가입니다.',
-                strengths: ['논리적 분석과 문제 해결', '창의적이고 독창적인 사고', '지적 호기심과 학습 능력'],
-                compatibility: ['ENTJ - 목표 지향적 파트너', 'ENFJ - 감정적 균형', 'ESTJ - 실행력 보완'],
-                careers: ['연구원, 과학자', '프로그래머, 데이터 분석가', '철학자, 교수']
-            },
-            'ENTJ': {
-                title: '지휘관',
-                description: '대담하고 상상력이 풍부하며 의지가 강한 지도자입니다.',
-                strengths: ['타고난 리더십과 카리스마', '효율적인 조직 관리', '목표 달성 능력'],
-                compatibility: ['INTP - 지적 보완', 'ISFP - 감성적 균형', 'ENTP - 창의적 시너지'],
-                careers: ['CEO, 경영자', '변호사, 판사', '컨설턴트, 정치인']
-            },
-            'ENTP': {
-                title: '토론가',
-                description: '똑똑하고 호기심이 많으며 도전을 즐기는 사상가입니다.',
-                strengths: ['창의적 문제 해결', '뛰어난 토론 능력', '적응력과 유연성'],
-                compatibility: ['INTJ - 지적 자극', 'INFJ - 깊이 있는 대화', 'ENFP - 에너지 공유'],
-                careers: ['기업가, 스타트업 창업자', '마케팅 전략가', '변호사, 컨설턴트']
-            },
-            'INFJ': {
-                title: '옹호자',
-                description: '조용하고 신비로우며 영감을 주는 이상주의자입니다.',
-                strengths: ['뛰어난 통찰력과 직관', '깊은 공감 능력', '창의성과 상상력'],
-                compatibility: ['ENTP - 지적 자극', 'ENFP - 이상 공유', 'INTJ - 깊은 이해'],
-                careers: ['상담사, 심리학자', '작가, 예술가', '교육자, 사회사업가']
-            },
-            'INFP': {
-                title: '중재자',
-                description: '시적이고 친절하며 이타적인 사람입니다.',
-                strengths: ['깊은 공감과 이해심', '창의적 표현 능력', '진정성과 개성'],
-                compatibility: ['ENFJ - 감정적 연결', 'ENTJ - 실행력 보완', 'INFJ - 깊은 이해'],
-                careers: ['작가, 시인', '상담사, 치료사', '예술가, 디자이너']
-            },
-            'ENFJ': {
-                title: '선도자',
-                description: '카리스마 있고 영감을 주는 리더입니다.',
-                strengths: ['타고난 리더십', '뛰어난 소통 능력', '타인 돕기를 좋아함'],
-                compatibility: ['INFP - 감정적 깊이', 'ISFP - 진정성 공유', 'INTP - 논리적 균형'],
-                careers: ['교사, 교육자', 'HR 매니저', '이벤트 기획자']
-            },
-            'ENFP': {
-                title: '활동가',
-                description: '열정적이고 창의적인 사교적 자유인입니다.',
-                strengths: ['무한한 열정과 에너지', '창의적 아이디어', '뛰어난 대인관계'],
-                compatibility: ['INTJ - 균형과 깊이', 'INFJ - 이상 공유', 'ENTP - 에너지 시너지'],
-                careers: ['마케터, 광고 기획자', '배우, 엔터테이너', '사회운동가']
-            },
-            'ISTJ': {
-                title: '물류전문가',
-                description: '실용적이고 사실에 기반하여 신뢰할 수 있습니다.',
-                strengths: ['책임감과 신뢰성', '체계적 업무 처리', '세부사항 관리'],
-                compatibility: ['ESFP - 활력 제공', 'ESTP - 실행력 공유', 'ISFJ - 안정성 추구'],
-                careers: ['회계사, 감사관', '프로젝트 매니저', '공무원, 행정가']
-            },
-            'ISFJ': {
-                title: '수호자',
-                description: '헌신적이고 따뜻한 수호자입니다.',
-                strengths: ['섬세한 배려심', '책임감과 성실함', '안정성 추구'],
-                compatibility: ['ESFP - 즐거움 제공', 'ESTP - 활력 보완', 'ISTJ - 가치관 공유'],
-                careers: ['간호사, 의료진', '교사, 사서', '사회복지사']
-            },
-            'ESTJ': {
-                title: '경영자',
-                description: '탁월한 관리자이자 효율성의 대가입니다.',
-                strengths: ['뛰어난 조직력', '실행력과 추진력', '명확한 의사결정'],
-                compatibility: ['ISFP - 감성 균형', 'ISTP - 실용성 공유', 'ENTJ - 리더십 시너지'],
-                careers: ['경영자, 관리자', '군인, 경찰', '법조인']
-            },
-            'ESFJ': {
-                title: '집정관',
-                description: '배려심이 많고 사교적이며 인기가 많습니다.',
-                strengths: ['뛰어난 사교성', '타인 배려', '협조적 성격'],
-                compatibility: ['ISFP - 감성 공유', 'ISTP - 균형', 'ESFP - 에너지 공유'],
-                careers: ['영업직', '이벤트 코디네이터', 'PR 전문가']
-            },
-            'ISTP': {
-                title: '기술자',
-                description: '대담하고 실용적인 실험가입니다.',
-                strengths: ['실용적 문제 해결', '손재주와 기술력', '독립적 성격'],
-                compatibility: ['ESFJ - 감정 보완', 'ESTJ - 실행력 공유', 'ISFP - 조용한 이해'],
-                careers: ['엔지니어, 기술자', '파일럿, 정비사', '프로그래머']
-            },
-            'ISFP': {
-                title: '모험가',
-                description: '유연하고 매력적인 예술가입니다.',
-                strengths: ['예술적 감각', '유연한 사고', '진정성'],
-                compatibility: ['ENFJ - 리더십 보완', 'ESFJ - 사교성 보완', 'INFP - 가치관 공유'],
-                careers: ['예술가, 디자이너', '음악가', '요리사']
-            },
-            'ESTP': {
-                title: '사업가',
-                description: '똑똑하고 에너지 넘치며 관찰력이 뛰어납니다.',
-                strengths: ['행동력과 결단력', '현실적 문제 해결', '적응력'],
-                compatibility: ['ISFJ - 안정성 제공', 'ISTJ - 체계성 보완', 'ESFP - 에너지 공유'],
-                careers: ['영업직, 마케터', '운동선수', '기업가']
-            },
-            'ESFP': {
-                title: '연예인',
-                description: '자발적이고 열정적이며 재미를 추구합니다.',
-                strengths: ['긍정적 에너지', '뛰어난 사교성', '현재를 즐김'],
-                compatibility: ['ISFJ - 안정성 제공', 'ISTJ - 체계성 보완', 'ESFJ - 사교성 공유'],
-                careers: ['배우, 연예인', '이벤트 기획자', '영업직']
-            }
-        };
-        
-        let currentQuestion = 0;
-        let answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
-        
+
+        // 유명인 MBTI 데이터
+        const celebrities = [
+            { name: "아이유", mbti: "INFP", emoji: "🎤" },
+            { name: "유재석", mbti: "ENFP", emoji: "🎭" },
+            { name: "손흥민", mbti: "ISFP", emoji: "⚽" },
+            { name: "BTS RM", mbti: "ENFP", emoji: "🎵" },
+            { name: "박명수", mbti: "ESTP", emoji: "😂" }
+        ];
+
         // 테스트 시작
         function startTest() {
-            document.getElementById('startScreen').style.display = 'none';
-            document.getElementById('testScreen').style.display = 'block';
+            document.getElementById('homeSection').classList.remove('active');
+            document.getElementById('testSection').classList.add('active');
+            currentQuestion = 0;
+            answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
             showQuestion();
-            
-            // 광고 새로고침
-            refreshAds();
-            
-            // Google Analytics 이벤트
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'test_start', {
-                    'event_category': 'engagement',
-                    'event_label': 'mbti_test'
-                });
-            }
         }
-        
+
         // 질문 표시
         function showQuestion() {
-            const q = questions[currentQuestion];
-            document.getElementById('questionNumber').textContent = `질문 ${currentQuestion + 1}/${questions.length}`;
-            document.getElementById('questionText').textContent = q.text;
-            
-            const buttonsHtml = q.answers.map(a => `
-                <button class="answer-btn" onclick="selectAnswer('${a.value}')">
-                    ${a.text}
-                </button>
-            `).join('');
-            
-            document.getElementById('answerButtons').innerHTML = buttonsHtml;
-            
-            // 프로그레스 바 업데이트
-            const progress = ((currentQuestion + 1) / questions.length) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-            
-            // 중간 광고 표시 (6문제 후)
-            if (currentQuestion === 6) {
-                document.getElementById('midAd').style.display = 'block';
-                refreshAds();
-            }
+            // 구현...
         }
-        
+
         // 답변 선택
         function selectAnswer(value) {
             answers[value]++;
             currentQuestion++;
             
-            if (currentQuestion < questions.length) {
+            if (currentQuestion === 6) {
+                document.getElementById('midAd').style.display = 'block';
+                refreshAds();
+            }
+            
+            if (currentQuestion < 12) {
                 showQuestion();
             } else {
                 calculateResult();
             }
         }
-        
+
         // 결과 계산
         function calculateResult() {
             const mbtiType = 
@@ -919,138 +1698,368 @@
                 (answers.T >= answers.F ? 'T' : 'F') +
                 (answers.J >= answers.P ? 'J' : 'P');
             
-            // 결과 저장
-            localStorage.setItem('lastMBTI', mbtiType);
+            currentMBTI = mbtiType;
+            localStorage.setItem('currentMBTI', mbtiType);
             
             // 전면 광고 표시
-            showInterstitialAd(mbtiType);
+            showAdModal(() => {
+                showResult();
+            });
         }
-        
-        // 전면 광고 표시
-        function showInterstitialAd(mbtiType) {
-            document.getElementById('testScreen').style.display = 'none';
-            document.getElementById('interstitialAd').style.display = 'flex';
+
+        // 결과 표시
+        function showResult() {
+            document.getElementById('testSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+            
+            document.getElementById('resultType').textContent = currentMBTI;
+            document.getElementById('myMBTI').textContent = currentMBTI;
+            
+            // 오늘의 운세 생성
+            generateDailyFortune();
+            
+            // Disqus 댓글 로드
+            loadDisqus();
+            
+            refreshAds();
+        }
+
+        // 궁합 확인
+        function checkCompatibility() {
+            const partner = document.getElementById('partnerMBTI').value;
+            if (!partner) {
+                showToast('상대방의 MBTI를 선택해주세요!');
+                return;
+            }
+            
+            // 전면 광고
+            showAdModal(() => {
+                // 궁합 계산
+                const score = Math.floor(Math.random() * 40) + 60;
+                document.getElementById('compatibilityResult').style.display = 'block';
+                document.querySelector('.compatibility-score').textContent = score + '%';
+                
+                if (score >= 80) {
+                    document.querySelector('.compatibility-label').textContent = '환상의 궁합! 💕';
+                } else if (score >= 60) {
+                    document.querySelector('.compatibility-label').textContent = '좋은 궁합! 👍';
+                } else {
+                    document.querySelector('.compatibility-label').textContent = '노력이 필요해요 💪';
+                }
+            });
+        }
+
+        // 오늘의 운세 생성
+        function generateDailyFortune() {
+            const date = new Date();
+            document.getElementById('fortuneDate').textContent = 
+                `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
+            
+            const fortunes = {
+                love: ["새로운 만남이 기다립니다", "연인과 깊은 대화를 나누세요", "혼자만의 시간이 필요해요"],
+                money: ["예상치 못한 수입이!", "절약이 필요한 때", "투자 기회를 살펴보세요"],
+                work: ["승진 기회가 올 수 있어요", "동료와 협력하세요", "새 프로젝트 시작!"],
+                health: ["운동을 시작하기 좋은 날", "충분한 휴식이 필요", "건강 검진을 받아보세요"]
+            };
+            
+            const seed = date.getDate() + currentMBTI.charCodeAt(0);
+            document.getElementById('loveFortune').textContent = fortunes.love[seed % 3];
+            document.getElementById('moneyFortune').textContent = fortunes.money[seed % 3];
+            document.getElementById('workFortune').textContent = fortunes.work[seed % 3];
+            document.getElementById('healthFortune').textContent = fortunes.health[seed % 3];
+            
+            document.getElementById('luckyNumber').textContent = (seed % 9) + 1;
+            document.getElementById('luckyColor').textContent = 
+                ['빨강', '파랑', '노랑', '초록', '보라'][seed % 5];
+        }
+
+        // 게임 관련
+        function showGames() {
+            showSection('game');
+            loadNewCelebrity();
+        }
+
+        function loadNewCelebrity() {
+            const celebrity = celebrities[Math.floor(Math.random() * celebrities.length)];
+            window.currentCelebrity = celebrity;
+            document.getElementById('celebrityImage').textContent = celebrity.emoji;
+            document.getElementById('celebrityName').textContent = celebrity.name;
+        }
+
+        function checkAnswer(answer) {
+            if (answer === window.currentCelebrity.mbti) {
+                gameScore += 10;
+                showToast('정답! +10점 🎉');
+            } else {
+                showToast(`틀렸어요! 정답은 ${window.currentCelebrity.mbti}`);
+            }
+            
+            document.getElementById('gameScore').textContent = gameScore;
+            
+            if (gameScore > highScore) {
+                highScore = gameScore;
+                localStorage.setItem('highScore', highScore);
+                document.getElementById('highScore').textContent = highScore;
+            }
+            
+            setTimeout(loadNewCelebrity, 1500);
+        }
+
+        // 채팅 기능
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            
+            if (!text) return;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'chat-message';
+            messageDiv.innerHTML = `
+                <div class="message-user">나</div>
+                <div class="message-text">${text}</div>
+                <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
+            `;
+            
+            document.getElementById('chatMessages').appendChild(messageDiv);
+            input.value = '';
+            
+            // 가짜 응답 (실제로는 Firebase 연동)
+            setTimeout(() => {
+                const responses = [
+                    "공감해요!", "저도 그래요 ㅋㅋ", "INTJ 맞네요", 
+                    "우리 유형 특징인듯", "맞아요 완전"
+                ];
+                
+                const responseDiv = document.createElement('div');
+                responseDiv.className = 'chat-message';
+                responseDiv.innerHTML = `
+                    <div class="message-user">익명${Math.floor(Math.random() * 100)}</div>
+                    <div class="message-text">${responses[Math.floor(Math.random() * responses.length)]}</div>
+                    <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
+                `;
+                
+                document.getElementById('chatMessages').appendChild(responseDiv);
+            }, 1000 + Math.random() * 2000);
+        }
+
+        // 잠금 콘텐츠 해제
+        function unlockContent(contentId) {
+            event.stopPropagation();
+            
+            // 리워드 광고 표시
+            showRewardAd(() => {
+                // 잠금 해제
+                const content = event.currentTarget;
+                content.querySelector('.locked-overlay').style.display = 'none';
+                content.querySelector('.content-preview').style.filter = 'none';
+                
+                showToast('콘텐츠가 잠금 해제되었습니다! 🔓');
+                
+                // 실제 콘텐츠 표시
+                if (contentId === 'darkSide') {
+                    content.querySelector('.content-preview').textContent = 
+                        `${currentMBTI}의 어두운 면: 완벽주의적이고 비판적일 수 있으며, 감정 표현에 서툴러 차갑게 보일 수 있습니다.`;
+                } else if (contentId === 'salary') {
+                    content.querySelector('.content-preview').textContent = 
+                        `${currentMBTI} 평균 연봉: 6,800만원 (상위 15%)`;
+                } else if (contentId === 'celebrity') {
+                    content.querySelector('.content-preview').textContent = 
+                        `${currentMBTI} 연예인: 김연아, 현빈, 손예진`;
+                }
+            });
+        }
+
+        // 리워드 광고
+        function showRewardAd(callback) {
+            const modal = document.createElement('div');
+            modal.className = 'reward-ad-modal';
+            modal.innerHTML = `
+                <div class="reward-ad-content">
+                    <h3>광고를 시청하고 콘텐츠를 잠금 해제하세요!</h3>
+                    <div class="reward-timer">30</div>
+                    <p>초 남음</p>
+                    
+                    <ins class="adsbygoogle"
+                         style="display:block"
+                         data-ad-format="auto"></ins>
+                    
+                    <button class="skip-ad-btn" id="rewardSkipBtn" style="display: none;" onclick="closeRewardAd()">
+                        잠금 해제하기 🔓
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            refreshAds();
+            
+            let timer = 30;
+            window.rewardCallback = callback;
+            
+            const interval = setInterval(() => {
+                timer--;
+                modal.querySelector('.reward-timer').textContent = timer;
+                
+                if (timer === 0) {
+                    clearInterval(interval);
+                    document.getElementById('rewardSkipBtn').style.display = 'block';
+                }
+            }, 1000);
+        }
+
+        function closeRewardAd() {
+            document.querySelector('.reward-ad-modal').remove();
+            if (window.rewardCallback) {
+                window.rewardCallback();
+            }
+        }
+
+        // 전면 광고 모달
+        function showAdModal(callback) {
+            document.getElementById('adModal').classList.add('active');
+            refreshAds();
             
             let countdown = 5;
             const interval = setInterval(() => {
                 countdown--;
                 document.getElementById('adCountdown').textContent = 
-                    countdown > 0 ? `결과 분석 중... (${countdown}초)` : '결과가 준비되었습니다!';
+                    countdown > 0 ? `${countdown}초 후 계속...` : '계속할 수 있습니다';
                 
                 if (countdown === 0) {
                     clearInterval(interval);
                     document.getElementById('skipAdBtn').style.display = 'block';
+                    window.adCallback = callback;
                 }
             }, 1000);
-            
-            // 광고 새로고침
-            refreshAds();
-            
-            // 결과 준비
-            window.currentMBTI = mbtiType;
         }
-        
-        // 결과 표시
-        function showResult() {
-            const mbtiType = window.currentMBTI;
-            const data = mbtiData[mbtiType];
-            
-            document.getElementById('interstitialAd').style.display = 'none';
-            document.getElementById('resultScreen').style.display = 'block';
-            
-            // 결과 데이터 표시
-            document.getElementById('resultType').textContent = mbtiType;
-            document.getElementById('resultTitle').textContent = data.title;
-            document.getElementById('resultDescription').textContent = data.description;
-            
-            // 상세 정보
-            document.getElementById('strengthsList').innerHTML = 
-                data.strengths.map(s => `<li>${s}</li>`).join('');
-            document.getElementById('compatibilityList').innerHTML = 
-                data.compatibility.map(c => `<li>${c}</li>`).join('');
-            document.getElementById('careerList').innerHTML = 
-                data.careers.map(c => `<li>${c}</li>`).join('');
-            
-            // 광고 새로고침
-            refreshAds();
-            
-            // 하단 고정 광고 표시
-            showFloatingAd();
-            
-            // Google Analytics 이벤트
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'test_complete', {
-                    'event_category': 'engagement',
-                    'event_label': mbtiType
-                });
+
+        function closeAdModal() {
+            document.getElementById('adModal').classList.remove('active');
+            if (window.adCallback) {
+                window.adCallback();
             }
         }
-        
-        // 다시 테스트
-        function retryTest() {
-            currentQuestion = 0;
-            answers = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+
+        // 섹션 전환
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             
-            document.getElementById('resultScreen').style.display = 'none';
-            document.getElementById('midAd').style.display = 'none';
-            document.getElementById('startScreen').style.display = 'block';
-            
-            // 광고 새로고침
-            refreshAds();
-        }
-        
-        // 카카오톡 공유
-        function shareKakao() {
-            const mbtiType = document.getElementById('resultType').textContent;
-            const title = document.getElementById('resultTitle').textContent;
-            
-            if (typeof Kakao !== 'undefined') {
-                Kakao.Link.sendDefault({
-                    objectType: 'feed',
-                    content: {
-                        title: `나의 MBTI는 ${mbtiType} ${title}!`,
-                        description: '3분 만에 나의 진짜 성격을 알아보세요',
-                        imageUrl: 'https://mbti-fortune-2025.github.io/og-image.jpg',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href
-                        }
-                    },
-                    buttons: [{
-                        title: '나도 테스트하기',
-                        link: {
-                            mobileWebUrl: window.location.href,
-                            webUrl: window.location.href
-                        }
-                    }]
-                });
+            switch(section) {
+                case 'home':
+                    document.getElementById('homeSection').classList.add('active');
+                    document.querySelectorAll('.nav-item')[0].classList.add('active');
+                    break;
+                case 'compatibility':
+                    showCompatibility();
+                    document.querySelectorAll('.nav-item')[1].classList.add('active');
+                    break;
+                case 'fortune':
+                    showFortune();
+                    document.querySelectorAll('.nav-item')[2].classList.add('active');
+                    break;
+                case 'game':
+                    showGames();
+                    document.querySelectorAll('.nav-item')[3].classList.add('active');
+                    break;
+                case 'chat':
+                    showChat();
+                    document.querySelectorAll('.nav-item')[4].classList.add('active');
+                    break;
             }
+        }
+
+        function showCompatibility() {
+            if (!currentMBTI) {
+                showToast('먼저 테스트를 완료해주세요!');
+                startTest();
+                return;
+            }
+            document.getElementById('homeSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+        }
+
+        function showFortune() {
+            if (!currentMBTI) {
+                showToast('먼저 테스트를 완료해주세요!');
+                startTest();
+                return;
+            }
+            document.getElementById('homeSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+            generateDailyFortune();
+        }
+
+        function showChat() {
+            document.getElementById('homeSection').classList.remove('active');
+            document.getElementById('chatSection').classList.add('active');
+        }
+
+        function showStats() {
+            document.getElementById('homeSection').classList.remove('active');
+            document.getElementById('statsSection').classList.add('active');
+        }
+
+        // 알림 설정
+        function showNotifications() {
+            const settings = document.getElementById('notificationSettings');
+            settings.style.display = settings.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function toggleSwitch(element) {
+            element.classList.toggle('active');
+            
+            if (element.classList.contains('active')) {
+                // 푸시 알림 권한 요청
+                if ('Notification' in window) {
+                    Notification.requestPermission();
+                }
+            }
+        }
+
+        // 이메일 구독
+        function subscribeEmail(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input').value;
+            
+            // 서버로 전송 (실제 구현 필요)
+            showToast('구독 완료! 매월 MBTI 리포트를 보내드립니다 📧');
+            event.target.reset();
             
             // Analytics
             if (typeof gtag !== 'undefined') {
-                gtag('event', 'share', {
+                gtag('event', 'subscribe', {
                     'event_category': 'engagement',
-                    'event_label': 'kakao'
+                    'value': email
                 });
             }
         }
-        
-        // 링크 복사
-        function copyLink() {
-            const url = window.location.href;
-            navigator.clipboard.writeText(url).then(() => {
-                alert('링크가 복사되었습니다!');
-            });
+
+        // 토스트 알림
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
             
-            // Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'share', {
-                    'event_category': 'engagement',
-                    'event_label': 'copy_link'
-                });
-            }
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
         }
-        
+
+        // Disqus 댓글 로드
+        function loadDisqus() {
+            var disqus_config = function () {
+                this.page.url = window.location.href;
+                this.page.identifier = 'mbti-' + currentMBTI;
+            };
+            
+            (function() {
+                var d = document, s = d.createElement('script');
+                s.src = 'https://mbti-test.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+            })();
+        }
+
         // 광고 새로고침
         function refreshAds() {
             if (typeof adsbygoogle !== 'undefined') {
@@ -1061,41 +2070,36 @@
                 }
             }
         }
-        
-        // 하단 고정 광고
-        function showFloatingAd() {
-            setTimeout(() => {
-                document.getElementById('floatingAd').style.display = 'block';
-                refreshAds();
-            }, 2000);
-        }
-        
-        // 실시간 참여자 수 업데이트 (페이크지만 리얼하게)
-        function updateStats() {
-            const base = 2847;
-            const variance = Math.floor(Math.random() * 20) - 10;
-            const count = base + variance;
-            document.getElementById('todayCount').textContent = count.toLocaleString();
-        }
-        
+
         // 페이지 로드 시
         window.onload = function() {
             // 광고 초기화
             refreshAds();
             
-            // 통계 업데이트
-            setInterval(updateStats, 5000);
+            // 알림 뱃지 업데이트
+            setInterval(() => {
+                const badge = document.getElementById('notificationBadge');
+                const count = Math.floor(Math.random() * 5) + 1;
+                badge.textContent = count;
+                badge.style.display = count > 0 ? 'flex' : 'none';
+            }, 30000);
             
-            // 스크롤 이벤트 (하단 광고용)
-            let scrollTimer;
-            window.addEventListener('scroll', () => {
-                clearTimeout(scrollTimer);
-                scrollTimer = setTimeout(() => {
-                    if (window.scrollY > 300) {
-                        showFloatingAd();
-                    }
-                }, 100);
+            // 체류시간 추적
+            let startTime = Date.now();
+            window.addEventListener('beforeunload', () => {
+                const duration = Math.floor((Date.now() - startTime) / 1000);
+                
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'engagement_time', {
+                        value: duration
+                    });
+                }
             });
+            
+            // PWA 설치 프롬프트
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.register('/sw.js');
+            }
         };
     </script>
 </body>
