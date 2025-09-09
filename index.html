@@ -2029,6 +2029,9 @@
                 <h1 class="main-title">MBTI Universe</h1>
                 <h2 class="tagline">당신의 모든 MBTI가 여기에</h2>
                 <p class="subtitle">테스트, 궁합, 운세, 게임, 채팅까지!</p>
+                
+                <!-- 🎮 게임 성과 연동 표시 영역 -->
+                <div id="homeGameStats" style="display: none;"></div>
 
                 <!-- 메인 메뉴 -->
                 <div class="menu-grid">
@@ -2232,6 +2235,9 @@
                     <div class="fortune-score-label">오늘의 운세 점수</div>
                 </div>
                 
+                <!-- 🎮 게임 연동 보너스 표시 -->
+                <div id="gameBonus" style="text-align: center;"></div>
+                
                 <div class="fortune-categories">
                     <div class="fortune-card">
                         <div class="fortune-card-icon">💕</div>
@@ -2307,24 +2313,26 @@
         <section id="gameSection" class="section">
             <div class="game-section">
                 <div class="game-header">
-                    <h2 class="game-title">🌟 MBTI 3D 어드벤처</h2>
-                    <p style="color: var(--gray); margin-bottom: 15px;">당신의 MBTI 능력으로 차원을 탐험하고 크리스탈을 수집하세요!</p>
+                    <h2 class="game-title">⚔️ MBTI RPG-FPS: 차원 전쟁</h2>
+                    <p style="color: var(--gray); margin-bottom: 15px;">DOOM과 Skyrim을 결합한 차세대 MBTI 액션 RPG! 당신만의 무기와 능력으로 MBTI 차원을 정복하세요!</p>
                     
                     <!-- 게임 설명 및 튜토리얼 -->
                     <div class="game-tutorial" id="gameTutorial" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
-                        <h3 style="color: #10B981; margin-bottom: 15px;">🎯 게임 방법</h3>
+                        <h3 style="color: #10B981; margin-bottom: 15px;">🎯 RPG-FPS 가이드</h3>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.9rem;">
                             <div>
-                                <strong style="color: #F59E0B;">📱 조작법:</strong><br>
-                                • 화살표 키 또는 WASD로 이동<br>
-                                • 마우스로 시점 조정<br>
-                                • 모바일: 화면 터치로 조작
+                                <strong style="color: #F59E0B;">🎮 FPS 조작법:</strong><br>
+                                • WASD: 이동 / 마우스: 시점<br>
+                                • 좌클릭: 공격 / 우클릭: 조준<br>
+                                • R: 재장전 / Space: 점프<br>
+                                • Shift: 달리기 / Ctrl: 웅크리기
                             </div>
                             <div>
-                                <strong style="color: #EC4899;">🎮 게임 목표:</strong><br>
-                                • 당신의 MBTI 크리스탈 수집<br>
-                                • 장애물과 적 피하기<br>
-                                • 특수능력으로 도전 극복
+                                <strong style="color: #EC4899;">⚔️ RPG 시스템:</strong><br>
+                                • MBTI 기반 스킬 트리 성장<br>
+                                • 장비 수집 및 강화<br>
+                                • 퀘스트와 NPC 상호작용<br>
+                                • 경험치 획득과 레벨업
                             </div>
                         </div>
                         <div style="text-align: center; margin-top: 15px;">
@@ -2396,25 +2404,26 @@
                 <!-- 게임 설명 -->
                 <div class="game-instructions-3d">
                     <div class="instruction-category">
-                        <h4>🎮 조작법</h4>
-                        <p>• WASD / 화살표 키: 이동</p>
-                        <p>• 마우스: 시점 조정</p>
-                        <p>• 스페이스바: 점프</p>
-                        <p>• 1,2,3,4: 특수 능력</p>
-                        <p>• 모바일: 터치 조작</p>
+                        <h4>🎯 FPS 전투</h4>
+                        <p>• WASD: 이동 / 마우스: 시점</p>
+                        <p>• 좌클릭: 발사 / 우클릭: 정조준</p>
+                        <p>• R: 재장전 / G: 수류탄</p>
+                        <p>• Tab: 인벤토리 / M: 지도</p>
+                        <p>• 1-4: 무기 변경 / Q: 근접공격</p>
                     </div>
                     <div class="instruction-category">
-                        <h4>🌍 게임 목표</h4>
-                        <p>• 인지 기능 차원을 탐험하세요</p>
-                        <p>• MBTI 크리스탈을 수집하세요</p>
-                        <p>• 특수 능력을 활용하여 장애물을 극복하세요</p>
-                        <p>• 더 높은 차원으로 진화하세요</p>
+                        <h4>🏆 RPG 성장</h4>
+                        <p>• MBTI별 고유 무기와 스킬 마스터</p>
+                        <p>• 적을 처치하고 경험치 획득</p>
+                        <p>• 던전 클리어로 장비 드롭</p>
+                        <p>• 퀘스트 완료로 보상 획득</p>
+                        <p>• 스킬 포인트로 능력치 강화</p>
                     </div>
                 </div>
 
                 <!-- 3D 게임 캔버스 -->
                 <div class="game-canvas-container-3d">
-                    <canvas id="game3DCanvas" width="800" height="600"></canvas>
+                    <canvas id="game3DCanvas" style="width: 100vw; height: 80vh; border: none; background: #000; cursor: none;"></canvas>
                     <div class="game-overlay-3d" id="gameOverlay3D">
                         <div class="game-menu" id="gameMenu">
                             <h3>🌟 MBTI 3D 어드벤처</h3>
@@ -2519,6 +2528,8 @@
                     <div class="chat-input-area">
                         <input type="text" class="chat-input" placeholder="메시지 입력..." id="chatInput" onkeypress="if(event.key==='Enter') sendMessage()">
                         <button class="chat-send-btn" onclick="sendMessage()">전송</button>
+                        <!-- 🎮 게임 성과 공유 버튼 -->
+                        <button id="shareGameAchievement" class="chat-send-btn" style="display: none; background: #10B981; margin-left: 5px;" onclick="shareGameAchievement()">🏆 성과 공유</button>
                     </div>
                 </div>
             </div>
@@ -2929,172 +2940,487 @@
             'ESFP': { emoji: '🎉', color: '#CA8A04' }
         };
 
-        // ====== 혁신적인 3D MBTI 어드벤처 게임 시스템 ======
+        // ====== MBTI RPG-FPS HYBRID: 차원 전쟁 게임 엔진 ======
         
-        // 3D 벡터 클래스
-        class Vector3D {
+        // Enhanced 3D Vector System for FPS
+        class Vector3 {
             constructor(x = 0, y = 0, z = 0) {
                 this.x = x; this.y = y; this.z = z;
             }
             
-            add(v) { return new Vector3D(this.x + v.x, this.y + v.y, this.z + v.z); }
-            subtract(v) { return new Vector3D(this.x - v.x, this.y - v.y, this.z - v.z); }
-            multiply(scalar) { return new Vector3D(this.x * scalar, this.y * scalar, this.z * scalar); }
+            add(v) { return new Vector3(this.x + v.x, this.y + v.y, this.z + v.z); }
+            subtract(v) { return new Vector3(this.x - v.x, this.y - v.y, this.z - v.z); }
+            multiply(scalar) { return new Vector3(this.x * scalar, this.y * scalar, this.z * scalar); }
+            dot(v) { return this.x * v.x + this.y * v.y + this.z * v.z; }
+            cross(v) { 
+                return new Vector3(
+                    this.y * v.z - this.z * v.y,
+                    this.z * v.x - this.x * v.z,
+                    this.x * v.y - this.y * v.x
+                );
+            }
             length() { return Math.sqrt(this.x ** 2 + this.y ** 2 + this.z ** 2); }
+            lengthSq() { return this.x ** 2 + this.y ** 2 + this.z ** 2; }
             normalize() { 
                 const len = this.length(); 
-                return len > 0 ? new Vector3D(this.x / len, this.y / len, this.z / len) : new Vector3D(); 
+                return len > 0 ? new Vector3(this.x / len, this.y / len, this.z / len) : new Vector3(); 
+            }
+            distanceTo(v) { return this.subtract(v).length(); }
+            lerp(v, alpha) {
+                return new Vector3(
+                    this.x + (v.x - this.x) * alpha,
+                    this.y + (v.y - this.y) * alpha,
+                    this.z + (v.z - this.z) * alpha
+                );
             }
             
-            // 3D to 2D 등각 투영
-            projectIsometric() {
-                const x = (this.x - this.z) * Math.cos(Math.PI / 6);
-                const y = (this.x + this.z) * Math.sin(Math.PI / 6) - this.y;
-                return { x, y };
+            // First-person 3D to 2D projection
+            projectFPS(camera) {
+                const dx = this.x - camera.position.x;
+                const dy = this.y - camera.position.y; 
+                const dz = this.z - camera.position.z;
+                
+                const cos_pitch = Math.cos(-camera.pitch);
+                const sin_pitch = Math.sin(-camera.pitch);
+                const cos_yaw = Math.cos(-camera.yaw);
+                const sin_yaw = Math.sin(-camera.yaw);
+                
+                // 3D rotation
+                const rx = dx * cos_yaw - dz * sin_yaw;
+                const ry = dy * cos_pitch - (dx * sin_yaw + dz * cos_yaw) * sin_pitch;
+                const rz = dy * sin_pitch + (dx * sin_yaw + dz * cos_yaw) * cos_pitch;
+                
+                if (rz <= 0.1) return null; // Behind camera
+                
+                const focal_length = 400;
+                return {
+                    x: (rx * focal_length / rz),
+                    y: (ry * focal_length / rz),
+                    z: rz
+                };
             }
         }
 
-        // 물리 엔진
-        class Physics3D {
-            static gravity = new Vector3D(0, -0.5, 0);
-            static friction = 0.95;
+        // Advanced FPS Physics Engine
+        class FPSPhysics {
+            static gravity = new Vector3(0, -9.8, 0);
+            static airResistance = 0.99;
+            static groundFriction = 0.85;
             
-            static applyGravity(object) {
-                if (object.position.y > 0) {
-                    object.velocity = object.velocity.add(Physics3D.gravity);
-                } else if (object.position.y <= 0) {
-                    object.position.y = 0;
-                    object.velocity.y = Math.max(0, object.velocity.y);
-                    object.velocity = object.velocity.multiply(Physics3D.friction);
+            static applyGravity(entity, deltaTime) {
+                if (!entity.onGround) {
+                    entity.velocity = entity.velocity.add(this.gravity.multiply(deltaTime));
                 }
             }
             
-            static checkBoundaries(object, worldSize) {
-                if (object.position.x < -worldSize) object.position.x = -worldSize;
-                if (object.position.x > worldSize) object.position.x = worldSize;
-                if (object.position.z < -worldSize) object.position.z = -worldSize;
-                if (object.position.z > worldSize) object.position.z = worldSize;
+            static applyFriction(entity) {
+                if (entity.onGround) {
+                    entity.velocity.x *= this.groundFriction;
+                    entity.velocity.z *= this.groundFriction;
+                } else {
+                    entity.velocity = entity.velocity.multiply(this.airResistance);
+                }
             }
             
-            static detectCollision(obj1, obj2) {
-                const distance = obj1.position.subtract(obj2.position).length();
-                return distance < (obj1.size + obj2.size);
+            static checkCollision(pos1, radius1, pos2, radius2) {
+                return pos1.distanceTo(pos2) < (radius1 + radius2);
+            }
+            
+            static raycast(origin, direction, distance, obstacles) {
+                const step = 0.5;
+                const steps = Math.floor(distance / step);
+                
+                for (let i = 0; i < steps; i++) {
+                    const point = origin.add(direction.multiply(i * step));
+                    
+                    for (const obstacle of obstacles) {
+                        if (this.checkCollision(point, 0.1, obstacle.position, obstacle.radius)) {
+                            return {
+                                hit: true,
+                                point: point,
+                                distance: i * step,
+                                target: obstacle
+                            };
+                        }
+                    }
+                }
+                
+                return { hit: false, distance: distance };
+            }
+            
+            static checkBoundaries(entity, worldSize) {
+                const pos = entity.position;
+                if (pos.x < -worldSize) entity.position.x = -worldSize;
+                if (pos.x > worldSize) entity.position.x = worldSize;
+                if (pos.z < -worldSize) entity.position.z = -worldSize;
+                if (pos.z > worldSize) entity.position.z = worldSize;
+                if (pos.y < 0) {
+                    entity.position.y = 0;
+                    entity.velocity.y = Math.max(0, entity.velocity.y);
+                    entity.onGround = true;
+                } else {
+                    entity.onGround = false;
+                }
             }
         }
 
-        // 파티클 시스템
-        class ParticleSystem {
-            constructor() { this.particles = []; }
+        // Enhanced 3D Particle System for RPG-FPS
+        class ParticleSystem3D {
+            constructor() { 
+                this.particles = []; 
+                this.maxParticles = 1000;
+            }
             
-            emit(position, count, type) {
-                for (let i = 0; i < count; i++) {
+            emit(position, count, config = {}) {
+                const {
+                    velocity = new Vector3(0, 5, 0),
+                    spread = 2,
+                    life = 1.0,
+                    color = '#FFFFFF',
+                    size = 2,
+                    type = 'default',
+                    gravity = true
+                } = config;
+                
+                for (let i = 0; i < count && this.particles.length < this.maxParticles; i++) {
                     this.particles.push({
-                        position: new Vector3D(
-                            position.x + (Math.random() - 0.5) * 2, 
-                            position.y + Math.random() * 2, 
-                            position.z + (Math.random() - 0.5) * 2
+                        position: new Vector3(
+                            position.x + (Math.random() - 0.5) * spread,
+                            position.y + (Math.random() - 0.5) * spread,
+                            position.z + (Math.random() - 0.5) * spread
                         ),
-                        velocity: new Vector3D(
-                            (Math.random() - 0.5) * 5, 
-                            Math.random() * 8, 
-                            (Math.random() - 0.5) * 5
+                        velocity: new Vector3(
+                            velocity.x + (Math.random() - 0.5) * spread,
+                            velocity.y + (Math.random() - 0.5) * spread,
+                            velocity.z + (Math.random() - 0.5) * spread
                         ),
-                        life: 1.0,
-                        decay: 0.02 + Math.random() * 0.02,
-                        size: 2 + Math.random() * 3,
-                        color: type.color,
-                        type: type.name
+                        life: life,
+                        maxLife: life,
+                        decay: 1 / (life * 60),
+                        color: color,
+                        size: size + Math.random() * size * 0.5,
+                        type: type,
+                        gravity: gravity,
+                        rotation: Math.random() * Math.PI * 2
                     });
                 }
             }
             
-            update() {
+            update(deltaTime) {
                 for (let i = this.particles.length - 1; i >= 0; i--) {
                     const particle = this.particles[i];
-                    particle.position = particle.position.add(particle.velocity);
-                    particle.velocity = particle.velocity.multiply(0.98).add(new Vector3D(0, -0.1, 0));
-                    particle.life -= particle.decay;
                     
-                    if (particle.life <= 0) this.particles.splice(i, 1);
+                    if (particle.gravity) {
+                        particle.velocity = particle.velocity.add(new Vector3(0, -9.8 * deltaTime, 0));
+                    }
+                    
+                    particle.position = particle.position.add(particle.velocity.multiply(deltaTime));
+                    particle.life -= particle.decay * deltaTime;
+                    
+                    if (particle.life <= 0) {
+                        this.particles.splice(i, 1);
+                    }
                 }
             }
             
-            render(ctx, camera) {
+            render(ctx, camera, canvasWidth, canvasHeight) {
                 this.particles.forEach(particle => {
-                    const screen = particle.position.subtract(camera.position).projectIsometric();
-                    const alpha = particle.life;
-                    const size = particle.size * alpha;
+                    const screenPos = particle.position.projectFPS(camera);
+                    if (!screenPos) return;
+                    
+                    const alpha = particle.life / particle.maxLife;
+                    const size = particle.size * (1 + (1 - alpha) * 0.5);
                     
                     ctx.save();
-                    ctx.globalAlpha = alpha;
-                    ctx.fillStyle = particle.color;
-                    ctx.beginPath();
-                    ctx.arc(screen.x + 400, screen.y + 300, size, 0, Math.PI * 2);
-                    ctx.fill();
+                    ctx.globalAlpha = alpha * 0.8;
+                    ctx.translate(canvasWidth/2 + screenPos.x, canvasHeight/2 + screenPos.y);
+                    ctx.rotate(particle.rotation);
+                    
+                    switch (particle.type) {
+                        case 'muzzleFlash':
+                            ctx.fillStyle = '#FFFF00';
+                            ctx.fillRect(-size, -size/4, size*2, size/2);
+                            break;
+                        case 'explosion':
+                            const gradient = ctx.createRadialGradient(0, 0, 0, 0, 0, size);
+                            gradient.addColorStop(0, '#FFFF00');
+                            gradient.addColorStop(0.5, '#FF6600');
+                            gradient.addColorStop(1, '#FF0000');
+                            ctx.fillStyle = gradient;
+                            ctx.beginPath();
+                            ctx.arc(0, 0, size, 0, Math.PI * 2);
+                            ctx.fill();
+                            break;
+                        case 'blood':
+                            ctx.fillStyle = '#CC0000';
+                            ctx.beginPath();
+                            ctx.arc(0, 0, size, 0, Math.PI * 2);
+                            ctx.fill();
+                            break;
+                        default:
+                            ctx.fillStyle = particle.color;
+                            ctx.beginPath();
+                            ctx.arc(0, 0, size, 0, Math.PI * 2);
+                            ctx.fill();
+                    }
+                    
                     ctx.restore();
                 });
             }
         }
 
-        // MBTI 차원 정의
-        const MBTIDimensions = {
-            Ne: { name: '직관 확장', color: '#8B5CF6', ambient: '#4C1D95', challenge: 'creativity' },
-            Ni: { name: '직관 집중', color: '#6366F1', ambient: '#312E81', challenge: 'insight' },
-            Se: { name: '감각 확장', color: '#F59E0B', ambient: '#92400E', challenge: 'action' },
-            Si: { name: '감각 집중', color: '#10B981', ambient: '#065F46', challenge: 'memory' },
-            Te: { name: '사고 확장', color: '#EF4444', ambient: '#991B1B', challenge: 'logic' },
-            Ti: { name: '사고 집중', color: '#06B6D4', ambient: '#164E63', challenge: 'analysis' },
-            Fe: { name: '감정 확장', color: '#EC4899', ambient: '#BE185D', challenge: 'harmony' },
-            Fi: { name: '감정 집중', color: '#84CC16', ambient: '#365314', challenge: 'authenticity' }
+        // MBTI 차원 던전 시스템 (RPG-FPS)
+        const MBTIDungeons = {
+            Ne: { 
+                name: '무한 가능성의 차원', color: '#8B5CF6', ambient: '#2D1B69',
+                enemies: ['혁신 방해자', '고정관념 몬스터'], 
+                environment: 'floating_islands', difficulty: 'medium',
+                boss: '제약의 왕', loot: ['창의성 부스터', '아이디어 크리스탈']
+            },
+            Ni: { 
+                name: '깊은 통찰의 성채', color: '#6366F1', ambient: '#1E1B4B',
+                enemies: ['혼란 스펙터', '피상적 사고'], 
+                environment: 'ancient_library', difficulty: 'hard',
+                boss: '무지의 군주', loot: ['예견의 오브', '깨달음 스크롤']
+            },
+            Se: { 
+                name: '생생한 현실 전장', color: '#F59E0B', ambient: '#78350F',
+                enemies: ['행동 지연자', '감각 마비'], 
+                environment: 'dynamic_arena', difficulty: 'easy',
+                boss: '정체의 골렘', loot: ['순발력 장갑', '감각 증폭기']
+            },
+            Si: { 
+                name: '기억의 요새', color: '#10B981', ambient: '#064E3B',
+                enemies: ['망각 악마', '무질서 정령'], 
+                environment: 'organized_castle', difficulty: 'medium',
+                boss: '혼돈의 드래곤', loot: ['완벽 저장소', '전통 방패']
+            },
+            Te: { 
+                name: '논리 산업 단지', color: '#EF4444', ambient: '#7F1D1D',
+                enemies: ['비효율 바이러스', '감정 오염'], 
+                environment: 'industrial_complex', difficulty: 'medium',
+                boss: '무능의 타이탄', loot: ['논리 검', '효율성 엔진']
+            },
+            Ti: { 
+                name: '분석의 실험실', color: '#06B6D4', ambient: '#164E63',
+                enemies: ['편견 박테리아', '성급한 결론'], 
+                environment: 'tech_laboratory', difficulty: 'hard',
+                boss: '오류의 AI', loot: ['정밀 도구', '분석 칩셋']
+            },
+            Fe: { 
+                name: '조화의 공동체', color: '#EC4899', ambient: '#9D174D',
+                enemies: ['갈등 조장자', '이기심 괴물'], 
+                environment: 'harmony_village', difficulty: 'easy',
+                boss: '분열의 악마', loot: ['공감 반지', '화합 스태프']
+            },
+            Fi: { 
+                name: '진정성의 성소', color: '#84CC16', ambient: '#1A2E05',
+                enemies: ['위선 그림자', '타협 유령'], 
+                environment: 'sacred_grove', difficulty: 'medium',
+                boss: '거짓의 마왕', loot: ['순수 목걸이', '가치 수호검']
+            }
         };
 
-        // MBTI 특수 능력 시스템
-        const MBTIAbilities = {
-            INTJ: { abilities: ['건축가의 비전', '시스템 분석', '미래 예측', '전략적 사고'], ultimate: '마스터 플랜' },
-            INTP: { abilities: ['논리 분석', '패턴 인식', '창의적 해결', '지식 흡수'], ultimate: '완벽한 이론' },
-            ENTJ: { abilities: ['리더십 발휘', '목표 달성', '전략 수립', '조직 관리'], ultimate: '지휘관의 명령' },
-            ENTP: { abilities: ['아이디어 폭발', '즉흥 대응', '연결 발견', '혁신 창조'], ultimate: '무한 가능성' },
-            INFJ: { abilities: ['공감 능력', '미래 통찰', '조화 창조', '직관 발동'], ultimate: '옹호자의 보호' },
-            INFP: { abilities: ['진정성 추구', '창의적 표현', '가치 수호', '내적 조화'], ultimate: '순수한 이상' },
-            ENFJ: { abilities: ['영감 전달', '팀 결속', '성장 지원', '희망 전파'], ultimate: '선도자의 카리스마' },
-            ENFP: { abilities: ['열정 전파', '관계 연결', '가능성 발견', '즉흥 창작'], ultimate: '활동가의 에너지' },
-            ISTJ: { abilities: ['체계적 관리', '신뢰성 보장', '세부 집중', '전통 수호'], ultimate: '물류전문가의 완벽' },
-            ISFJ: { abilities: ['보호 본능', '배려 행동', '안정 제공', '헌신적 봉사'], ultimate: '수호자의 방패' },
-            ESTJ: { abilities: ['효율적 관리', '질서 확립', '목표 달성', '책임감 발휘'], ultimate: '경영자의 통제' },
-            ESFJ: { abilities: ['사회적 조화', '팀워크 강화', '서비스 정신', '배려 행동'], ultimate: '집정관의 유대' },
-            ISTP: { abilities: ['기술적 해결', '실용적 접근', '즉석 수리', '도구 마스터'], ultimate: '기술자의 정밀' },
-            ISFP: { abilities: ['예술적 감각', '개인적 표현', '자연 친화', '순수 추구'], ultimate: '모험가의 자유' },
-            ESTP: { abilities: ['즉각 반응', '위기 대응', '현장 판단', '행동력 발휘'], ultimate: '사업가의 순발력' },
-            ESFP: { abilities: ['즐거움 전파', '분위기 메이커', '현재 집중', '감정 공유'], ultimate: '연예인의 매력' }
+        // MBTI 기반 무기 & 스킬 시스템
+        const MBTIWeaponSystem = {
+            INTJ: { 
+                weapons: ['전략 저격소총', '시스템 해킹 툴', '미래 예측 스코프', '건축가 드론'],
+                skills: ['완벽한 계획', '약점 분석', '전술 오버라이드', '마스터플랜'],
+                stats: { accuracy: 95, damage: 85, speed: 60, strategy: 100 }
+            },
+            INTP: { 
+                weapons: ['로직 캐논', '이론 폭탄', '패턴 레이저', '지식 수집기'],
+                skills: ['논리 분해', '창의적 해킹', '이론 실험', '완벽한 모델'],
+                stats: { accuracy: 90, damage: 80, speed: 55, innovation: 100 }
+            },
+            ENTJ: { 
+                weapons: ['리더십 어썰트 라이플', '목표 달성 미사일', '지휘 방패', '조직 네트워크'],
+                skills: ['전투 지휘', '팀 버프', '목표 집중', '절대 명령'],
+                stats: { accuracy: 80, damage: 90, speed: 75, leadership: 100 }
+            },
+            ENTP: { 
+                weapons: ['아이디어 머신건', '즉흥 수류탄', '연결 와이어', '혁신 드릴'],
+                skills: ['창의 폭발', '즉흥 대응', '연결 발견', '무한 가능성'],
+                stats: { accuracy: 70, damage: 85, speed: 95, creativity: 100 }
+            },
+            INFJ: { 
+                weapons: ['공감 스나이퍼', '미래 통찰 오브', '보호 방벽', '조화 지팡이'],
+                skills: ['예언 시전', '보호막 생성', '영혼 치유', '옹호자의 축복'],
+                stats: { accuracy: 85, damage: 70, speed: 65, intuition: 100 }
+            },
+            INFP: { 
+                weapons: ['진정성 활', '가치 방패', '창의 마법봉', '순수 크리스탈'],
+                skills: ['가치 수호', '창의적 치유', '영감 화살', '순수한 이상'],
+                stats: { accuracy: 75, damage: 75, speed: 70, authenticity: 100 }
+            },
+            ENFJ: { 
+                weapons: ['영감 라이플', '성장 지원 드론', '희망 광선', '카리스마 오라'],
+                skills: ['팀 영감', '성장 촉진', '희망 전파', '선도자 권능'],
+                stats: { accuracy: 80, damage: 75, speed: 80, inspiration: 100 }
+            },
+            ENFP: { 
+                weapons: ['열정 샷건', '관계 연결망', '가능성 탐지기', '즉흥 폭탄'],
+                skills: ['열정 폭발', '관계 강화', '가능성 발견', '활동가 에너지'],
+                stats: { accuracy: 75, damage: 80, speed: 90, enthusiasm: 100 }
+            },
+            ISTJ: { 
+                weapons: ['신뢰성 라이플', '체계 방패', '전통 검', '완벽 장갑'],
+                skills: ['완벽 관리', '시스템 복원', '전통 수호', '물류 마스터'],
+                stats: { accuracy: 95, damage: 85, speed: 60, reliability: 100 }
+            },
+            ISFJ: { 
+                weapons: ['보호 방패', '배려 힐링건', '헌신 검', '안정 오브'],
+                skills: ['보호 본능', '치유 마법', '안정 제공', '수호자 방벽'],
+                stats: { accuracy: 80, damage: 70, speed: 70, protection: 100 }
+            },
+            ESTJ: { 
+                weapons: ['효율 머신건', '질서 해머', '관리 드론', '책임 방패'],
+                skills: ['효율적 공격', '질서 확립', '팀 관리', '경영자 통제'],
+                stats: { accuracy: 85, damage: 90, speed: 75, efficiency: 100 }
+            },
+            ESFJ: { 
+                weapons: ['조화 스태프', '서비스 힐링건', '팀워크 버프', '배려 방벽'],
+                skills: ['사회적 치유', '팀워크 강화', '서비스 마법', '집정관 유대'],
+                stats: { accuracy: 80, damage: 65, speed: 75, harmony: 100 }
+            },
+            ISTP: { 
+                weapons: ['정밀 스나이퍼', '도구 세트', '수리 드론', '기술 해커'],
+                skills: ['정밀 사격', '즉석 수리', '기술 해킹', '장인 기술'],
+                stats: { accuracy: 100, damage: 90, speed: 65, precision: 100 }
+            },
+            ISFP: { 
+                weapons: ['예술 활', '자유 윙슈트', '자연 마법봖', '순수 크리스탈'],
+                skills: ['예술적 공격', '자유로운 이동', '자연 친화', '모험가 정신'],
+                stats: { accuracy: 85, damage: 70, speed: 85, freedom: 100 }
+            },
+            ESTP: { 
+                weapons: ['순발력 샷건', '위기 대응 키트', '행동력 부스터', '현장 도구'],
+                skills: ['즉각 반응', '위기 탈출', '현장 판단', '사업가 감각'],
+                stats: { accuracy: 80, damage: 85, speed: 100, action: 100 }
+            },
+            ESFP: { 
+                weapons: ['즐거움 파티건', '분위기 메이커', '감정 공유 오브', '현재 집중 렌즈'],
+                skills: ['즐거움 전파', '분위기 전환', '감정 동조', '연예인 매력'],
+                stats: { accuracy: 75, damage: 70, speed: 95, charisma: 100 }
+            }
         };
 
-        // 메인 3D 게임 객체
-        const Game3D = {
+        // ====== 메인 RPG-FPS 게임 엔진 ======
+        const RPGFPSEngine = {
+            // 렌더링 시스템
             canvas: null, ctx: null, minimap: null, minimapCtx: null,
-            isRunning: false, isPaused: false, lastTime: 0,
             
+            // 플레이어 (FPS 캐릭터)
             player: {
-                position: new Vector3D(0, 0, 0), velocity: new Vector3D(0, 0, 0),
-                rotation: 0, size: 1, energy: 100, abilities: [], cooldowns: [0, 0, 0, 0],
-                mbtiType: 'INTJ'
+                position: new Vector3(0, 1.7, 0), // 눈높이
+                velocity: new Vector3(0, 0, 0),
+                rotation: { yaw: 0, pitch: 0 }, // 1인칭 시점 회전
+                health: 100, maxHealth: 100,
+                mana: 100, maxMana: 100,
+                level: 1, experience: 0, skillPoints: 0,
+                mbtiType: 'ENFP',
+                currentWeapon: 0,
+                weapons: [], // 소유 무기들
+                inventory: [],
+                equipment: { helmet: null, armor: null, boots: null, accessory: null },
+                onGround: true,
+                isRunning: false, isCrouching: false,
+                stats: { strength: 10, agility: 10, intelligence: 10, charisma: 10 }
             },
             
-            camera: { position: new Vector3D(0, 10, 10), target: new Vector3D(0, 0, 0), zoom: 1 },
-            score: 0, level: 1, currentDimension: 'Ne', worldSize: 50,
-            crystals: [], obstacles: [], platforms: [],
-            particles: new ParticleSystem(),
-            audioContext: null,
-            
-            keys: {
-                W: false, A: false, S: false, D: false,
-                ArrowUp: false, ArrowLeft: false, ArrowDown: false, ArrowRight: false,
-                Space: false, Digit1: false, Digit2: false, Digit3: false, Digit4: false
+            // 1인칭 카메라
+            camera: {
+                position: new Vector3(0, 1.7, 0),
+                yaw: 0, pitch: 0,
+                fov: 75, sensitivity: 0.002,
+                bobPhase: 0, bobAmount: 0.02
             },
             
-            mouse: { x: 0, y: 0, isPressed: false },
-            touch: { moveStick: { x: 0, y: 0, active: false }, actionButtons: [] }
+            // 게임 세계
+            world: {
+                currentDungeon: 'Ne',
+                size: 100,
+                enemies: [],
+                npcs: [],
+                loot: [],
+                structures: [],
+                lighting: { ambient: 0.3, sun: { direction: new Vector3(0.5, -1, 0.3), intensity: 0.8 } }
+            },
+            
+            // 전투 시스템
+            combat: {
+                projectiles: [],
+                explosions: [],
+                hitMarkers: []
+            },
+            
+            // RPG 시스템
+            rpg: {
+                quests: [],
+                achievements: [],
+                skillTrees: {},
+                dialogue: null
+            },
+            
+            // 게임 상태
+            state: {
+                isRunning: false,
+                isPaused: false,
+                inInventory: false,
+                inDialogue: false,
+                gameMode: 'campaign'
+            },
+            
+            // 입력 시스템 (FPS 전용)
+            input: {
+                keys: {
+                    W: false, A: false, S: false, D: false,
+                    Space: false, Shift: false, Control: false,
+                    R: false, G: false, Q: false, E: false,
+                    Tab: false, M: false,
+                    Digit1: false, Digit2: false, Digit3: false, Digit4: false
+                },
+                mouse: { 
+                    x: 0, y: 0, deltaX: 0, deltaY: 0,
+                    buttons: { left: false, right: false, middle: false },
+                    locked: false, sensitivity: 1 
+                },
+                gamepad: null
+            },
+            
+            // 오디오 시스템
+            audio: {
+                context: null,
+                masterVolume: 1.0,
+                sfxVolume: 0.8,
+                musicVolume: 0.6,
+                currentTrack: null
+            },
+            
+            // 시스템들
+            particles: new ParticleSystem3D(),
+            ui: { crosshair: true, healthBar: true, minimap: true, hotbar: true },
+            
+            // 성능 추적
+            performance: { 
+                lastTime: 0, deltaTime: 0, fps: 0, frameCount: 0, 
+                lastFpsUpdate: 0, drawCalls: 0 
+            },
+            
+            // 게임 진행도 (기존 호환성)
+            progression: {
+                score: 0,
+                level: 1,
+                currentDimension: 'Ne',
+                dungeonsCleared: 0,
+                enemiesKilled: 0,
+                itemsFound: 0,
+                secretsDiscovered: 0
+            }
         };
 
+        // ====== RPG-FPS 핵심 시스템 함수들 ======
+        
         function showGames() {
             // 게임 섹션 직접 활성화
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -3103,137 +3429,1109 @@
             // MBTI 표시 업데이트
             updateMBTIDisplay();
             
-            // 3D 게임 초기화
+            // RPG-FPS 게임 초기화
             setTimeout(() => {
-                if (initGame3D()) {
-                    console.log('3D MBTI 게임이 준비되었습니다!');
+                if (initRPGFPS()) {
+                    console.log('🎮 MBTI RPG-FPS: 차원 전쟁이 준비되었습니다!');
                 }
             }, 100);
         }
-
-        // ====== 3D 게임 함수들 ======
-
-        // 게임 초기화
-        function initGame3D() {
-            console.log('3D MBTI 게임 초기화 시작');
+        
+        // RPG-FPS 게임 초기화
+        function initRPGFPS() {
+            console.log('🚀 RPG-FPS 엔진 초기화 시작');
             
-            Game3D.canvas = document.getElementById('game3DCanvas');
-            Game3D.minimap = document.getElementById('minimapCanvas');
+            // 캔버스 요소 가져오기
+            RPGFPSEngine.canvas = document.getElementById('game3DCanvas');
+            RPGFPSEngine.minimap = document.getElementById('minimapCanvas');
             
-            if (!Game3D.canvas || !Game3D.minimap) {
-                console.error('캔버스를 찾을 수 없습니다!');
+            if (!RPGFPSEngine.canvas || !RPGFPSEngine.minimap) {
+                console.error('❌ 캔버스를 찾을 수 없습니다!');
                 return false;
             }
             
-            Game3D.ctx = Game3D.canvas.getContext('2d');
-            Game3D.minimapCtx = Game3D.minimap.getContext('2d');
+            // 2D 컨텍스트 초기화
+            RPGFPSEngine.ctx = RPGFPSEngine.canvas.getContext('2d');
+            RPGFPSEngine.minimapCtx = RPGFPSEngine.minimap.getContext('2d');
             
-            // 캔버스 크기 설정
-            resizeCanvas();
+            // 캔버스 크기 설정 (전체화면)
+            resizeCanvasRPG();
             
-            // 이벤트 리스너 설정
-            setupControls();
+            // 컨트롤 시스템 초기화
+            initControlsRPG();
             
-            // 오디오 컨텍스트 초기화
-            initAudio();
+            // 오디오 시스템 초기화
+            initAudioRPG();
             
-            // MBTI 타입 설정
-            Game3D.player.mbtiType = currentMBTI || 'ENFP'; // 기본값은 활동가
-            Game3D.player.abilities = MBTIAbilities[Game3D.player.mbtiType].abilities;
+            // 플레이어 MBTI 설정
+            RPGFPSEngine.player.mbtiType = currentMBTI || 'ENFP';
+            initPlayerWeapons();
             
-            updateGameUI();
+            // UI 초기화
+            updateGameUIRPG();
             
-            console.log('3D MBTI 게임 초기화 완료');
+            console.log('✅ RPG-FPS 엔진 초기화 완료');
             return true;
         }
-
-        // 캔버스 크기 조정
-        function resizeCanvas() {
-            const container = Game3D.canvas.parentElement;
-            const rect = container.getBoundingClientRect();
+        
+        // 캔버스 크기 조정 (전체화면)
+        function resizeCanvasRPG() {
+            const canvas = RPGFPSEngine.canvas;
             
-            const maxWidth = Math.min(rect.width - 40, 1200);
-            const maxHeight = Math.min(window.innerHeight * 0.6, 800);
+            // 실제 디스플레이 크기 설정
+            canvas.width = window.innerWidth;
+            canvas.height = Math.floor(window.innerHeight * 0.8);
             
-            Game3D.canvas.width = maxWidth;
-            Game3D.canvas.height = maxHeight;
+            // CSS 크기와 동기화
+            canvas.style.width = '100vw';
+            canvas.style.height = '80vh';
+            
+            console.log(`📐 캔버스 크기: ${canvas.width} x ${canvas.height}`);
         }
-
-        // 컨트롤 설정 (화살표 키 스크롤 방지 포함)
-        function setupControls() {
+        
+        // FPS 컨트롤 시스템 초기화
+        function initControlsRPG() {
+            const canvas = RPGFPSEngine.canvas;
+            
+            // 키보드 이벤트
             document.addEventListener('keydown', (e) => {
-                if (Game3D.keys.hasOwnProperty(e.code)) {
-                    e.preventDefault(); // 화살표 키 페이지 스크롤 방지
-                    Game3D.keys[e.code] = true;
+                if (RPGFPSEngine.input.keys.hasOwnProperty(e.code.replace('Key', '').replace('Arrow', ''))) {
+                    RPGFPSEngine.input.keys[e.code.replace('Key', '').replace('Arrow', '')] = true;
                 }
                 
-                // 능력 활성화
-                if (e.code.startsWith('Digit') && Game3D.isRunning) {
-                    const abilityIndex = parseInt(e.code.slice(-1)) - 1;
-                    activateAbility(abilityIndex);
-                }
+                // FPS 전용 키 처리
+                handleFPSKeys(e.code, true);
                 
-                if (e.code === 'Escape' || e.code === 'KeyP') {
-                    togglePause();
+                // 스크롤 방지
+                if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                    e.preventDefault();
                 }
             });
             
             document.addEventListener('keyup', (e) => {
-                if (Game3D.keys.hasOwnProperty(e.code)) {
-                    Game3D.keys[e.code] = false;
+                if (RPGFPSEngine.input.keys.hasOwnProperty(e.code.replace('Key', '').replace('Arrow', ''))) {
+                    RPGFPSEngine.input.keys[e.code.replace('Key', '').replace('Arrow', '')] = false;
+                }
+                
+                handleFPSKeys(e.code, false);
+            });
+            
+            // 마우스 이벤트 (FPS 전용)
+            canvas.addEventListener('click', () => {
+                // 포인터 락 요청
+                canvas.requestPointerLock();
+            });
+            
+            canvas.addEventListener('mousemove', (e) => {
+                if (document.pointerLockElement === canvas) {
+                    RPGFPSEngine.input.mouse.deltaX = e.movementX;
+                    RPGFPSEngine.input.mouse.deltaY = e.movementY;
+                    
+                    // 1인칭 카메라 회전
+                    RPGFPSEngine.camera.yaw += e.movementX * RPGFPSEngine.camera.sensitivity;
+                    RPGFPSEngine.camera.pitch -= e.movementY * RPGFPSEngine.camera.sensitivity;
+                    
+                    // 피치 제한 (위/아래 시야 제한)
+                    RPGFPSEngine.camera.pitch = Math.max(-Math.PI/2, Math.min(Math.PI/2, RPGFPSEngine.camera.pitch));
                 }
             });
             
-            // 마우스 이벤트
-            Game3D.canvas.addEventListener('mousemove', (e) => {
-                const rect = Game3D.canvas.getBoundingClientRect();
-                Game3D.mouse.x = (e.clientX - rect.left - Game3D.canvas.width / 2) / Game3D.canvas.width;
-                Game3D.mouse.y = (e.clientY - rect.top - Game3D.canvas.height / 2) / Game3D.canvas.height;
-            });
-            
-            Game3D.canvas.addEventListener('mousedown', (e) => {
-                Game3D.mouse.isPressed = true;
+            canvas.addEventListener('mousedown', (e) => {
+                switch(e.button) {
+                    case 0: // 좌클릭 - 발사
+                        RPGFPSEngine.input.mouse.buttons.left = true;
+                        if (document.pointerLockElement === canvas) {
+                            fireWeapon();
+                        }
+                        break;
+                    case 2: // 우클릭 - 조준
+                        RPGFPSEngine.input.mouse.buttons.right = true;
+                        break;
+                    case 1: // 휠클릭 - 근접공격
+                        RPGFPSEngine.input.mouse.buttons.middle = true;
+                        meleeAttack();
+                        break;
+                }
                 e.preventDefault();
             });
             
-            Game3D.canvas.addEventListener('mouseup', () => {
-                Game3D.mouse.isPressed = false;
+            canvas.addEventListener('mouseup', (e) => {
+                switch(e.button) {
+                    case 0: RPGFPSEngine.input.mouse.buttons.left = false; break;
+                    case 2: RPGFPSEngine.input.mouse.buttons.right = false; break;
+                    case 1: RPGFPSEngine.input.mouse.buttons.middle = false; break;
+                }
             });
             
-            // 터치 이벤트 (모바일 지원)
-            setupTouchControls();
+            // 컨텍스트 메뉴 방지
+            canvas.addEventListener('contextmenu', (e) => e.preventDefault());
             
-            window.addEventListener('resize', resizeCanvas);
+            // 윈도우 리사이즈 이벤트
+            window.addEventListener('resize', resizeCanvasRPG);
+            
+            console.log('🎮 FPS 컨트롤 시스템 초기화 완료');
         }
 
-        // 터치 컨트롤 설정
-        function setupTouchControls() {
-            let touchStartPos = null;
+        // ====== RPG-FPS 핵심 시스템 계속 ======
+
+        // FPS 전용 키 핸들러
+        function handleFPSKeys(code, pressed) {
+            switch(code) {
+                case 'KeyR': // 재장전
+                    if (pressed) reloadWeapon();
+                    break;
+                case 'KeyG': // 수류탄
+                    if (pressed) throwGrenade();
+                    break;
+                case 'KeyQ': // 근접공격
+                    if (pressed) meleeAttack();
+                    break;
+                case 'KeyE': // 상호작용
+                    if (pressed) interact();
+                    break;
+                case 'Tab': // 인벤토리
+                    if (pressed) toggleInventory();
+                    break;
+                case 'KeyM': // 지도
+                    if (pressed) toggleMap();
+                    break;
+                case 'Escape': // 메뉴
+                    if (pressed) togglePauseMenu();
+                    break;
+            }
+        }
+        
+        // 오디오 시스템 초기화
+        function initAudioRPG() {
+            try {
+                RPGFPSEngine.audio.context = new (window.AudioContext || window.webkitAudioContext)();
+                console.log('🔊 3D 오디오 시스템 초기화 완료');
+            } catch (e) {
+                console.warn('⚠️ 오디오 시스템 초기화 실패:', e);
+            }
+        }
+        
+        // 플레이어 무기 초기화
+        function initPlayerWeapons() {
+            const mbtiType = RPGFPSEngine.player.mbtiType;
+            const weaponData = MBTIWeaponSystem[mbtiType];
             
-            Game3D.canvas.addEventListener('touchstart', (e) => {
-                e.preventDefault();
-                const touch = e.touches[0];
-                const rect = Game3D.canvas.getBoundingClientRect();
-                touchStartPos = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
+            if (weaponData) {
+                // 기본 무기 설정
+                RPGFPSEngine.player.weapons = weaponData.weapons.map((name, index) => ({
+                    name: name,
+                    ammo: 30,
+                    maxAmmo: 30,
+                    damage: weaponData.stats.damage,
+                    accuracy: weaponData.stats.accuracy,
+                    fireRate: 600, // RPM
+                    lastShot: 0,
+                    type: index === 0 ? 'primary' : 'skill'
+                }));
+                
+                console.log(`⚔️ ${mbtiType} 무기 시스템 로드 완료: ${weaponData.weapons.join(', ')}`);
+            }
+        }
+        
+        // 게임 시작 함수 (호환성)
+        function startGame3D() {
+            startRPGFPS();
+        }
+        
+        // RPG-FPS 게임 시작
+        function startRPGFPS() {
+            if (RPGFPSEngine.state.isRunning) return;
+            
+            console.log('🎮 RPG-FPS 게임 시작!');
+            
+            // 게임 상태 초기화
+            RPGFPSEngine.state.isRunning = true;
+            RPGFPSEngine.state.isPaused = false;
+            
+            // 플레이어 초기화
+            initializePlayer();
+            
+            // 현재 던전 생성
+            generateDungeon(RPGFPSEngine.world.currentDungeon);
+            
+            // UI 숨기기/보이기
+            document.getElementById('gameOverlay3D').style.display = 'none';
+            document.getElementById('gameStartBtn').style.display = 'none';
+            document.getElementById('gamePauseBtn').style.display = 'block';
+            
+            // 포인터 락 활성화
+            RPGFPSEngine.canvas.requestPointerLock();
+            
+            // 게임 루프 시작
+            RPGFPSEngine.performance.lastTime = performance.now();
+            gameLoopRPG();
+            
+            playGameMusic(RPGFPSEngine.world.currentDungeon);
+            
+            console.log(`🚀 ${RPGFPSEngine.player.mbtiType} 전사가 ${MBTIDungeons[RPGFPSEngine.world.currentDungeon].name}에 입장했습니다!`);
+        }
+        
+        // 플레이어 초기화
+        function initializePlayer() {
+            const player = RPGFPSEngine.player;
+            
+            // 위치 초기화
+            player.position = new Vector3(0, 1.7, 0);
+            player.velocity = new Vector3(0, 0, 0);
+            
+            // 카메라 초기화
+            RPGFPSEngine.camera.position = new Vector3(0, 1.7, 0);
+            RPGFPSEngine.camera.yaw = 0;
+            RPGFPSEngine.camera.pitch = 0;
+            
+            // 상태 초기화
+            player.health = player.maxHealth;
+            player.mana = player.maxMana;
+            player.onGround = true;
+            
+            // 무기 초기화
+            if (player.weapons.length > 0) {
+                player.currentWeapon = 0;
+                player.weapons.forEach(weapon => {
+                    weapon.ammo = weapon.maxAmmo;
+                });
+            }
+            
+            updateGameUIRPG();
+        }
+        
+        // 던전 생성
+        function generateDungeon(dungeonType) {
+            const dungeon = MBTIDungeons[dungeonType];
+            if (!dungeon) return;
+            
+            console.log(`🏰 ${dungeon.name} 던전 생성 중...`);
+            
+            // 월드 초기화
+            RPGFPSEngine.world.enemies = [];
+            RPGFPSEngine.world.loot = [];
+            RPGFPSEngine.world.structures = [];
+            
+            // 적 생성
+            generateEnemies(dungeon);
+            
+            // 구조물 생성
+            generateStructures(dungeon);
+            
+            // 전리품 생성
+            generateLoot(dungeon);
+            
+            console.log(`✅ ${dungeon.name} 생성 완료 - 적 ${RPGFPSEngine.world.enemies.length}마리`);
+        }
+        // 적 생성
+        function generateEnemies(dungeon) {
+            const enemyCount = 5 + (RPGFPSEngine.player.level * 2);
+            
+            for (let i = 0; i < enemyCount; i++) {
+                const enemyType = dungeon.enemies[Math.floor(Math.random() * dungeon.enemies.length)];
+                RPGFPSEngine.world.enemies.push({
+                    type: enemyType,
+                    position: new Vector3(
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size,
+                        0,
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size
+                    ),
+                    health: 100,
+                    maxHealth: 100,
+                    damage: 20 + RPGFPSEngine.player.level * 5,
+                    speed: 2,
+                    state: 'patrol', // 'patrol', 'chase', 'attack', 'dead'
+                    lastAttack: 0,
+                    pathTarget: null,
+                    alertLevel: 0
+                });
+            }
+        }
+        
+        // 구조물 생성
+        function generateStructures(dungeon) {
+            const structureCount = 8 + Math.floor(Math.random() * 5);
+            
+            for (let i = 0; i < structureCount; i++) {
+                RPGFPSEngine.world.structures.push({
+                    type: Math.random() > 0.5 ? 'wall' : 'pillar',
+                    position: new Vector3(
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size,
+                        0,
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size
+                    ),
+                    size: new Vector3(2, 3, 2),
+                    color: dungeon.color
+                });
+            }
+        }
+        
+        // 전리품 생성
+        function generateLoot(dungeon) {
+            const lootCount = 3 + Math.floor(Math.random() * 4);
+            
+            for (let i = 0; i < lootCount; i++) {
+                const lootType = dungeon.loot[Math.floor(Math.random() * dungeon.loot.length)];
+                RPGFPSEngine.world.loot.push({
+                    type: lootType,
+                    position: new Vector3(
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size,
+                        0.5,
+                        (Math.random() - 0.5) * RPGFPSEngine.world.size
+                    ),
+                    value: 50 + Math.floor(Math.random() * 100),
+                    collected: false,
+                    rotation: Math.random() * Math.PI * 2
+                });
+            }
+        }
+        
+        // ====== FPS 전투 시스템 ======
+        
+        // 무기 발사
+        function fireWeapon() {
+            const player = RPGFPSEngine.player;
+            const weapon = player.weapons[player.currentWeapon];
+            
+            if (!weapon || weapon.ammo <= 0) {
+                // 클릭 소리 재생
+                playSound3D('click', player.position);
+                return;
+            }
+            
+            const now = performance.now();
+            const fireDelay = 60000 / weapon.fireRate; // RPM을 밀리초로 변환
+            
+            if (now - weapon.lastShot < fireDelay) return;
+            
+            weapon.lastShot = now;
+            weapon.ammo--;
+            
+            // 총구 화염 파티클
+            RPGFPSEngine.particles.emit(
+                RPGFPSEngine.camera.position.add(new Vector3(0, -0.2, 0)),
+                5,
+                { type: 'muzzleFlash', life: 0.1, color: '#FFFF00', size: 3 }
+            );
+            
+            // 레이캐스팅으로 적중 판정
+            const direction = getCameraDirection();
+            const raycast = FPSPhysics.raycast(
+                RPGFPSEngine.camera.position,
+                direction,
+                100,
+                RPGFPSEngine.world.enemies.concat(RPGFPSEngine.world.structures)
+            );
+            
+            if (raycast.hit && raycast.target.health !== undefined) {
+                // 적 타격
+                dealDamage(raycast.target, weapon.damage);
+                
+                // 피격 파티클
+                RPGFPSEngine.particles.emit(
+                    raycast.point,
+                    8,
+                    { type: 'blood', life: 0.5, color: '#CC0000', size: 2 }
+                );
+                
+                // 히트마커 표시
+                showHitMarker();
+            }
+            
+            // 발사 사운드
+            playSound3D('gunshot', player.position, weapon.name);
+            
+            // 화면 흔들림
+            addCameraShake(0.05);
+            
+            updateGameUIRPG();
+        }
+        
+        // 무기 재장전
+        function reloadWeapon() {
+            const weapon = RPGFPSEngine.player.weapons[RPGFPSEngine.player.currentWeapon];
+            
+            if (!weapon || weapon.ammo >= weapon.maxAmmo) return;
+            
+            weapon.ammo = weapon.maxAmmo;
+            playSound3D('reload', RPGFPSEngine.player.position);
+            
+            console.log(`🔄 ${weapon.name} 재장전 완료`);
+            updateGameUIRPG();
+        }
+        
+        // 근접 공격
+        function meleeAttack() {
+            const player = RPGFPSEngine.player;
+            const direction = getCameraDirection();
+            const meleeRange = 3;
+            
+            // 근접 범위 내 적들 검색
+            RPGFPSEngine.world.enemies.forEach(enemy => {
+                const distance = player.position.distanceTo(enemy.position);
+                if (distance <= meleeRange && !enemy.dead) {
+                    dealDamage(enemy, 40);
+                    
+                    // 넉백 효과
+                    const knockback = enemy.position.subtract(player.position).normalize().multiply(5);
+                    enemy.position = enemy.position.add(knockback);
+                    
+                    playSound3D('melee_hit', enemy.position);
+                }
             });
             
-            Game3D.canvas.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                if (!touchStartPos) return;
-                
-                const touch = e.touches[0];
-                const rect = Game3D.canvas.getBoundingClientRect();
-                const currentPos = { x: touch.clientX - rect.left, y: touch.clientY - rect.top };
-                
-                const deltaX = currentPos.x - touchStartPos.x;
-                const deltaY = currentPos.y - touchStartPos.y;
-                
-                const sensitivity = 50;
-                Game3D.keys.ArrowLeft = deltaX < -sensitivity;
-                Game3D.keys.ArrowRight = deltaX > sensitivity;
-                Game3D.keys.ArrowUp = deltaY < -sensitivity;
-                Game3D.keys.ArrowDown = deltaY > sensitivity;
+            playSound3D('melee_swing', player.position);
+        }
+        
+        // 수류탄 투척
+        function throwGrenade() {
+            const player = RPGFPSEngine.player;
+            const direction = getCameraDirection();
+            const grenadeSpeed = 15;
+            
+            RPGFPSEngine.combat.projectiles.push({
+                type: 'grenade',
+                position: player.position.add(new Vector3(0, -0.3, 0)),
+                velocity: direction.multiply(grenadeSpeed),
+                life: 3.0, // 3초 후 폭발
+                damage: 80,
+                radius: 8
             });
+            
+            playSound3D('grenade_throw', player.position);
+            console.log('💣 수류탄 투척!');
+        }
+        
+        // ====== 게임 루프 시스템 ======
+        
+        // 메인 게임 루프
+        function gameLoopRPG(currentTime = 0) {
+            if (!RPGFPSEngine.state.isRunning) return;
+            
+            // 델타타임 계산
+            const deltaTime = (currentTime - RPGFPSEngine.performance.lastTime) / 1000;
+            RPGFPSEngine.performance.deltaTime = Math.min(deltaTime, 0.033); // 30 FPS 제한
+            RPGFPSEngine.performance.lastTime = currentTime;
+            
+            // FPS 계산
+            updateFPS();
+            
+            if (!RPGFPSEngine.state.isPaused) {
+                // 게임 로직 업데이트
+                updatePlayerRPG(RPGFPSEngine.performance.deltaTime);
+                updateEnemiesRPG(RPGFPSEngine.performance.deltaTime);
+                updateCombatRPG(RPGFPSEngine.performance.deltaTime);
+                updateParticlesRPG(RPGFPSEngine.performance.deltaTime);
+                
+                // 렌더링
+                renderRPG();
+                
+                // UI 업데이트
+                updateGameUIRPG();
+            }
+            
+            // 다음 프레임 예약
+            requestAnimationFrame(gameLoopRPG);
+        }
+        
+        // FPS 계산
+        function updateFPS() {
+            RPGFPSEngine.performance.frameCount++;
+            const now = performance.now();
+            
+            if (now - RPGFPSEngine.performance.lastFpsUpdate >= 1000) {
+                RPGFPSEngine.performance.fps = RPGFPSEngine.performance.frameCount;
+                RPGFPSEngine.performance.frameCount = 0;
+                RPGFPSEngine.performance.lastFpsUpdate = now;
+            }
+        }
+        // ====== 업데이트 시스템들 ======
+        
+        // 플레이어 업데이트
+        function updatePlayerRPG(deltaTime) {
+            const player = RPGFPSEngine.player;
+            const input = RPGFPSEngine.input;
+            
+            // 이동 벡터 계산
+            let moveVector = new Vector3(0, 0, 0);
+            
+            if (input.keys.W) moveVector.z -= 1;
+            if (input.keys.S) moveVector.z += 1;
+            if (input.keys.A) moveVector.x -= 1;
+            if (input.keys.D) moveVector.x += 1;
+            
+            // 카메라 방향에 따른 이동
+            if (moveVector.length() > 0) {
+                moveVector = moveVector.normalize();
+                const yaw = RPGFPSEngine.camera.yaw;
+                
+                const forward = new Vector3(-Math.sin(yaw), 0, -Math.cos(yaw));
+                const right = new Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+                
+                moveVector = forward.multiply(moveVector.z).add(right.multiply(moveVector.x));
+                
+                const speed = input.keys.Shift ? 8 : 4; // 달리기/걷기
+                player.velocity.x = moveVector.x * speed;
+                player.velocity.z = moveVector.z * speed;
+                
+                // 화면 흔들림 (걸을 때)
+                RPGFPSEngine.camera.bobPhase += deltaTime * speed;
+            } else {
+                // 마찰력 적용
+                player.velocity.x *= 0.8;
+                player.velocity.z *= 0.8;
+            }
+            
+            // 점프
+            if (input.keys.Space && player.onGround) {
+                player.velocity.y = 7;
+                player.onGround = false;
+            }
+            
+            // 물리 적용
+            FPSPhysics.applyGravity(player, deltaTime);
+            FPSPhysics.applyFriction(player);
+            
+            // 위치 업데이트
+            player.position = player.position.add(player.velocity.multiply(deltaTime));
+            
+            // 경계 확인
+            FPSPhysics.checkBoundaries(player, RPGFPSEngine.world.size);
+            
+            // 카메라 위치 동기화
+            RPGFPSEngine.camera.position = player.position;
+            
+            // 헤드 밥 적용
+            if (moveVector.length() > 0 && player.onGround) {
+                const bobOffset = Math.sin(RPGFPSEngine.camera.bobPhase * 10) * RPGFPSEngine.camera.bobAmount;
+                RPGFPSEngine.camera.position.y += bobOffset;
+            }
+        }
+        
+        // 적 AI 업데이트
+        function updateEnemiesRPG(deltaTime) {
+            const player = RPGFPSEngine.player;
+            
+            RPGFPSEngine.world.enemies.forEach(enemy => {
+                if (enemy.health <= 0) {
+                    enemy.state = 'dead';
+                    return;
+                }
+                
+                const distanceToPlayer = enemy.position.distanceTo(player.position);
+                
+                // AI 상태 머신
+                switch (enemy.state) {
+                    case 'patrol':
+                        // 플레이어 감지
+                        if (distanceToPlayer < 15) {
+                            enemy.state = 'chase';
+                            enemy.alertLevel = 100;
+                        }
+                        break;
+                        
+                    case 'chase':
+                        // 플레이어 추적
+                        if (distanceToPlayer > 25) {
+                            enemy.state = 'patrol';
+                            enemy.alertLevel = 0;
+                        } else if (distanceToPlayer < 3) {
+                            enemy.state = 'attack';
+                        } else {
+                            // 플레이어 방향으로 이동
+                            const direction = player.position.subtract(enemy.position).normalize();
+                            enemy.position = enemy.position.add(direction.multiply(enemy.speed * deltaTime));
+                        }
+                        break;
+                        
+                    case 'attack':
+                        // 공격
+                        const now = performance.now();
+                        if (now - enemy.lastAttack > 1000) { // 1초마다 공격
+                            if (distanceToPlayer < 3) {
+                                dealDamageToPlayer(enemy.damage);
+                                playSound3D('enemy_attack', enemy.position);
+                            }
+                            enemy.lastAttack = now;
+                        }
+                        
+                        // 플레이어가 멀어지면 추적으로 전환
+                        if (distanceToPlayer > 5) {
+                            enemy.state = 'chase';
+                        }
+                        break;
+                }
+            });
+        }
+        
+        // 전투 시스템 업데이트
+        function updateCombatRPG(deltaTime) {
+            // 투사체 업데이트
+            for (let i = RPGFPSEngine.combat.projectiles.length - 1; i >= 0; i--) {
+                const projectile = RPGFPSEngine.combat.projectiles[i];
+                
+                // 물리 적용
+                if (projectile.type === 'grenade') {
+                    projectile.velocity = projectile.velocity.add(new Vector3(0, -9.8 * deltaTime, 0));
+                }
+                
+                // 위치 업데이트
+                projectile.position = projectile.position.add(projectile.velocity.multiply(deltaTime));
+                
+                // 생명시간 감소
+                projectile.life -= deltaTime;
+                
+                // 폭발 또는 제거
+                if (projectile.life <= 0) {
+                    if (projectile.type === 'grenade') {
+                        explodeGrenade(projectile);
+                    }
+                    RPGFPSEngine.combat.projectiles.splice(i, 1);
+                }
+            }
+        }
+        
+        // 파티클 업데이트
+        function updateParticlesRPG(deltaTime) {
+            RPGFPSEngine.particles.update(deltaTime);
+        }
+        
+        // ====== 렌더링 시스템 ======
+        
+        // 메인 렌더링
+        function renderRPG() {
+            const ctx = RPGFPSEngine.ctx;
+            const canvas = RPGFPSEngine.canvas;
+            const camera = RPGFPSEngine.camera;
+            
+            // 화면 클리어
+            const dungeon = MBTIDungeons[RPGFPSEngine.world.currentDungeon];
+            ctx.fillStyle = dungeon.ambient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 3D 렌더링 시작
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            
+            // 적 렌더링
+            renderEnemies(ctx, camera, canvas.width, canvas.height);
+            
+            // 구조물 렌더링
+            renderStructures(ctx, camera, canvas.width, canvas.height);
+            
+            // 전리품 렌더링
+            renderLoot(ctx, camera, canvas.width, canvas.height);
+            
+            // 투사체 렌더링
+            renderProjectiles(ctx, camera, canvas.width, canvas.height);
+            
+            // 파티클 렌더링
+            RPGFPSEngine.particles.render(ctx, camera, canvas.width, canvas.height);
+            
+            ctx.restore();
+            
+            // UI 렌더링
+            renderUI(ctx, canvas);
+            
+            // FPS 표시 (디버그)
+            ctx.fillStyle = 'white';
+            ctx.font = '14px Arial';
+            ctx.fillText(`FPS: ${RPGFPSEngine.performance.fps}`, 10, 30);
+        }
+        
+        // 적 렌더링
+        function renderEnemies(ctx, camera, screenWidth, screenHeight) {
+            RPGFPSEngine.world.enemies.forEach(enemy => {
+                if (enemy.state === 'dead') return;
+                
+                const screenPos = enemy.position.projectFPS(camera);
+                if (!screenPos) return;
+                
+                // 거리에 따른 크기 조정
+                const size = 30 / (screenPos.z * 0.01);
+                
+                // 적 몸체
+                ctx.fillStyle = enemy.alertLevel > 0 ? '#FF4444' : '#666666';
+                ctx.fillRect(screenPos.x - size/2, screenPos.y - size, size, size);
+                
+                // 체력바
+                const healthPercent = enemy.health / enemy.maxHealth;
+                ctx.fillStyle = '#333333';
+                ctx.fillRect(screenPos.x - size/2, screenPos.y - size - 8, size, 4);
+                ctx.fillStyle = healthPercent > 0.5 ? '#00FF00' : '#FF0000';
+                ctx.fillRect(screenPos.x - size/2, screenPos.y - size - 8, size * healthPercent, 4);
+                
+                // 적 이름
+                ctx.fillStyle = 'white';
+                ctx.font = `${Math.max(8, size/4)}px Arial`;
+                ctx.textAlign = 'center';
+                ctx.fillText(enemy.type, screenPos.x, screenPos.y + size/2);
+            });
+        }
+        
+        // 구조물 렌더링
+        function renderStructures(ctx, camera, screenWidth, screenHeight) {
+            RPGFPSEngine.world.structures.forEach(structure => {
+                const screenPos = structure.position.projectFPS(camera);
+                if (!screenPos) return;
+                
+                const size = 20 / (screenPos.z * 0.01);
+                
+                ctx.fillStyle = structure.color;
+                ctx.fillRect(screenPos.x - size/2, screenPos.y - size, size, size);
+            });
+        }
+        
+        // 전리품 렌더링
+        function renderLoot(ctx, camera, screenWidth, screenHeight) {
+            RPGFPSEngine.world.loot.forEach(loot => {
+                if (loot.collected) return;
+                
+                const screenPos = loot.position.projectFPS(camera);
+                if (!screenPos) return;
+                
+                const size = 15 / (screenPos.z * 0.01);
+                
+                // 반짝이는 효과
+                const glow = 0.5 + 0.5 * Math.sin(performance.now() * 0.005);
+                ctx.globalAlpha = glow;
+                
+                ctx.fillStyle = '#FFD700';
+                ctx.beginPath();
+                ctx.arc(screenPos.x, screenPos.y, size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                ctx.globalAlpha = 1.0;
+            });
+        }
+        
+        // 투사체 렌더링
+        function renderProjectiles(ctx, camera, screenWidth, screenHeight) {
+            RPGFPSEngine.combat.projectiles.forEach(projectile => {
+                const screenPos = projectile.position.projectFPS(camera);
+                if (!screenPos) return;
+                
+                const size = 5 / (screenPos.z * 0.01);
+                
+                if (projectile.type === 'grenade') {
+                    ctx.fillStyle = '#444444';
+                    ctx.beginPath();
+                    ctx.arc(screenPos.x, screenPos.y, size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            });
+        }
+        
+        // UI 렌더링
+        function renderUI(ctx, canvas) {
+            // 크로스헤어
+            if (RPGFPSEngine.ui.crosshair) {
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                ctx.moveTo(centerX - 10, centerY);
+                ctx.lineTo(centerX + 10, centerY);
+                ctx.moveTo(centerX, centerY - 10);
+                ctx.lineTo(centerX, centerY + 10);
+                ctx.stroke();
+            }
+            
+            // 탄약 정보
+            const weapon = RPGFPSEngine.player.weapons[RPGFPSEngine.player.currentWeapon];
+            if (weapon) {
+                ctx.fillStyle = 'white';
+                ctx.font = '20px Arial';
+                ctx.textAlign = 'right';
+                ctx.fillText(`${weapon.ammo} / ${weapon.maxAmmo}`, canvas.width - 20, canvas.height - 20);
+                ctx.fillText(weapon.name, canvas.width - 20, canvas.height - 50);
+            }
+        }
+
+        // ====== 유틸리티 함수들 ======
+        
+        // 카메라 방향 벡터 계산
+        function getCameraDirection() {
+            const camera = RPGFPSEngine.camera;
+            return new Vector3(
+                Math.sin(camera.yaw) * Math.cos(camera.pitch),
+                Math.sin(camera.pitch),
+                Math.cos(camera.yaw) * Math.cos(camera.pitch)
+            );
+        }
+        
+        // 데미지 처리
+        function dealDamage(target, damage) {
+            target.health -= damage;
+            
+            if (target.health <= 0) {
+                target.health = 0;
+                if (target.type) { // 적인 경우
+                    RPGFPSEngine.progression.enemiesKilled++;
+                    RPGFPSEngine.progression.score += 100;
+                    awardExperience(50);
+                }
+            }
+        }
+        
+        // 플레이어 피해 처리
+        function dealDamageToPlayer(damage) {
+            RPGFPSEngine.player.health -= damage;
+            
+            // 화면 빨갛게 깜빡임 효과 (추가할 수 있음)
+            
+            if (RPGFPSEngine.player.health <= 0) {
+                RPGFPSEngine.player.health = 0;
+                endGameRPG();
+            }
+            
+            updateGameUIRPG();
+        }
+        
+        // 경험치 지급
+        function awardExperience(exp) {
+            RPGFPSEngine.player.experience += exp;
+            
+            const expRequired = RPGFPSEngine.player.level * 100;
+            if (RPGFPSEngine.player.experience >= expRequired) {
+                RPGFPSEngine.player.level++;
+                RPGFPSEngine.player.experience -= expRequired;
+                RPGFPSEngine.player.skillPoints += 3;
+                
+                // 레벨업 혜택
+                RPGFPSEngine.player.maxHealth += 20;
+                RPGFPSEngine.player.maxMana += 10;
+                RPGFPSEngine.player.health = RPGFPSEngine.player.maxHealth;
+                RPGFPSEngine.player.mana = RPGFPSEngine.player.maxMana;
+                
+                showToast(`🎉 레벨업! Lv.${RPGFPSEngine.player.level}`);
+                playSound3D('levelup', RPGFPSEngine.player.position);
+            }
+        }
+        
+        // 수류탄 폭발
+        function explodeGrenade(grenade) {
+            // 폭발 파티클
+            RPGFPSEngine.particles.emit(
+                grenade.position,
+                20,
+                { type: 'explosion', life: 1.0, color: '#FF6600', size: 8 }
+            );
+            
+            // 범위 데미지
+            RPGFPSEngine.world.enemies.forEach(enemy => {
+                const distance = enemy.position.distanceTo(grenade.position);
+                if (distance <= grenade.radius) {
+                    const damage = grenade.damage * (1 - distance / grenade.radius);
+                    dealDamage(enemy, damage);
+                }
+            });
+            
+            // 플레이어도 피해 가능
+            const playerDistance = RPGFPSEngine.player.position.distanceTo(grenade.position);
+            if (playerDistance <= grenade.radius) {
+                const damage = grenade.damage * 0.5 * (1 - playerDistance / grenade.radius);
+                dealDamageToPlayer(damage);
+            }
+            
+            playSound3D('explosion', grenade.position);
+            addCameraShake(0.2);
+        }
+        
+        // 화면 흔들림 추가
+        function addCameraShake(intensity) {
+            // 간단한 구현 - 실제로는 카메라 오프셋을 조정
+            console.log(`📳 화면 흔들림: ${intensity}`);
+        }
+        
+        // 히트마커 표시
+        function showHitMarker() {
+            // 히트마커 애니메이션 - 간단한 구현
+            console.log('🎯 적중!');
+        }
+        
+        // 3D 사운드 재생
+        function playSound3D(type, position, extraData = '') {
+            if (!RPGFPSEngine.audio.context) return;
+            
+            try {
+                const oscillator = RPGFPSEngine.audio.context.createOscillator();
+                const gainNode = RPGFPSEngine.audio.context.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(RPGFPSEngine.audio.context.destination);
+                
+                // 거리 기반 볼륨 조절
+                const distance = RPGFPSEngine.player.position.distanceTo(position);
+                const volume = Math.max(0.1, 1 - distance / 50) * RPGFPSEngine.audio.sfxVolume;
+                
+                gainNode.gain.setValueAtTime(volume, RPGFPSEngine.audio.context.currentTime);
+                
+                // 사운드 타입별 주파수
+                const frequencies = {
+                    'gunshot': 200,
+                    'reload': 400,
+                    'melee_swing': 300,
+                    'melee_hit': 500,
+                    'grenade_throw': 250,
+                    'explosion': 150,
+                    'enemy_attack': 180,
+                    'levelup': 800,
+                    'click': 1000
+                };
+                
+                oscillator.frequency.setValueAtTime(
+                    frequencies[type] || 440, 
+                    RPGFPSEngine.audio.context.currentTime
+                );
+                
+                oscillator.start(RPGFPSEngine.audio.context.currentTime);
+                oscillator.stop(RPGFPSEngine.audio.context.currentTime + 0.1);
+                
+                gainNode.gain.exponentialRampToValueAtTime(
+                    0.01, 
+                    RPGFPSEngine.audio.context.currentTime + 0.1
+                );
+            } catch (e) {
+                console.warn('사운드 재생 실패:', e);
+            }
+        }
+        
+        // 게임 음악 재생
+        function playGameMusic(dungeonType) {
+            console.log(`🎵 ${MBTIDungeons[dungeonType].name} 테마 음악 재생`);
+        }
+        
+        // 상호작용
+        function interact() {
+            const player = RPGFPSEngine.player;
+            
+            // 근처 전리품 수집
+            RPGFPSEngine.world.loot.forEach(loot => {
+                if (!loot.collected && player.position.distanceTo(loot.position) < 3) {
+                    loot.collected = true;
+                    RPGFPSEngine.progression.score += loot.value;
+                    RPGFPSEngine.progression.itemsFound++;
+                    
+                    playSound3D('item_collect', loot.position);
+                    showToast(`💰 ${loot.type} 획득! (+${loot.value}점)`);
+                }
+            });
+        }
+        
+        // 인벤토리 토글
+        function toggleInventory() {
+            RPGFPSEngine.state.inInventory = !RPGFPSEngine.state.inInventory;
+            console.log('🎒 인벤토리:', RPGFPSEngine.state.inInventory ? '열림' : '닫힌');
+        }
+        
+        // 지도 토글
+        function toggleMap() {
+            console.log('🗺️ 지도 토글');
+        }
+        
+        // 일시정지 메뉴 토글
+        function togglePauseMenu() {
+            RPGFPSEngine.state.isPaused = !RPGFPSEngine.state.isPaused;
+            
+            if (RPGFPSEngine.state.isPaused) {
+                document.exitPointerLock();
+                document.getElementById('gameOverlay3D').style.display = 'flex';
+            } else {
+                document.getElementById('gameOverlay3D').style.display = 'none';
+                RPGFPSEngine.canvas.requestPointerLock();
+            }
+        }
+        
+        // 일시정지 (호환성)
+        function togglePause() {
+            togglePauseMenu();
+        }
+        
+        // UI 업데이트
+        function updateGameUIRPG() {
+            const player = RPGFPSEngine.player;
+            const progression = RPGFPSEngine.progression;
+            
+            // 기존 UI 요소들 업데이트 (호환성)
+            const scoreEl = document.getElementById('gameScore');
+            const levelEl = document.getElementById('gameLevel');
+            const dimensionEl = document.getElementById('currentDimension');
+            const energyEl = document.getElementById('energyFill');
+            
+            if (scoreEl) scoreEl.textContent = progression.score;
+            if (levelEl) levelEl.textContent = player.level;
+            if (dimensionEl) dimensionEl.textContent = MBTIDungeons[RPGFPSEngine.world.currentDungeon].name;
+            if (energyEl) energyEl.style.width = (player.health / player.maxHealth * 100) + '%';
+            
+            // MBTI 표시 업데이트
+            const mbtiDisplay = document.getElementById('mbtiDisplay');
+            if (mbtiDisplay) mbtiDisplay.textContent = player.mbtiType;
+        }
+        
+        // 게임 종료
+        function endGameRPG() {
+            RPGFPSEngine.state.isRunning = false;
+            
+            console.log('💀 게임 오버!');
+            
+            // 포인터 락 해제
+            document.exitPointerLock();
+            
+            // 최종 점수 계산
+            const finalScore = RPGFPSEngine.progression.score;
+            
+            // UI 업데이트
+            document.getElementById('finalScore3D').textContent = finalScore;
+            document.getElementById('finalLevel').textContent = RPGFPSEngine.player.level;
+            document.getElementById('exploredDimensions').textContent = 1;
+            
+            // 게임 오버 화면 표시
+            document.getElementById('gameMenu').style.display = 'none';
+            document.getElementById('gameOverMenu').style.display = 'block';
+            document.getElementById('gameOverlay3D').style.display = 'flex';
+            document.getElementById('gameStartBtn').style.display = 'block';
+            document.getElementById('gamePauseBtn').style.display = 'none';
+            
+            // 하이스코어 저장
+            const highScore = localStorage.getItem('mbtiRPGFPSHighScore') || 0;
+            if (finalScore > highScore) {
+                localStorage.setItem('mbtiRPGFPSHighScore', finalScore);
+                showToast(`🏆 신기록! ${finalScore}점`);
+            }
+            
+            console.log(`🎮 게임 종료 - 최종 점수: ${finalScore}, 레벨: ${RPGFPSEngine.player.level}`);
+        }
+        
+        // ====== RPG-FPS 변환 완료! ======
+        
+        // 호환성 함수들 - 기존 게임 함수 이름으로 새 시스템 호출
+        function initGame3D() { return initRPGFPS(); }
+        function gameLoop3D() { return gameLoopRPG(); }
+        function updateGameUI() { return updateGameUIRPG(); }
+        
+        console.log('✅ MBTI RPG-FPS: 차원 전쟁 시스템 로드 완료!');
+        console.log('🎮 게임 특징:');
+        console.log('   • 완전한 1인칭 FPS 시점');
+        console.log('   • 16가지 MBTI별 고유 무기 & 스킬');
+        console.log('   • 8개 MBTI 차원 던전');
+        console.log('   • 실시간 전투 & RPG 성장');
+        console.log('   • 대형 전체화면 (100vw x 80vh)');
+        console.log('   • 3D 오디오 & 파티클 시스템');
+        
+        // ====== 🎉 MBTI RPG-FPS 변환 완료! ======
+        // 기존 3D 어드벤처 게임이 완전히 새로운 RPG-FPS 하이브리드로 진화했습니다!
+        
+        // 사용자에게 새로운 게임 방법 안내
+        function showRPGFPSWelcome() {
+            if (typeof showToast === 'function') {
+                showToast(`🎮 새로운 MBTI RPG-FPS가 로드되었습니다! 캔버스를 클릭하고 마우스로 시점을 조작하세요!`);
+            }
+        }
+        
+        // 페이지 로드 시 환영 메시지
+        setTimeout(showRPGFPSWelcome, 2000);
             
             Game3D.canvas.addEventListener('touchend', (e) => {
                 e.preventDefault();
@@ -4398,34 +5696,210 @@
             console.log(`현재 MBTI 변수값: ${currentMBTI}`);
         }
         
-        // MBTI 표시 업데이트 함수
+        // 🌟 통합 MBTI 연동 시스템
         function updateMBTIDisplay() {
             if (!currentMBTI) return;
             
-            // 홈 화면의 MBTI 표시 업데이트
-            const mbtiDisplay = document.getElementById('displayMBTI');
-            if (mbtiDisplay) {
-                mbtiDisplay.textContent = currentMBTI;
+            // 1. 모든 페이지의 MBTI 표시 업데이트
+            const mbtiElements = [
+                'displayMBTI', 'userMBTI', 'resultType', 'myMBTI', 
+                'mbtiDisplay', 'playerMBTI', 'currentUserMBTI'
+            ];
+            
+            mbtiElements.forEach(id => {
+                const element = document.getElementById(id);
+                if (element) {
+                    element.textContent = currentMBTI;
+                }
+            });
+            
+            // 2. 게임과 연동 - RPG 캐릭터 업데이트
+            if (window.RPGFPSEngine && RPGFPSEngine.player) {
+                RPGFPSEngine.player.mbtiType = currentMBTI;
+                updatePlayerAbilities();
             }
             
-            // 게임 버튼의 MBTI 표시 업데이트
-            const userMBTISpan = document.getElementById('userMBTI');
-            if (userMBTISpan) {
-                userMBTISpan.textContent = currentMBTI;
+            // 3. 채팅과 연동 - 매칭 설정 업데이트
+            updateChatMBTI();
+            
+            // 4. 운세와 연동 - 개인화된 운세 생성
+            if (document.getElementById('fortuneSection')?.classList.contains('active')) {
+                generatePersonalizedFortune();
             }
             
-            // 결과 섹션의 MBTI 표시 업데이트
-            const resultType = document.getElementById('resultType');
-            const myMBTI = document.getElementById('myMBTI');
+            // 5. 통계와 연동 - MBTI 기반 성과 추적
+            updateMBTIStats();
             
-            if (resultType) {
-                resultType.textContent = currentMBTI;
+            console.log(`🔗 전체 시스템 MBTI 연동 완료: ${currentMBTI}`);
+        }
+        
+        // 🎮 게임-MBTI 연동 함수
+        function updatePlayerAbilities() {
+            if (!window.RPGFPSEngine || !currentMBTI) return;
+            
+            const player = RPGFPSEngine.player;
+            const mbtiData = MBTIWeapons[currentMBTI];
+            
+            if (mbtiData) {
+                player.weapons = mbtiData.weapons;
+                player.abilities = mbtiData.abilities;
+                player.primaryWeapon = mbtiData.weapons[0];
+                
+                // 게임 UI 업데이트
+                updateGameUIRPG();
+                
+                showToast(`🎯 ${currentMBTI} 전용 무기와 능력이 적용되었습니다!`);
             }
-            if (myMBTI) {
-                myMBTI.textContent = currentMBTI;
+        }
+        
+        // 💬 채팅-MBTI 연동 함수
+        function updateChatMBTI() {
+            const chatTitle = document.querySelector('.chat-title');
+            if (chatTitle && currentPartner) {
+                chatTitle.textContent = `${currentMBTI} ↔ ${currentPartner} 채팅`;
             }
             
-            console.log(`MBTI 표시 업데이트 완료: ${currentMBTI}`);
+            // 채팅 매칭 설정에 현재 MBTI 반영
+            const myMBTIChat = document.getElementById('myMBTIChat');
+            if (myMBTIChat) {
+                myMBTIChat.textContent = currentMBTI;
+            }
+        }
+        
+        // 🔮 운세-MBTI 연동 함수
+        function generatePersonalizedFortune() {
+            if (!currentMBTI) return;
+            
+            const today = new Date();
+            const seed = today.getDate() + currentMBTI.charCodeAt(0) + currentMBTI.charCodeAt(1);
+            
+            // MBTI별 맞춤형 운세 데이터
+            const mbtiFortuneData = {
+                'INTJ': {
+                    lucky: ['계획', '전략', '분석', '시스템'],
+                    advice: ['장기적 관점으로 접근하세요', '체계적인 준비가 성공의 열쇠입니다'],
+                    color: '#6B46C1'
+                },
+                'ENFP': {
+                    lucky: ['열정', '창의', '관계', '모험'],
+                    advice: ['새로운 경험에 열린 마음으로', '사람들과의 연결이 기회를 만듭니다'],
+                    color: '#F59E0B'
+                }
+                // ... 다른 MBTI 타입들도 추가
+            };
+            
+            const mbtiData = mbtiFortuneData[currentMBTI] || mbtiFortuneData['ENFP'];
+            const luckyItem = mbtiData.lucky[seed % mbtiData.lucky.length];
+            const advice = mbtiData.advice[seed % mbtiData.advice.length];
+            
+            // 운세 업데이트
+            const fortuneElements = {
+                loveFortune: `${currentMBTI} 타입에게 ${luckyItem}이/가 행운을 가져다줄 것입니다`,
+                moneyFortune: `${advice}`,
+                workFortune: `${currentMBTI}의 특성을 활용한 프로젝트에서 성과가 기대됩니다`,
+                healthFortune: `균형잡힌 생활로 ${currentMBTI} 에너지를 충전하세요`
+            };
+            
+            Object.entries(fortuneElements).forEach(([id, text]) => {
+                const element = document.getElementById(id);
+                if (element) element.textContent = text;
+            });
+            
+            // 럭키 컬러 업데이트
+            const luckyColor = document.getElementById('luckyColor');
+            if (luckyColor) {
+                luckyColor.textContent = mbtiData.color;
+                luckyColor.style.color = mbtiData.color;
+            }
+        }
+        
+        // 📊 통계-MBTI 연동 함수
+        function updateMBTIStats() {
+            // 게임 점수와 MBTI 연결
+            if (window.RPGFPSEngine) {
+                const gameScore = RPGFPSEngine.progression.score;
+                const gameLevel = RPGFPSEngine.player.level;
+                
+                // localStorage에 MBTI별 게임 기록 저장
+                const mbtiStats = JSON.parse(localStorage.getItem('mbtiGameStats') || '{}');
+                if (!mbtiStats[currentMBTI]) {
+                    mbtiStats[currentMBTI] = { 
+                        totalScore: 0, 
+                        gamesPlayed: 0, 
+                        highScore: 0,
+                        maxLevel: 0
+                    };
+                }
+                
+                mbtiStats[currentMBTI].totalScore += gameScore;
+                mbtiStats[currentMBTI].gamesPlayed += 1;
+                mbtiStats[currentMBTI].highScore = Math.max(mbtiStats[currentMBTI].highScore, gameScore);
+                mbtiStats[currentMBTI].maxLevel = Math.max(mbtiStats[currentMBTI].maxLevel, gameLevel);
+                
+                localStorage.setItem('mbtiGameStats', JSON.stringify(mbtiStats));
+            }
+        }
+        
+        // 🔗 페이지 간 데이터 연동 함수
+        function syncAllPages() {
+            updateMBTIDisplay();
+            
+            // 게임 결과를 다른 페이지에서 활용
+            if (window.RPGFPSEngine) {
+                const gameData = {
+                    level: RPGFPSEngine.player.level,
+                    score: RPGFPSEngine.progression.score,
+                    mbti: currentMBTI,
+                    achievements: RPGFPSEngine.player.achievements || []
+                };
+                
+                // 홈 화면에 게임 성과 표시
+                updateHomeWithGameData(gameData);
+                
+                // 채팅에서 게임 성과 자랑하기 기능
+                updateChatWithGameData(gameData);
+                
+                // 운세에 게임 경험 반영
+                updateFortuneWithGameData(gameData);
+            }
+        }
+        
+        function updateHomeWithGameData(gameData) {
+            const homeStats = document.getElementById('homeGameStats');
+            if (homeStats && gameData.level > 1) {
+                homeStats.innerHTML = `
+                    <div style="background: rgba(79,70,229,0.1); padding: 10px; border-radius: 8px; margin: 10px 0;">
+                        🎮 <strong>${gameData.mbti} 어드벤처 진행상황</strong><br>
+                        레벨 ${gameData.level} | 점수 ${gameData.score.toLocaleString()}점
+                    </div>
+                `;
+                homeStats.style.display = 'block';
+            }
+        }
+        
+        function updateChatWithGameData(gameData) {
+            // 채팅에서 게임 성과 공유 기능 추가
+            if (gameData.level >= 5) {
+                const shareButton = document.getElementById('shareGameAchievement');
+                if (shareButton) {
+                    shareButton.style.display = 'block';
+                    shareButton.onclick = () => {
+                        const message = `🏆 저는 ${gameData.mbti} 어드벤처에서 레벨 ${gameData.level}에 도달했어요! (점수: ${gameData.score.toLocaleString()}점)`;
+                        sendChatMessage(message);
+                    };
+                }
+            }
+        }
+        
+        function updateFortuneWithGameData(gameData) {
+            const gameBonus = document.getElementById('gameBonus');
+            if (gameBonus && gameData.level > 1) {
+                gameBonus.innerHTML = `
+                    <div style="color: #10B981; margin: 10px 0;">
+                        🎮 게임 보너스: 레벨 ${gameData.level} 달성으로 행운이 +${gameData.level}% 상승!
+                    </div>
+                `;
+            }
         }
         
         // 튜토리얼 숨기기 함수
@@ -4442,13 +5916,106 @@
             // localStorage를 확인하지 않고 항상 설정 화면부터 시작
             console.log('페이지 로드됨 - MBTI 설정 화면 표시');
             
+            // 🔗 전체 페이지 연동 초기화
+            initializePageSync();
+            
             // const savedMBTI = localStorage.getItem('currentMBTI');
             // if (savedMBTI) {
             //     currentMBTI = savedMBTI;
             //     document.getElementById('mbtiSetupScreen').style.display = 'none';
             //     document.getElementById('mainContainer').style.display = 'block';
+            //     syncAllPages(); // 저장된 MBTI로 모든 페이지 동기화
             // }
         });
+        
+        // 🌟 전체 페이지 연동 초기화
+        function initializePageSync() {
+            // 페이지 전환 시 자동 동기화
+            const navItems = document.querySelectorAll('.nav-item, .menu-card');
+            navItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    setTimeout(syncAllPages, 100); // 페이지 전환 후 동기화
+                });
+            });
+            
+            // 게임 결과 변경 시 자동 동기화
+            if (window.RPGFPSEngine) {
+                const originalEndGame = window.endGameRPG;
+                window.endGameRPG = function() {
+                    originalEndGame?.();
+                    setTimeout(syncAllPages, 500); // 게임 종료 후 동기화
+                };
+            }
+            
+            console.log('🔗 페이지 연동 시스템 초기화 완료');
+        }
+        
+        // 🎮 게임 성과 공유 함수
+        function shareGameAchievement() {
+            if (!window.RPGFPSEngine || !currentMBTI) return;
+            
+            const gameData = {
+                level: RPGFPSEngine.player.level,
+                score: RPGFPSEngine.progression.score,
+                mbti: currentMBTI
+            };
+            
+            const messages = [
+                `🎯 ${gameData.mbti} 어드벤처 레벨 ${gameData.level} 달성! 점수: ${gameData.score.toLocaleString()}점`,
+                `🏆 ${gameData.mbti} 타입의 힘으로 레벨업! 현재 ${gameData.level}레벨입니다`,
+                `⚡ ${gameData.mbti} 특성을 살려서 ${gameData.score.toLocaleString()}점 달성했어요!`
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            
+            // 채팅 입력창에 메시지 설정
+            const chatInput = document.getElementById('chatInput');
+            if (chatInput) {
+                chatInput.value = randomMessage;
+                chatInput.focus();
+            }
+        }
+        
+        // 📊 실시간 연동 업데이트 (5초마다)
+        setInterval(() => {
+            if (currentMBTI) {
+                updateMBTIStats();
+                
+                // 게임이 실행 중이면 연동 데이터 업데이트
+                if (window.RPGFPSEngine && RPGFPSEngine.state.isRunning) {
+                    syncAllPages();
+                }
+            }
+        }, 5000);
+        
+        // 🎯 섹션별 진입 시 자동 연동
+        function enhanceNavigation() {
+            const originalShowSection = window.showSection;
+            window.showSection = function(sectionName) {
+                originalShowSection?.(sectionName);
+                
+                // 각 섹션별 맞춤 연동
+                switch(sectionName) {
+                    case 'home':
+                        syncAllPages();
+                        break;
+                    case 'fortune':
+                        generatePersonalizedFortune();
+                        break;
+                    case 'chat':
+                        updateChatMBTI();
+                        break;
+                    case 'game':
+                        updatePlayerAbilities();
+                        break;
+                }
+                
+                console.log(`📱 ${sectionName} 섹션 진입 - 연동 완료`);
+            };
+        }
+        
+        // 네비게이션 강화 적용
+        setTimeout(enhanceNavigation, 1000);
 
         // 잠금 콘텐츠 해제
         function unlockContent(contentId) {
