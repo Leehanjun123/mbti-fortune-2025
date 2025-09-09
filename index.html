@@ -621,6 +621,114 @@
             border-color: var(--primary);
         }
 
+        /* 러너 게임 스타일 */
+        .game-controls {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+
+        .game-start-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            transition: opacity 0.2s;
+        }
+
+        .game-start-btn:hover {
+            opacity: 0.9;
+        }
+
+        .game-instructions {
+            color: var(--gray);
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .game-instructions p {
+            margin: 5px 0;
+        }
+
+        .game-canvas-container {
+            position: relative;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 15px;
+            margin: 0 auto;
+            width: 400px;
+            height: 300px;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #gameCanvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .game-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        .game-over-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .final-score {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--success);
+        }
+
+        .retry-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .retry-btn:hover {
+            opacity: 0.9;
+        }
+
         /* 채팅방 */
         .chat-section {
             background: rgba(255, 255, 255, 0.05);
@@ -709,6 +817,318 @@
 
         .chat-send-btn:hover {
             background: #4752C4;
+        }
+
+        /* 새로운 채팅 UI 스타일 */
+        .chat-partner-select {
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .chat-partner-select h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .partner-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .partner-btn {
+            background: linear-gradient(135deg, var(--primary), #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .partner-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .mbti-selector h4 {
+            margin-bottom: 15px;
+            color: var(--white);
+        }
+
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .mbti-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .mbti-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .chat-partner-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .new-partner-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background 0.2s;
+        }
+
+        .new-partner-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .system-message {
+            text-align: center;
+            color: var(--gray);
+            font-size: 0.9rem;
+            padding: 10px;
+            font-style: italic;
+        }
+
+        /* MBTI 설정 화면 스타일 */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .setup-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 100px 20px 20px;
+            text-align: center;
+        }
+
+        .setup-header {
+            margin-bottom: 40px;
+        }
+
+        .setup-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .setup-subtitle {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .setup-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .setup-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .setup-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .setup-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .setup-card h3 {
+            color: var(--white);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .setup-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .setup-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+
+        .setup-btn:hover {
+            opacity: 0.9;
+        }
+
+        .mbti-selector-section {
+            text-align: center;
+        }
+
+        .mbti-selector-section h3 {
+            color: var(--white);
+            margin-bottom: 30px;
+            font-size: 1.3rem;
+        }
+
+        .mbti-grid-setup {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto 30px;
+        }
+
+        .mbti-select-btn {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-weight: 600;
+        }
+
+        .mbti-select-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .mbti-select-btn small {
+            display: block;
+            font-size: 0.7rem;
+            margin-top: 5px;
+            opacity: 0.7;
+        }
+
+        .quiz-section {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-right: 15px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        .quiz-question h3 {
+            color: var(--white);
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        .quiz-answers {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+
+        .quiz-answer {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        .quiz-answer:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .setup-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .mbti-grid-setup {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         /* 통계 섹션 */
@@ -1152,8 +1572,78 @@
         </div>
     </header>
 
+    <!-- MBTI 설정 화면 -->
+    <div id="mbtiSetupScreen" class="screen active">
+        <div class="setup-container">
+            <div class="setup-header">
+                <h1 class="setup-title">🌟 MBTI Universe에 오신 걸 환영해요!</h1>
+                <p class="setup-subtitle">먼저 당신의 MBTI를 설정해주세요</p>
+            </div>
+            
+            <div class="setup-options">
+                <div class="setup-card" onclick="showMBTIQuiz()">
+                    <div class="setup-icon">🤔</div>
+                    <h3>MBTI를 모르겠어요</h3>
+                    <p>간단한 질문으로 알아보기</p>
+                    <button class="setup-btn">테스트 시작</button>
+                </div>
+                
+                <div class="setup-card" onclick="showMBTISelector()">
+                    <div class="setup-icon">✅</div>
+                    <h3>이미 알고 있어요</h3>
+                    <p>MBTI 타입 직접 선택</p>
+                    <button class="setup-btn">바로 선택</button>
+                </div>
+            </div>
+            
+            <!-- MBTI 선택기 -->
+            <div id="mbtiSelector" class="mbti-selector-section" style="display: none;">
+                <h3>당신의 MBTI 타입을 선택해주세요</h3>
+                <div class="mbti-grid-setup">
+                    <button class="mbti-select-btn" onclick="setMBTI('INTJ')">INTJ<br><small>건축가</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('INTP')">INTP<br><small>논리술사</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ENTJ')">ENTJ<br><small>통솔자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ENTP')">ENTP<br><small>변론가</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('INFJ')">INFJ<br><small>옹호자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('INFP')">INFP<br><small>중재자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ENFJ')">ENFJ<br><small>선도자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ENFP')">ENFP<br><small>활동가</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ISTJ')">ISTJ<br><small>현실주의자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ISFJ')">ISFJ<br><small>수호자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ESTJ')">ESTJ<br><small>경영자</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ESFJ')">ESFJ<br><small>집정관</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ISTP')">ISTP<br><small>만능재주꾼</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ISFP')">ISFP<br><small>모험가</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ESTP')">ESTP<br><small>사업가</small></button>
+                    <button class="mbti-select-btn" onclick="setMBTI('ESFP')">ESFP<br><small>연예인</small></button>
+                </div>
+                <button class="back-btn" onclick="goBackToSetup()">← 돌아가기</button>
+            </div>
+            
+            <!-- MBTI 퀴즈 -->
+            <div id="mbtiQuiz" class="quiz-section" style="display: none;">
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="quizProgress"></div>
+                    </div>
+                    <span id="questionCounter">1/8</span>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3 id="questionTitle">질문을 불러오는 중...</h3>
+                    <div class="quiz-answers">
+                        <button class="quiz-answer" onclick="selectQuizAnswer('E')" id="answerA"></button>
+                        <button class="quiz-answer" onclick="selectQuizAnswer('I')" id="answerB"></button>
+                    </div>
+                </div>
+                
+                <button class="back-btn" onclick="goBackToSetup()">← 돌아가기</button>
+            </div>
+        </div>
+    </div>
+
     <!-- 메인 컨테이너 -->
-    <div class="container">
+    <div class="container" id="mainContainer" style="display: none;">
         
         <!-- 홈 섹션 -->
         <section id="homeSection" class="section active">
@@ -1439,34 +1929,30 @@
         <section id="gameSection" class="section">
             <div class="game-section">
                 <div class="game-header">
-                    <h2 class="game-title">🎮 MBTI 맞추기 게임</h2>
-                    <p style="color: var(--gray);">유명인의 MBTI를 맞춰보세요!</p>
+                    <h2 class="game-title">🏃‍♂️ MBTI 러너</h2>
+                    <p style="color: var(--gray);">당신의 MBTI 성향에 맞는 아이템을 수집하세요!</p>
                 </div>
                 
-                <div class="game-score">
-                    <div class="score-item">
-                        <div class="score-label">현재 점수</div>
-                        <div class="score-value" id="gameScore">0</div>
+                <div class="game-controls">
+                    <div class="game-info">
+                        <div class="info-item">점수: <span id="runnerScore">0</span></div>
+                        <div class="info-item">속도: <span id="gameSpeed">1x</span></div>
+                        <div class="info-item">생명: <span id="playerLives">❤️❤️❤️</span></div>
                     </div>
-                    <div class="score-item">
-                        <div class="score-label">최고 점수</div>
-                        <div class="score-value" id="highScore">0</div>
+                    <button class="game-start-btn" id="gameStartBtn" onclick="startRunner()">🎮 게임 시작</button>
+                    <div class="game-instructions">
+                        <p>↑↓ 키 또는 터치로 조작하세요!</p>
+                        <p>💚 당신의 MBTI 아이템 수집 (+10점)</p>
+                        <p>💔 다른 MBTI 아이템 피하기 (-1생명)</p>
                     </div>
                 </div>
-                
-                <div class="game-content">
-                    <div class="celebrity-card">
-                        <div class="celebrity-image" id="celebrityImage">🧑‍🎤</div>
-                        <div class="celebrity-name" id="celebrityName">아이유</div>
-                    </div>
-                    
-                    <p style="margin-bottom: 20px;">이 사람의 MBTI는?</p>
-                    
-                    <div class="game-options">
-                        <button class="game-option" onclick="checkAnswer('INFP')">INFP</button>
-                        <button class="game-option" onclick="checkAnswer('ENFP')">ENFP</button>
-                        <button class="game-option" onclick="checkAnswer('ISFP')">ISFP</button>
-                        <button class="game-option" onclick="checkAnswer('INFJ')">INFJ</button>
+
+                <div class="game-canvas-container">
+                    <canvas id="gameCanvas" width="400" height="300"></canvas>
+                    <div class="game-overlay" id="gameOverlay">
+                        <div class="game-over-text" id="gameOverText">게임 준비!</div>
+                        <div class="final-score" id="finalScore" style="display: none;"></div>
+                        <button class="retry-btn" id="retryBtn" onclick="startRunner()" style="display: none;">다시 하기</button>
                     </div>
                 </div>
             </div>
@@ -1487,26 +1973,55 @@
         <section id="chatSection" class="section">
             <div class="chat-section">
                 <div class="chat-header">
-                    <div class="chat-title">INTJ 채팅방</div>
-                    <div class="online-count">🟢 23명 접속중</div>
+                    <div class="chat-title" id="chatTitle">🔍 상대방 찾는 중...</div>
+                    <div class="online-count">🟢 실시간 매칭</div>
                 </div>
                 
-                <div class="chat-messages" id="chatMessages">
-                    <div class="chat-message">
-                        <div class="message-user">익명의 INTJ</div>
-                        <div class="message-text">역시 혼자가 최고야...</div>
-                        <div class="message-time">오후 3:24</div>
+                <!-- 채팅 상대 선택 UI -->
+                <div class="chat-partner-select" id="chatPartnerSelect">
+                    <h3>💬 채팅 상대 선택</h3>
+                    <div class="partner-options">
+                        <button class="partner-btn" onclick="findPartner('random')">🎲 랜덤</button>
+                        <button class="partner-btn" onclick="findPartner('same')">👥 같은 타입</button>
                     </div>
-                    <div class="chat-message">
-                        <div class="message-user">전략가123</div>
-                        <div class="message-text">계획 없이 사는 사람들 이해 안됨 ㅋㅋ</div>
-                        <div class="message-time">오후 3:25</div>
+                    <div class="mbti-selector">
+                        <h4>특정 MBTI와 채팅하기:</h4>
+                        <div class="mbti-grid">
+                            <button class="mbti-btn" onclick="findPartner('INTJ')">INTJ</button>
+                            <button class="mbti-btn" onclick="findPartner('INTP')">INTP</button>
+                            <button class="mbti-btn" onclick="findPartner('ENTJ')">ENTJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ENTP')">ENTP</button>
+                            <button class="mbti-btn" onclick="findPartner('INFJ')">INFJ</button>
+                            <button class="mbti-btn" onclick="findPartner('INFP')">INFP</button>
+                            <button class="mbti-btn" onclick="findPartner('ENFJ')">ENFJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ENFP')">ENFP</button>
+                            <button class="mbti-btn" onclick="findPartner('ISTJ')">ISTJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ISFJ')">ISFJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ESTJ')">ESTJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ESFJ')">ESFJ</button>
+                            <button class="mbti-btn" onclick="findPartner('ISTP')">ISTP</button>
+                            <button class="mbti-btn" onclick="findPartner('ISFP')">ISFP</button>
+                            <button class="mbti-btn" onclick="findPartner('ESTP')">ESTP</button>
+                            <button class="mbti-btn" onclick="findPartner('ESFP')">ESFP</button>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="chat-input-area">
-                    <input type="text" class="chat-input" placeholder="메시지 입력..." id="chatInput">
-                    <button class="chat-send-btn" onclick="sendMessage()">전송</button>
+                <!-- 채팅 창 -->
+                <div class="chat-room" id="chatRoom" style="display: none;">
+                    <div class="chat-partner-info" id="chatPartnerInfo">
+                        <span id="partnerMBTI">INTJ</span> 상대방과 연결됨
+                        <button class="new-partner-btn" onclick="findNewPartner()">🔄 새 상대 찾기</button>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="system-message">💬 채팅이 시작되었습니다!</div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <input type="text" class="chat-input" placeholder="메시지 입력..." id="chatInput" onkeypress="if(event.key==='Enter') sendMessage()">
+                        <button class="chat-send-btn" onclick="sendMessage()">전송</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1884,36 +2399,297 @@
                 ['빨강', '파랑', '노랑', '초록', '보라'][seed % 5];
         }
 
-        // 게임 관련
+        // MBTI 러너 게임 관련
+        let game = {
+            canvas: null,
+            ctx: null,
+            player: { x: 50, y: 150, width: 30, height: 30, dy: 0 },
+            items: [],
+            obstacles: [],
+            score: 0,
+            lives: 3,
+            speed: 2,
+            isRunning: false,
+            keys: { up: false, down: false }
+        };
+
+        const mbtiItems = {
+            'INTJ': { emoji: '🏗️', color: '#6B46C1' },
+            'INTP': { emoji: '🔬', color: '#059669' },
+            'ENTJ': { emoji: '👑', color: '#DC2626' },
+            'ENTP': { emoji: '💡', color: '#F59E0B' },
+            'INFJ': { emoji: '🔮', color: '#7C3AED' },
+            'INFP': { emoji: '🌸', color: '#EC4899' },
+            'ENFJ': { emoji: '🤝', color: '#10B981' },
+            'ENFP': { emoji: '🌟', color: '#F97316' },
+            'ISTJ': { emoji: '📋', color: '#374151' },
+            'ISFJ': { emoji: '🛡️', color: '#6366F1' },
+            'ESTJ': { emoji: '⚖️', color: '#B91C1C' },
+            'ESFJ': { emoji: '❤️', color: '#BE185D' },
+            'ISTP': { emoji: '🔧', color: '#65A30D' },
+            'ISFP': { emoji: '🎨', color: '#C2410C' },
+            'ESTP': { emoji: '🏃‍♂️', color: '#DC2626' },
+            'ESFP': { emoji: '🎉', color: '#CA8A04' }
+        };
+
         function showGames() {
             showSection('game');
-            loadNewCelebrity();
+            initGame();
         }
 
-        function loadNewCelebrity() {
-            const celebrity = celebrities[Math.floor(Math.random() * celebrities.length)];
-            window.currentCelebrity = celebrity;
-            document.getElementById('celebrityImage').textContent = celebrity.emoji;
-            document.getElementById('celebrityName').textContent = celebrity.name;
+        function initGame() {
+            game.canvas = document.getElementById('gameCanvas');
+            game.ctx = game.canvas.getContext('2d');
+            
+            // 키보드 이벤트
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowUp') game.keys.up = true;
+                if (e.key === 'ArrowDown') game.keys.down = true;
+            });
+            
+            document.addEventListener('keyup', (e) => {
+                if (e.key === 'ArrowUp') game.keys.up = false;
+                if (e.key === 'ArrowDown') game.keys.down = false;
+            });
+            
+            // 터치 이벤트
+            game.canvas.addEventListener('touchstart', handleTouch);
+            game.canvas.addEventListener('touchmove', handleTouch);
         }
 
-        function checkAnswer(answer) {
-            if (answer === window.currentCelebrity.mbti) {
-                gameScore += 10;
-                showToast('정답! +10점 🎉');
+        function handleTouch(e) {
+            e.preventDefault();
+            const rect = game.canvas.getBoundingClientRect();
+            const touch = e.touches[0];
+            const y = touch.clientY - rect.top;
+            
+            if (y < game.canvas.height / 2) {
+                game.keys.up = true;
+                game.keys.down = false;
             } else {
-                showToast(`틀렸어요! 정답은 ${window.currentCelebrity.mbti}`);
+                game.keys.down = true;
+                game.keys.up = false;
             }
             
-            document.getElementById('gameScore').textContent = gameScore;
+            setTimeout(() => {
+                game.keys.up = false;
+                game.keys.down = false;
+            }, 150);
+        }
+
+        function startRunner() {
+            if (game.isRunning) return;
             
-            if (gameScore > highScore) {
-                highScore = gameScore;
-                localStorage.setItem('highScore', highScore);
-                document.getElementById('highScore').textContent = highScore;
+            // 게임 초기화
+            game.score = 0;
+            game.lives = 3;
+            game.speed = 2;
+            game.player.y = 150;
+            game.player.dy = 0;
+            game.items = [];
+            game.obstacles = [];
+            game.isRunning = true;
+            
+            // UI 업데이트
+            document.getElementById('runnerScore').textContent = '0';
+            document.getElementById('gameSpeed').textContent = '1x';
+            document.getElementById('playerLives').textContent = '❤️❤️❤️';
+            document.getElementById('gameOverlay').style.display = 'none';
+            document.getElementById('gameStartBtn').style.display = 'none';
+            
+            // 게임 루프 시작
+            gameLoop();
+            spawnItems();
+        }
+
+        function gameLoop() {
+            if (!game.isRunning) return;
+            
+            updatePlayer();
+            updateItems();
+            updateObstacles();
+            checkCollisions();
+            draw();
+            
+            // 속도 증가
+            if (game.score > 0 && game.score % 100 === 0) {
+                game.speed += 0.1;
+                document.getElementById('gameSpeed').textContent = Math.floor(game.speed) + 'x';
             }
             
-            setTimeout(loadNewCelebrity, 1500);
+            requestAnimationFrame(gameLoop);
+        }
+
+        function updatePlayer() {
+            // 플레이어 움직임
+            if (game.keys.up && game.player.y > 0) {
+                game.player.dy = -4;
+            } else if (game.keys.down && game.player.y < game.canvas.height - game.player.height) {
+                game.player.dy = 4;
+            } else {
+                game.player.dy *= 0.8; // 감속
+            }
+            
+            game.player.y += game.player.dy;
+            
+            // 경계 체크
+            if (game.player.y < 0) game.player.y = 0;
+            if (game.player.y > game.canvas.height - game.player.height) {
+                game.player.y = game.canvas.height - game.player.height;
+            }
+        }
+
+        function updateItems() {
+            // 아이템 이동
+            for (let i = game.items.length - 1; i >= 0; i--) {
+                const item = game.items[i];
+                item.x -= game.speed;
+                
+                if (item.x + item.width < 0) {
+                    game.items.splice(i, 1);
+                }
+            }
+            
+            // 장애물 이동
+            for (let i = game.obstacles.length - 1; i >= 0; i--) {
+                const obstacle = game.obstacles[i];
+                obstacle.x -= game.speed;
+                
+                if (obstacle.x + obstacle.width < 0) {
+                    game.obstacles.splice(i, 1);
+                }
+            }
+        }
+
+        function updateObstacles() {
+            // 장애물 로직은 updateItems에서 처리
+        }
+
+        function checkCollisions() {
+            // 아이템 충돌 (좋은 아이템)
+            for (let i = game.items.length - 1; i >= 0; i--) {
+                const item = game.items[i];
+                if (isColliding(game.player, item)) {
+                    game.score += 10;
+                    document.getElementById('runnerScore').textContent = game.score;
+                    game.items.splice(i, 1);
+                    showToast('+10점! 🎉');
+                }
+            }
+            
+            // 장애물 충돌 (나쁜 아이템)
+            for (let i = game.obstacles.length - 1; i >= 0; i--) {
+                const obstacle = game.obstacles[i];
+                if (isColliding(game.player, obstacle)) {
+                    game.lives--;
+                    updateLives();
+                    game.obstacles.splice(i, 1);
+                    
+                    if (game.lives <= 0) {
+                        endGame();
+                    }
+                }
+            }
+        }
+
+        function isColliding(rect1, rect2) {
+            return rect1.x < rect2.x + rect2.width &&
+                   rect1.x + rect1.width > rect2.x &&
+                   rect1.y < rect2.y + rect2.height &&
+                   rect1.y + rect1.height > rect2.y;
+        }
+
+        function updateLives() {
+            const hearts = '❤️'.repeat(game.lives);
+            document.getElementById('playerLives').textContent = hearts || '💀';
+        }
+
+        function spawnItems() {
+            if (!game.isRunning) return;
+            
+            // 좋은 아이템 (사용자 MBTI)
+            if (Math.random() < 0.4) {
+                const playerMBTI = currentMBTI || 'INTJ';
+                const itemData = mbtiItems[playerMBTI];
+                game.items.push({
+                    x: game.canvas.width,
+                    y: Math.random() * (game.canvas.height - 30),
+                    width: 25,
+                    height: 25,
+                    type: playerMBTI,
+                    color: itemData.color,
+                    emoji: itemData.emoji
+                });
+            }
+            
+            // 나쁜 아이템 (다른 MBTI)
+            if (Math.random() < 0.3) {
+                const allTypes = Object.keys(mbtiItems);
+                const otherTypes = allTypes.filter(t => t !== currentMBTI);
+                const randomType = otherTypes[Math.floor(Math.random() * otherTypes.length)];
+                const itemData = mbtiItems[randomType];
+                
+                game.obstacles.push({
+                    x: game.canvas.width,
+                    y: Math.random() * (game.canvas.height - 30),
+                    width: 25,
+                    height: 25,
+                    type: randomType,
+                    color: itemData.color,
+                    emoji: itemData.emoji
+                });
+            }
+            
+            setTimeout(spawnItems, 1000 + Math.random() * 1000);
+        }
+
+        function draw() {
+            // 배경 클리어
+            game.ctx.clearRect(0, 0, game.canvas.width, game.canvas.height);
+            
+            // 플레이어 그리기
+            game.ctx.fillStyle = '#4F46E5';
+            game.ctx.fillRect(game.player.x, game.player.y, game.player.width, game.player.height);
+            game.ctx.fillStyle = 'white';
+            game.ctx.font = '20px Arial';
+            game.ctx.fillText('🏃‍♂️', game.player.x + 2, game.player.y + 22);
+            
+            // 아이템 그리기 (좋은 아이템)
+            game.items.forEach(item => {
+                game.ctx.fillStyle = item.color;
+                game.ctx.fillRect(item.x, item.y, item.width, item.height);
+                game.ctx.fillStyle = 'white';
+                game.ctx.font = '16px Arial';
+                game.ctx.fillText(item.emoji, item.x + 4, item.y + 18);
+            });
+            
+            // 장애물 그리기 (나쁜 아이템)
+            game.obstacles.forEach(obstacle => {
+                game.ctx.fillStyle = '#DC2626';
+                game.ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
+                game.ctx.fillStyle = 'white';
+                game.ctx.font = '16px Arial';
+                game.ctx.fillText(obstacle.emoji, obstacle.x + 4, obstacle.y + 18);
+            });
+        }
+
+        function endGame() {
+            game.isRunning = false;
+            
+            // 게임 오버 UI
+            document.getElementById('gameOverText').textContent = '게임 오버!';
+            document.getElementById('finalScore').textContent = `최종 점수: ${game.score}점`;
+            document.getElementById('finalScore').style.display = 'block';
+            document.getElementById('retryBtn').style.display = 'block';
+            document.getElementById('gameOverlay').style.display = 'flex';
+            document.getElementById('gameStartBtn').style.display = 'block';
+            
+            // 최고 점수 업데이트
+            const savedHighScore = localStorage.getItem('runnerHighScore') || 0;
+            if (game.score > savedHighScore) {
+                localStorage.setItem('runnerHighScore', game.score);
+                showToast(`🎉 신기록! ${game.score}점`);
+            }
         }
 
         // 채팅 기능
@@ -1921,12 +2697,12 @@
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             
-            if (!text) return;
+            if (!text || !currentPartner) return;
             
             const messageDiv = document.createElement('div');
             messageDiv.className = 'chat-message';
             messageDiv.innerHTML = `
-                <div class="message-user">나</div>
+                <div class="message-user">나 (${currentMBTI})</div>
                 <div class="message-text">${text}</div>
                 <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
             `;
@@ -1934,24 +2710,228 @@
             document.getElementById('chatMessages').appendChild(messageDiv);
             input.value = '';
             
-            // 가짜 응답 (실제로는 Firebase 연동)
+            // MBTI별 특성 응답
             setTimeout(() => {
-                const responses = [
-                    "공감해요!", "저도 그래요 ㅋㅋ", "INTJ 맞네요", 
-                    "우리 유형 특징인듯", "맞아요 완전"
-                ];
+                const responses = partnerResponses[currentPartner] || ["공감해요!", "그렇네요", "흥미로워요"];
                 
                 const responseDiv = document.createElement('div');
                 responseDiv.className = 'chat-message';
                 responseDiv.innerHTML = `
-                    <div class="message-user">익명${Math.floor(Math.random() * 100)}</div>
+                    <div class="message-user">익명의 ${currentPartner}</div>
                     <div class="message-text">${responses[Math.floor(Math.random() * responses.length)]}</div>
                     <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
                 `;
                 
                 document.getElementById('chatMessages').appendChild(responseDiv);
+                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
             }, 1000 + Math.random() * 2000);
+            
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
         }
+
+        // 채팅 관련 변수
+        let currentPartner = null;
+        let partnerResponses = {
+            'INTJ': ["계획적으로 접근해보세요", "효율성이 중요하죠", "혼자 시간이 필요해요", "논리적으로 생각해보면..."],
+            'INTP': ["흥미로운 관점이네요", "다양한 가능성이 있겠어요", "이론적으로는...", "생각해볼만하네요"],
+            'ENTJ': ["목표를 명확히 하세요", "리더십이 필요한 상황이네요", "결과가 중요하죠", "도전해볼만해요"],
+            'ENTP': ["창의적인 아이디어네요!", "새로운 시도해보죠", "재미있을 것 같아요", "변화가 필요해요"],
+            'INFJ': ["깊이 있는 이야기네요", "의미있는 연결이에요", "감정적으로 공감해요", "신중하게 생각해보세요"],
+            'INFP': ["진실한 마음이 중요해요", "개인적 가치를 존중해요", "감정에 충실하세요", "자유롭게 표현하세요"],
+            'ENFJ': ["함께 해결해봐요", "다른 사람도 고려해보세요", "소통이 중요해요", "팀워크가 필요해요"],
+            'ENFP': ["열정적이에요!", "가능성이 무궁무진해요", "사람들과 나누고 싶어요", "영감을 주네요"],
+            'ISTJ': ["안정적인 방법이 좋겠어요", "차근차근 해보세요", "전통적인 방식을 따라요", "신중하게 결정하세요"],
+            'ISFJ': ["다른 사람을 배려해보세요", "도움이 필요하면 말해요", "섬세하게 접근해요", "조화롭게 해결해요"],
+            'ESTJ': ["체계적으로 정리하세요", "실용적인 방법이 좋아요", "책임감 있게 하세요", "효과적인 결과를 원해요"],
+            'ESFJ': ["모두가 행복했으면 좋겠어요", "협력해서 해보죠", "따뜻한 마음으로 접근해요", "친근하게 다가가세요"],
+            'ISTP': ["실용적으로 접근해보세요", "직접 해보는게 좋겠어요", "간단하게 해결하죠", "현실적으로 생각해요"],
+            'ISFP': ["개성을 살려보세요", "자연스럽게 하세요", "감성적으로 표현해요", "유연하게 받아들여요"],
+            'ESTP': ["지금 당장 해보죠!", "활동적으로 하세요", "재미있게 만들어봐요", "실전 경험이 중요해요"],
+            'ESFP': ["즐겁게 해보아요!", "에너지 넘치네요", "사람들과 함께해요", "긍정적으로 생각해요"]
+        };
+
+        function findPartner(type) {
+            if (!currentMBTI) {
+                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
+                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
+                    currentMBTI = selected.toUpperCase();
+                    localStorage.setItem('currentMBTI', currentMBTI);
+                    showToast(`${currentMBTI} 설정 완료! 🎉`);
+                } else return;
+            }
+
+            document.getElementById('chatPartnerSelect').style.display = 'none';
+            document.getElementById('chatRoom').style.display = 'block';
+
+            if (type === 'random') {
+                const types = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
+                currentPartner = types[Math.floor(Math.random() * types.length)];
+            } else if (type === 'same') {
+                currentPartner = currentMBTI;
+            } else {
+                currentPartner = type;
+            }
+
+            document.getElementById('partnerMBTI').textContent = currentPartner;
+            document.getElementById('chatMessages').innerHTML = `
+                <div class="system-message">💬 ${currentPartner} 상대방과 연결되었습니다!</div>
+            `;
+        }
+
+        function findNewPartner() {
+            const options = ['🎲 다른 랜덤 상대', '👥 같은 타입', '🎯 특정 타입 선택'];
+            const choice = prompt(`새로운 상대를 어떻게 찾을까요?\n1: ${options[0]}\n2: ${options[1]}\n3: ${options[2]}\n\n번호를 입력하세요:`);
+            
+            if (choice === '1') {
+                findPartner('random');
+            } else if (choice === '2') {
+                findPartner('same');
+            } else if (choice === '3') {
+                const mbti = prompt('찾고 싶은 MBTI 타입을 입력하세요:');
+                if (mbti && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(mbti.toUpperCase())) {
+                    findPartner(mbti.toUpperCase());
+                }
+            }
+        }
+
+        // MBTI 설정 관련 함수들
+        let quizAnswers = [];
+        let currentQuestion = 0;
+        
+        const mbtiQuestions = [
+            {
+                question: "파티에서 당신은 어떤 타입인가요?",
+                A: { text: "여러 사람과 대화하며 에너지를 얻어요", value: "E" },
+                B: { text: "조용한 곳에서 소수와 깊은 대화를 나눠요", value: "I" }
+            },
+            {
+                question: "새로운 정보를 접할 때",
+                A: { text: "구체적인 사실과 세부사항에 집중해요", value: "S" },
+                B: { text: "전체적인 패턴과 가능성을 봐요", value: "N" }
+            },
+            {
+                question: "결정을 내릴 때 중요하게 생각하는 것은?",
+                A: { text: "논리적이고 객관적인 분석", value: "T" },
+                B: { text: "사람들의 감정과 가치관", value: "F" }
+            },
+            {
+                question: "일상생활에서 선호하는 스타일은?",
+                A: { text: "계획을 세우고 체계적으로 진행", value: "J" },
+                B: { text: "상황에 따라 유연하게 대응", value: "P" }
+            },
+            {
+                question: "스트레스를 받을 때",
+                A: { text: "사람들과 이야기하면서 해소해요", value: "E" },
+                B: { text: "혼자만의 시간을 가지며 정리해요", value: "I" }
+            },
+            {
+                question: "문제를 해결할 때",
+                A: { text: "과거 경험을 바탕으로 실용적 접근", value: "S" },
+                B: { text: "새로운 아이디어와 창의적 해결책", value: "N" }
+            },
+            {
+                question: "다른 사람과의 갈등 상황에서",
+                A: { text: "원칙과 공정성을 중시해요", value: "T" },
+                B: { text: "상대방의 입장을 이해하려 해요", value: "F" }
+            },
+            {
+                question: "주말 계획을 세울 때",
+                A: { text: "미리 계획을 세워서 준비해요", value: "J" },
+                B: { text: "그때그때 상황에 맞춰 결정해요", value: "P" }
+            }
+        ];
+
+        function showMBTISelector() {
+            document.querySelector('.setup-options').style.display = 'none';
+            document.getElementById('mbtiSelector').style.display = 'block';
+        }
+
+        function showMBTIQuiz() {
+            document.querySelector('.setup-options').style.display = 'none';
+            document.getElementById('mbtiQuiz').style.display = 'block';
+            startQuiz();
+        }
+
+        function goBackToSetup() {
+            document.querySelector('.setup-options').style.display = 'grid';
+            document.getElementById('mbtiSelector').style.display = 'none';
+            document.getElementById('mbtiQuiz').style.display = 'none';
+            quizAnswers = [];
+            currentQuestion = 0;
+        }
+
+        function startQuiz() {
+            quizAnswers = [];
+            currentQuestion = 0;
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = mbtiQuestions[currentQuestion];
+            document.getElementById('questionTitle').textContent = question.question;
+            document.getElementById('answerA').textContent = question.A.text;
+            document.getElementById('answerB').textContent = question.B.text;
+            document.getElementById('questionCounter').textContent = `${currentQuestion + 1}/8`;
+            
+            const progress = ((currentQuestion + 1) / 8) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+        }
+
+        function selectQuizAnswer(choice) {
+            const question = mbtiQuestions[currentQuestion];
+            const answer = choice === 'E' ? question.A.value : question.B.value;
+            quizAnswers.push(answer);
+            
+            currentQuestion++;
+            
+            if (currentQuestion < mbtiQuestions.length) {
+                showQuestion();
+            } else {
+                calculateMBTI();
+            }
+        }
+
+        function calculateMBTI() {
+            const result = {
+                E: 0, I: 0,
+                S: 0, N: 0,
+                T: 0, F: 0,
+                J: 0, P: 0
+            };
+            
+            quizAnswers.forEach(answer => {
+                result[answer]++;
+            });
+            
+            const mbti = 
+                (result.E >= result.I ? 'E' : 'I') +
+                (result.S >= result.N ? 'S' : 'N') +
+                (result.T >= result.F ? 'T' : 'F') +
+                (result.J >= result.P ? 'J' : 'P');
+            
+            setMBTI(mbti);
+        }
+
+        function setMBTI(mbti) {
+            currentMBTI = mbti;
+            localStorage.setItem('currentMBTI', mbti);
+            
+            // MBTI 설정 화면 숨기기
+            document.getElementById('mbtiSetupScreen').style.display = 'none';
+            document.getElementById('mainContainer').style.display = 'block';
+            
+            showToast(`🎉 ${mbti} 설정 완료! MBTI Universe에 오신 걸 환영해요!`);
+        }
+
+        // 페이지 로드 시 MBTI 확인
+        window.addEventListener('load', () => {
+            const savedMBTI = localStorage.getItem('currentMBTI');
+            if (savedMBTI) {
+                currentMBTI = savedMBTI;
+                document.getElementById('mbtiSetupScreen').style.display = 'none';
+                document.getElementById('mainContainer').style.display = 'block';
+            }
+        });
 
         // 잠금 콘텐츠 해제
         function unlockContent(contentId) {
