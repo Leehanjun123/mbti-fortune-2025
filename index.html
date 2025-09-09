@@ -2471,7 +2471,10 @@
         };
 
         function showGames() {
-            showSection('game');
+            // 게임 섹션 직접 활성화 (무한 재귀 방지)
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById('gameSection').classList.add('active');
+            
             // 섹션이 보여진 후 게임 초기화
             setTimeout(initGame, 100);
         }
@@ -3034,6 +3037,7 @@
         }
 
         function setMBTI(mbti) {
+            console.log(`MBTI 설정: ${mbti}`);
             currentMBTI = mbti;
             localStorage.setItem('currentMBTI', mbti);
             
@@ -3041,7 +3045,23 @@
             document.getElementById('mbtiSetupScreen').style.display = 'none';
             document.getElementById('mainContainer').style.display = 'block';
             
+            // 홈 화면에 MBTI 표시 업데이트
+            updateMBTIDisplay();
+            
             showToast(`🎉 ${mbti} 설정 완료! MBTI Universe에 오신 걸 환영해요!`);
+            console.log(`현재 MBTI 변수값: ${currentMBTI}`);
+        }
+        
+        // MBTI 표시 업데이트 함수
+        function updateMBTIDisplay() {
+            // 홈 화면의 MBTI 표시 업데이트
+            const mbtiDisplay = document.getElementById('displayMBTI');
+            if (mbtiDisplay && currentMBTI) {
+                mbtiDisplay.textContent = currentMBTI;
+            }
+            
+            // 기타 MBTI 표시가 필요한 곳들 업데이트
+            console.log(`MBTI 표시 업데이트: ${currentMBTI}`);
         }
 
         // 페이지 로드 시 MBTI 확인 (테스트를 위해 주석 처리)
@@ -3172,32 +3192,32 @@
                     document.querySelectorAll('.nav-item')[0].classList.add('active');
                     break;
                 case 'compatibility':
-                    showCompatibility();
+                    document.getElementById('compatibilitySection').classList.add('active');
                     document.querySelectorAll('.nav-item')[1].classList.add('active');
+                    showCompatibility();
                     break;
                 case 'fortune':
-                    showFortune();
+                    document.getElementById('fortuneSection').classList.add('active');
                     document.querySelectorAll('.nav-item')[2].classList.add('active');
+                    showFortune();
                     break;
                 case 'game':
-                    showGames();
+                    document.getElementById('gameSection').classList.add('active');
                     document.querySelectorAll('.nav-item')[3].classList.add('active');
+                    setTimeout(initGame, 100); // 직접 게임 초기화
                     break;
                 case 'chat':
-                    showChat();
+                    document.getElementById('chatSection').classList.add('active');
                     document.querySelectorAll('.nav-item')[4].classList.add('active');
+                    showChat();
                     break;
             }
         }
 
         function showCompatibility() {
             if (!currentMBTI) {
-                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
-                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
-                    currentMBTI = selected.toUpperCase();
-                    localStorage.setItem('currentMBTI', currentMBTI);
-                    showToast(`${currentMBTI} 설정 완료! 🎉`);
-                } else return;
+                showToast('❌ MBTI가 설정되지 않았습니다!');
+                return;
             }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
@@ -3205,12 +3225,8 @@
 
         function showFortune() {
             if (!currentMBTI) {
-                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
-                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
-                    currentMBTI = selected.toUpperCase();
-                    localStorage.setItem('currentMBTI', currentMBTI);
-                    showToast(`${currentMBTI} 설정 완료! 🎉`);
-                } else return;
+                showToast('❌ MBTI가 설정되지 않았습니다!');
+                return;
             }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('resultSection').classList.add('active');
@@ -3219,12 +3235,8 @@
 
         function showChat() {
             if (!currentMBTI) {
-                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
-                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
-                    currentMBTI = selected.toUpperCase();
-                    localStorage.setItem('currentMBTI', currentMBTI);
-                    showToast(`${currentMBTI} 설정 완료! 🎉`);
-                } else return;
+                showToast('❌ MBTI가 설정되지 않았습니다!');
+                return;
             }
             document.getElementById('homeSection').classList.remove('active');
             document.getElementById('chatSection').classList.add('active');
