@@ -2659,6 +2659,51 @@
     <!-- MBTI 테스트 로직 -->
     
     <script>
+        // ⚡ MBTI 설정 함수들 (최우선 정의)
+        function showMBTISelector() {
+            console.log('showMBTISelector 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiSelector = document.getElementById('mbtiSelector');
+            
+            if (setupOptions) setupOptions.style.display = 'none';
+            if (mbtiSelector) {
+                mbtiSelector.style.display = 'block';
+                console.log('MBTI 선택기 표시됨');
+            } else {
+                console.error('mbtiSelector 요소를 찾을 수 없습니다');
+            }
+        }
+
+        function showMBTIQuiz() {
+            console.log('showMBTIQuiz 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiQuiz = document.getElementById('mbtiQuiz');
+            
+            if (setupOptions) setupOptions.style.display = 'none';
+            if (mbtiQuiz) {
+                mbtiQuiz.style.display = 'block';
+                if (typeof startQuiz === 'function') {
+                    startQuiz();
+                }
+                console.log('MBTI 퀴즈 시작됨');
+            } else {
+                console.error('mbtiQuiz 요소를 찾을 수 없습니다');
+            }
+        }
+        
+        function goBackToSetup() {
+            console.log('goBackToSetup 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiSelector = document.getElementById('mbtiSelector');
+            const mbtiQuiz = document.getElementById('mbtiQuiz');
+            
+            if (setupOptions) setupOptions.style.display = 'grid';
+            if (mbtiSelector) mbtiSelector.style.display = 'none';
+            if (mbtiQuiz) mbtiQuiz.style.display = 'none';
+        }
+        
+        // selectQuizAnswer는 나중에 구현됨
+        
         // 전역 변수
         let currentMBTI = localStorage.getItem('currentMBTI') || null;
         let currentQuestion = 0;
@@ -4532,16 +4577,6 @@
         
         // 페이지 로드 시 환영 메시지
         setTimeout(showRPGFPSWelcome, 2000);
-            
-            Game3D.canvas.addEventListener('touchend', (e) => {
-                e.preventDefault();
-                touchStartPos = null;
-                Game3D.keys.ArrowLeft = Game3D.keys.ArrowRight = Game3D.keys.ArrowUp = Game3D.keys.ArrowDown = false;
-                
-                Game3D.keys.Space = true;
-                setTimeout(() => Game3D.keys.Space = false, 100);
-            });
-        }
 
         // 오디오 시스템 초기화
         function initAudio() {
@@ -5566,49 +5601,7 @@
         let quizAnswers = [];
         let mbtiCurrentQuestion = 0;
         
-        // ⚡ 즉시 정의되는 MBTI 선택 함수들 (호이스팅 문제 해결)
-        function showMBTISelector() {
-            console.log('showMBTISelector 호출됨');
-            const setupOptions = document.querySelector('.setup-options');
-            const mbtiSelector = document.getElementById('mbtiSelector');
-            
-            if (setupOptions) setupOptions.style.display = 'none';
-            if (mbtiSelector) {
-                mbtiSelector.style.display = 'block';
-                console.log('MBTI 선택기 표시됨');
-            } else {
-                console.error('mbtiSelector 요소를 찾을 수 없습니다');
-            }
-        }
-
-        function showMBTIQuiz() {
-            console.log('showMBTIQuiz 호출됨');
-            const setupOptions = document.querySelector('.setup-options');
-            const mbtiQuiz = document.getElementById('mbtiQuiz');
-            
-            if (setupOptions) setupOptions.style.display = 'none';
-            if (mbtiQuiz) {
-                mbtiQuiz.style.display = 'block';
-                startQuiz();
-                console.log('MBTI 퀴즈 시작됨');
-            } else {
-                console.error('mbtiQuiz 요소를 찾을 수 없습니다');
-            }
-        }
-        
-        function goBackToSetup() {
-            console.log('goBackToSetup 호출됨');
-            const setupOptions = document.querySelector('.setup-options');
-            const mbtiSelector = document.getElementById('mbtiSelector');
-            const mbtiQuiz = document.getElementById('mbtiQuiz');
-            
-            if (setupOptions) setupOptions.style.display = 'grid';
-            if (mbtiSelector) mbtiSelector.style.display = 'none';
-            if (mbtiQuiz) mbtiQuiz.style.display = 'none';
-            
-            quizAnswers = [];
-            mbtiCurrentQuestion = 0;
-        }
+        // 중복 함수 제거 - 최상단에 이미 정의됨
         
         const mbtiQuestions = [
             {
