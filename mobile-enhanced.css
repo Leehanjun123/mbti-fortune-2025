@@ -1,0 +1,383 @@
+/* 모바일 최적화 강화 스타일시트 */
+
+/* 모바일 우선 설계 */
+@media (max-width: 768px) {
+    /* 스와이프 제스처 지원 */
+    .test-options {
+        position: relative;
+        padding: 0 1rem;
+    }
+    
+    .test-option {
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        padding: 1.5rem 1.2rem;
+        /* 터치 피드백 강화 */
+        -webkit-tap-highlight-color: rgba(88, 101, 242, 0.2);
+        touch-action: manipulation;
+    }
+    
+    .test-option:active {
+        transform: scale(0.98);
+        background: rgba(88, 101, 242, 0.3);
+    }
+    
+    /* 플로팅 액션 버튼 */
+    .fab-test {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 60px;
+        height: 60px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(88, 101, 242, 0.5);
+        z-index: 999;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 1.5rem;
+    }
+    
+    .fab-test:active {
+        transform: scale(0.9);
+    }
+    
+    /* 하단 네비게이션 바 */
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 0.5rem 0;
+        z-index: 1000;
+    }
+    
+    .mobile-nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        color: var(--gray);
+        text-decoration: none;
+        transition: all 0.2s;
+        font-size: 0.75rem;
+    }
+    
+    .mobile-nav-item.active {
+        color: var(--primary);
+    }
+    
+    .mobile-nav-icon {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    /* 스와이프 가능한 카드 */
+    .swipeable-cards {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        padding: 0 1rem;
+        scrollbar-width: none;
+    }
+    
+    .swipeable-cards::-webkit-scrollbar {
+        display: none;
+    }
+    
+    .swipeable-card {
+        flex: 0 0 85%;
+        scroll-snap-align: center;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 1.5rem;
+    }
+    
+    /* 풀스크린 모달 */
+    .test-modal {
+        padding: 0;
+    }
+    
+    .test-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 1rem;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    /* 제스처 힌트 */
+    .gesture-hint {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--gray);
+        font-size: 0.9rem;
+        animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+        0%, 100% { transform: translateX(-50%) translateY(0); }
+        50% { transform: translateX(-50%) translateY(-10px); }
+    }
+    
+    /* 모바일 히어로 최적화 */
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 1rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .btn-primary-large,
+    .btn-secondary-large {
+        width: 100%;
+        padding: 1.2rem;
+        font-size: 1rem;
+    }
+    
+    /* 모바일 결과 화면 */
+    .result-container {
+        padding: 1rem;
+        padding-bottom: 5rem;
+    }
+    
+    .result-mbti-type {
+        font-size: 4rem;
+    }
+    
+    .result-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .result-actions {
+        flex-direction: column;
+        width: 100%;
+        padding: 0 1rem;
+    }
+    
+    .result-actions button {
+        width: 100%;
+    }
+    
+    /* 가격 카드 스와이프 */
+    .pricing-grid {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        gap: 1rem;
+        padding: 0 1rem;
+    }
+    
+    .pricing-card {
+        flex: 0 0 85%;
+        scroll-snap-align: center;
+    }
+    
+    /* 터치 친화적 버튼 크기 */
+    button {
+        min-height: 48px;
+        min-width: 48px;
+    }
+    
+    /* 스크롤 인디케이터 */
+    .scroll-indicator {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    
+    .scroll-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.3s;
+    }
+    
+    .scroll-dot.active {
+        background: var(--primary);
+        transform: scale(1.5);
+    }
+    
+    /* 모바일 전용 상단 바 */
+    .mobile-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+    }
+    
+    .mobile-menu-toggle {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 4px;
+        cursor: pointer;
+    }
+    
+    .menu-line {
+        width: 24px;
+        height: 2px;
+        background: white;
+        transition: all 0.3s;
+    }
+    
+    /* 사이드 메뉴 */
+    .mobile-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 80%;
+        height: 100vh;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(20px);
+        transition: left 0.3s;
+        z-index: 2000;
+        padding: 2rem;
+    }
+    
+    .mobile-sidebar.active {
+        left: 0;
+    }
+    
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 1999;
+    }
+    
+    .sidebar-overlay.active {
+        display: block;
+    }
+}
+
+/* 다크모드 자동 감지 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #0a0a0a;
+        --text-primary: #ffffff;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --bg-primary: #ffffff;
+        --text-primary: #0a0a0a;
+    }
+}
+
+/* 접근성 개선 */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* 태블릿 최적화 */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-content {
+        grid-template-columns: 1fr;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .pricing-grid {
+        grid-template-columns: repeat(2, 1fr);
+        max-width: 800px;
+    }
+}
+
+/* PWA 지원 스타일 */
+@media (display-mode: standalone) {
+    .nav-header {
+        padding-top: env(safe-area-inset-top);
+    }
+    
+    .mobile-nav {
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* 고해상도 디스플레이 최적화 */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .hero-gradient-text,
+    .result-mbti-type {
+        background: var(--gradient-primary);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* 랜드스케이프 모드 */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero-section {
+        min-height: auto;
+        padding: 2rem 1rem;
+    }
+    
+    .test-container {
+        height: auto;
+        max-height: 100vh;
+        overflow-y: auto;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .result-mbti-type {
+        font-size: 3rem;
+    }
+}
