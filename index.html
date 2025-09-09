@@ -2150,7 +2150,7 @@
         <!-- 결과 섹션 -->
         <section id="resultSection" class="section">
             <div style="text-align: center; padding: 30px 0;">
-                <h2 class="result-type" id="resultType" style="font-size: 4rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">INTJ</h2>
+                <h2 class="result-type" id="resultType" style="font-size: 4rem; font-weight: 900; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">로딩중...</h2>
                 <h3 id="resultTitle" style="font-size: 2rem; margin: 20px 0;">전략가</h3>
                 <p id="resultDescription" style="color: var(--gray); line-height: 1.6;">
                     독창적이고 의지가 강하며, 목표를 달성하기 위해 체계적으로 움직이는 전략가입니다.
@@ -2168,7 +2168,7 @@
                     <div class="mbti-selector">
                         <label>나의 MBTI</label>
                         <div class="mbti-select" style="padding: 12px; background: var(--primary); border-radius: 10px; font-weight: 600;">
-                            <span id="myMBTI">INTJ</span>
+                            <span id="myMBTI">로딩중...</span>
                         </div>
                     </div>
                     
@@ -2308,7 +2308,29 @@
             <div class="game-section">
                 <div class="game-header">
                     <h2 class="game-title">🌟 MBTI 3D 어드벤처</h2>
-                    <p style="color: var(--gray);">차원을 넘나드는 MBTI 인지 기능 세계를 탐험하세요!</p>
+                    <p style="color: var(--gray); margin-bottom: 15px;">당신의 MBTI 능력으로 차원을 탐험하고 크리스탈을 수집하세요!</p>
+                    
+                    <!-- 게임 설명 및 튜토리얼 -->
+                    <div class="game-tutorial" id="gameTutorial" style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                        <h3 style="color: #10B981; margin-bottom: 15px;">🎯 게임 방법</h3>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; font-size: 0.9rem;">
+                            <div>
+                                <strong style="color: #F59E0B;">📱 조작법:</strong><br>
+                                • 화살표 키 또는 WASD로 이동<br>
+                                • 마우스로 시점 조정<br>
+                                • 모바일: 화면 터치로 조작
+                            </div>
+                            <div>
+                                <strong style="color: #EC4899;">🎮 게임 목표:</strong><br>
+                                • 당신의 MBTI 크리스탈 수집<br>
+                                • 장애물과 적 피하기<br>
+                                • 특수능력으로 도전 극복
+                            </div>
+                        </div>
+                        <div style="text-align: center; margin-top: 15px;">
+                            <button onclick="hideTutorial()" style="background: #10B981; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer;">이해했어요! 게임 시작 🚀</button>
+                        </div>
+                    </div>
                 </div>
                 
                 <!-- 게임 UI 대시보드 -->
@@ -2356,7 +2378,9 @@
 
                 <!-- 게임 컨트롤 -->
                 <div class="game-controls">
-                    <button class="game-start-btn" id="gameStartBtn" onclick="startGame3D()">🎮 모험 시작</button>
+                    <button class="game-start-btn" id="gameStartBtn" onclick="startGame3D()" style="font-size: 1.2rem; padding: 15px 30px;">
+                        🎮 <span id="userMBTI">[MBTI]</span> 어드벤처 시작!
+                    </button>
                     <button class="game-pause-btn" id="gamePauseBtn" onclick="togglePause()" style="display: none;">⏸️ 일시정지</button>
                     <div class="difficulty-selector">
                         <label>난이도:</label>
@@ -2484,7 +2508,7 @@
                 <!-- 채팅 창 -->
                 <div class="chat-room" id="chatRoom" style="display: none;">
                     <div class="chat-partner-info" id="chatPartnerInfo">
-                        <span id="partnerMBTI">INTJ</span> 상대방과 연결됨
+                        <span id="partnerMBTI">연결 대기중</span> 상대방과 연결됨
                         <button class="new-partner-btn" onclick="findNewPartner()">🔄 새 상대 찾기</button>
                     </div>
                     
@@ -3076,6 +3100,9 @@
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById('gameSection').classList.add('active');
             
+            // MBTI 표시 업데이트
+            updateMBTIDisplay();
+            
             // 3D 게임 초기화
             setTimeout(() => {
                 if (initGame3D()) {
@@ -3111,7 +3138,7 @@
             initAudio();
             
             // MBTI 타입 설정
-            Game3D.player.mbtiType = currentMBTI || 'INTJ';
+            Game3D.player.mbtiType = currentMBTI || 'ENFP'; // 기본값은 활동가
             Game3D.player.abilities = MBTIAbilities[Game3D.player.mbtiType].abilities;
             
             updateGameUI();
@@ -3264,6 +3291,12 @@
         function startGame3D() {
             if (Game3D.isRunning) return;
             
+            // MBTI 확인
+            if (!currentMBTI) {
+                showToast('❌ 먼저 MBTI를 설정해주세요!');
+                return;
+            }
+            
             // 게임 상태 초기화
             Game3D.score = 0; Game3D.level = 1; Game3D.currentDimension = 'Ne';
             Game3D.player.position = new Vector3D(0, 0, 0);
@@ -3271,6 +3304,9 @@
             Game3D.player.energy = 100; Game3D.player.cooldowns = [0, 0, 0, 0];
             Game3D.crystals = []; Game3D.obstacles = []; Game3D.platforms = [];
             Game3D.particles = new ParticleSystem();
+            
+            // 현재 사용자 MBTI 기반 설정
+            Game3D.player.mbtiType = currentMBTI;
             
             generateLevel();
             updateGameUI();
@@ -3281,9 +3317,13 @@
             
             Game3D.isRunning = true; Game3D.isPaused = false;
             Game3D.lastTime = performance.now();
+            
+            // 게임 시작 안내
+            showToast(`🎮 ${currentMBTI} 어드벤처 시작! 당신의 크리스탈을 찾아보세요!`);
+            
             gameLoop3D();
             
-            console.log('3D MBTI 게임 시작!');
+            console.log(`${currentMBTI} 3D MBTI 게임 시작!`);
         }
 
         // 레벨 생성 (동적 레벨 생성)
@@ -3973,7 +4013,7 @@
             
             // 좋은 아이템 (사용자 MBTI)
             if (Math.random() < 0.4) {
-                const playerMBTI = currentMBTI || 'INTJ';
+                const playerMBTI = currentMBTI || 'ENFP'; // 기본값은 활동가
                 const itemData = mbtiItems[playerMBTI];
                 game.items.push({
                     x: game.canvas.width,
@@ -4360,14 +4400,40 @@
         
         // MBTI 표시 업데이트 함수
         function updateMBTIDisplay() {
+            if (!currentMBTI) return;
+            
             // 홈 화면의 MBTI 표시 업데이트
             const mbtiDisplay = document.getElementById('displayMBTI');
-            if (mbtiDisplay && currentMBTI) {
+            if (mbtiDisplay) {
                 mbtiDisplay.textContent = currentMBTI;
             }
             
-            // 기타 MBTI 표시가 필요한 곳들 업데이트
-            console.log(`MBTI 표시 업데이트: ${currentMBTI}`);
+            // 게임 버튼의 MBTI 표시 업데이트
+            const userMBTISpan = document.getElementById('userMBTI');
+            if (userMBTISpan) {
+                userMBTISpan.textContent = currentMBTI;
+            }
+            
+            // 결과 섹션의 MBTI 표시 업데이트
+            const resultType = document.getElementById('resultType');
+            const myMBTI = document.getElementById('myMBTI');
+            
+            if (resultType) {
+                resultType.textContent = currentMBTI;
+            }
+            if (myMBTI) {
+                myMBTI.textContent = currentMBTI;
+            }
+            
+            console.log(`MBTI 표시 업데이트 완료: ${currentMBTI}`);
+        }
+        
+        // 튜토리얼 숨기기 함수
+        function hideTutorial() {
+            const tutorial = document.getElementById('gameTutorial');
+            if (tutorial) {
+                tutorial.style.display = 'none';
+            }
         }
 
         // 페이지 로드 시 MBTI 확인 (테스트를 위해 주석 처리)
