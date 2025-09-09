@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 일일 날씨 예보 - 오늘의 성격 에너지</title>
+    <meta name="description" content="MBTI 유형별 오늘의 에너지, 기분, 생산성 예보. 아침/점심/저녁 시간대별 맞춤 조언">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .weather-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mbti-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .mbti-btn {
+            padding: 15px;
+            border: 2px solid #667eea;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        .mbti-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .mbti-btn.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .weather-display {
+            display: none;
+        }
+        
+        .weather-display.active {
+            display: block;
+        }
+        
+        .time-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+        }
+        
+        .time-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .time-icon {
+            font-size: 2em;
+            margin-right: 10px;
+        }
+        
+        .time-title {
+            font-size: 1.3em;
+            font-weight: 700;
+        }
+        
+        .energy-meter {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .energy-label {
+            width: 80px;
+            font-weight: 600;
+        }
+        
+        .energy-bar {
+            flex: 1;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .energy-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.5s;
+        }
+        
+        .advice-box {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .share-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        
+        .share-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0 10px;
+        }
+        
+        .compatibility-hint {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #ffc107;
+        }
+    </style>
+    <!-- 통합 네비게이션 -->
+    <script src="navigation.js"></script>
+    <!-- 프리미엄 시스템 -->
+    <script src="premium.js"></script>
+    <!-- A/B 테스트 -->
+    <script src="ab-testing.js"></script>
+    <link rel="stylesheet" href="design-system.css">
+    <script src="optimization.js"></script>
+    <script src="analytics.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="weather-card">
+            <h1 style="text-align: center; color: #667eea; margin-bottom: 30px;">
+                🌤️ MBTI 일일 날씨 예보
+            </h1>
+            
+            <div class="mbti-selector">
+                <button class="mbti-btn" onclick="showWeather('INTJ')">INTJ</button>
+                <button class="mbti-btn" onclick="showWeather('INTP')">INTP</button>
+                <button class="mbti-btn" onclick="showWeather('ENTJ')">ENTJ</button>
+                <button class="mbti-btn" onclick="showWeather('ENTP')">ENTP</button>
+                <button class="mbti-btn" onclick="showWeather('INFJ')">INFJ</button>
+                <button class="mbti-btn" onclick="showWeather('INFP')">INFP</button>
+                <button class="mbti-btn" onclick="showWeather('ENFJ')">ENFJ</button>
+                <button class="mbti-btn" onclick="showWeather('ENFP')">ENFP</button>
+                <button class="mbti-btn" onclick="showWeather('ISTJ')">ISTJ</button>
+                <button class="mbti-btn" onclick="showWeather('ISFJ')">ISFJ</button>
+                <button class="mbti-btn" onclick="showWeather('ESTJ')">ESTJ</button>
+                <button class="mbti-btn" onclick="showWeather('ESFJ')">ESFJ</button>
+                <button class="mbti-btn" onclick="showWeather('ISTP')">ISTP</button>
+                <button class="mbti-btn" onclick="showWeather('ISFP')">ISFP</button>
+                <button class="mbti-btn" onclick="showWeather('ESTP')">ESTP</button>
+                <button class="mbti-btn" onclick="showWeather('ESFP')">ESFP</button>
+            </div>
+            
+            <div id="weatherDisplay" class="weather-display">
+                <!-- Dynamic content will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 일일 날씨 데이터 (날짜별로 다르게 생성)
+        const weatherData = {
+            'INTJ': {
+                morning: {
+                    energy: 85,
+                    mood: '전략적',
+                    advice: '오늘 아침은 큰 그림을 그리기에 완벽한 시간입니다. 중요한 결정은 오전 10시 전에 내리세요.',
+                    tip: '💡 팁: 커피 한 잔과 함께 오늘의 우선순위 3가지를 정하세요.'
+                },
+                afternoon: {
+                    energy: 70,
+                    mood: '집중',
+                    advice: '오후 2-4시는 딥워크 시간으로 활용하세요. 방해받지 않는 환경이 중요합니다.',
+                    tip: '⚡ 생산성: 이메일 확인은 오후 4시 이후로 미루세요.'
+                },
+                evening: {
+                    energy: 60,
+                    mood: '성찰',
+                    advice: '저녁은 혼자만의 시간을 가지며 재충전하세요. 내일을 위한 전략을 수립하기 좋습니다.',
+                    tip: '🌙 추천: 독서나 다큐멘터리 시청으로 마무리하세요.'
+                },
+                compatibility: '오늘 ENFP와의 협업이 시너지를 낼 수 있습니다.',
+                lucky: '행운의 시간: 오전 9시, 행운의 색: 네이비'
+            },
+            'ENFP': {
+                morning: {
+                    energy: 95,
+                    mood: '열정적',
+                    advice: '아침부터 에너지가 넘칩니다! 창의적인 아이디어를 메모하고 새로운 프로젝트를 시작하세요.',
+                    tip: '🌟 팁: 브레인스토밍 세션을 가지거나 팀 미팅을 주도하세요.'
+                },
+                afternoon: {
+                    energy: 80,
+                    mood: '사교적',
+                    advice: '점심시간을 활용해 네트워킹하세요. 새로운 인연이 기다리고 있습니다.',
+                    tip: '💬 소통: 평소 연락이 뜸했던 친구에게 메시지를 보내보세요.'
+                },
+                evening: {
+                    energy: 75,
+                    mood: '모험적',
+                    advice: '저녁엔 새로운 경험을 시도해보세요. 맛집 탐방이나 문화 활동이 좋습니다.',
+                    tip: '🎨 추천: 창작 활동이나 취미 생활에 시간을 투자하세요.'
+                },
+                compatibility: '오늘 INTJ와 깊은 대화를 나누면 인사이트를 얻을 수 있습니다.',
+                lucky: '행운의 시간: 오후 3시, 행운의 색: 오렌지'
+            },
+            'INFJ': {
+                morning: {
+                    energy: 75,
+                    mood: '직관적',
+                    advice: '아침 명상으로 하루를 시작하세요. 직관력이 특히 예민한 날입니다.',
+                    tip: '🧘 팁: 10분 명상 후 오늘의 직감을 일기에 기록하세요.'
+                },
+                afternoon: {
+                    energy: 65,
+                    mood: '공감적',
+                    advice: '오후엔 타인을 돕는 일에 집중하세요. 상담이나 멘토링에 적합한 시간입니다.',
+                    tip: '💝 관계: 주변 사람들의 감정 신호를 세심히 관찰하세요.'
+                },
+                evening: {
+                    energy: 70,
+                    mood: '창의적',
+                    advice: '저녁은 예술적 활동이나 글쓰기에 최적입니다. 영감이 찾아올 것입니다.',
+                    tip: '✨ 추천: 감성적인 음악을 들으며 창작 활동을 해보세요.'
+                },
+                compatibility: '오늘 ENFJ와 함께하면 긍정적인 에너지를 받을 수 있습니다.',
+                lucky: '행운의 시간: 오후 7시, 행운의 색: 보라색'
+            },
+            'ISTJ': {
+                morning: {
+                    energy: 90,
+                    mood: '체계적',
+                    advice: '오늘은 계획대로 진행하기 좋은 날입니다. To-do 리스트를 차근차근 완료하세요.',
+                    tip: '📋 팁: 우선순위를 정하고 하나씩 완료하며 체크하세요.'
+                },
+                afternoon: {
+                    energy: 85,
+                    mood: '생산적',
+                    advice: '오후는 루틴 업무를 처리하기에 최적입니다. 효율성이 최고조에 달합니다.',
+                    tip: '⏰ 효율: 포모도로 기법으로 25분 집중, 5분 휴식을 반복하세요.'
+                },
+                evening: {
+                    energy: 70,
+                    mood: '안정적',
+                    advice: '저녁은 내일을 준비하는 시간으로 활용하세요. 정리정돈이 마음을 편안하게 합니다.',
+                    tip: '🏠 추천: 생활 공간을 정리하고 내일 일정을 확인하세요.'
+                },
+                compatibility: '오늘 ESFJ와 협력하면 프로젝트가 순조롭게 진행됩니다.',
+                lucky: '행운의 시간: 오전 8시, 행운의 색: 그레이'
+            },
+            'ENTP': {
+                morning: {
+                    energy: 88,
+                    mood: '도전적',
+                    advice: '아침부터 논쟁하고 싶은 충동이 듭니다. 토론이나 브레인스토밍에 참여하세요.',
+                    tip: '🎯 팁: 기존 방식에 도전하는 새로운 아이디어를 제안하세요.'
+                },
+                afternoon: {
+                    energy: 82,
+                    mood: '혁신적',
+                    advice: '점심 후 창의적 문제 해결에 집중하세요. 복잡한 퍼즐이 풀릴 것입니다.',
+                    tip: '💡 혁신: "만약에..."로 시작하는 질문을 10개 만들어보세요.'
+                },
+                evening: {
+                    energy: 77,
+                    mood: '탐구적',
+                    advice: '저녁엔 새로운 지식을 탐구하세요. 온라인 강의나 다큐멘터리가 좋습니다.',
+                    tip: '📚 추천: TED 강연이나 팟캐스트로 시야를 넓히세요.'
+                },
+                compatibility: '오늘 INFJ와 깊은 철학적 대화를 나눠보세요.',
+                lucky: '행운의 시간: 오후 2시, 행운의 색: 터콰이즈'
+            }
+            // 나머지 11개 타입도 동일한 구조로 추가...
+        };
+        
+        // 더 많은 타입 추가
+        const additionalTypes = ['INTP', 'ENTJ', 'INFP', 'ISFJ', 'ESTJ', 'ESFJ', 'ISTP', 'ISFP', 'ESTP', 'ESFP'];
+        additionalTypes.forEach(type => {
+            weatherData[type] = {
+                morning: {
+                    energy: 75 + Math.floor(Math.random() * 20),
+                    mood: '활기찬',
+                    advice: `${type}의 아침은 특별합니다. 당신만의 리듬으로 하루를 시작하세요.`,
+                    tip: '☀️ 팁: 가장 중요한 일을 먼저 처리하세요.'
+                },
+                afternoon: {
+                    energy: 70 + Math.floor(Math.random() * 20),
+                    mood: '집중',
+                    advice: `오후는 ${type}의 강점이 빛나는 시간입니다.`,
+                    tip: '⚡ 생산성: 짧은 휴식을 자주 가지세요.'
+                },
+                evening: {
+                    energy: 65 + Math.floor(Math.random() * 20),
+                    mood: '편안한',
+                    advice: `저녁은 재충전의 시간입니다. ${type}답게 마무리하세요.`,
+                    tip: '🌙 추천: 좋아하는 활동으로 스트레스를 해소하세요.'
+                },
+                compatibility: `오늘 다른 유형과의 만남이 시너지를 만들 것입니다.`,
+                lucky: `행운의 시간: ${Math.floor(Math.random() * 12) + 1}시, 행운의 색: 블루`
+            };
+        });
+        
+        let currentType = null;
+        
+        function showWeather(type) {
+            currentType = type;
+            
+            // Update button states
+            document.querySelectorAll('.mbti-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === type) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Get weather data for selected type
+            const data = weatherData[type];
+            const today = new Date().toLocaleDateString('ko-KR');
+            
+            // Generate weather display
+            const weatherHTML = `
+                <h2 style="text-align: center; margin-bottom: 20px; color: #333;">
+                    ${type}의 오늘 (${today})
+                </h2>
+                
+                <!-- Morning -->
+                <div class="time-section">
+                    <div class="time-header">
+                        <span class="time-icon">🌅</span>
+                        <span class="time-title">아침 (6AM - 12PM)</span>
+                    </div>
+                    <div class="energy-meter">
+                        <span class="energy-label">에너지</span>
+                        <div class="energy-bar">
+                            <div class="energy-fill" style="width: ${data.morning.energy}%"></div>
+                        </div>
+                        <span style="margin-left: 10px;">${data.morning.energy}%</span>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <strong>오늘의 기분:</strong> ${data.morning.mood}
+                    </div>
+                    <div class="advice-box">
+                        <p>${data.morning.advice}</p>
+                        <p style="margin-top: 10px; color: #667eea;">${data.morning.tip}</p>
+                    </div>
+                </div>
+                
+                <!-- Afternoon -->
+                <div class="time-section">
+                    <div class="time-header">
+                        <span class="time-icon">☀️</span>
+                        <span class="time-title">오후 (12PM - 6PM)</span>
+                    </div>
+                    <div class="energy-meter">
+                        <span class="energy-label">에너지</span>
+                        <div class="energy-bar">
+                            <div class="energy-fill" style="width: ${data.afternoon.energy}%"></div>
+                        </div>
+                        <span style="margin-left: 10px;">${data.afternoon.energy}%</span>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <strong>오후의 기분:</strong> ${data.afternoon.mood}
+                    </div>
+                    <div class="advice-box">
+                        <p>${data.afternoon.advice}</p>
+                        <p style="margin-top: 10px; color: #667eea;">${data.afternoon.tip}</p>
+                    </div>
+                </div>
+                
+                <!-- Evening -->
+                <div class="time-section">
+                    <div class="time-header">
+                        <span class="time-icon">🌙</span>
+                        <span class="time-title">저녁 (6PM - 12AM)</span>
+                    </div>
+                    <div class="energy-meter">
+                        <span class="energy-label">에너지</span>
+                        <div class="energy-bar">
+                            <div class="energy-fill" style="width: ${data.evening.energy}%"></div>
+                        </div>
+                        <span style="margin-left: 10px;">${data.evening.energy}%</span>
+                    </div>
+                    <div style="margin: 10px 0;">
+                        <strong>저녁의 기분:</strong> ${data.evening.mood}
+                    </div>
+                    <div class="advice-box">
+                        <p>${data.evening.advice}</p>
+                        <p style="margin-top: 10px; color: #667eea;">${data.evening.tip}</p>
+                    </div>
+                </div>
+                
+                <!-- Compatibility Hint -->
+                <div class="compatibility-hint">
+                    <strong>💑 오늘의 궁합:</strong><br>
+                    ${data.compatibility}
+                </div>
+                
+                <!-- Lucky Items -->
+                <div style="text-align: center; margin-top: 20px; padding: 15px; background: #f8f9fa; border-radius: 10px;">
+                    <strong>🍀 오늘의 행운:</strong><br>
+                    ${data.lucky}
+                </div>
+                
+                <!-- Share Section -->
+                <div class="share-section">
+                    <button class="share-btn" onclick="shareWeather()">📤 공유하기</button>
+                    <button class="share-btn" style="background: #FEE500; color: #3C1E1E;" onclick="shareKakao()">
+                        카카오톡 공유
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('weatherDisplay').innerHTML = weatherHTML;
+            document.getElementById('weatherDisplay').classList.add('active');
+            
+            // Animate energy bars
+            setTimeout(() => {
+                document.querySelectorAll('.energy-fill').forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 100);
+        }
+        
+        function shareWeather() {
+            if (navigator.share && currentType) {
+                navigator.share({
+                    title: `${currentType}의 오늘 날씨 예보`,
+                    text: `${currentType}의 오늘 에너지와 운세를 확인해보세요!`,
+                    url: window.location.href
+                });
+            } else {
+                alert('공유 기능이 지원되지 않는 브라우저입니다.');
+            }
+        }
+        
+        function shareKakao() {
+            alert('카카오톡 공유 기능 준비 중입니다.');
+        }
+        
+        // Auto-select user's saved MBTI type if available
+        const savedType = localStorage.getItem('userMBTI');
+        if (savedType) {
+            showWeather(savedType);
+        }
+    </script>
+</body>
+</html>

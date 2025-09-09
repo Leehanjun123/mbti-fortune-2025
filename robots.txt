@@ -1,4 +1,39 @@
+# MBTI Destiny Site Robots.txt
+# https://mbti-destiny.site
+
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
 
-Sitemap: https://www.mbti-destiny.site/sitemap.xml
+# Sitemap location
+Sitemap: https://mbti-destiny.site/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Naver
+User-agent: Yeti
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

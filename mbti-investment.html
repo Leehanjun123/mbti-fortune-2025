@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 투자 성향 분석 2025 | 성격유형별 재테크 전략</title>
+    <meta name="description" content="MBTI 16가지 성격유형별 투자 성향 분석. 주식, 부동산, 암호화폐 등 맞춤형 투자 전략과 리스크 관리 가이드">
+    <meta name="keywords" content="MBTI 투자, MBTI 재테크, 성격유형 투자전략, MBTI 주식, MBTI 부동산, 2025 투자가이드">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 투자 성향 - 나에게 맞는 투자 전략은?">
+    <meta property="og:description" content="성격유형별 최적 투자 전략과 리스크 관리법. 당신의 MBTI로 투자 성공률을 높이세요!">
+    <meta property="og:image" content="https://mbti-destiny.site/images/mbti-investment-og.jpg">
+    <meta property="og:url" content="https://mbti-destiny.site/mbti-investment.html">
+    
+    <link rel="canonical" href="https://mbti-destiny.site/mbti-investment.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
+         crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .risk-spectrum {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .spectrum-title {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 900;
+            margin-bottom: 25px;
+            color: #333;
+        }
+        
+        .spectrum-bar {
+            height: 60px;
+            background: linear-gradient(90deg, 
+                #28a745 0%, 
+                #ffc107 25%, 
+                #fd7e14 50%, 
+                #dc3545 75%, 
+                #721c24 100%);
+            border-radius: 30px;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .spectrum-labels {
+            display: flex;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+        
+        .spectrum-label {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #666;
+        }
+        
+        .mbti-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .mbti-card {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .mbti-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .mbti-card.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .investment-profile {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .investment-profile.active {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .profile-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: #333;
+        }
+        
+        .risk-level {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .risk-badge {
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .risk-low { background: #28a745; }
+        .risk-medium { background: #ffc107; color: #333; }
+        .risk-high { background: #fd7e14; }
+        .risk-very-high { background: #dc3545; }
+        
+        .portfolio-chart {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .portfolio-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .asset-allocation {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .asset-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .asset-name {
+            width: 120px;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .asset-bar {
+            flex: 1;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .asset-fill {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9em;
+            transition: width 1s ease;
+        }
+        
+        .investment-section {
+            margin-bottom: 25px;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .strategy-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .strategy-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .strategy-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .strategy-desc {
+            color: #666;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+        
+        .traits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .trait-card {
+            padding: 15px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .trait-positive {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .trait-negative {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+        
+        .warning-title {
+            font-weight: 700;
+            color: #856404;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .warning-list {
+            list-style: none;
+            color: #856404;
+        }
+        
+        .warning-list li {
+            padding: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .warning-list li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+        
+        /* 광고 영역 */
+        .ad-container {
+            margin: 30px 0;
+            min-height: 100px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .calculator-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .calculator-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        
+        .calculator-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .calculator-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .mbti-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .traits-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .strategy-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <!-- 통합 네비게이션 -->
+    <script src="navigation.js"></script>
+    <!-- 프리미엄 시스템 -->
+    <script src="premium.js"></script>
+    <!-- A/B 테스트 -->
+    <script src="ab-testing.js"></script>
+    <link rel="stylesheet" href="design-system.css">
+    <script src="optimization.js"></script>
+    <script src="analytics.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📈 MBTI 투자 성향 분석</h1>
+            <p class="subtitle">성격유형별 최적 투자 전략을 찾아드립니다</p>
+        </header>
+        
+        <!-- 리스크 스펙트럼 -->
+        <div class="risk-spectrum">
+            <h2 class="spectrum-title">투자 리스크 성향 분포</h2>
+            <div class="spectrum-bar"></div>
+            <div class="spectrum-labels">
+                <span class="spectrum-label">안정형</span>
+                <span class="spectrum-label">안정추구형</span>
+                <span class="spectrum-label">균형형</span>
+                <span class="spectrum-label">성장추구형</span>
+                <span class="spectrum-label">공격형</span>
+            </div>
+        </div>
+        
+        <!-- MBTI 선택 그리드 -->
+        <div class="mbti-grid">
+            <div class="mbti-card" onclick="showInvestmentProfile('INTJ')">INTJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('INTP')">INTP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ENTJ')">ENTJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ENTP')">ENTP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('INFJ')">INFJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('INFP')">INFP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ENFJ')">ENFJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ENFP')">ENFP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ISTJ')">ISTJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ISFJ')">ISFJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ESTJ')">ESTJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ESFJ')">ESFJ</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ISTP')">ISTP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ISFP')">ISFP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ESTP')">ESTP</div>
+            <div class="mbti-card" onclick="showInvestmentProfile('ESFP')">ESFP</div>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1752582087901677"
+                 data-ad-slot="YOUR-AD-SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <!-- 투자 프로필 상세 (동적 표시) -->
+        <div id="investment-details"></div>
+        
+        <!-- 투자 계산기 CTA -->
+        <div class="calculator-section">
+            <h2 class="calculator-title">💰 나의 투자 수익률 계산하기</h2>
+            <p style="margin-bottom: 20px;">MBTI 맞춤형 포트폴리오로 예상 수익을 계산해보세요</p>
+            <button class="calculator-button" onclick="alert('프리미엄 기능 준비 중입니다!')">수익률 계산기</button>
+        </div>
+    </div>
+    
+    <script>
+        // 투자 성향 데이터베이스
+        const investmentProfiles = {
+            'INTJ': {
+                type: '전략적 투자자',
+                riskLevel: '균형형',
+                riskClass: 'risk-medium',
+                portfolio: {
+                    '주식(성장주)': { percent: 40, color: '#667eea' },
+                    '채권/예금': { percent: 25, color: '#28a745' },
+                    'ETF/인덱스': { percent: 20, color: '#ffc107' },
+                    '대체투자': { percent: 10, color: '#fd7e14' },
+                    '현금': { percent: 5, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '가치투자 전략', desc: '펀더멘털 분석 기반 장기 투자' },
+                    { title: '분산투자', desc: '섹터별, 지역별 포트폴리오 다각화' },
+                    { title: '목표 기반 투자', desc: '명확한 수익률 목표 설정 후 실행' },
+                    { title: '리밸런싱', desc: '정기적 포트폴리오 재조정' }
+                ],
+                strengths: [
+                    '철저한 분석과 리서치',
+                    '장기적 관점 유지',
+                    '감정 배제한 의사결정',
+                    '시스템적 접근'
+                ],
+                weaknesses: [
+                    '과도한 분석으로 기회 상실',
+                    '유연성 부족',
+                    '단기 수익 기회 놓침',
+                    '보수적 성향'
+                ],
+                warnings: [
+                    '분석 마비에 빠지지 않도록 주의',
+                    '시장 타이밍보다 시간 분산 투자',
+                    '정기적인 포트폴리오 점검 필수'
+                ],
+                bestAssets: ['우량 성장주', '인덱스 펀드', '회사채', 'REITs'],
+                avoidAssets: ['페니스톡', '레버리지 상품', '단기 옵션']
+            },
+            'INTP': {
+                type: '분석적 투자자',
+                riskLevel: '성장추구형',
+                riskClass: 'risk-high',
+                portfolio: {
+                    '기술주/성장주': { percent: 45, color: '#667eea' },
+                    '암호화폐': { percent: 15, color: '#dc3545' },
+                    'ETF': { percent: 20, color: '#ffc107' },
+                    '채권': { percent: 15, color: '#28a745' },
+                    '현금': { percent: 5, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '알고리즘 트레이딩', desc: '데이터 기반 자동매매 시스템' },
+                    { title: '섹터 로테이션', desc: '경제 사이클별 섹터 전환' },
+                    { title: '퀀트 투자', desc: '수학적 모델 기반 투자' },
+                    { title: '차익거래', desc: '시장 비효율성 활용' }
+                ],
+                strengths: [
+                    '논리적 투자 결정',
+                    '새로운 투자 기법 습득',
+                    '복잡한 상품 이해',
+                    '객관적 리스크 평가'
+                ],
+                weaknesses: [
+                    '실행력 부족',
+                    '과도한 이론 의존',
+                    '시장 심리 무시',
+                    '포트폴리오 방치'
+                ],
+                warnings: [
+                    '백테스팅과 실제 투자는 다름을 인지',
+                    '정기적인 리밸런싱 알람 설정',
+                    '손절 기준 명확히 설정'
+                ],
+                bestAssets: ['기술주', '혁신 ETF', '암호화폐', '원자재'],
+                avoidAssets: ['배당주', '저축성 보험', '정기예금']
+            },
+            'ENTJ': {
+                type: '공격적 리더형',
+                riskLevel: '공격형',
+                riskClass: 'risk-very-high',
+                portfolio: {
+                    '성장주/IPO': { percent: 50, color: '#dc3545' },
+                    '부동산': { percent: 20, color: '#fd7e14' },
+                    '사모펀드': { percent: 15, color: '#667eea' },
+                    '채권': { percent: 10, color: '#28a745' },
+                    '현금': { percent: 5, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '집중투자', desc: '확신 있는 소수 종목 집중' },
+                    { title: 'M&A 플레이', desc: '인수합병 관련주 투자' },
+                    { title: '레버리지 활용', desc: '자본 효율성 극대화' },
+                    { title: '시장 지배', desc: '트렌드 선도 기업 투자' }
+                ],
+                strengths: [
+                    '빠른 의사결정',
+                    '높은 리스크 감수',
+                    '시장 기회 포착',
+                    '강한 실행력'
+                ],
+                weaknesses: [
+                    '과도한 자신감',
+                    '리스크 관리 소홀',
+                    '단기 성과 집착',
+                    '손절 어려움'
+                ],
+                warnings: [
+                    '포트폴리오 레버리지 30% 이내 제한',
+                    '정기적 수익 실현으로 현금 확보',
+                    '시장 과열 시 방어적 전환'
+                ],
+                bestAssets: ['성장주', 'IPO', '부동산', '벤처투자'],
+                avoidAssets: ['국채', '정기예금', '안정형 펀드']
+            },
+            'ENTP': {
+                type: '혁신적 투기자',
+                riskLevel: '공격형',
+                riskClass: 'risk-very-high',
+                portfolio: {
+                    '신기술주': { percent: 35, color: '#dc3545' },
+                    '암호화폐': { percent: 20, color: '#fd7e14' },
+                    '옵션/선물': { percent: 15, color: '#667eea' },
+                    'ETF': { percent: 20, color: '#ffc107' },
+                    '현금': { percent: 10, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '트렌드 서핑', desc: '신산업 초기 진입' },
+                    { title: '역발상 투자', desc: '시장 반대 포지션' },
+                    { title: '스윙 트레이딩', desc: '단중기 변동성 활용' },
+                    { title: '테마 투자', desc: '이슈 관련주 단기 매매' }
+                ],
+                strengths: [
+                    '혁신 기업 조기 발굴',
+                    '빠른 트렌드 파악',
+                    '유연한 전략 전환',
+                    '리스크 테이킹'
+                ],
+                weaknesses: [
+                    '인내심 부족',
+                    '과도한 매매',
+                    '포트폴리오 산만',
+                    '충동적 투자'
+                ],
+                warnings: [
+                    '일일 매매 횟수 제한 설정',
+                    '투자일지 작성으로 객관성 유지',
+                    '전체 자산의 20%는 안전자산 유지'
+                ],
+                bestAssets: ['테마주', '암호화폐', 'IPO', '해외주식'],
+                avoidAssets: ['장기채권', '배당주', '예금']
+            },
+            'INFJ': {
+                type: '신중한 이상주의자',
+                riskLevel: '안정추구형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    'ESG 펀드': { percent: 30, color: '#28a745' },
+                    '채권': { percent: 25, color: '#667eea' },
+                    '배당주': { percent: 20, color: '#ffc107' },
+                    '예금/적금': { percent: 20, color: '#6c757d' },
+                    '금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: 'ESG 투자', desc: '사회적 가치 기업 투자' },
+                    { title: '장기 바이앤홀드', desc: '10년 이상 장기 보유' },
+                    { title: '정액 분할 투자', desc: '매월 일정액 적립식' },
+                    { title: '안전자산 중심', desc: '원금 보장 상품 선호' }
+                ],
+                strengths: [
+                    '가치 중심 투자',
+                    '장기적 인내심',
+                    '리스크 회피',
+                    '윤리적 투자'
+                ],
+                weaknesses: [
+                    '수익률 희생',
+                    '기회비용 상실',
+                    '과도한 신중함',
+                    '변화 거부'
+                ],
+                warnings: [
+                    '인플레이션 리스크 고려',
+                    '최소한의 성장 자산 포함',
+                    '정기적 자산 배분 검토'
+                ],
+                bestAssets: ['ESG 펀드', '국채', '우량 배당주', '금'],
+                avoidAssets: ['파생상품', '투기주', '레버리지']
+            },
+            'INFP': {
+                type: '가치 추구 투자자',
+                riskLevel: '안정추구형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    '임팩트 투자': { percent: 25, color: '#28a745' },
+                    '예술품/수집품': { percent: 15, color: '#667eea' },
+                    '채권형 펀드': { percent: 30, color: '#ffc107' },
+                    '예금': { percent: 25, color: '#6c757d' },
+                    '현금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: '가치 일치 투자', desc: '개인 신념과 일치하는 기업' },
+                    { title: '소액 분산', desc: '다양한 소액 투자' },
+                    { title: '크라우드 펀딩', desc: '스타트업 소액 투자' },
+                    { title: '패시브 투자', desc: '인덱스 펀드 중심' }
+                ],
+                strengths: [
+                    '윤리적 투자 결정',
+                    '감정적 만족도',
+                    '독특한 투자 관점',
+                    '인내심'
+                ],
+                weaknesses: [
+                    '수익성 간과',
+                    '감정적 결정',
+                    '시장 분석 부족',
+                    '소극적 태도'
+                ],
+                warnings: [
+                    '최소 수익률 목표 설정',
+                    '감정과 투자 분리 연습',
+                    '전문가 조언 활용'
+                ],
+                bestAssets: ['ESG', '예술품', '채권', 'P2P'],
+                avoidAssets: ['단기 매매', '옵션', '신용거래']
+            },
+            'ENFJ': {
+                type: '균형잡힌 조언자',
+                riskLevel: '균형형',
+                riskClass: 'risk-medium',
+                portfolio: {
+                    '우량주': { percent: 35, color: '#667eea' },
+                    '채권': { percent: 25, color: '#28a745' },
+                    'REITs': { percent: 15, color: '#ffc107' },
+                    '펀드': { percent: 20, color: '#fd7e14' },
+                    '현금': { percent: 5, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '코어-위성 전략', desc: '안정 코어 + 수익 위성' },
+                    { title: '목표 기반', desc: '라이프 이벤트별 투자' },
+                    { title: '자산 배분', desc: '연령별 자산 조정' },
+                    { title: '정기 리밸런싱', desc: '분기별 포트폴리오 조정' }
+                ],
+                strengths: [
+                    '균형잡힌 포트폴리오',
+                    '체계적 접근',
+                    '리스크 관리',
+                    '장기 계획'
+                ],
+                weaknesses: [
+                    '평범한 수익률',
+                    '타인 조언 과신',
+                    '독창성 부족',
+                    '트렌드 후행'
+                ],
+                warnings: [
+                    '자신만의 투자 원칙 확립',
+                    '시장 극단 시 대응 계획',
+                    '정기적 성과 평가'
+                ],
+                bestAssets: ['블루칩', '회사채', 'REITs', '타겟데이트펀드'],
+                avoidAssets: ['페니스톡', '암호화폐', '파생상품']
+            },
+            'ENFP': {
+                type: '열정적 모험가',
+                riskLevel: '성장추구형',
+                riskClass: 'risk-high',
+                portfolio: {
+                    '테마주': { percent: 30, color: '#dc3545' },
+                    '해외주식': { percent: 25, color: '#667eea' },
+                    '암호화폐': { percent: 15, color: '#fd7e14' },
+                    'ETF': { percent: 20, color: '#ffc107' },
+                    '현금': { percent: 10, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '스토리 투자', desc: '매력적인 비전 기업' },
+                    { title: '글로벌 분산', desc: '전 세계 시장 투자' },
+                    { title: '소셜 트레이딩', desc: '커뮤니티 정보 활용' },
+                    { title: '모멘텀 투자', desc: '상승 추세 추종' }
+                ],
+                strengths: [
+                    '새로운 기회 포착',
+                    '글로벌 시야',
+                    '빠른 학습',
+                    '네트워킹'
+                ],
+                weaknesses: [
+                    '충동적 매매',
+                    '집중력 부족',
+                    'FOMO 심리',
+                    '손절 어려움'
+                ],
+                warnings: [
+                    '투자 일기로 감정 통제',
+                    '자동 매매 시스템 활용',
+                    '월 투자 한도 설정'
+                ],
+                bestAssets: ['글로벌 주식', '테마 ETF', '암호화폐', 'IPO'],
+                avoidAssets: ['장기 채권', '정기 예금', '보험 상품']
+            },
+            'ISTJ': {
+                type: '보수적 관리자',
+                riskLevel: '안정형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    '우량 배당주': { percent: 30, color: '#28a745' },
+                    '국채/회사채': { percent: 30, color: '#667eea' },
+                    '예금/적금': { percent: 25, color: '#6c757d' },
+                    '부동산 펀드': { percent: 10, color: '#ffc107' },
+                    '현금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: '배당 재투자', desc: '배당금 복리 효과' },
+                    { title: '정기 적립', desc: '매월 일정액 투자' },
+                    { title: '만기 매칭', desc: '목표 시점 채권 만기' },
+                    { title: '비용 최소화', desc: '수수료, 세금 절감' }
+                ],
+                strengths: [
+                    '일관된 투자 원칙',
+                    '리스크 관리',
+                    '장기 투자',
+                    '꼼꼼한 기록'
+                ],
+                weaknesses: [
+                    '낮은 수익률',
+                    '기회 상실',
+                    '변화 거부',
+                    '과도한 안전 추구'
+                ],
+                warnings: [
+                    '인플레이션 대비 실질 수익률 점검',
+                    '포트폴리오 다각화 필요',
+                    '새로운 투자 상품 학습'
+                ],
+                bestAssets: ['배당 귀족주', '국채', '정기예금', '연금저축'],
+                avoidAssets: ['신생 기업', '암호화폐', '파생상품']
+            },
+            'ISFJ': {
+                type: '안전 제일주의자',
+                riskLevel: '안정형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    '예금/적금': { percent: 40, color: '#28a745' },
+                    '채권': { percent: 25, color: '#667eea' },
+                    '안정형 펀드': { percent: 20, color: '#ffc107' },
+                    '연금보험': { percent: 10, color: '#6c757d' },
+                    '현금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: '원금 보장', desc: '예금자 보호 상품' },
+                    { title: '분할 만기', desc: '만기 분산 예금' },
+                    { title: '연금 준비', desc: '노후 대비 장기 저축' },
+                    { title: '비상금 확보', desc: '6개월 생활비 현금' }
+                ],
+                strengths: [
+                    '안정적 자산 관리',
+                    '꾸준한 저축',
+                    '리스크 회피',
+                    '계획적 투자'
+                ],
+                weaknesses: [
+                    '수익 기회 포기',
+                    '인플레이션 취약',
+                    '소극적 태도',
+                    '금융 지식 부족'
+                ],
+                warnings: [
+                    '물가 상승률 이상 수익 목표',
+                    '소액이라도 성장 자산 포함',
+                    '금융 교육 참여'
+                ],
+                bestAssets: ['정기예금', '국채', '연금보험', 'ELS'],
+                avoidAssets: ['주식', '암호화폐', '원자재']
+            },
+            'ESTJ': {
+                type: '실용적 관리자',
+                riskLevel: '균형형',
+                riskClass: 'risk-medium',
+                portfolio: {
+                    '대형주': { percent: 40, color: '#667eea' },
+                    '회사채': { percent: 20, color: '#28a745' },
+                    '부동산': { percent: 20, color: '#fd7e14' },
+                    'ETF': { percent: 15, color: '#ffc107' },
+                    '현금': { percent: 5, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '가치 투자', desc: 'PER, PBR 기반 투자' },
+                    { title: '섹터 배분', desc: '산업별 균등 투자' },
+                    { title: '비용 효율', desc: '저비용 인덱스 활용' },
+                    { title: '세금 최적화', desc: '절세 상품 활용' }
+                ],
+                strengths: [
+                    '체계적 분석',
+                    '실행력',
+                    '목표 달성',
+                    '리스크 통제'
+                ],
+                weaknesses: [
+                    '유연성 부족',
+                    '단기 기회 무시',
+                    '보수적 편향',
+                    '혁신 거부'
+                ],
+                warnings: [
+                    '시장 변화 적응력 향상',
+                    '새로운 투자 기법 학습',
+                    '포트폴리오 정기 점검'
+                ],
+                bestAssets: ['블루칩', '우량 회사채', 'REITs', '인덱스 펀드'],
+                avoidAssets: ['암호화폐', '신생 벤처', '복잡한 파생상품']
+            },
+            'ESFJ': {
+                type: '사회적 투자자',
+                riskLevel: '안정추구형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    '배당주': { percent: 30, color: '#28a745' },
+                    '채권형 펀드': { percent: 25, color: '#667eea' },
+                    '저축성 보험': { percent: 20, color: '#ffc107' },
+                    '예금': { percent: 20, color: '#6c757d' },
+                    '현금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: '안정 수익', desc: '정기 배당/이자 수입' },
+                    { title: '가족 재무', desc: '교육비, 주택 자금' },
+                    { title: '보험 연계', desc: '저축과 보장 동시' },
+                    { title: '소액 적립', desc: '자녀 명의 적금' }
+                ],
+                strengths: [
+                    '가족 중심 계획',
+                    '안정적 투자',
+                    '신뢰성',
+                    '장기 관점'
+                ],
+                weaknesses: [
+                    '수익률 포기',
+                    '전문성 부족',
+                    '타인 의견 의존',
+                    '보수적 성향'
+                ],
+                warnings: [
+                    '은퇴 후 인플레이션 대비',
+                    '자녀 독립 후 투자 전략 수정',
+                    '배우자와 투자 목표 공유'
+                ],
+                bestAssets: ['배당주', '채권', '연금저축', '교육보험'],
+                avoidAssets: ['단기 매매', '레버리지', '복잡한 상품']
+            },
+            'ISTP': {
+                type: '실용적 기회주의자',
+                riskLevel: '균형형',
+                riskClass: 'risk-medium',
+                portfolio: {
+                    '기술주': { percent: 30, color: '#667eea' },
+                    '원자재/상품': { percent: 20, color: '#fd7e14' },
+                    'ETF': { percent: 25, color: '#ffc107' },
+                    '암호화폐': { percent: 10, color: '#dc3545' },
+                    '현금': { percent: 15, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '기술적 분석', desc: '차트 패턴 매매' },
+                    { title: '단기 스윙', desc: '변동성 활용 매매' },
+                    { title: '자동 매매', desc: '알고리즘 트레이딩' },
+                    { title: '독립적 판단', desc: '자체 분석 의존' }
+                ],
+                strengths: [
+                    '기술적 이해',
+                    '독립적 사고',
+                    '리스크 계산',
+                    '실용적 접근'
+                ],
+                weaknesses: [
+                    '장기 계획 부족',
+                    '감정 무시',
+                    '네트워킹 부족',
+                    '충동적 결정'
+                ],
+                warnings: [
+                    '포트폴리오 과도한 집중 주의',
+                    '정기적 수익 실현',
+                    '시장 과열 시 현금 비중 확대'
+                ],
+                bestAssets: ['기술주', '원자재 ETF', '암호화폐', '옵션'],
+                avoidAssets: ['펀드', '보험 상품', '장기 채권']
+            },
+            'ISFP': {
+                type: '감성적 투자자',
+                riskLevel: '안정추구형',
+                riskClass: 'risk-low',
+                portfolio: {
+                    'ESG/친환경': { percent: 25, color: '#28a745' },
+                    '예술품 투자': { percent: 10, color: '#667eea' },
+                    '안정 펀드': { percent: 30, color: '#ffc107' },
+                    '예금': { percent: 30, color: '#6c757d' },
+                    '현금': { percent: 5, color: '#fd7e14' }
+                },
+                strategies: [
+                    { title: '가치 일치', desc: '신념과 일치하는 투자' },
+                    { title: '느린 투자', desc: '서두르지 않는 접근' },
+                    { title: '직관 활용', desc: '감각적 판단 신뢰' },
+                    { title: '소액 다양화', desc: '여러 분야 소액 투자' }
+                ],
+                strengths: [
+                    '가치 중심',
+                    '인내심',
+                    '독특한 관점',
+                    '스트레스 회피'
+                ],
+                weaknesses: [
+                    '분석 부족',
+                    '수익 간과',
+                    '소극적 태도',
+                    '전문 지식 부족'
+                ],
+                warnings: [
+                    '최소 수익률 목표 설정',
+                    '정기적 포트폴리오 검토',
+                    '전문가 상담 활용'
+                ],
+                bestAssets: ['ESG 펀드', '예술품', '금', '안정형 상품'],
+                avoidAssets: ['파생상품', '단기 매매', '레버리지']
+            },
+            'ESTP': {
+                type: '행동파 트레이더',
+                riskLevel: '공격형',
+                riskClass: 'risk-very-high',
+                portfolio: {
+                    '단기 매매': { percent: 35, color: '#dc3545' },
+                    '옵션/선물': { percent: 20, color: '#fd7e14' },
+                    '암호화폐': { percent: 15, color: '#667eea' },
+                    '해외 주식': { percent: 20, color: '#ffc107' },
+                    '현금': { percent: 10, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '데이 트레이딩', desc: '일일 단타 매매' },
+                    { title: '모멘텀 추종', desc: '강한 추세 편승' },
+                    { title: '뉴스 트레이딩', desc: '이슈 즉각 대응' },
+                    { title: '리스크 온/오프', desc: '시장 분위기 활용' }
+                ],
+                strengths: [
+                    '빠른 실행력',
+                    '기회 포착',
+                    '스트레스 관리',
+                    '현실적 판단'
+                ],
+                weaknesses: [
+                    '인내심 부족',
+                    '과도한 매매',
+                    '장기 계획 무시',
+                    '리스크 과소평가'
+                ],
+                warnings: [
+                    '일일 손실 한도 설정 필수',
+                    '레버리지 2배 이내 제한',
+                    '월 1회 강제 휴식 기간'
+                ],
+                bestAssets: ['변동성 큰 주식', '옵션', '암호화폐', '외환'],
+                avoidAssets: ['장기 채권', '연금 상품', '정기예금']
+            },
+            'ESFP': {
+                type: '즐거운 투자자',
+                riskLevel: '성장추구형',
+                riskClass: 'risk-high',
+                portfolio: {
+                    '엔터/소비주': { percent: 30, color: '#dc3545' },
+                    '테마 ETF': { percent: 25, color: '#667eea' },
+                    '해외 여행주': { percent: 15, color: '#fd7e14' },
+                    '펀드': { percent: 20, color: '#ffc107' },
+                    '현금': { percent: 10, color: '#6c757d' }
+                },
+                strategies: [
+                    { title: '트렌드 투자', desc: '유행 관련 종목' },
+                    { title: '브랜드 투자', desc: '좋아하는 브랜드 주식' },
+                    { title: '소셜 투자', desc: 'SNS 정보 활용' },
+                    { title: '경험 투자', desc: '직접 체험 기반' }
+                ],
+                strengths: [
+                    '트렌드 민감성',
+                    '긍정적 마인드',
+                    '네트워킹',
+                    '빠른 적응'
+                ],
+                weaknesses: [
+                    '충동 구매',
+                    '분석 부족',
+                    '단기 시야',
+                    '계획성 부족'
+                ],
+                warnings: [
+                    '월 투자 예산 설정',
+                    '자동 이체로 강제 저축',
+                    '투자 일기 작성'
+                ],
+                bestAssets: ['소비재주', '엔터주', '테마 ETF', '리츠'],
+                avoidAssets: ['복잡한 파생상품', '장기 채권', '원자재']
+            }
+        };
+        
+        function showInvestmentProfile(type) {
+            // 버튼 활성화
+            document.querySelectorAll('.mbti-card').forEach(card => {
+                card.classList.remove('active');
+                if (card.textContent === type) {
+                    card.classList.add('active');
+                }
+            });
+            
+            // 사용자 MBTI 저장
+            localStorage.setItem('userMBTI', type);
+            window.dispatchEvent(new Event('storage'));
+            
+            // 프로필 데이터 가져오기
+            const profile = investmentProfiles[type];
+            
+            // HTML 생성
+            const detailsHTML = `
+                <div class="investment-profile active">
+                    <div class="profile-header">
+                        <h2 class="profile-title">${type} - ${profile.type}</h2>
+                        <div class="risk-level">
+                            <span>투자 성향:</span>
+                            <span class="risk-badge ${profile.riskClass}">${profile.riskLevel}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="portfolio-chart">
+                        <h3 class="portfolio-title">📊 추천 포트폴리오 구성</h3>
+                        <div class="asset-allocation">
+                            ${Object.entries(profile.portfolio).map(([asset, data]) => `
+                                <div class="asset-item">
+                                    <span class="asset-name">${asset}</span>
+                                    <div class="asset-bar">
+                                        <div class="asset-fill" style="width: ${data.percent}%; background: ${data.color};">
+                                            ${data.percent}%
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="investment-section">
+                        <h3 class="section-title">🎯 추천 투자 전략</h3>
+                        <div class="strategy-cards">
+                            ${profile.strategies.map(strategy => `
+                                <div class="strategy-card">
+                                    <div class="strategy-title">${strategy.title}</div>
+                                    <div class="strategy-desc">${strategy.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="investment-section">
+                        <h3 class="section-title">💎 투자 성향 분석</h3>
+                        <div class="traits-grid">
+                            ${profile.strengths.map(strength => `
+                                <div class="trait-card trait-positive">
+                                    ✅ ${strength}
+                                </div>
+                            `).join('')}
+                            ${profile.weaknesses.map(weakness => `
+                                <div class="trait-card trait-negative">
+                                    ⚠️ ${weakness}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="investment-section">
+                        <h3 class="section-title">📈 최적 투자 상품</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            ${profile.bestAssets.map(asset => `
+                                <span style="padding: 8px 16px; background: #d4edda; color: #155724; border-radius: 20px; font-weight: 600;">
+                                    ${asset}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="investment-section">
+                        <h3 class="section-title">🚫 피해야 할 투자</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                            ${profile.avoidAssets.map(asset => `
+                                <span style="padding: 8px 16px; background: #f8d7da; color: #721c24; border-radius: 20px; font-weight: 600;">
+                                    ${asset}
+                                </span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4 class="warning-title">
+                            ⚠️ 투자 시 주의사항
+                        </h4>
+                        <ul class="warning-list">
+                            ${profile.warnings.map(warning => `
+                                <li>${warning}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('investment-details').innerHTML = detailsHTML;
+            
+            // 애니메이션을 위한 스크롤
+            document.getElementById('investment-details').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+        
+        // 페이지 로드 시 초기화
+        window.addEventListener('load', () => {
+            const userMBTI = localStorage.getItem('userMBTI');
+            if (userMBTI && investmentProfiles[userMBTI]) {
+                showInvestmentProfile(userMBTI);
+            } else {
+                showInvestmentProfile('INTJ');
+            }
+            
+            // AdSense 광고 로드
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        });
+    </script>
+</body>
+</html>

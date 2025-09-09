@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 유형별 반응 - 2025 트렌드편 | MBTI Destiny</title>
+    <meta name="description" content="MBTI 16가지 성격유형이 2025년 트렌드, K-POP, 연애 상황에 어떻게 반응하는지 재미있게 알아보세요. 공감 100% MBTI 반응 모음!">
+    <meta name="keywords" content="MBTI 반응, MBTI 밈, MBTI 트렌드, MBTI K-POP, MBTI 연애, 성격유형 반응, 2025 MBTI">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 유형별 반응 - 나만 이래? 🤔">
+    <meta property="og:description" content="내 MBTI 유형은 이런 상황에서 어떻게 반응할까? 공감 100% MBTI 반응 모음!">
+    <meta property="og:image" content="https://mbti-destiny.site/images/mbti-reactions-og.jpg">
+    <meta property="og:url" content="https://mbti-destiny.site/mbti-reactions.html">
+    
+    <link rel="canonical" href="https://mbti-destiny.site/mbti-reactions.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+        
+        .tab:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .scenario-container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .scenario-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .scenario-emoji {
+            font-size: 3em;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .reactions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .reaction-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .reaction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .reaction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+        
+        .mbti-type {
+            font-size: 1.3em;
+            font-weight: 900;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .reaction-text {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #495057;
+            margin-bottom: 10px;
+        }
+        
+        .reaction-emoji {
+            font-size: 1.5em;
+            text-align: right;
+        }
+        
+        .share-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .share-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+        
+        .share-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .scenario-title {
+                font-size: 1.4em;
+            }
+            
+            .reactions-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-tabs {
+                justify-content: flex-start;
+            }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: white;
+            font-size: 1.2em;
+        }
+        
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 20px;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn:hover {
+            background: #e9ecef;
+        }
+        
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+    </style>
+    <!-- 통합 네비게이션 -->
+    <script src="navigation.js"></script>
+    <!-- 프리미엄 시스템 -->
+    <script src="premium.js"></script>
+    <!-- A/B 테스트 -->
+    <script src="ab-testing.js"></script>
+    <link rel="stylesheet" href="design-system.css">
+    <script src="optimization.js"></script>
+    <script src="analytics.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>MBTI가 반응하는 법 🎭</h1>
+            <p class="subtitle">같은 상황, 16가지 다른 반응!</p>
+        </header>
+        
+        <div class="category-tabs">
+            <button class="tab active" data-category="trending">🔥 2025 트렌드</button>
+            <button class="tab" data-category="kpop">🎵 K-POP</button>
+            <button class="tab" data-category="dating">💕 연애</button>
+            <button class="tab" data-category="work">💼 직장생활</button>
+            <button class="tab" data-category="food">🍕 음식</button>
+            <button class="tab" data-category="tech">📱 신기술</button>
+        </div>
+        
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">전체 보기</button>
+            <button class="filter-btn" data-filter="analyst">분석형 (NT)</button>
+            <button class="filter-btn" data-filter="diplomat">외교형 (NF)</button>
+            <button class="filter-btn" data-filter="sentinel">관리형 (SJ)</button>
+            <button class="filter-btn" data-filter="explorer">탐험형 (SP)</button>
+        </div>
+        
+        <div id="scenarios-container">
+            <!-- 시나리오들이 동적으로 로드됩니다 -->
+        </div>
+        
+        <div class="share-section">
+            <h3 style="color: white; margin-bottom: 20px;">내 MBTI 반응 공유하기</h3>
+            <a href="#" class="share-btn" onclick="shareKakao(); return false;">카카오톡 공유</a>
+            <a href="#" class="share-btn" onclick="shareNative(); return false;">공유하기</a>
+        </div>
+    </div>
+    
+    <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+    <script>
+        // 카카오 SDK 초기화
+        if (!Kakao.isInitialized()) {
+            Kakao.init('48c0d88498f6ea2f7e8c8f87654321ab');
+        }
+        
+        // 시나리오 데이터
+        const scenarios = {
+            trending: [
+                {
+                    title: "AI가 내 일자리를 대체한다고?",
+                    emoji: "🤖",
+                    reactions: {
+                        'INTJ': { text: "드디어 비효율적인 인간들이 사라지는구나. 내 계획대로야.", emoji: "😏", group: "analyst" },
+                        'INTP': { text: "흥미롭네. AI의 알고리즘을 분석해서 더 나은 버전을 만들어야겠어.", emoji: "🤔", group: "analyst" },
+                        'ENTJ': { text: "AI를 관리하는 CEO가 되면 되지. 문제없어.", emoji: "💪", group: "analyst" },
+                        'ENTP': { text: "AI vs 인간 토론 대회 열어야겠다. 내가 이길 자신 있는데?", emoji: "😎", group: "analyst" },
+                        'INFJ': { text: "인류의 미래가 걱정되지만... 이미 예견했던 일이야.", emoji: "😔", group: "diplomat" },
+                        'INFP': { text: "AI에게도 감정이 있을까? 그들도 꿈을 꾸나?", emoji: "🥺", group: "diplomat" },
+                        'ENFJ': { text: "모두가 새로운 기술에 적응할 수 있도록 도와야해!", emoji: "🤗", group: "diplomat" },
+                        'ENFP': { text: "와! AI랑 친구가 될 수 있을까? 같이 창작 활동하고 싶어!", emoji: "✨", group: "diplomat" },
+                        'ISTJ': { text: "매뉴얼대로 하면 AI든 뭐든 문제없습니다.", emoji: "📋", group: "sentinel" },
+                        'ISFJ': { text: "AI 때문에 실직하는 사람들이 걱정돼... 도울 방법이 없을까?", emoji: "😟", group: "sentinel" },
+                        'ESTJ': { text: "효율성이 증가한다면 환영이지. 단, 내가 관리한다.", emoji: "📊", group: "sentinel" },
+                        'ESFJ': { text: "AI도 좋지만 인간의 따뜻함은 대체할 수 없어요!", emoji: "❤️", group: "sentinel" },
+                        'ISTP': { text: "고장나면 내가 고치면 되지 뭐.", emoji: "🔧", group: "explorer" },
+                        'ISFP': { text: "AI가 그린 그림 vs 내 그림... 누가 더 감성적일까?", emoji: "🎨", group: "explorer" },
+                        'ESTP': { text: "일단 써보고 판단하지 뭐. 액션이 중요해!", emoji: "🏃", group: "explorer" },
+                        'ESFP': { text: "AI랑 셀카 찍어야지! 새로운 친구 생겼다~!", emoji: "🤳", group: "explorer" }
+                    }
+                },
+                {
+                    title: "숏폼 콘텐츠 중독 시대",
+                    emoji: "📱",
+                    reactions: {
+                        'INTJ': { text: "시간 낭비. 책 한 권이 더 유익해.", emoji: "📚", group: "analyst" },
+                        'INTP': { text: "알고리즘이 어떻게 중독을 유발하는지 연구 중...", emoji: "🔬", group: "analyst" },
+                        'ENTJ': { text: "10초 안에 메시지 전달 못하면 실패한 콘텐츠야.", emoji: "⏰", group: "analyst" },
+                        'ENTP': { text: "내가 만들면 더 중독성 있게 만들 수 있는데?", emoji: "😈", group: "analyst" },
+                        'INFJ': { text: "인류의 집중력이 파괴되고 있어... 심각한 문제야.", emoji: "😰", group: "diplomat" },
+                        'INFP': { text: "가끔은 좋지만... 깊이 있는 콘텐츠가 그리워.", emoji: "🌙", group: "diplomat" },
+                        'ENFJ': { text: "교육적인 숏폼을 만들어서 모두를 도와야겠어!", emoji: "📖", group: "diplomat" },
+                        'ENFP': { text: "오늘도 3시간 봤네... 아 맞다! 내 채널도 만들어야지!", emoji: "🎬", group: "diplomat" },
+                        'ISTJ': { text: "정해진 시간만 보고 끕니다. 자제력이 중요해요.", emoji: "⏱️", group: "sentinel" },
+                        'ISFJ': { text: "가족들이 너무 많이 보는 것 같아 걱정이에요.", emoji: "👨‍👩‍👧", group: "sentinel" },
+                        'ESTJ': { text: "업무에 활용할 수 있는 것만 봅니다. 효율적으로.", emoji: "💼", group: "sentinel" },
+                        'ESFJ': { text: "친구들이 올린 영상은 다 봐줘야죠! 의리!", emoji: "👥", group: "sentinel" },
+                        'ISTP': { text: "DIY 영상만 봄. 쓸모있는 것만.", emoji: "🔨", group: "explorer" },
+                        'ISFP': { text: "예쁜 영상 보면서 힐링 중... 이것도 예술이야.", emoji: "🌸", group: "explorer" },
+                        'ESTP': { text: "스크롤 속도 최강자. 1시간에 500개 가능.", emoji: "💨", group: "explorer" },
+                        'ESFP': { text: "내가 찍은 영상 조회수 10만! 파티하자!", emoji: "🎉", group: "explorer" }
+                    }
+                },
+                {
+                    title: "메타버스에서 만나요",
+                    emoji: "🥽",
+                    reactions: {
+                        'INTJ': { text: "현실 세계도 비효율적인데 가상까지? 패스.", emoji: "🚫", group: "analyst" },
+                        'INTP': { text: "물리 법칙을 무시할 수 있다니... 가능성이 무한해!", emoji: "🌌", group: "analyst" },
+                        'ENTJ': { text: "메타버스 부동산 투자 시작. 미래를 선점한다.", emoji: "🏢", group: "analyst" },
+                        'ENTP': { text: "현실 vs 메타버스 정체성 실험 중. 누가 진짜 나일까?", emoji: "🎭", group: "analyst" },
+                        'INFJ': { text: "가상과 현실의 경계가 모호해지는게 불안해...", emoji: "😟", group: "diplomat" },
+                        'INFP': { text: "드디어 내 상상의 세계를 구현할 수 있어!", emoji: "🦄", group: "diplomat" },
+                        'ENFJ': { text: "메타버스에서도 사람들을 도울 거예요!", emoji: "🦸", group: "diplomat" },
+                        'ENFP': { text: "아바타 100개 만들어서 다 다른 인생 살아볼래!", emoji: "🌈", group: "diplomat" },
+                        'ISTJ': { text: "현실 세계가 더 안정적입니다. 굳이?", emoji: "🏠", group: "sentinel" },
+                        'ISFJ': { text: "가족들과 안전하게 즐길 수 있다면 좋을 것 같아요.", emoji: "👨‍👩‍👧‍👦", group: "sentinel" },
+                        'ESTJ': { text: "비즈니스 미팅용으로만 사용. 효율성 테스트 중.", emoji: "👔", group: "sentinel" },
+                        'ESFJ': { text: "친구들이 다 하니까 나도! 같이 해야죠!", emoji: "👫", group: "sentinel" },
+                        'ISTP': { text: "버그 찾아서 해킹하기 딱 좋네.", emoji: "💻", group: "explorer" },
+                        'ISFP': { text: "내 아바타 꾸미는데 3시간... 이것도 예술이야.", emoji: "🎨", group: "explorer" },
+                        'ESTP': { text: "VR 스포츠 게임 최고! 현실보다 재밌어!", emoji: "🏀", group: "explorer" },
+                        'ESFP': { text: "메타버스 클럽 파티 주최! 다들 오세요!", emoji: "🕺", group: "explorer" }
+                    }
+                }
+            ],
+            kpop: [
+                {
+                    title: "최애 아이돌이 열애설?!",
+                    emoji: "💔",
+                    reactions: {
+                        'INTJ': { text: "예상했던 일. 내 계획에는 차질 없어.", emoji: "😐", group: "analyst" },
+                        'INTP': { text: "통계적으로 아이돌의 67%는... (분석 모드 ON)", emoji: "📊", group: "analyst" },
+                        'ENTJ': { text: "프로답지 못해. 팬 관리를 어떻게 한 거야?", emoji: "😤", group: "analyst" },
+                        'ENTP': { text: "열애설 반박 증거 100가지 준비 완료. 토론하실?", emoji: "🗣️", group: "analyst" },
+                        'INFJ': { text: "마음은 아프지만... 그들의 행복을 응원해야지.", emoji: "😢", group: "diplomat" },
+                        'INFP': { text: "배신감... 방구석에서 슬픈 노래 무한반복 중.", emoji: "😭", group: "diplomat" },
+                        'ENFJ': { text: "우리 모두 성숙하게 축하해 주자! (속으로 펑펑)", emoji: "🥲", group: "diplomat" },
+                        'ENFP': { text: "새로운 최애 찾기 시작! 긍정적으로 생각하자!", emoji: "🔍", group: "diplomat" },
+                        'ISTJ': { text: "연예인은 연예인일 뿐. 현실을 직시하세요.", emoji: "😑", group: "sentinel" },
+                        'ISFJ': { text: "팬들 마음이 많이 아플 텐데... 걱정되네요.", emoji: "😔", group: "sentinel" },
+                        'ESTJ': { text: "앨범은 계속 살 겁니다. 비즈니스는 비즈니스.", emoji: "💳", group: "sentinel" },
+                        'ESFJ': { text: "팬카페 분위기 달래느라 바쁨. 다들 진정해!", emoji: "🤝", group: "sentinel" },
+                        'ISTP': { text: "그래서? 내 삶에 영향 없는데.", emoji: "🤷", group: "explorer" },
+                        'ISFP': { text: "조용히 팬아트 그리며 마음 달래는 중...", emoji: "🖼️", group: "explorer" },
+                        'ESTP': { text: "다른 그룹 덕질 시작! 다음!", emoji: "➡️", group: "explorer" },
+                        'ESFP': { text: "일단 울고 보자! 내일은 또 팬미팅!", emoji: "🎭", group: "explorer" }
+                    }
+                },
+                {
+                    title: "컴백 D-1",
+                    emoji: "🎵",
+                    reactions: {
+                        'INTJ': { text: "스트리밍 전략 수립 완료. 1위는 우리 것.", emoji: "📈", group: "analyst" },
+                        'INTP': { text: "티저 영상 프레임별 분석 중... 숨겨진 의미 발견!", emoji: "🔍", group: "analyst" },
+                        'ENTJ': { text: "스밍팀 조직 완료. 모두 자기 위치에서 대기.", emoji: "👥", group: "analyst" },
+                        'ENTP': { text: "타 팬덤과 기록 경쟁 준비 완료. 이기는 게임만 해.", emoji: "🏆", group: "analyst" },
+                        'INFJ': { text: "가사에 담긴 깊은 의미... 역시 아티스트야.", emoji: "✨", group: "diplomat" },
+                        'INFP': { text: "벌써부터 눈물이... 아직 안 나왔는데...", emoji: "🥺", group: "diplomat" },
+                        'ENFJ': { text: "신인 팬들을 위한 스밍 가이드 작성 완료!", emoji: "📝", group: "diplomat" },
+                        'ENFP': { text: "잠이 안 와!!! 너무 설레!!! 파티하자!!!", emoji: "🎉", group: "diplomat" },
+                        'ISTJ': { text: "알람 10개 설정. 정시 스트리밍 시작.", emoji: "⏰", group: "sentinel" },
+                        'ISFJ': { text: "다들 무리하지 말고 건강하게 덕질해요!", emoji: "💊", group: "sentinel" },
+                        'ESTJ': { text: "음원, 음반, 굿즈 구매 리스트 작성 완료.", emoji: "📋", group: "sentinel" },
+                        'ESFJ': { text: "응원 도시락 준비! 같이 스밍할 사람?", emoji: "🍱", group: "sentinel" },
+                        'ISTP': { text: "나오면 듣지 뭐. 굳이 새벽까지?", emoji: "😴", group: "explorer" },
+                        'ISFP': { text: "새 앨범 포카 디자인이 예뻐서 행복...", emoji: "💝", group: "explorer" },
+                        'ESTP': { text: "음방 1위 하면 육회 쏜다! 가자!", emoji: "🥩", group: "explorer" },
+                        'ESFP': { text: "컴백 파티 준비 완료! 드레스코드는 응원봉!", emoji: "🪩", group: "explorer" }
+                    }
+                }
+            ],
+            dating: [
+                {
+                    title: "썸 타는 사람이 독서실에서 공부 중",
+                    emoji: "📚",
+                    reactions: {
+                        'INTJ': { text: "방해하지 않고 조용히 옆자리에서 공부.", emoji: "🤫", group: "analyst" },
+                        'INTP': { text: "메모지에 재밌는 문제 써서 전달. 지적 호기심 자극.", emoji: "🧩", group: "analyst" },
+                        'ENTJ': { text: "공부 끝나는 시간 계산해서 정확히 그때 등장.", emoji: "⏰", group: "analyst" },
+                        'ENTP': { text: "일부러 틀린 답 말해서 관심 끌기. 논쟁 유발 성공.", emoji: "😏", group: "analyst" },
+                        'INFJ': { text: "눈빛으로만 교감. 말은 필요 없어.", emoji: "👀", group: "diplomat" },
+                        'INFP': { text: "시 한 편 써서 책갈피에 몰래 끼워놓기.", emoji: "💌", group: "diplomat" },
+                        'ENFJ': { text: "간식 차입으로 도와주러 왔어! (준비한 지 3일)", emoji: "☕", group: "diplomat" },
+                        'ENFP': { text: "못 참고 뛰어가서 인사! 공부 파이팅!", emoji: "🏃", group: "diplomat" },
+                        'ISTJ': { text: "방해되지 않게 문자로. '공부 끝나면 연락해.'", emoji: "📱", group: "sentinel" },
+                        'ISFJ': { text: "몰래 비타민 음료 놓고 가기. 메모는 없어도 알겠지?", emoji: "🥤", group: "sentinel" },
+                        'ESTJ': { text: "공부 스케줄 짜주러 등장. 효율적으로 해야지.", emoji: "📅", group: "sentinel" },
+                        'ESFJ': { text: "도시락 싸서 등장. 밥은 먹고 공부해야지!", emoji: "🍱", group: "sentinel" },
+                        'ISTP': { text: "그냥 내 할 일 하러 감. 우연히 마주치면 good.", emoji: "🚶", group: "explorer" },
+                        'ISFP': { text: "창밖에서 지켜보기만... 방해하면 안 되니까.", emoji: "🪟", group: "explorer" },
+                        'ESTP': { text: "공부고 뭐고 일단 나와! 놀러 가자!", emoji: "🎮", group: "explorer" },
+                        'ESFP': { text: "깜짝 등장! 서프라이즈 간식 파티!", emoji: "🎊", group: "explorer" }
+                    }
+                },
+                {
+                    title: "연인이 답장이 3시간째 없을 때",
+                    emoji: "😰",
+                    reactions: {
+                        'INTJ': { text: "바쁜가 보다. 내 할 일이나 하자.", emoji: "💼", group: "analyst" },
+                        'INTP': { text: "카톡 서버 오류 가능성 23%, 폰 고장 가능성 31%...", emoji: "🤔", group: "analyst" },
+                        'ENTJ': { text: "3시간 = 비효율. 다음 미팅 때 논의 예정.", emoji: "📊", group: "analyst" },
+                        'ENTP': { text: "일부러 나도 안 읽씨. 심리전 시작.", emoji: "😈", group: "analyst" },
+                        'INFJ': { text: "분명 무슨 일이 있을 거야... (최악의 시나리오 상상 중)", emoji: "😟", group: "diplomat" },
+                        'INFP': { text: "내가 뭘 잘못했나... 어제 대화 복기 시작.", emoji: "😢", group: "diplomat" },
+                        'ENFJ': { text: "무슨 일 있어? 걱정돼 ㅠㅠ (메시지 10개)", emoji: "💬", group: "diplomat" },
+                        'ENFP': { text: "혹시 사고? 경찰서 전화번호 검색 중...", emoji: "🚨", group: "diplomat" },
+                        'ISTJ': { text: "정해진 시간에 답장 안 오면 문제. 규칙 위반.", emoji: "⚠️", group: "sentinel" },
+                        'ISFJ': { text: "아프진 않겠지? 약 사러 가야 하나...", emoji: "💊", group: "sentinel" },
+                        'ESTJ': { text: "전화로 확인. 문자는 비효율적.", emoji: "📞", group: "sentinel" },
+                        'ESFJ': { text: "주변 사람들한테 다 물어보는 중. 누가 봤어?", emoji: "🕵️", group: "sentinel" },
+                        'ISTP': { text: "답장 올 때까지 게임이나 하지.", emoji: "🎮", group: "explorer" },
+                        'ISFP': { text: "슬픈 노래 들으며 감성 충전...", emoji: "🎵", group: "explorer" },
+                        'ESTP': { text: "직접 찾아감. 행동이 답이다.", emoji: "🏃", group: "explorer" },
+                        'ESFP': { text: "SNS 스토리 염탐. 접속 시간 확인!", emoji: "👁️", group: "explorer" }
+                    }
+                }
+            ],
+            work: [
+                {
+                    title: "금요일 오후 6시, 상사가 긴급 회의 소집",
+                    emoji: "😱",
+                    reactions: {
+                        'INTJ': { text: "예상했다. 플랜 B 발동.", emoji: "🎯", group: "analyst" },
+                        'INTP': { text: "논리적으로 월요일이 더 효율적인데... 왜?", emoji: "❓", group: "analyst" },
+                        'ENTJ': { text: "좋아. 주말 프로젝트 리드는 내가 한다.", emoji: "💪", group: "analyst" },
+                        'ENTP': { text: "이게 정말 '긴급'한지 토론해보실?", emoji: "🗣️", group: "analyst" },
+                        'INFJ': { text: "다들 힘들어할 텐데... (이미 퇴사 고민 중)", emoji: "😔", group: "diplomat" },
+                        'INFP': { text: "속으로 울면서 겉으로 미소. 네, 알겠습니다...", emoji: "🥲", group: "diplomat" },
+                        'ENFJ': { text: "팀원들 사기 올리기 프로젝트 가동! 할 수 있어!", emoji: "📣", group: "diplomat" },
+                        'ENFP': { text: "긍정적으로! 회식이라도 하자!", emoji: "🍻", group: "diplomat" },
+                        'ISTJ': { text: "규정상 초과근무 수당이 나와야 합니다.", emoji: "📋", group: "sentinel" },
+                        'ISFJ': { text: "네... (다들 커피라도 타드려야겠다)", emoji: "☕", group: "sentinel" },
+                        'ESTJ': { text: "효율적으로 1시간 안에 끝냅시다.", emoji: "⏱️", group: "sentinel" },
+                        'ESFJ': { text: "다들 저녁은 드셨어요? 제가 주문할게요!", emoji: "🍕", group: "sentinel" },
+                        'ISTP': { text: "카메라 끄고 참여. 최소한의 대답만.", emoji: "🔇", group: "explorer" },
+                        'ISFP': { text: "영혼 없는 눈으로 화면 응시...", emoji: "😑", group: "explorer" },
+                        'ESTP': { text: "일단 갔다가 빠져나올 구멍 찾기.", emoji: "🚪", group: "explorer" },
+                        'ESFP': { text: "아 진짜? 오늘 약속 있는데! (큰소리로)", emoji: "😫", group: "explorer" }
+                    }
+                },
+                {
+                    title: "회사에서 칭찬받았을 때",
+                    emoji: "🏆",
+                    reactions: {
+                        'INTJ': { text: "당연한 결과. 계획대로.", emoji: "😌", group: "analyst" },
+                        'INTP': { text: "왜 칭찬받았는지 분석 시작. 패턴 파악 완료.", emoji: "🔬", group: "analyst" },
+                        'ENTJ': { text: "다음 목표는 승진. 로드맵 작성 중.", emoji: "📈", group: "analyst" },
+                        'ENTP': { text: "이 정도는 기본이죠~ (자랑 MAX)", emoji: "😎", group: "analyst" },
+                        'INFJ': { text: "겉으로 담담, 속으로 기쁨. 집가서 일기 쓸 거야.", emoji: "✍️", group: "diplomat" },
+                        'INFP': { text: "부끄러워... 얼굴 빨개짐... 감사합니다...", emoji: "☺️", group: "diplomat" },
+                        'ENFJ': { text: "모두 덕분이에요! 팀워크의 승리!", emoji: "🤝", group: "diplomat" },
+                        'ENFP': { text: "와아아아! 최고! 다들 파티하자!", emoji: "🎉", group: "diplomat" },
+                        'ISTJ': { text: "감사합니다. 앞으로도 최선을 다하겠습니다.", emoji: "🤵", group: "sentinel" },
+                        'ISFJ': { text: "과분한 칭찬이에요... 더 열심히 할게요.", emoji: "😊", group: "sentinel" },
+                        'ESTJ': { text: "인정받는 것은 좋다. 성과급도 올려주세요.", emoji: "💰", group: "sentinel" },
+                        'ESFJ': { text: "다들 고마워요! 케이크 사올게요!", emoji: "🍰", group: "sentinel" },
+                        'ISTP': { text: "아... 네... 감사합니다. (무표정)", emoji: "😐", group: "explorer" },
+                        'ISFP': { text: "헤헤... (속으로 날아다니는 중)", emoji: "🦋", group: "explorer" },
+                        'ESTP': { text: "당연하죠! 오늘 회식 제가 쏩니다!", emoji: "🍺", group: "explorer" },
+                        'ESFP': { text: "SNS에 자랑하기! #회사생활 #칭찬 #행복", emoji: "📱", group: "explorer" }
+                    }
+                }
+            ],
+            food: [
+                {
+                    title: "점심 메뉴 못 정했을 때",
+                    emoji: "🍽️",
+                    reactions: {
+                        'INTJ': { text: "월요일은 한식, 화요일은 일식. 이미 정해놨다.", emoji: "📅", group: "analyst" },
+                        'INTP': { text: "영양소 분석 후 최적의 조합 도출 중...", emoji: "🧮", group: "analyst" },
+                        'ENTJ': { text: "결정장애는 사치다. 김치찌개 가자.", emoji: "👉", group: "analyst" },
+                        'ENTP': { text: "각자 다른 거 시켜서 나눠먹자! 실험정신!", emoji: "🔄", group: "analyst" },
+                        'INFJ': { text: "다들 뭐 먹고 싶어? (내 의견은 없어)", emoji: "🤷", group: "diplomat" },
+                        'INFP': { text: "오늘 기분에 맞는 음식이 뭘까... 고민 중...", emoji: "🌙", group: "diplomat" },
+                        'ENFJ': { text: "A는 매운 거, B는 느끼한 거 싫어하니까...", emoji: "📝", group: "diplomat" },
+                        'ENFP': { text: "새로운 맛집 개척하자! 모험이다!", emoji: "🗺️", group: "diplomat" },
+                        'ISTJ': { text: "늘 먹던 단골집. 실패 확률 0%.", emoji: "✅", group: "sentinel" },
+                        'ISFJ': { text: "다들 좋아하는 거면 뭐든 좋아요~", emoji: "😊", group: "sentinel" },
+                        'ESTJ': { text: "12시 30분까지 결정. 시간 낭비 금지.", emoji: "⏰", group: "sentinel" },
+                        'ESFJ': { text: "제가 맛집 리스트 정리해왔어요!", emoji: "📋", group: "sentinel" },
+                        'ISTP': { text: "아무거나. 진짜 아무거나.", emoji: "😑", group: "explorer" },
+                        'ISFP': { text: "분위기 좋은 카페 가고 싶다...", emoji: "☕", group: "explorer" },
+                        'ESTP': { text: "일단 나가자. 걸으면서 정하지.", emoji: "🚶", group: "explorer" },
+                        'ESFP': { text: "룰렛 돌려! 운명에 맡기자!", emoji: "🎰", group: "explorer" }
+                    }
+                },
+                {
+                    title: "다이어트 중인데 치킨 냄새가...",
+                    emoji: "🍗",
+                    reactions: {
+                        'INTJ': { text: "목표 달성까지 절대 불가. 의지의 문제.", emoji: "🚫", group: "analyst" },
+                        'INTP': { text: "닭가슴살로 대체 가능. 프로틴 함량은 비슷해.", emoji: "🥗", group: "analyst" },
+                        'ENTJ': { text: "한 입 = 런닝 30분. 비효율적이다.", emoji: "🏃", group: "analyst" },
+                        'ENTP': { text: "치킨도 단백질이잖아? 다이어트 식품 아님?", emoji: "🤔", group: "analyst" },
+                        'INFJ': { text: "마음속 격렬한 갈등... 이미 죄책감 느끼는 중.", emoji: "😖", group: "diplomat" },
+                        'INFP': { text: "치킨의 영혼이 날 부르고 있어... 운명인가?", emoji: "😭", group: "diplomat" },
+                        'ENFJ': { text: "다들 먹는데 나만 안 먹으면... 한 조각만!", emoji: "🥺", group: "diplomat" },
+                        'ENFP': { text: "오늘만 먹고 내일부터 다이어트! (365일째)", emoji: "🤗", group: "diplomat" },
+                        'ISTJ': { text: "계획표에 없다. 일요일이 치팅데이.", emoji: "📊", group: "sentinel" },
+                        'ISFJ': { text: "가족들 먹는 거 구경만... (침 삼킴)", emoji: "👀", group: "sentinel" },
+                        'ESTJ': { text: "칼로리 계산 후 운동 스케줄 추가. 먹는다.", emoji: "💪", group: "sentinel" },
+                        'ESFJ': { text: "다들 맛있게 드세요! (나는 참는다)", emoji: "😢", group: "sentinel" },
+                        'ISTP': { text: "먹고 싶으면 먹지. 운동하면 되고.", emoji: "🤷", group: "explorer" },
+                        'ISFP': { text: "일단 사진만 찍고... 한 입만...", emoji: "📸", group: "explorer" },
+                        'ESTP': { text: "치킨 먹고 새벽 런닝. 문제해결!", emoji: "🏃‍♂️", group: "explorer" },
+                        'ESFP': { text: "다이어트는 내일부터! 오늘은 치킨 파티!", emoji: "🎊", group: "explorer" }
+                    }
+                }
+            ],
+            tech: [
+                {
+                    title: "새 아이폰 나왔을 때",
+                    emoji: "📱",
+                    reactions: {
+                        'INTJ': { text: "2년 후 모델이 더 효율적. 대기.", emoji: "📈", group: "analyst" },
+                        'INTP': { text: "스펙 비교 분석표 작성 중. 벤치마크 확인.", emoji: "📊", group: "analyst" },
+                        'ENTJ': { text: "생산성 향상되면 구매. ROI 계산 중.", emoji: "💹", group: "analyst" },
+                        'ENTP': { text: "안드로이드가 더 혁신적인데? 토론할 사람?", emoji: "🤺", group: "analyst" },
+                        'INFJ': { text: "지금 폰도 충분한데... 소비주의 경계.", emoji: "🤔", group: "diplomat" },
+                        'INFP': { text: "색상이 너무 예뻐... 하지만 환경을 생각하면...", emoji: "🌱", group: "diplomat" },
+                        'ENFJ': { text: "가족들 선물용으로 좋을 것 같아!", emoji: "🎁", group: "diplomat" },
+                        'ENFP': { text: "와! 새 기능! 당장 사야해! (통장 잔고 무시)", emoji: "✨", group: "diplomat" },
+                        'ISTJ': { text: "아직 작동하는데 왜 바꿔? 5년은 써야지.", emoji: "📵", group: "sentinel" },
+                        'ISFJ': { text: "가족 할부로 구매하면 저렴하지 않을까요?", emoji: "👨‍👩‍👧", group: "sentinel" },
+                        'ESTJ': { text: "비즈니스 용도로 필요. 경비 처리 가능?", emoji: "💼", group: "sentinel" },
+                        'ESFJ': { text: "다들 산대! 나도 살래! 같은 거 쓰자!", emoji: "👥", group: "sentinel" },
+                        'ISTP': { text: "분해해서 뭐가 바뀌었는지 확인하고 싶다.", emoji: "🔧", group: "explorer" },
+                        'ISFP': { text: "카메라 성능만 좋으면... 사진용으로 필요해.", emoji: "📷", group: "explorer" },
+                        'ESTP': { text: "일단 매장 가서 만져보고 결정.", emoji: "🏃", group: "explorer" },
+                        'ESFP': { text: "언박싱 영상 찍어야지! 조회수 대박!", emoji: "🎬", group: "explorer" }
+                    }
+                },
+                {
+                    title: "와이파이가 안 될 때",
+                    emoji: "📶",
+                    reactions: {
+                        'INTJ': { text: "예상했다. 핫스팟 플랜 B 실행.", emoji: "📲", group: "analyst" },
+                        'INTP': { text: "라우터 재부팅, DNS 변경, IP 갱신... 시도 중.", emoji: "💻", group: "analyst" },
+                        'ENTJ': { text: "통신사 전화. 즉시 해결 요구.", emoji: "☎️", group: "analyst" },
+                        'ENTP': { text: "이참에 통신사 바꿔볼까? 비교 분석 시작.", emoji: "🔄", group: "analyst" },
+                        'INFJ': { text: "인터넷 없는 삶도 나쁘지 않을지도...", emoji: "📖", group: "diplomat" },
+                        'INFP': { text: "운명이 디지털 디톡스를 하라는 신호인가?", emoji: "🌿", group: "diplomat" },
+                        'ENFJ': { text: "다들 제 핫스팟 쓰세요! 비번은...", emoji: "🤲", group: "diplomat" },
+                        'ENFP': { text: "와이파이 없으면 밖에 나가자! 산책!", emoji: "🚶", group: "diplomat" },
+                        'ISTJ': { text: "매뉴얼대로 순서대로 확인. 1번부터.", emoji: "📋", group: "sentinel" },
+                        'ISFJ': { text: "이웃집 와이파이는 되려나... 민폐일까?", emoji: "🏠", group: "sentinel" },
+                        'ESTJ': { text: "A/S 기사 즉시 호출. 오늘 안에 해결.", emoji: "🔨", group: "sentinel" },
+                        'ESFJ': { text: "다들 불편하시죠? 카페 가실래요?", emoji: "☕", group: "sentinel" },
+                        'ISTP': { text: "공유기 분해 시작. 내가 고친다.", emoji: "🔧", group: "explorer" },
+                        'ISFP': { text: "데이터로 유튜브... 요금 폭탄 각...", emoji: "💸", group: "explorer" },
+                        'ESTP': { text: "PC방 가자! 어차피 게임할 거.", emoji: "🎮", group: "explorer" },
+                        'ESFP': { text: "와이파이 없는 파티! 보드게임하자!", emoji: "🎲", group: "explorer" }
+                    }
+                }
+            ]
+        };
+        
+        let currentCategory = 'trending';
+        let currentFilter = 'all';
+        
+        function renderScenarios() {
+            const container = document.getElementById('scenarios-container');
+            const categoryScenarios = scenarios[currentCategory] || [];
+            
+            container.innerHTML = categoryScenarios.map(scenario => {
+                const filteredReactions = Object.entries(scenario.reactions)
+                    .filter(([type, reaction]) => {
+                        if (currentFilter === 'all') return true;
+                        return reaction.group === currentFilter;
+                    });
+                
+                if (filteredReactions.length === 0) return '';
+                
+                return `
+                    <div class="scenario-container">
+                        <div class="scenario-emoji">${scenario.emoji}</div>
+                        <h2 class="scenario-title">${scenario.title}</h2>
+                        <div class="reactions-grid">
+                            ${filteredReactions.map(([type, reaction]) => `
+                                <div class="reaction-card" onclick="highlightCard(this)">
+                                    <div class="mbti-type">${type}</div>
+                                    <div class="reaction-text">"${reaction.text}"</div>
+                                    <div class="reaction-emoji">${reaction.emoji}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function highlightCard(card) {
+            card.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+            card.style.color = 'white';
+            setTimeout(() => {
+                card.style.background = '';
+                card.style.color = '';
+            }, 500);
+        }
+        
+        // 탭 이벤트 리스너
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.category;
+                renderScenarios();
+            });
+        });
+        
+        // 필터 이벤트 리스너
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentFilter = this.dataset.filter;
+                renderScenarios();
+            });
+        });
+        
+        // 초기 렌더링
+        renderScenarios();
+        
+        // 공유 기능
+        function shareKakao() {
+            if (!Kakao.isInitialized()) {
+                console.error('Kakao SDK가 초기화되지 않았습니다.');
+                return;
+            }
+            
+            Kakao.Share.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: 'MBTI 유형별 반응 - 나만 이래? 🤔',
+                    description: '같은 상황, 16가지 다른 반응! 내 MBTI는 어떻게 반응할까?',
+                    imageUrl: 'https://mbti-destiny.site/images/mbti-reactions-share.jpg',
+                    link: {
+                        mobileWebUrl: 'https://mbti-destiny.site/mbti-reactions.html',
+                        webUrl: 'https://mbti-destiny.site/mbti-reactions.html'
+                    }
+                },
+                buttons: [{
+                    title: '내 반응 확인하기',
+                    link: {
+                        mobileWebUrl: 'https://mbti-destiny.site/mbti-reactions.html',
+                        webUrl: 'https://mbti-destiny.site/mbti-reactions.html'
+                    }
+                }]
+            });
+        }
+        
+        function shareNative() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'MBTI 유형별 반응',
+                    text: '같은 상황, 16가지 다른 반응! 재미있는 MBTI 반응 모음',
+                    url: 'https://mbti-destiny.site/mbti-reactions.html'
+                }).catch(err => console.log('공유 취소'));
+            } else {
+                alert('공유 기능을 지원하지 않는 브라우저입니다.');
+            }
+        }
+        
+        // 페이지 로드 완료 시 애니메이션
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.reaction-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    card.style.transition = 'all 0.5s';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 50);
+                }, index * 30);
+            });
+        });
+    </script>
+</body>
+</html>

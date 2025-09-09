@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI 연애 코칭 2025 | 성격유형별 연애 가이드</title>
+    <meta name="description" content="MBTI 16가지 성격유형별 맞춤 연애 코칭. 이상형, 연애 스타일, 갈등 해결법까지 완벽 가이드">
+    <meta name="keywords" content="MBTI 연애, MBTI 이상형, 성격유형 연애법, MBTI 데이트, 연애 코칭">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="MBTI 연애 코칭 - 나의 연애 스타일은?">
+    <meta property="og:description" content="성격유형별 맞춤 연애 전략과 이상형 분석. 성공적인 연애를 위한 MBTI 가이드">
+    <meta property="og:image" content="https://mbti-destiny.site/images/mbti-dating-og.jpg">
+    <meta property="og:url" content="https://mbti-destiny.site/mbti-dating.html">
+    
+    <link rel="canonical" href="https://mbti-destiny.site/mbti-dating.html">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
+         crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .love-meter {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .meter-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .heart-animation {
+            font-size: 4em;
+            animation: heartbeat 1.5s ease-in-out infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .mbti-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .mbti-btn {
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .mbti-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .mbti-btn.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-color: transparent;
+        }
+        
+        .dating-profile {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .dating-profile.active {
+            display: block;
+            animation: slideIn 0.5s;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .dating-type {
+            font-size: 2em;
+            font-weight: 900;
+            color: #f5576c;
+            margin-bottom: 10px;
+        }
+        
+        .dating-motto {
+            font-size: 1.2em;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #f5576c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .ideal-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+        
+        .ideal-card {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .ideal-mbti {
+            font-size: 1.3em;
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 8px;
+        }
+        
+        .ideal-desc {
+            color: #636e72;
+            font-size: 0.95em;
+        }
+        
+        .dating-style {
+            display: grid;
+            gap: 15px;
+        }
+        
+        .style-item {
+            padding: 15px;
+            background: #fff0f5;
+            border-radius: 10px;
+            border-left: 4px solid #f5576c;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .style-icon {
+            font-size: 1.5em;
+        }
+        
+        .dos-donts {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .dos-card, .donts-card {
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .dos-card {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .donts-card {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .card-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .card-list {
+            list-style: none;
+        }
+        
+        .card-list li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .dos-card li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+        }
+        
+        .donts-card li:before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+        }
+        
+        .love-language {
+            background: linear-gradient(135deg, #ff9ff3, #feca57);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .love-language-title {
+            font-weight: 700;
+            color: #2d3436;
+            margin-bottom: 15px;
+        }
+        
+        .language-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .language-tag {
+            padding: 8px 16px;
+            background: white;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #636e72;
+        }
+        
+        .conflict-resolution {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .conflict-title {
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .resolution-list {
+            list-style: none;
+        }
+        
+        .resolution-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .resolution-list li:last-child {
+            border-bottom: none;
+        }
+        
+        /* 광고 영역 */
+        .ad-container {
+            margin: 30px 0;
+            min-height: 100px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .premium-coaching {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .coaching-title {
+            font-size: 1.8em;
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+        
+        .coaching-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #f5576c;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+        
+        .coaching-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .mbti-selector {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .dos-donts {
+                grid-template-columns: 1fr;
+            }
+            
+            .ideal-types {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    
+    <!-- 통합 네비게이션 -->
+    <script src="navigation.js"></script>
+    <!-- 프리미엄 시스템 -->
+    <script src="premium.js"></script>
+    <!-- A/B 테스트 -->
+    <script src="ab-testing.js"></script>
+    <link rel="stylesheet" href="design-system.css">
+    <script src="optimization.js"></script>
+    <script src="analytics.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💕 MBTI 연애 코칭</h1>
+            <p class="subtitle">성격유형별 맞춤 연애 전략</p>
+        </header>
+        
+        <!-- 연애 온도계 -->
+        <div class="love-meter">
+            <h2 class="meter-title">당신의 연애 온도는?</h2>
+            <div class="heart-animation">❤️</div>
+            <p>MBTI 유형을 선택하고 맞춤 연애 코칭을 받아보세요!</p>
+        </div>
+        
+        <!-- MBTI 선택 -->
+        <div class="mbti-selector">
+            <button class="mbti-btn" onclick="showDatingProfile('INTJ')">INTJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('INTP')">INTP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ENTJ')">ENTJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ENTP')">ENTP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('INFJ')">INFJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('INFP')">INFP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ENFJ')">ENFJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ENFP')">ENFP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ISTJ')">ISTJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ISFJ')">ISFJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ESTJ')">ESTJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ESFJ')">ESFJ</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ISTP')">ISTP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ISFP')">ISFP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ESTP')">ESTP</button>
+            <button class="mbti-btn" onclick="showDatingProfile('ESFP')">ESFP</button>
+        </div>
+        
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1752582087901677"
+                 data-ad-slot="YOUR-AD-SLOT"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+        
+        <!-- 연애 프로필 상세 -->
+        <div id="dating-details"></div>
+        
+        <!-- 프리미엄 코칭 CTA -->
+        <div class="premium-coaching">
+            <h2 class="coaching-title">💘 1:1 맞춤 연애 상담</h2>
+            <p style="margin-bottom: 20px;">전문 상담사의 개인 맞춤 연애 코칭</p>
+            <button class="coaching-button" onclick="PremiumSystem.showPremiumModal('dating_coaching')">프리미엄 상담 신청</button>
+        </div>
+    </div>
+    
+    <script>
+        // 연애 프로필 데이터
+        const datingProfiles = {
+            'INTJ': {
+                type: '전략적 연인',
+                motto: '"진정한 연결을 추구하는 깊이 있는 사랑"',
+                idealTypes: [
+                    { mbti: 'ENFP', desc: '활발함과 깊이의 조화' },
+                    { mbti: 'ENTP', desc: '지적 자극과 도전' },
+                    { mbti: 'INFJ', desc: '깊은 이해와 공감' }
+                ],
+                datingStyle: [
+                    { icon: '🧠', text: '지적인 대화를 통한 교감' },
+                    { icon: '📅', text: '계획적이고 의미 있는 데이트' },
+                    { icon: '🔒', text: '느리지만 깊이 있는 관계 발전' },
+                    { icon: '💎', text: '질적인 시간을 중요시함' }
+                ],
+                dos: [
+                    '독립적인 시간 존중하기',
+                    '논리적이고 명확한 소통',
+                    '장기적 비전 공유하기',
+                    '지적 성장 함께하기'
+                ],
+                donts: [
+                    '감정적 압박이나 강요',
+                    '피상적인 대화만 하기',
+                    '즉흥적인 계획 변경',
+                    '사생활 과도하게 침범'
+                ],
+                loveLanguage: ['인정의 말', '양질의 시간', '봉사'],
+                conflictResolution: [
+                    '💡 문제의 근본 원인 분석하기',
+                    '💡 논리적인 해결책 제시하기',
+                    '💡 감정보다 사실에 집중하기',
+                    '💡 충분한 개인 시간 후 대화하기'
+                ]
+            },
+            'INTP': {
+                type: '논리적 연인',
+                motto: '"호기심과 독립성이 공존하는 사랑"',
+                idealTypes: [
+                    { mbti: 'ENTJ', desc: '추진력과 논리의 만남' },
+                    { mbti: 'INFJ', desc: '깊이와 이해의 조화' },
+                    { mbti: 'ENFJ', desc: '감정과 논리의 균형' }
+                ],
+                datingStyle: [
+                    { icon: '🔬', text: '새로운 경험과 탐구' },
+                    { icon: '🎮', text: '공통 관심사 중심 활동' },
+                    { icon: '💭', text: '철학적 대화 즐기기' },
+                    { icon: '🚀', text: '독특한 데이트 코스' }
+                ],
+                dos: [
+                    '지적 호기심 자극하기',
+                    '개인 공간 충분히 주기',
+                    '논리적 사고 존중하기',
+                    '새로운 아이디어 공유'
+                ],
+                donts: [
+                    '감정적 드라마 만들기',
+                    '일상적 루틴 강요',
+                    '과도한 스킨십 요구',
+                    '비논리적 요구하기'
+                ],
+                loveLanguage: ['양질의 시간', '신체적 접촉', '선물'],
+                conflictResolution: [
+                    '💡 객관적 사실 기반 대화',
+                    '💡 각자 생각 정리 시간 갖기',
+                    '💡 창의적 해결책 모색',
+                    '💡 감정보다 논리 우선'
+                ]
+            },
+            'ENTJ': {
+                type: '리더십 연인',
+                motto: '"목표를 향해 함께 성장하는 사랑"',
+                idealTypes: [
+                    { mbti: 'INTP', desc: '아이디어와 실행의 조화' },
+                    { mbti: 'INFP', desc: '강함과 부드러움의 균형' },
+                    { mbti: 'ISTP', desc: '실용성과 효율성' }
+                ],
+                datingStyle: [
+                    { icon: '🎯', text: '목표 지향적 관계' },
+                    { icon: '💼', text: '파워 커플 추구' },
+                    { icon: '🏆', text: '함께 성취하는 즐거움' },
+                    { icon: '⚡', text: '효율적이고 직접적인 소통' }
+                ],
+                dos: [
+                    '명확한 의사 표현',
+                    '함께 목표 설정하기',
+                    '서로의 성장 지원',
+                    '리더십 존중하기'
+                ],
+                donts: [
+                    '우유부단한 태도',
+                    '비효율적인 시간 낭비',
+                    '경쟁심 과도하게 자극',
+                    '권위에 도전하기'
+                ],
+                loveLanguage: ['인정의 말', '봉사', '선물'],
+                conflictResolution: [
+                    '💡 직접적이고 명확한 대화',
+                    '💡 해결책 중심 접근',
+                    '💡 감정 배제하고 사실 집중',
+                    '💡 빠른 의사결정과 실행'
+                ]
+            },
+            'ENTP': {
+                type: '도전적 연인',
+                motto: '"지적 자극과 모험이 가득한 사랑"',
+                idealTypes: [
+                    { mbti: 'INFJ', desc: '깊이와 재치의 만남' },
+                    { mbti: 'INTJ', desc: '전략과 창의성' },
+                    { mbti: 'ENFP', desc: '열정과 혁신' }
+                ],
+                datingStyle: [
+                    { icon: '🎲', text: '예측 불가능한 재미' },
+                    { icon: '💬', text: '끝없는 토론과 대화' },
+                    { icon: '🎪', text: '새롭고 독특한 경험' },
+                    { icon: '🚀', text: '지적 도전과 성장' }
+                ],
+                dos: [
+                    '지적 대화 즐기기',
+                    '유머 감각 발휘',
+                    '새로운 아이디어 환영',
+                    '자유로운 분위기 조성'
+                ],
+                donts: [
+                    '감정적 집착 보이기',
+                    '루틴한 일상 강요',
+                    '토론을 싸움으로 오해',
+                    '창의성 제한하기'
+                ],
+                loveLanguage: ['인정의 말', '양질의 시간', '신체적 접촉'],
+                conflictResolution: [
+                    '💡 논리적 토론으로 해결',
+                    '💡 유머로 긴장 완화',
+                    '💡 창의적 해결책 찾기',
+                    '💡 서로의 관점 인정'
+                ]
+            },
+            'INFJ': {
+                type: '헌신적 연인',
+                motto: '"영혼의 깊은 연결을 추구하는 사랑"',
+                idealTypes: [
+                    { mbti: 'ENTP', desc: '깊이와 활력의 조화' },
+                    { mbti: 'ENFP', desc: '이상과 열정의 만남' },
+                    { mbti: 'INTJ', desc: '비전과 이해의 공유' }
+                ],
+                datingStyle: [
+                    { icon: '🌙', text: '깊고 의미 있는 대화' },
+                    { icon: '💝', text: '세심한 배려와 관심' },
+                    { icon: '🎨', text: '창의적이고 로맨틱한 데이트' },
+                    { icon: '🔮', text: '미래를 함께 그리기' }
+                ],
+                dos: [
+                    '진정성 있는 소통',
+                    '감정적 안정감 제공',
+                    '깊은 대화 나누기',
+                    '특별한 순간 만들기'
+                ],
+                donts: [
+                    '피상적인 관계 유지',
+                    '감정 무시하기',
+                    '갈등 회피만 하기',
+                    '신뢰 깨뜨리기'
+                ],
+                loveLanguage: ['양질의 시간', '인정의 말', '신체적 접촉'],
+                conflictResolution: [
+                    '💡 감정 충분히 표현하기',
+                    '💡 상대방 입장 깊이 이해',
+                    '💡 조용한 환경에서 대화',
+                    '💡 장기적 해결책 모색'
+                ]
+            },
+            'INFP': {
+                type: '낭만적 연인',
+                motto: '"진정한 자아를 나눌 수 있는 사랑"',
+                idealTypes: [
+                    { mbti: 'ENFJ', desc: '이해와 격려의 관계' },
+                    { mbti: 'ENTJ', desc: '꿈과 현실의 균형' },
+                    { mbti: 'INFJ', desc: '깊은 영혼의 교감' }
+                ],
+                datingStyle: [
+                    { icon: '🌹', text: '로맨틱하고 감성적인 순간' },
+                    { icon: '✍️', text: '편지와 시 같은 표현' },
+                    { icon: '🎭', text: '창의적이고 예술적인 데이트' },
+                    { icon: '🌈', text: '꿈과 이상 공유하기' }
+                ],
+                dos: [
+                    '진정성 있게 대하기',
+                    '감정 존중하고 공감',
+                    '창의성 격려하기',
+                    '느린 속도 인정하기'
+                ],
+                donts: [
+                    '감정 무시하거나 비판',
+                    '현실적 압박 가하기',
+                    '가치관 무시하기',
+                    '진정성 의심하기'
+                ],
+                loveLanguage: ['인정의 말', '양질의 시간', '신체적 접촉'],
+                conflictResolution: [
+                    '💡 감정 충분히 표현할 시간',
+                    '💡 비판보다 이해 우선',
+                    '💡 창의적 해결 방법 모색',
+                    '💡 가치관 존중하며 대화'
+                ]
+            },
+            'ENFJ': {
+                type: '배려심 깊은 연인',
+                motto: '"함께 성장하고 빛나는 사랑"',
+                idealTypes: [
+                    { mbti: 'INFP', desc: '지지와 성장의 관계' },
+                    { mbti: 'ISFP', desc: '배려와 감성의 조화' },
+                    { mbti: 'INTP', desc: '감정과 논리의 균형' }
+                ],
+                datingStyle: [
+                    { icon: '💖', text: '상대방 중심의 배려' },
+                    { icon: '🎁', text: '의미 있는 선물과 서프라이즈' },
+                    { icon: '👥', text: '함께하는 사회 활동' },
+                    { icon: '🌟', text: '서로를 빛나게 하기' }
+                ],
+                dos: [
+                    '감사 자주 표현하기',
+                    '노력 인정해주기',
+                    '함께 성장 추구하기',
+                    '깊은 대화 나누기'
+                ],
+                donts: [
+                    '배려를 당연시하기',
+                    '이기적으로 행동',
+                    '비판적인 태도',
+                    '감정 표현 막기'
+                ],
+                loveLanguage: ['인정의 말', '봉사', '양질의 시간'],
+                conflictResolution: [
+                    '💡 상대방 감정 우선 이해',
+                    '💡 건설적인 피드백',
+                    '💡 함께 해결책 찾기',
+                    '💡 화해 후 애정 표현'
+                ]
+            },
+            'ENFP': {
+                type: '열정적 연인',
+                motto: '"모험과 성장이 가득한 사랑"',
+                idealTypes: [
+                    { mbti: 'INTJ', desc: '열정과 전략의 만남' },
+                    { mbti: 'INFJ', desc: '이상과 깊이의 조화' },
+                    { mbti: 'ENTP', desc: '창의성과 모험' }
+                ],
+                datingStyle: [
+                    { icon: '🎊', text: '즉흥적이고 재미있는 데이트' },
+                    { icon: '💫', text: '열정적인 애정 표현' },
+                    { icon: '🌍', text: '새로운 경험 함께하기' },
+                    { icon: '💝', text: '창의적인 선물과 이벤트' }
+                ],
+                dos: [
+                    '열정 함께 나누기',
+                    '새로운 시도 격려',
+                    '감정 자유롭게 표현',
+                    '모험 함께하기'
+                ],
+                donts: [
+                    '열정 식게 만들기',
+                    '부정적 비판하기',
+                    '루틴에 가두기',
+                    '감정 무시하기'
+                ],
+                loveLanguage: ['인정의 말', '신체적 접촉', '양질의 시간'],
+                conflictResolution: [
+                    '💡 감정 먼저 인정하기',
+                    '💡 긍정적 해결 방향 모색',
+                    '💡 창의적 타협점 찾기',
+                    '💡 빠른 화해와 포옹'
+                ]
+            },
+            'ISTJ': {
+                type: '신뢰의 연인',
+                motto: '"안정적이고 헌신적인 사랑"',
+                idealTypes: [
+                    { mbti: 'ESFP', desc: '안정과 활력의 균형' },
+                    { mbti: 'ISFJ', desc: '신뢰와 배려의 조화' },
+                    { mbti: 'ESTJ', desc: '목표와 안정의 공유' }
+                ],
+                datingStyle: [
+                    { icon: '📆', text: '계획적이고 안정적인 만남' },
+                    { icon: '🏡', text: '편안한 장소에서 데이트' },
+                    { icon: '💍', text: '전통적인 연애 과정' },
+                    { icon: '🤝', text: '약속과 신뢰 중시' }
+                ],
+                dos: [
+                    '약속 철저히 지키기',
+                    '안정감 제공하기',
+                    '전통 존중하기',
+                    '책임감 있게 행동'
+                ],
+                donts: [
+                    '즉흥적 계획 변경',
+                    '무책임한 행동',
+                    '신뢰 깨뜨리기',
+                    '감정적 혼란 조성'
+                ],
+                loveLanguage: ['봉사', '양질의 시간', '신체적 접촉'],
+                conflictResolution: [
+                    '💡 사실 기반 차분한 대화',
+                    '💡 단계적 문제 해결',
+                    '💡 약속과 규칙 설정',
+                    '💡 시간을 두고 해결'
+                ]
+            },
+            'ISFJ': {
+                type: '헌신적 보호자',
+                motto: '"따뜻하고 안전한 사랑의 품"',
+                idealTypes: [
+                    { mbti: 'ESTP', desc: '안정과 모험의 조화' },
+                    { mbti: 'ESFJ', desc: '배려와 화목' },
+                    { mbti: 'ISTJ', desc: '신뢰와 안정' }
+                ],
+                datingStyle: [
+                    { icon: '🫂', text: '세심한 배려와 보살핌' },
+                    { icon: '🍳', text: '정성스런 요리와 케어' },
+                    { icon: '🎀', text: '작지만 의미 있는 선물' },
+                    { icon: '🏠', text: '아늑한 분위기 조성' }
+                ],
+                dos: [
+                    '노력 인정하고 감사',
+                    '안정감 주기',
+                    '작은 것도 기억하기',
+                    '가족 같은 따뜻함'
+                ],
+                donts: [
+                    '배려 당연시하기',
+                    '비판적 태도',
+                    '감정 상처 주기',
+                    '노력 무시하기'
+                ],
+                loveLanguage: ['봉사', '인정의 말', '양질의 시간'],
+                conflictResolution: [
+                    '💡 부드럽게 감정 표현',
+                    '💡 상처 주지 않게 조심',
+                    '💡 시간을 두고 대화',
+                    '💡 따뜻한 화해'
+                ]
+            },
+            'ESTJ': {
+                type: '책임감 있는 연인',
+                motto: '"목표를 향한 든든한 동반자"',
+                idealTypes: [
+                    { mbti: 'ISFP', desc: '강함과 부드러움' },
+                    { mbti: 'ISTP', desc: '효율과 실용' },
+                    { mbti: 'ISTJ', desc: '책임과 신뢰' }
+                ],
+                datingStyle: [
+                    { icon: '💼', text: '체계적인 관계 발전' },
+                    { icon: '🎯', text: '명확한 관계 목표' },
+                    { icon: '💪', text: '든든한 지원과 보호' },
+                    { icon: '📊', text: '현실적인 미래 계획' }
+                ],
+                dos: [
+                    '리더십 인정하기',
+                    '효율적으로 소통',
+                    '목표 함께 설정',
+                    '책임감 공유하기'
+                ],
+                donts: [
+                    '권위에 도전하기',
+                    '비효율적 행동',
+                    '감정적 드라마',
+                    '무계획적 태도'
+                ],
+                loveLanguage: ['봉사', '인정의 말', '선물'],
+                conflictResolution: [
+                    '💡 직접적이고 명확한 소통',
+                    '💡 해결책 중심 접근',
+                    '💡 책임 소재 명확히',
+                    '💡 빠른 결론 도출'
+                ]
+            },
+            'ESFJ': {
+                type: '사교적 연인',
+                motto: '"함께 나누고 성장하는 사랑"',
+                idealTypes: [
+                    { mbti: 'ISFP', desc: '배려와 감성' },
+                    { mbti: 'ISTJ', desc: '안정과 신뢰' },
+                    { mbti: 'ISFJ', desc: '따뜻함과 조화' }
+                ],
+                datingStyle: [
+                    { icon: '👫', text: '친구들과 함께하는 시간' },
+                    { icon: '🎉', text: '기념일과 이벤트 중시' },
+                    { icon: '💑', text: '공개적인 애정 표현' },
+                    { icon: '🎁', text: '정성스런 선물' }
+                ],
+                dos: [
+                    '관계 공개적 인정',
+                    '기념일 챙기기',
+                    '가족/친구 존중',
+                    '함께 시간 보내기'
+                ],
+                donts: [
+                    '사교 활동 제한',
+                    '기념일 잊기',
+                    '공개적 무시',
+                    '감정 표현 막기'
+                ],
+                loveLanguage: ['인정의 말', '봉사', '선물'],
+                conflictResolution: [
+                    '💡 감정적 공감 우선',
+                    '💡 대화로 해결하기',
+                    '💡 주변 조언 구하기',
+                    '💡 화해 후 스킨십'
+                ]
+            },
+            'ISTP': {
+                type: '독립적 연인',
+                motto: '"자유롭고 실용적인 사랑"',
+                idealTypes: [
+                    { mbti: 'ESTJ', desc: '독립과 리더십' },
+                    { mbti: 'ESFJ', desc: '자유와 배려' },
+                    { mbti: 'ISFJ', desc: '공간과 이해' }
+                ],
+                datingStyle: [
+                    { icon: '🛠️', text: '함께하는 활동과 취미' },
+                    { icon: '🏍️', text: '액티브한 데이트' },
+                    { icon: '🎯', text: '실용적인 선물' },
+                    { icon: '🤐', text: '조용한 함께함' }
+                ],
+                dos: [
+                    '개인 공간 존중',
+                    '행동으로 보여주기',
+                    '실용적 접근',
+                    '독립성 인정'
+                ],
+                donts: [
+                    '감정적 압박',
+                    '지나친 간섭',
+                    '말로만 하는 약속',
+                    '드라마 만들기'
+                ],
+                loveLanguage: ['신체적 접촉', '봉사', '양질의 시간'],
+                conflictResolution: [
+                    '💡 시간과 공간 주기',
+                    '💡 논리적 접근',
+                    '💡 행동으로 해결',
+                    '💡 간단명료한 대화'
+                ]
+            },
+            'ISFP': {
+                type: '감성적 연인',
+                motto: '"자연스럽고 따뜻한 사랑"',
+                idealTypes: [
+                    { mbti: 'ESFJ', desc: '감성과 배려' },
+                    { mbti: 'ENFJ', desc: '예술과 성장' },
+                    { mbti: 'ESTJ', desc: '부드러움과 강함' }
+                ],
+                datingStyle: [
+                    { icon: '🎨', text: '예술적이고 감성적 데이트' },
+                    { icon: '🌸', text: '자연 속에서 시간' },
+                    { icon: '📷', text: '추억 만들고 기록' },
+                    { icon: '🎵', text: '음악과 감성 공유' }
+                ],
+                dos: [
+                    '감성 존중하기',
+                    '자연스러운 속도',
+                    '예술적 취향 공유',
+                    '진정성 있게 대하기'
+                ],
+                donts: [
+                    '감정 무시하기',
+                    '압박감 주기',
+                    '비판적 태도',
+                    '강요하기'
+                ],
+                loveLanguage: ['신체적 접촉', '양질의 시간', '인정의 말'],
+                conflictResolution: [
+                    '💡 부드럽게 접근하기',
+                    '💡 감정 충분히 표현',
+                    '💡 예술로 화해하기',
+                    '💡 자연스러운 해결'
+                ]
+            },
+            'ESTP': {
+                type: '모험적 연인',
+                motto: '"지금 이 순간을 즐기는 사랑"',
+                idealTypes: [
+                    { mbti: 'ISFJ', desc: '모험과 안정' },
+                    { mbti: 'ISTJ', desc: '행동과 신뢰' },
+                    { mbti: 'ESFP', desc: '열정과 재미' }
+                ],
+                datingStyle: [
+                    { icon: '🎢', text: '스릴 넘치는 데이트' },
+                    { icon: '🏃', text: '액티브한 활동' },
+                    { icon: '🎉', text: '즉흥적인 이벤트' },
+                    { icon: '💋', text: '열정적인 스킨십' }
+                ],
+                dos: [
+                    '함께 모험하기',
+                    '현재에 집중하기',
+                    '액션으로 보여주기',
+                    '재미있게 만들기'
+                ],
+                donts: [
+                    '지루하게 만들기',
+                    '너무 미래 얘기',
+                    '행동 제한하기',
+                    '감정적 드라마'
+                ],
+                loveLanguage: ['신체적 접촉', '양질의 시간', '선물'],
+                conflictResolution: [
+                    '💡 빠르게 해결하고 잊기',
+                    '💡 행동으로 사과하기',
+                    '💡 즉각적인 대응',
+                    '💡 신체적 화해'
+                ]
+            },
+            'ESFP': {
+                type: '즐거운 연인',
+                motto: '"매일이 축제같은 사랑"',
+                idealTypes: [
+                    { mbti: 'ISTJ', desc: '재미와 안정' },
+                    { mbti: 'ISFJ', desc: '즐거움과 배려' },
+                    { mbti: 'ESTP', desc: '파티와 모험' }
+                ],
+                datingStyle: [
+                    { icon: '🎊', text: '파티같은 데이트' },
+                    { icon: '🎭', text: '다양한 경험 시도' },
+                    { icon: '💃', text: '춤과 음악 즐기기' },
+                    { icon: '🎁', text: '서프라이즈 이벤트' }
+                ],
+                dos: [
+                    '함께 즐기기',
+                    '긍정적 에너지',
+                    '자유롭게 표현',
+                    '새로운 시도'
+                ],
+                donts: [
+                    '분위기 깨기',
+                    '부정적 비판',
+                    '재미없게 만들기',
+                    '감정 억압'
+                ],
+                loveLanguage: ['신체적 접촉', '인정의 말', '선물'],
+                conflictResolution: [
+                    '💡 빠른 화해와 포옹',
+                    '💡 긍정적으로 접근',
+                    '💡 함께 웃으며 해결',
+                    '💡 파티로 화해하기'
+                ]
+            }
+        };
+        
+        function showDatingProfile(type) {
+            // 버튼 활성화
+            document.querySelectorAll('.mbti-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === type) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // 사용자 MBTI 저장
+            localStorage.setItem('userMBTI', type);
+            window.dispatchEvent(new Event('storage'));
+            
+            // 프로필 데이터
+            const profile = datingProfiles[type];
+            
+            // HTML 생성
+            const detailsHTML = `
+                <div class="dating-profile active">
+                    <div class="profile-header">
+                        <h2 class="dating-type">${type} - ${profile.type}</h2>
+                        <p class="dating-motto">${profile.motto}</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💘 최고의 이상형 MBTI</h3>
+                        <div class="ideal-types">
+                            ${profile.idealTypes.map(ideal => `
+                                <div class="ideal-card">
+                                    <div class="ideal-mbti">${ideal.mbti}</div>
+                                    <div class="ideal-desc">${ideal.desc}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💝 연애 스타일</h3>
+                        <div class="dating-style">
+                            ${profile.datingStyle.map(style => `
+                                <div class="style-item">
+                                    <span class="style-icon">${style.icon}</span>
+                                    <span>${style.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">💡 연애 Do's & Don'ts</h3>
+                        <div class="dos-donts">
+                            <div class="dos-card">
+                                <div class="card-title">이렇게 해주세요</div>
+                                <ul class="card-list">
+                                    ${profile.dos.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="donts-card">
+                                <div class="card-title">이건 피해주세요</div>
+                                <ul class="card-list">
+                                    ${profile.donts.map(item => `<li>${item}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="love-language">
+                        <div class="love-language-title">💬 사랑의 언어</div>
+                        <div class="language-items">
+                            ${profile.loveLanguage.map(lang => `
+                                <span class="language-tag">${lang}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div class="conflict-resolution">
+                        <div class="conflict-title">🔧 갈등 해결법</div>
+                        <ul class="resolution-list">
+                            ${profile.conflictResolution.map(item => `
+                                <li>${item}</li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('dating-details').innerHTML = detailsHTML;
+            
+            // 스크롤
+            document.getElementById('dating-details').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+        }
+        
+        // 초기화
+        window.addEventListener('load', () => {
+            const userMBTI = localStorage.getItem('userMBTI');
+            if (userMBTI && datingProfiles[userMBTI]) {
+                showDatingProfile(userMBTI);
+            }
+            
+            // AdSense 광고 로드
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        });
+    </script>
+</body>
+</html>

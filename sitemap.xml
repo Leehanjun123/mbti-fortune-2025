@@ -1,9 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://www.mbti-destiny.site/</loc>
-    <lastmod>2025-01-07</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
+    <!-- 메인 페이지 -->
+    <url>
+        <loc>https://mbti-destiny.site/</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- MBTI 운세 테스트 -->
+    <url>
+        <loc>https://mbti-destiny.site/index.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- MBTI 일일 예보 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-daily.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- MBTI 궁합 계산기 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-compatibility.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- MBTI 반응 시리즈 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-reactions.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- MBTI 직업 추천 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-career.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- MBTI 투자 성향 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-investment.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- MBTI 여행 스타일 -->
+    <url>
+        <loc>https://mbti-destiny.site/mbti-travel.html</loc>
+        <lastmod>2025-01-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
