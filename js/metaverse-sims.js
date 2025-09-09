@@ -1383,8 +1383,8 @@ class SimAI {
     }
 }
 
-// 전역 인스턴스
-const MBTIMetaverse = new MBTIMetaverseSims();
+// 전역 인스턴스 (심즈 스타일)
+const MBTIMetaverseSim = new MBTIMetaverseSims();
 
 // Export
 if (typeof module !== 'undefined' && module.exports) {
