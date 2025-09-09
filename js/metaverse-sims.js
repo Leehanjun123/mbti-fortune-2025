@@ -105,6 +105,50 @@ class MBTIMetaverseSims {
         this.createEconomyBuildings();
     }
     
+    // 경제 건물 생성 (누락된 함수)
+    createEconomyBuildings() {
+        // 중앙 마켓 생성
+        this.placeBuilding(50, 25, {
+            type: 'market',
+            name: 'MBTI 마켓',
+            width: 4,
+            height: 4,
+            color: '#10b981',
+            floors: 2,
+            shops: ['식당', '카페', '의류점', '전자제품']
+        });
+        
+        // 은행
+        this.placeBuilding(25, 50, {
+            type: 'bank',
+            name: 'MBTI 은행',
+            width: 3,
+            height: 3,
+            color: '#3b82f6',
+            floors: 3
+        });
+        
+        // 병원
+        this.placeBuilding(75, 50, {
+            type: 'hospital',
+            name: 'MBTI 병원',
+            width: 4,
+            height: 3,
+            color: '#ef4444',
+            floors: 4
+        });
+        
+        // 학교
+        this.placeBuilding(50, 75, {
+            type: 'school',
+            name: 'MBTI 대학교',
+            width: 5,
+            height: 4,
+            color: '#8b5cf6',
+            floors: 3
+        });
+    }
+    
     // MBTI 구역 생성
     createMBTIDistricts() {
         const districts = {
@@ -1383,8 +1427,7 @@ class SimAI {
     }
 }
 
-// 전역 인스턴스 (심즈 스타일)
-const MBTIMetaverseSim = new MBTIMetaverseSims();
+// 클래스만 전역으로 노출 (인스턴스는 필요할 때 생성)
 
 // Export
 if (typeof module !== 'undefined' && module.exports) {

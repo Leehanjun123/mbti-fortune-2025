@@ -1144,8 +1144,9 @@
             const container = document.getElementById('metaverseContent');
             
             // 심즈 스타일 메타버스 시작
-            if (typeof MBTIMetaverseSim !== 'undefined' && MBTIMetaverseSim.startGame) {
-                MBTIMetaverseSim.startGame(container, currentMBTI);
+            if (typeof MBTIMetaverseSims !== 'undefined') {
+                const metaverse = new MBTIMetaverseSims();
+                metaverse.startGame(container, currentMBTI);
             } else {
                 container.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #1e1b4b, #312e81);">
