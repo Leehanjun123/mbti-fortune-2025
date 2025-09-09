@@ -1171,7 +1171,7 @@
         }
         
         function visitDistrict(mbtiType) {
-            const result = MBTIMetaverse.visitDistrict(mbtiType);
+            const result = MBTIMetaverseBasic.visitDistrict(mbtiType);
             
             if (!result) {
                 showToast('구역 방문 실패!');
@@ -1214,7 +1214,7 @@
         }
         
         function playMiniGame() {
-            const result = MBTIMetaverse.playMiniGame('puzzle', currentMBTI);
+            const result = MBTIMetaverseBasic.playMiniGame('puzzle', currentMBTI);
             if (result.success) {
                 showToast(`미니게임 성공! +${result.reward} 코인`);
             } else {

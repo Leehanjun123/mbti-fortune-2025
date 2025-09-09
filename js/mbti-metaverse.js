@@ -1,5 +1,5 @@
-// MBTI 메타버스 타운
-const MBTIMetaverse = {
+// MBTI 메타버스 타운 (기본 버전)
+const MBTIMetaverseBasic = {
     // 16개 MBTI 구역 정의
     districts: {
         'INTJ': {
@@ -370,5 +370,5 @@ const MBTIMetaverse = {
 
 // 전역 사용 가능하도록 export
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = MBTIMetaverse;
+    module.exports = MBTIMetaverseBasic;
 }
