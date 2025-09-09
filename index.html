@@ -22,9 +22,29 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
         crossorigin="anonymous"></script>
     
-    <!-- Firebase (채팅용) - 호환성 버전으로 변경 -->
+    <!-- Firebase (실시간 채팅용) -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <!-- Firebase 설정 스크립트 -->
+    <script>
+        // Firebase 설정 (실제 프로덕션에서는 환경변수로 관리)
+        const firebaseConfig = {
+            apiKey: "demo-key",
+            authDomain: "mbti-chat-demo.firebaseapp.com",
+            databaseURL: "https://mbti-chat-demo-default-rtdb.firebaseio.com/",
+            projectId: "mbti-chat-demo",
+            storageBucket: "mbti-chat-demo.appspot.com",
+            messagingSenderId: "123456789",
+            appId: "demo-app-id"
+        };
+        
+        // Firebase 초기화
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        const database = firebase.database();
+    </script>
     
     <!-- Kakao SDK -->
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
@@ -911,6 +931,25 @@
             font-size: 0.9rem;
             padding: 10px;
             font-style: italic;
+        }
+
+        /* 실시간 채팅 메시지 스타일 */
+        .my-message {
+            background: rgba(88, 101, 242, 0.2);
+            border-left: 3px solid var(--primary);
+        }
+
+        .other-message {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid var(--gray);
+        }
+
+        .my-message .message-user {
+            color: var(--primary);
+        }
+
+        .other-message .message-user {
+            color: var(--success);
         }
 
         /* MBTI 설정 화면 스타일 */
@@ -2408,7 +2447,8 @@
             lives: 3,
             speed: 2,
             isRunning: false,
-            keys: { up: false, down: false }
+            keys: { up: false, down: false },
+            eventsInitialized: false
         };
 
         const mbtiItems = {
@@ -2432,27 +2472,44 @@
 
         function showGames() {
             showSection('game');
-            initGame();
+            // 섹션이 보여진 후 게임 초기화
+            setTimeout(initGame, 100);
         }
 
         function initGame() {
+            console.log('게임 초기화 시작');
             game.canvas = document.getElementById('gameCanvas');
+            if (!game.canvas) {
+                console.error('게임 캔버스를 찾을 수 없습니다!');
+                return;
+            }
+            
             game.ctx = game.canvas.getContext('2d');
+            if (!game.ctx) {
+                console.error('2D 컨텍스트를 가져올 수 없습니다!');
+                return;
+            }
             
-            // 키보드 이벤트
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowUp') game.keys.up = true;
-                if (e.key === 'ArrowDown') game.keys.down = true;
-            });
+            console.log('캔버스 초기화 완료');
             
-            document.addEventListener('keyup', (e) => {
-                if (e.key === 'ArrowUp') game.keys.up = false;
-                if (e.key === 'ArrowDown') game.keys.down = false;
-            });
-            
-            // 터치 이벤트
-            game.canvas.addEventListener('touchstart', handleTouch);
-            game.canvas.addEventListener('touchmove', handleTouch);
+            // 키보드 이벤트 (중복 방지)
+            if (!game.eventsInitialized) {
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowUp') game.keys.up = true;
+                    if (e.key === 'ArrowDown') game.keys.down = true;
+                });
+                
+                document.addEventListener('keyup', (e) => {
+                    if (e.key === 'ArrowUp') game.keys.up = false;
+                    if (e.key === 'ArrowDown') game.keys.down = false;
+                });
+                
+                // 터치 이벤트
+                game.canvas.addEventListener('touchstart', handleTouch);
+                game.canvas.addEventListener('touchmove', handleTouch);
+                
+                game.eventsInitialized = true;
+            }
         }
 
         function handleTouch(e) {
@@ -2690,41 +2747,99 @@
             }
         }
 
-        // 채팅 기능
+        // 실시간 채팅 기능
+        let currentChatRoom = null;
+        let currentUserId = null;
+        
+        // 사용자 ID 생성 (세션별 고유)
+        function generateUserId() {
+            return 'user_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+        
+        // 채팅방 참여
+        function joinChatRoom(targetMBTI) {
+            if (!currentMBTI) return;
+            
+            currentUserId = generateUserId();
+            currentChatRoom = `chat_${currentMBTI}_${targetMBTI}`;
+            
+            // 채팅 메시지 실시간 구독
+            const chatRef = database.ref(`chats/${currentChatRoom}`);
+            chatRef.limitToLast(50).on('child_added', (snapshot) => {
+                const message = snapshot.val();
+                if (message.userId !== currentUserId) {
+                    displayMessage(message, false);
+                }
+            });
+            
+            // 접속 알림
+            const joinMessage = {
+                userId: currentUserId,
+                userMBTI: currentMBTI,
+                text: `${currentMBTI} 사용자가 입장했습니다.`,
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                type: 'system'
+            };
+            
+            chatRef.push(joinMessage);
+        }
+        
+        // 메시지 표시
+        function displayMessage(message, isMyMessage) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isMyMessage ? 'my-message' : 'other-message'}`;
+            
+            if (message.type === 'system') {
+                messageDiv.innerHTML = `
+                    <div class="system-message">${message.text}</div>
+                `;
+            } else {
+                const time = message.timestamp ? new Date(message.timestamp).toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }) : '방금';
+                messageDiv.innerHTML = `
+                    <div class="message-user">${isMyMessage ? '나' : '익명의'} ${message.userMBTI}</div>
+                    <div class="message-text">${message.text}</div>
+                    <div class="message-time">${time}</div>
+                `;
+            }
+            
+            document.getElementById('chatMessages').appendChild(messageDiv);
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        }
+        
         function sendMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             
-            if (!text || !currentPartner) return;
+            if (!text || !currentChatRoom || !currentMBTI) return;
             
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'chat-message';
-            messageDiv.innerHTML = `
-                <div class="message-user">나 (${currentMBTI})</div>
-                <div class="message-text">${text}</div>
-                <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
-            `;
+            const message = {
+                userId: currentUserId,
+                userMBTI: currentMBTI,
+                text: text,
+                timestamp: firebase.database.ServerValue.TIMESTAMP,
+                type: 'user'
+            };
             
-            document.getElementById('chatMessages').appendChild(messageDiv);
-            input.value = '';
-            
-            // MBTI별 특성 응답
-            setTimeout(() => {
-                const responses = partnerResponses[currentPartner] || ["공감해요!", "그렇네요", "흥미로워요"];
-                
-                const responseDiv = document.createElement('div');
-                responseDiv.className = 'chat-message';
-                responseDiv.innerHTML = `
-                    <div class="message-user">익명의 ${currentPartner}</div>
-                    <div class="message-text">${responses[Math.floor(Math.random() * responses.length)]}</div>
-                    <div class="message-time">${new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}</div>
-                `;
-                
-                document.getElementById('chatMessages').appendChild(responseDiv);
-                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-            }, 1000 + Math.random() * 2000);
-            
-            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+            // Firebase에 메시지 저장
+            database.ref(`chats/${currentChatRoom}`).push(message)
+                .then(() => {
+                    // 내 메시지 즉시 표시
+                    displayMessage({
+                        ...message,
+                        timestamp: Date.now()
+                    }, true);
+                    
+                    input.value = '';
+                })
+                .catch((error) => {
+                    console.error('메시지 전송 실패:', error);
+                    // 오프라인 모드로 폴백
+                    displayMessage({
+                        ...message,
+                        timestamp: Date.now()
+                    }, true);
+                    input.value = '';
+                });
         }
 
         // 채팅 관련 변수
@@ -2750,30 +2865,38 @@
 
         function findPartner(type) {
             if (!currentMBTI) {
-                const selected = prompt('본인의 MBTI를 입력해주세요 (예: INTJ):');
-                if (selected && ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'].includes(selected.toUpperCase())) {
-                    currentMBTI = selected.toUpperCase();
-                    localStorage.setItem('currentMBTI', currentMBTI);
-                    showToast(`${currentMBTI} 설정 완료! 🎉`);
-                } else return;
+                showToast('먼저 MBTI를 설정해주세요!');
+                return;
             }
 
             document.getElementById('chatPartnerSelect').style.display = 'none';
             document.getElementById('chatRoom').style.display = 'block';
 
+            let targetMBTI;
             if (type === 'random') {
                 const types = ['INTJ','INTP','ENTJ','ENTP','INFJ','INFP','ENFJ','ENFP','ISTJ','ISFJ','ESTJ','ESFJ','ISTP','ISFP','ESTP','ESFP'];
-                currentPartner = types[Math.floor(Math.random() * types.length)];
+                targetMBTI = types[Math.floor(Math.random() * types.length)];
             } else if (type === 'same') {
-                currentPartner = currentMBTI;
+                targetMBTI = currentMBTI;
             } else {
-                currentPartner = type;
+                targetMBTI = type;
             }
 
-            document.getElementById('partnerMBTI').textContent = currentPartner;
-            document.getElementById('chatMessages').innerHTML = `
-                <div class="system-message">💬 ${currentPartner} 상대방과 연결되었습니다!</div>
-            `;
+            currentPartner = targetMBTI;
+            document.getElementById('partnerMBTI').textContent = targetMBTI;
+            
+            // 이전 채팅방 구독 해제
+            if (currentChatRoom) {
+                database.ref(`chats/${currentChatRoom}`).off();
+            }
+            
+            // 채팅 메시지 초기화
+            document.getElementById('chatMessages').innerHTML = '';
+            
+            // 새 채팅방 참여
+            joinChatRoom(targetMBTI);
+            
+            showToast(`🎯 ${targetMBTI} 사용자들과 연결 중...`);
         }
 
         function findNewPartner() {
@@ -2921,14 +3044,18 @@
             showToast(`🎉 ${mbti} 설정 완료! MBTI Universe에 오신 걸 환영해요!`);
         }
 
-        // 페이지 로드 시 MBTI 확인
+        // 페이지 로드 시 MBTI 확인 (테스트를 위해 주석 처리)
         window.addEventListener('load', () => {
-            const savedMBTI = localStorage.getItem('currentMBTI');
-            if (savedMBTI) {
-                currentMBTI = savedMBTI;
-                document.getElementById('mbtiSetupScreen').style.display = 'none';
-                document.getElementById('mainContainer').style.display = 'block';
-            }
+            // 테스트를 위해 항상 MBTI 설정 화면을 보여줍니다
+            // localStorage를 확인하지 않고 항상 설정 화면부터 시작
+            console.log('페이지 로드됨 - MBTI 설정 화면 표시');
+            
+            // const savedMBTI = localStorage.getItem('currentMBTI');
+            // if (savedMBTI) {
+            //     currentMBTI = savedMBTI;
+            //     document.getElementById('mbtiSetupScreen').style.display = 'none';
+            //     document.getElementById('mainContainer').style.display = 'block';
+            // }
         });
 
         // 잠금 콘텐츠 해제
