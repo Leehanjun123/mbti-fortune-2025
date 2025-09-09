@@ -5566,6 +5566,50 @@
         let quizAnswers = [];
         let mbtiCurrentQuestion = 0;
         
+        // ⚡ 즉시 정의되는 MBTI 선택 함수들 (호이스팅 문제 해결)
+        function showMBTISelector() {
+            console.log('showMBTISelector 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiSelector = document.getElementById('mbtiSelector');
+            
+            if (setupOptions) setupOptions.style.display = 'none';
+            if (mbtiSelector) {
+                mbtiSelector.style.display = 'block';
+                console.log('MBTI 선택기 표시됨');
+            } else {
+                console.error('mbtiSelector 요소를 찾을 수 없습니다');
+            }
+        }
+
+        function showMBTIQuiz() {
+            console.log('showMBTIQuiz 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiQuiz = document.getElementById('mbtiQuiz');
+            
+            if (setupOptions) setupOptions.style.display = 'none';
+            if (mbtiQuiz) {
+                mbtiQuiz.style.display = 'block';
+                startQuiz();
+                console.log('MBTI 퀴즈 시작됨');
+            } else {
+                console.error('mbtiQuiz 요소를 찾을 수 없습니다');
+            }
+        }
+        
+        function goBackToSetup() {
+            console.log('goBackToSetup 호출됨');
+            const setupOptions = document.querySelector('.setup-options');
+            const mbtiSelector = document.getElementById('mbtiSelector');
+            const mbtiQuiz = document.getElementById('mbtiQuiz');
+            
+            if (setupOptions) setupOptions.style.display = 'grid';
+            if (mbtiSelector) mbtiSelector.style.display = 'none';
+            if (mbtiQuiz) mbtiQuiz.style.display = 'none';
+            
+            quizAnswers = [];
+            mbtiCurrentQuestion = 0;
+        }
+        
         const mbtiQuestions = [
             {
                 question: "파티에서 당신은 어떤 타입인가요?",
@@ -5609,24 +5653,7 @@
             }
         ];
 
-        function showMBTISelector() {
-            document.querySelector('.setup-options').style.display = 'none';
-            document.getElementById('mbtiSelector').style.display = 'block';
-        }
-
-        function showMBTIQuiz() {
-            document.querySelector('.setup-options').style.display = 'none';
-            document.getElementById('mbtiQuiz').style.display = 'block';
-            startQuiz();
-        }
-
-        function goBackToSetup() {
-            document.querySelector('.setup-options').style.display = 'grid';
-            document.getElementById('mbtiSelector').style.display = 'none';
-            document.getElementById('mbtiQuiz').style.display = 'none';
-            quizAnswers = [];
-            mbtiCurrentQuestion = 0;
-        }
+        // 중복 함수 제거됨 - 위쪽에 이미 정의됨
 
         function startQuiz() {
             quizAnswers = [];
