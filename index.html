@@ -695,6 +695,7 @@
     <script src="js/mbti-battle.js"></script>
     <script src="js/mbti-worldcup.js"></script>
     <script src="js/mbti-metaverse.js"></script>
+    <script src="js/metaverse-sims.js"></script>
     <script src="js/mbti-ai-chat.js"></script>
     <script src="js/mbti-compatibility.js"></script>
     <script src="js/battle-arena-enhanced.js"></script>
@@ -1121,46 +1122,47 @@
         // ========== 메타버스 ==========
         function loadMetaverse() {
             const html = `
-                <div style="padding: 20px;">
-                    <h2 style="text-align: center; font-size: 32px; margin-bottom: 30px;">🌍 MBTI 메타버스 타운</h2>
-                    <div id="metaverseContent"></div>
+                <div style="height: 100%; position: relative;">
+                    <h2 style="text-align: center; font-size: 32px; margin-bottom: 10px; position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 100; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 10px;">🌍 MBTI 메타버스 타운</h2>
+                    <div id="metaverseContent" style="height: 100%; width: 100%;"></div>
                 </div>
             `;
             document.getElementById('featureScreen').innerHTML = html;
             
-            // 메타버스 초기화
+            // 심즈 스타일 메타버스 시작
             setTimeout(() => {
-                initMetaverse();
+                initSimsMetaverse();
             }, 100);
         }
         
-        function initMetaverse() {
-            const data = MBTIMetaverse.initMetaverse(currentMBTI);
+        function initSimsMetaverse() {
+            const container = document.getElementById('metaverseContent');
             
-            const html = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <p>현재 위치: <strong>${data.currentDistrict.name}</strong></p>
-                    <p style="color: var(--gray);">${data.currentDistrict.description}</p>
-                </div>
-                
-                <h3 style="text-align: center; margin-bottom: 20px;">🗺️ MBTI 월드맵</h3>
-                <div class="metaverse-map">
-                    ${Object.entries(MBTIMetaverse.districts).map(([type, district]) => `
-                        <div class="district-tile" onclick="visitDistrict('${type}')" style="${type === currentMBTI ? 'border-color: var(--primary);' : ''}">
-                            <div style="font-size: 36px;">${district.emoji}</div>
-                            <div style="font-weight: bold;">${type}</div>
-                            <div style="font-size: 12px; color: var(--gray);">${district.name}</div>
+            // 심즈 스타일 메타버스 시작
+            if (typeof MBTIMetaverse !== 'undefined' && MBTIMetaverse.startGame) {
+                MBTIMetaverse.startGame(container, currentMBTI);
+            } else {
+                container.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #1e1b4b, #312e81);">
+                        <div style="text-align: center; color: white;">
+                            <div style="font-size: 64px; margin-bottom: 20px;">🏗️</div>
+                            <h2>심즈 스타일 메타버스 로딩 중...</h2>
+                            <p>MBTI 구역 16개를 생성하고 있습니다.</p>
+                            <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 20px auto; overflow: hidden;">
+                                <div style="width: 0%; height: 100%; background: var(--primary); animation: loading 3s ease-in-out infinite;"></div>
+                            </div>
                         </div>
-                    `).join('')}
-                </div>
+                    </div>
+                `;
                 
-                <div style="margin-top: 30px; text-align: center;">
-                    <button class="btn" onclick="openMyHome()">🏠 내 집</button>
-                    <button class="btn btn-secondary" onclick="playMiniGame()" style="margin-left: 10px;">🎮 미니게임</button>
-                </div>
-            `;
-            
-            document.getElementById('metaverseContent').innerHTML = html;
+                // 실제 초기화를 지연
+                setTimeout(() => {
+                    if (window.MBTIMetaverseSims) {
+                        const metaverse = new MBTIMetaverseSims();
+                        metaverse.startGame(container, currentMBTI);
+                    }
+                }, 2000);
+            }
         }
         
         function visitDistrict(mbtiType) {
