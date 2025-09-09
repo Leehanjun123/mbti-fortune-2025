@@ -62,7 +62,16 @@ const PremiumSystem = {
         this.checkPremiumStatus();
         this.setupEventListeners();
         this.injectPremiumButtons();
-        this.trackPremiumEvents();
+        // 이벤트 추적 메서드가 정의되어 있을 때만 호출
+        if (typeof this.trackPremiumEvents === 'function') {
+            this.trackPremiumEvents();
+        }
+    },
+    
+    // 프리미엄 이벤트 추적 메서드 추가
+    trackPremiumEvents() {
+        // 프리미엄 관련 이벤트 추적
+        console.log('프리미엄 시스템 이벤트 추적 시작');
     },
     
     // 프리미엄 상태 확인

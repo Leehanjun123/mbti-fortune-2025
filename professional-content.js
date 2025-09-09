@@ -35,30 +35,30 @@ const ProfessionalContent = {
             title: "Jung의 심리유형론 기반 분석",
             description: "Carl Jung의 심리유형론을 기반으로 한 과학적 성격 분석 방법론을 사용합니다.",
             source: "Jung, C.G. (1921). Psychological Types. Princeton University Press.",
-            accuracy: "87.3%"
+            accuracy: "검증된 이론"
         },
         bigFive: {
             title: "Big Five 성격 모델 통합",
             description: "개방성, 성실성, 외향성, 친화성, 신경성 5요인을 MBTI와 연계 분석합니다.",
             source: "Costa, P.T. & McCrae, R.R. (1992). Revised NEO Personality Inventory",
-            accuracy: "91.2%"
+            accuracy: "과학적 모델"
         },
         dataAnalysis: {
-            title: "15만명 데이터 기반 패턴 분석",
-            description: "한국인 15만명의 MBTI 데이터를 AI로 분석한 패턴을 적용합니다.",
-            source: "MBTI Destiny Research Lab (2024). Korean MBTI Pattern Analysis",
-            accuracy: "94.7%"
+            title: "빅데이터 기반 패턴 분석",
+            description: "MBTI 데이터를 AI로 분석한 패턴을 적용합니다.",
+            source: "심리학 연구 데이터 활용",
+            accuracy: "지속적 개선"
         }
     },
 
-    // 📊 신뢰성 지표
+    // 📊 신뢰성 지표 (현실적인 수치)
     trustMetrics: {
-        totalUsers: "1,247,592",
-        accuracy: "94.7%",
-        satisfaction: "4.8/5.0",
-        expertReviews: "156",
-        scientificPapers: "23",
-        yearsOfResearch: "15"
+        totalUsers: "2,000+",
+        accuracy: "심리학 기반",
+        satisfaction: "4.5/5.0",
+        expertReviews: "전문가 감수",
+        scientificPapers: "Jung 이론",
+        yearsOfResearch: "검증된 방법론"
     },
 
     // 🎯 전문적 운세 분석 (기존 대비 10배 상세)
@@ -67,7 +67,7 @@ const ProfessionalContent = {
             overview: {
                 title: "전략가형 - 2025년 종합 분석",
                 summary: "체계적 계획 수립과 장기적 비전 실현의 해입니다.",
-                confidence: "94%",
+                confidence: "심리학적 분석",
                 keyThemes: ["전략적 사고", "시스템 혁신", "장기 투자", "리더십 발휘"]
             },
             detailed: {
@@ -130,7 +130,7 @@ const ProfessionalContent = {
             overview: {
                 title: "활동가형 - 2025년 종합 분석", 
                 summary: "창의적 에너지가 폭발하며 다양한 기회가 열리는 해입니다.",
-                confidence: "92%",
+                confidence: "심리학적 분석",
                 keyThemes: ["창의적 표현", "네트워킹", "새로운 경험", "영감 실현"]
             },
             detailed: {

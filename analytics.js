@@ -388,10 +388,22 @@ const AdvancedAnalytics = {
         });
     },
     
+    // throttle 헬퍼 함수 추가
+    throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+            if (!inThrottle) {
+                func.apply(this, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        };
+    },
+    
     // 이벤트 리스너 설정
     setupEventListeners() {
         // 스크롤 추적
-        const scrollHandler = this.performance.throttle(() => {
+        const scrollHandler = this.throttle(() => {
             this.userBehavior.trackScrollDepth();
         }, 1000);
         window.addEventListener('scroll', scrollHandler, { passive: true });
