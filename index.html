@@ -700,7 +700,7 @@
     <script src="js/mbti-battle.js"></script>
     <script src="js/mbti-worldcup.js"></script>
     <script src="js/mbti-metaverse.js"></script>
-    <script src="js/metaverse-sims.js"></script>
+    <script src="js/simple-metaverse.js"></script>
     <script src="js/mbti-ai-chat.js"></script>
     <script src="js/mbti-compatibility.js"></script>
     <script src="js/battle-arena-enhanced.js"></script>
@@ -1143,31 +1143,21 @@
         function initSimsMetaverse() {
             const container = document.getElementById('metaverseContent');
             
-            // 심즈 스타일 메타버스 시작
-            if (typeof MBTIMetaverseSims !== 'undefined') {
-                const metaverse = new MBTIMetaverseSims();
-                metaverse.startGame(container, currentMBTI);
+            // 간단하고 실용적인 메타버스 시작
+            if (typeof SimpleMBTIMetaverse !== 'undefined') {
+                simpleMeta = new SimpleMBTIMetaverse();
+                simpleMeta.start(container, currentMBTI);
             } else {
                 container.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #1e1b4b, #312e81);">
-                        <div style="text-align: center; color: white;">
-                            <div style="font-size: 64px; margin-bottom: 20px;">🏗️</div>
-                            <h2>심즈 스타일 메타버스 로딩 중...</h2>
-                            <p>MBTI 구역 16개를 생성하고 있습니다.</p>
-                            <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 20px auto; overflow: hidden;">
-                                <div style="width: 0%; height: 100%; background: var(--primary); animation: loading 3s ease-in-out infinite;"></div>
-                            </div>
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #1e1b4b, #312e81); color: white;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 64px; margin-bottom: 20px;">❌</div>
+                            <h2>메타버스 로딩 실패</h2>
+                            <p>페이지를 새로고침해주세요.</p>
+                            <button onclick="location.reload()" style="margin-top: 20px; padding: 10px 20px; background: var(--primary); color: white; border: none; border-radius: 5px; cursor: pointer;">새로고침</button>
                         </div>
                     </div>
                 `;
-                
-                // 실제 초기화를 지연
-                setTimeout(() => {
-                    if (window.MBTIMetaverseSims) {
-                        const metaverse = new MBTIMetaverseSims();
-                        metaverse.startGame(container, currentMBTI);
-                    }
-                }, 2000);
             }
         }
         
