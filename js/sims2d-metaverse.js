@@ -352,8 +352,13 @@ class Sims2DMetaverse {
             isMoving = true;
         }
         
+        // 키보드 이동이 있으면 타겟 이동 취소
+        if (isMoving) {
+            this.player.targetX = null;
+            this.player.targetY = null;
+        }
         // 마우스 클릭 이동
-        if (this.player.targetX !== null && this.player.targetY !== null) {
+        else if (this.player.targetX !== null && this.player.targetY !== null) {
             const tdx = this.player.targetX - this.player.x;
             const tdy = this.player.targetY - this.player.y;
             const distance = Math.sqrt(tdx * tdx + tdy * tdy);
@@ -363,8 +368,8 @@ class Sims2DMetaverse {
                 this.player.targetY = null;
                 this.player.animation = 'idle';
             } else {
-                dx += (tdx / distance) * this.player.speed;
-                dy += (tdy / distance) * this.player.speed;
+                dx = (tdx / distance) * this.player.speed;
+                dy = (tdy / distance) * this.player.speed;
             }
         }
         
@@ -786,10 +791,12 @@ class Sims2DMetaverse {
         const energyEl = document.getElementById('energy');
         const happinessEl = document.getElementById('happiness');
         const socialEl = document.getElementById('social');
+        const onlineEl = document.getElementById('online-count');
         
         if (energyEl) energyEl.textContent = Math.round(this.player.energy);
         if (happinessEl) happinessEl.textContent = Math.round(this.player.happiness);
         if (socialEl) socialEl.textContent = Math.round(this.player.social);
+        if (onlineEl) onlineEl.textContent = this.onlinePlayers.size;
     }
     
     // 유틸리티 함수들
@@ -852,37 +859,56 @@ class Sims2DMetaverse {
         return avatars[avatarId] || '😊';
     }
     
-    // Firebase 초기화
+    // Firebase 초기화 (옵션)
     initFirebase() {
+        // Firebase 비활성화 옵션 (로컬 테스트용)
+        const USE_FIREBASE = false; // true로 변경하면 온라인 기능 활성화
+        
+        if (!USE_FIREBASE) {
+            console.log('🎮 오프라인 모드로 실행 중...');
+            return;
+        }
+        
         // Firebase가 이미 초기화되어 있는지 확인
         if (typeof firebase !== 'undefined' && !firebase.apps.length) {
-            firebase.initializeApp({
-                apiKey: "AIzaSyDY6bF6-fuKZ9BZn4YJbcWZ4XzR_yu-KQw",
-                authDomain: "mbti-metaverse.firebaseapp.com",
-                databaseURL: "https://mbti-metaverse-default-rtdb.firebaseio.com",
-                projectId: "mbti-metaverse",
-                storageBucket: "mbti-metaverse.appspot.com",
-                messagingSenderId: "123456789",
-                appId: "1:123456789:web:abcdef123456"
-            });
+            try {
+                firebase.initializeApp({
+                    apiKey: "AIzaSyBqVr7Fq8Y7Jp8ZH9l8QXmFQ5w_9dKmPeI",
+                    authDomain: "mbti-universe-2025.firebaseapp.com",
+                    databaseURL: "https://mbti-universe-2025-default-rtdb.firebaseio.com",
+                    projectId: "mbti-universe-2025",
+                    storageBucket: "mbti-universe-2025.appspot.com",
+                    messagingSenderId: "987654321",
+                    appId: "1:987654321:web:fedcba987654"
+                });
+            } catch (error) {
+                console.warn('Firebase 초기화 실패:', error);
+                return;
+            }
         }
         
         if (typeof firebase !== 'undefined' && firebase.database) {
-            this.database = firebase.database();
-            this.playersRef = this.database.ref('players');
-            this.chatRef = this.database.ref('chat');
-            
-            // 플레이어 온라인 상태 설정
-            this.updatePlayerOnline();
-            
-            // 다른 플레이어들 리스닝
-            this.listenToPlayers();
-            
-            // 채팅 리스닝
-            this.listenToChat();
-            
-            // 연결 끊김 처리
-            this.playersRef.child(this.player.id).onDisconnect().remove();
+            try {
+                this.database = firebase.database();
+                this.playersRef = this.database.ref('players');
+                this.chatRef = this.database.ref('chat');
+                
+                // 플레이어 온라인 상태 설정
+                this.updatePlayerOnline();
+                
+                // 다른 플레이어들 리스닝
+                this.listenToPlayers();
+                
+                // 채팅 리스닝
+                this.listenToChat();
+                
+                // 연결 끊김 처리
+                this.playersRef.child(this.player.id).onDisconnect().remove();
+                
+                console.log('🌐 온라인 모드 활성화!');
+            } catch (error) {
+                console.warn('Firebase 연결 실패:', error);
+            }
         }
     }
     
