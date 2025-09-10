@@ -862,7 +862,7 @@ class Sims2DMetaverse {
     // Firebase 초기화 (옵션)
     initFirebase() {
         // Firebase 비활성화 옵션 (로컬 테스트용)
-        const USE_FIREBASE = false; // true로 변경하면 온라인 기능 활성화
+        const USE_FIREBASE = true; // true로 변경하면 온라인 기능 활성화
         
         if (!USE_FIREBASE) {
             console.log('🎮 오프라인 모드로 실행 중...');

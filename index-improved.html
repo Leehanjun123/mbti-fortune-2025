@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO 최적화 -->
+    <title>무료 MBTI 성격유형 테스트 2025 - 가장 정확한 16가지 성격 분석</title>
+    <meta name="description" content="2025년 최신 MBTI 테스트. 16가지 성격유형을 무료로 정확하게 분석해드립니다. 연애, 직업, 인간관계 조언 포함. 5분 완성!">
+    <meta name="keywords" content="MBTI, MBTI 테스트, 성격유형, 16personalities, 무료 성격테스트, MBTI 유형, INTJ, ENFP">
+    <meta name="google-adsense-account" content="ca-pub-1752582087901677">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="무료 MBTI 테스트 2025 - 나의 진짜 성격 찾기">
+    <meta property="og:description" content="5분만에 나의 MBTI 성격유형을 정확하게 알아보세요. 연애, 직업, 강점까지 분석!">
+    <meta property="og:type" content="website">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677"
+         crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #5865F2;
+            --primary-dark: #4752C4;
+            --secondary: #EB459E;
+            --success: #57F287;
+            --warning: #FEE75C;
+            --danger: #ED4245;
+            --dark: #23272A;
+            --light: #99AAB5;
+            --white: #FFFFFF;
+            --bg-primary: #36393F;
+            --bg-secondary: #2F3136;
+            --bg-tertiary: #202225;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--dark);
+        }
+
+        /* 헤더 */
+        .header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        /* 메인 컨테이너 */
+        .container {
+            flex: 1;
+            max-width: 800px;
+            width: 100%;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* 히어로 섹션 */
+        .hero {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--light);
+            margin-bottom: 2rem;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        /* 테스트 섹션 */
+        .test-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .test-section.active {
+            display: block;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .question {
+            margin-bottom: 2rem;
+        }
+
+        .question h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 1rem 1.5rem;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-color: transparent;
+        }
+
+        /* 결과 섹션 */
+        .result-section {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+        }
+
+        .result-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .mbti-type {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .mbti-title {
+            font-size: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .dimensions {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .dimension {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .dimension-label {
+            width: 30px;
+            font-weight: bold;
+        }
+
+        .dimension-bar {
+            flex: 1;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dimension-fill {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: var(--white);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .result-details {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .detail-card {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .detail-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .detail-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-card li:last-child {
+            border-bottom: none;
+        }
+
+        /* 버튼 */
+        .btn {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* 공유 버튼 */
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .share-btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .share-kakao {
+            background: #FEE500;
+            color: #3C1E1E;
+        }
+
+        .share-facebook {
+            background: #1877F2;
+        }
+
+        .share-twitter {
+            background: #1DA1F2;
+        }
+
+        .share-link {
+            background: #6c757d;
+        }
+
+        /* 특징 카드 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .feature-desc {
+            color: var(--light);
+        }
+
+        /* 광고 영역 */
+        .ad-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+            text-align: center;
+            min-height: 100px;
+        }
+
+        /* 반응형 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats {
+                gap: 2rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .share-buttons {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* 로딩 애니메이션 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 툴팁 */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: var(--dark);
+            color: var(--white);
+            text-align: center;
+            border-radius: 6px;
+            padding: 0.5rem;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- 헤더 -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">MBTI Universe</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#test">테스트</a></li>
+                    <li><a href="#types">유형소개</a></li>
+                    <li><a href="#compatibility">궁합</a></li>
+                    <li><a href="#careers">직업</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 메인 컨테이너 -->
+    <div class="container">
+        <!-- 히어로 섹션 -->
+        <section class="hero" id="hero">
+            <h1>나의 진짜 성격을 찾아보세요</h1>
+            <p>과학적으로 검증된 16가지 성격유형 테스트</p>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">2.5M+</div>
+                    <div class="stat-label">총 테스트 횟수</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">93%</div>
+                    <div class="stat-label">정확도</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">5분</div>
+                    <div class="stat-label">소요시간</div>
+                </div>
+            </div>
+
+            <button class="btn" onclick="startTest()">
+                무료 테스트 시작하기
+            </button>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <div class="feature-title">과학적 분석</div>
+                    <div class="feature-desc">심리학 이론 기반</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <div class="feature-title">연애 궁합</div>
+                    <div class="feature-desc">이상적인 파트너 찾기</div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <div class="feature-title">직업 추천</div>
+                    <div class="feature-desc">적성에 맞는 커리어</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 테스트 섹션 -->
+        <section class="test-section" id="test-section">
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <div class="question" id="question-container">
+                <!-- 질문이 동적으로 삽입됨 -->
+            </div>
+        </section>
+
+        <!-- 결과 섹션 -->
+        <section class="result-section" id="result-section">
+            <div class="result-header">
+                <div class="mbti-type" id="mbti-type">INTJ</div>
+                <div class="mbti-title" id="mbti-title">전략가</div>
+            </div>
+
+            <div class="dimensions" id="dimensions">
+                <!-- 차원별 결과가 동적으로 삽입됨 -->
+            </div>
+
+            <div class="result-details" id="result-details">
+                <!-- 상세 결과가 동적으로 삽입됨 -->
+            </div>
+
+            <div class="share-buttons">
+                <a href="#" class="share-btn share-kakao" onclick="shareKakao()">카카오톡</a>
+                <a href="#" class="share-btn share-facebook" onclick="shareFacebook()">페이스북</a>
+                <a href="#" class="share-btn share-twitter" onclick="shareTwitter()">트위터</a>
+                <a href="#" class="share-btn share-link" onclick="copyLink()">링크 복사</a>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn" onclick="restartTest()">다시 테스트하기</button>
+                <button class="btn btn-secondary" onclick="viewAllTypes()">모든 유형 보기</button>
+            </div>
+        </section>
+
+        <!-- 광고 영역 -->
+        <div class="ad-container">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-1752582087901677"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- MBTI 테스트 코어 -->
+    <script src="js/mbti-test-core.js"></script>
+    
+    <script>
+        let testCore = null;
+        let currentQuestion = null;
+
+        function startTest() {
+            testCore = new MBTITestCore();
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById('test-section').classList.add('active');
+            
+            currentQuestion = testCore.startTest();
+            displayQuestion();
+        }
+
+        function displayQuestion() {
+            const container = document.getElementById('question-container');
+            const progress = document.getElementById('progress');
+            
+            progress.style.width = testCore.getProgress() + '%';
+            
+            container.innerHTML = `
+                <h2>질문 ${testCore.currentQuestion + 1} / ${testCore.questions.length}</h2>
+                <p>${currentQuestion.text}</p>
+                <div class="options">
+                    ${currentQuestion.options.map((opt, idx) => `
+                        <div class="option" onclick="selectAnswer(${idx})">
+                            ${opt.text}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function selectAnswer(index) {
+            const result = testCore.answerQuestion(index);
+            
+            if (result.type) {
+                // 테스트 완료
+                showResult(result);
+            } else {
+                // 다음 질문
+                currentQuestion = result;
+                displayQuestion();
+            }
+        }
+
+        function showResult(result) {
+            document.getElementById('test-section').classList.remove('active');
+            document.getElementById('result-section').classList.add('active');
+            
+            // 결과 표시
+            document.getElementById('mbti-type').textContent = result.type;
+            document.getElementById('mbti-title').textContent = result.details.title;
+            
+            // 차원별 퍼센티지
+            const dimensionsHtml = `
+                <div class="dimension">
+                    <span class="dimension-label">E</span>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: ${result.percentages.E}%">
+                            ${result.percentages.E}%
+                        </div>
+                    </div>
+                    <span class="dimension-label">I</span>
+                </div>
+                <div class="dimension">
+                    <span class="dimension-label">S</span>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: ${result.percentages.S}%">
+                            ${result.percentages.S}%
+                        </div>
+                    </div>
+                    <span class="dimension-label">N</span>
+                </div>
+                <div class="dimension">
+                    <span class="dimension-label">T</span>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: ${result.percentages.T}%">
+                            ${result.percentages.T}%
+                        </div>
+                    </div>
+                    <span class="dimension-label">F</span>
+                </div>
+                <div class="dimension">
+                    <span class="dimension-label">J</span>
+                    <div class="dimension-bar">
+                        <div class="dimension-fill" style="width: ${result.percentages.J}%">
+                            ${result.percentages.J}%
+                        </div>
+                    </div>
+                    <span class="dimension-label">P</span>
+                </div>
+            `;
+            document.getElementById('dimensions').innerHTML = dimensionsHtml;
+            
+            // 상세 정보
+            const detailsHtml = `
+                <div class="detail-card">
+                    <h3>📝 설명</h3>
+                    <p>${result.details.description}</p>
+                </div>
+                <div class="detail-card">
+                    <h3>💪 강점</h3>
+                    <ul>
+                        ${result.details.strengths.map(s => `<li>${s}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>⚠️ 약점</h3>
+                    <ul>
+                        ${result.details.weaknesses.map(w => `<li>${w}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>💼 추천 직업</h3>
+                    <ul>
+                        ${result.details.careers.map(c => `<li>${c}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>💝 잘 맞는 유형</h3>
+                    <ul>
+                        ${result.details.compatibility.map(c => `<li>${c}</li>`).join('')}
+                    </ul>
+                </div>
+                <div class="detail-card">
+                    <h3>🌟 유명인</h3>
+                    <ul>
+                        ${result.details.famous.map(f => `<li>${f}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+            document.getElementById('result-details').innerHTML = detailsHtml;
+            
+            // 결과 저장
+            localStorage.setItem('mbtiType', result.type);
+            localStorage.setItem('mbtiResult', JSON.stringify(result));
+        }
+
+        function restartTest() {
+            document.getElementById('result-section').classList.remove('active');
+            document.getElementById('hero').style.display = 'block';
+        }
+
+        function viewAllTypes() {
+            window.location.href = '#types';
+        }
+
+        function shareKakao() {
+            // 카카오톡 공유 구현
+            alert('카카오톡 공유 기능 준비중');
+        }
+
+        function shareFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+        }
+
+        function shareTwitter() {
+            const url = encodeURIComponent(window.location.href);
+            const text = encodeURIComponent('나의 MBTI 유형을 확인해보세요!');
+            window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href);
+            alert('링크가 복사되었습니다!');
+        }
+
+        // 페이지 로드시 저장된 결과 확인
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedType = localStorage.getItem('mbtiType');
+            if (savedType) {
+                // 저장된 결과가 있으면 표시할 수 있는 옵션 제공
+                console.log('저장된 MBTI 유형:', savedType);
+            }
+        });
+    </script>
+</body>
+</html>
