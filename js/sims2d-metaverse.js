@@ -1,25 +1,32 @@
-// 2D 심즈 스타일 MBTI 메타버스
+// 2D 심즈 스타일 MBTI 메타버스 (온라인 멀티플레이어)
 class Sims2DMetaverse {
     constructor() {
         this.canvas = null;
         this.ctx = null;
-        this.gameState = 'playing';
+        this.gameState = 'characterSelect'; // characterSelect -> playing
+        
+        // Firebase 실시간 DB
+        this.database = null;
+        this.playersRef = null;
+        this.chatRef = null;
+        this.onlinePlayers = new Map();
         
         // 월드 설정
         this.world = {
-            width: 1200,
-            height: 800,
+            width: 1600,
+            height: 1200,
             tileSize: 40,
             camera: { x: 0, y: 0 }
         };
         
         // 플레이어
         this.player = {
+            id: `player_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             x: 600,
             y: 400,
             width: 30,
             height: 40,
-            speed: 3,
+            speed: 4,
             targetX: null,
             targetY: null,
             path: [],
@@ -27,9 +34,12 @@ class Sims2DMetaverse {
             direction: 'down',
             frame: 0,
             mbti: null,
+            name: '',
+            avatar: 1, // 1-8 아바타 선택
             energy: 100,
             happiness: 100,
-            social: 50
+            social: 50,
+            color: '#667eea'
         };
         
         // MBTI 건물들
@@ -84,21 +94,97 @@ class Sims2DMetaverse {
     // 게임 시작
     start(container, mbtiType) {
         this.player.mbti = mbtiType;
+        this.container = container;
+        
+        // 캐릭터 선택 화면 표시
+        this.showCharacterSelection();
+        
+        return this;
+    }
+    
+    // 캐릭터 선택 화면
+    showCharacterSelection() {
+        this.container.innerHTML = `
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 100%; display: flex; align-items: center; justify-content: center;">
+                <div style="background: rgba(255,255,255,0.95); padding: 30px; border-radius: 20px; max-width: 600px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3);">
+                    <h2 style="text-align: center; color: #333; margin-bottom: 20px;">🎮 캐릭터 만들기</h2>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 5px; color: #666;">이름:</label>
+                        <input type="text" id="player-name" placeholder="닉네임을 입력하세요" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 5px; font-size: 16px;">
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 10px; color: #666;">아바타 선택:</label>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
+                            ${[1,2,3,4,5,6,7,8].map(i => `
+                                <button class="avatar-btn" data-avatar="${i}" style="padding: 15px; border: 3px solid ${i === 1 ? '#667eea' : '#ddd'}; background: white; border-radius: 10px; cursor: pointer; transition: all 0.2s;" onclick="sims2d.selectAvatar(${i})">
+                                    <div style="font-size: 40px;">${this.getAvatarEmoji(i)}</div>
+                                    <div style="font-size: 12px; margin-top: 5px;">스타일 ${i}</div>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 10px; color: #666;">캐릭터 색상:</label>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            ${['#667eea', '#ef4444', '#10b981', '#f59e0b', '#ec4899', '#3b82f6', '#8b5cf6', '#14b8a6'].map(color => `
+                                <button class="color-btn" data-color="${color}" style="width: 40px; height: 40px; background: ${color}; border: 3px solid ${color === '#667eea' ? '#333' : '#ddd'}; border-radius: 50%; cursor: pointer;" onclick="sims2d.selectColor('${color}')"></button>
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <button onclick="sims2d.startGame()" style="width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; border-radius: 10px; font-size: 18px; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                        🚀 게임 시작하기
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    
+    // 아바타 선택
+    selectAvatar(avatarId) {
+        this.player.avatar = avatarId;
+        document.querySelectorAll('.avatar-btn').forEach(btn => {
+            btn.style.borderColor = btn.dataset.avatar == avatarId ? '#667eea' : '#ddd';
+        });
+    }
+    
+    // 색상 선택
+    selectColor(color) {
+        this.player.color = color;
+        document.querySelectorAll('.color-btn').forEach(btn => {
+            btn.style.borderColor = btn.dataset.color === color ? '#333' : '#ddd';
+        });
+    }
+    
+    // 게임 시작
+    startGame() {
+        const nameInput = document.getElementById('player-name');
+        const name = nameInput ? nameInput.value.trim() : '';
+        
+        if (!name) {
+            alert('닉네임을 입력해주세요!');
+            return;
+        }
+        
+        this.player.name = name;
+        this.gameState = 'playing';
         
         // 플레이어를 해당 MBTI 집 앞에 위치
-        const playerHouse = this.buildings.find(b => b.id === mbtiType);
+        const playerHouse = this.buildings.find(b => b.id === this.player.mbti);
         if (playerHouse) {
             this.player.x = playerHouse.x + 40;
             this.player.y = playerHouse.y + 80;
         }
         
-        this.setupCanvas(container);
+        this.setupCanvas(this.container);
         this.setupEvents();
+        this.initFirebase();
         this.startGameLoop();
         
-        this.showWelcomeMessage(mbtiType);
-        
-        return this;
+        this.showWelcomeMessage(this.player.mbti);
     }
     
     // 캔버스 설정
@@ -233,6 +319,12 @@ class Sims2DMetaverse {
             this.player.happiness = Math.max(0, this.player.happiness - 1);
         }
         
+        // Firebase 업데이트 (0.1초마다)
+        if (this.frameCount % 6 === 0) {
+            this.updatePlayerOnline();
+        }
+        this.frameCount = (this.frameCount || 0) + 1;
+        
         // UI 업데이트
         this.updateUI();
     }
@@ -241,10 +333,24 @@ class Sims2DMetaverse {
     updatePlayer(deltaTime) {
         // 키보드 이동
         let dx = 0, dy = 0;
-        if (this.keys['w'] || this.keys['W'] || this.keys['ArrowUp']) dy -= this.player.speed;
-        if (this.keys['s'] || this.keys['S'] || this.keys['ArrowDown']) dy += this.player.speed;
-        if (this.keys['a'] || this.keys['A'] || this.keys['ArrowLeft']) dx -= this.player.speed;
-        if (this.keys['d'] || this.keys['D'] || this.keys['ArrowRight']) dx += this.player.speed;
+        let isMoving = false;
+        
+        if (this.keys['w'] || this.keys['W'] || this.keys['ArrowUp']) {
+            dy -= this.player.speed;
+            isMoving = true;
+        }
+        if (this.keys['s'] || this.keys['S'] || this.keys['ArrowDown']) {
+            dy += this.player.speed;
+            isMoving = true;
+        }
+        if (this.keys['a'] || this.keys['A'] || this.keys['ArrowLeft']) {
+            dx -= this.player.speed;
+            isMoving = true;
+        }
+        if (this.keys['d'] || this.keys['D'] || this.keys['ArrowRight']) {
+            dx += this.player.speed;
+            isMoving = true;
+        }
         
         // 마우스 클릭 이동
         if (this.player.targetX !== null && this.player.targetY !== null) {
@@ -592,6 +698,18 @@ class Sims2DMetaverse {
     
     // 건물 입장
     enterBuilding(building) {
+        // 플레이어와 건물 입구의 거리 체크
+        const distance = Math.sqrt(
+            Math.pow(this.player.x - (building.x + building.width/2), 2) +
+            Math.pow(this.player.y - (building.y + building.height), 2)
+        );
+        
+        // 너무 멀면 입장 불가
+        if (distance > 60) {
+            this.showDialog('건물에 더 가까이 가서 클릭하세요!');
+            return;
+        }
+        
         const messages = {
             'house': `${building.name}에 입장했습니다! 🏠\n\n${building.id} 스타일의 인테리어가 인상적입니다.\n에너지와 행복도가 회복됩니다!`,
             'cafe': `${building.name}에서 맛있는 커피를 마셨습니다! ☕\n\n사교성이 증가하고 기분이 좋아집니다!`,
@@ -723,6 +841,147 @@ class Sims2DMetaverse {
             'ISTP': '#78716c', 'ISFP': '#22c55e', 'ESTP': '#dc2626', 'ESFP': '#be185d'
         };
         return colors[mbti] || '#666666';
+    }
+    
+    // 아바타 이모지 가져오기
+    getAvatarEmoji(avatarId) {
+        const avatars = {
+            1: '😊', 2: '😎', 3: '🤓', 4: '😍',
+            5: '🤠', 6: '👨‍🎤', 7: '👩‍🎤', 8: '🦸'
+        };
+        return avatars[avatarId] || '😊';
+    }
+    
+    // Firebase 초기화
+    initFirebase() {
+        // Firebase가 이미 초기화되어 있는지 확인
+        if (typeof firebase !== 'undefined' && !firebase.apps.length) {
+            firebase.initializeApp({
+                apiKey: "AIzaSyDY6bF6-fuKZ9BZn4YJbcWZ4XzR_yu-KQw",
+                authDomain: "mbti-metaverse.firebaseapp.com",
+                databaseURL: "https://mbti-metaverse-default-rtdb.firebaseio.com",
+                projectId: "mbti-metaverse",
+                storageBucket: "mbti-metaverse.appspot.com",
+                messagingSenderId: "123456789",
+                appId: "1:123456789:web:abcdef123456"
+            });
+        }
+        
+        if (typeof firebase !== 'undefined' && firebase.database) {
+            this.database = firebase.database();
+            this.playersRef = this.database.ref('players');
+            this.chatRef = this.database.ref('chat');
+            
+            // 플레이어 온라인 상태 설정
+            this.updatePlayerOnline();
+            
+            // 다른 플레이어들 리스닝
+            this.listenToPlayers();
+            
+            // 채팅 리스닝
+            this.listenToChat();
+            
+            // 연결 끊김 처리
+            this.playersRef.child(this.player.id).onDisconnect().remove();
+        }
+    }
+    
+    // 플레이어 온라인 상태 업데이트
+    updatePlayerOnline() {
+        if (this.playersRef) {
+            const playerData = {
+                id: this.player.id,
+                name: this.player.name,
+                mbti: this.player.mbti,
+                x: Math.round(this.player.x),
+                y: Math.round(this.player.y),
+                avatar: this.player.avatar,
+                color: this.player.color,
+                animation: this.player.animation,
+                direction: this.player.direction,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+            
+            this.playersRef.child(this.player.id).set(playerData);
+        }
+    }
+    
+    // 다른 플레이어들 리스닝
+    listenToPlayers() {
+        if (!this.playersRef) return;
+        
+        // 새 플레이어 추가
+        this.playersRef.on('child_added', (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.id !== this.player.id) {
+                this.onlinePlayers.set(data.id, data);
+            }
+        });
+        
+        // 플레이어 업데이트
+        this.playersRef.on('child_changed', (snapshot) => {
+            const data = snapshot.val();
+            if (data && data.id !== this.player.id) {
+                this.onlinePlayers.set(data.id, data);
+            }
+        });
+        
+        // 플레이어 제거
+        this.playersRef.on('child_removed', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                this.onlinePlayers.delete(data.id);
+            }
+        });
+    }
+    
+    // 채팅 리스닝
+    listenToChat() {
+        if (!this.chatRef) return;
+        
+        // 최근 50개 메시지만 리스닝
+        this.chatRef.limitToLast(50).on('child_added', (snapshot) => {
+            const message = snapshot.val();
+            if (message && message.playerId !== this.player.id) {
+                this.showChatBubble(message.playerId, message.text);
+            }
+        });
+    }
+    
+    // 채팅 말풍선 표시
+    showChatBubble(playerId, text) {
+        const player = this.onlinePlayers.get(playerId);
+        if (!player) return;
+        
+        // 말풍선 생성 및 3초 후 제거
+        player.chatBubble = text;
+        player.chatBubbleTime = Date.now();
+        
+        setTimeout(() => {
+            if (player.chatBubble === text) {
+                player.chatBubble = null;
+            }
+        }, 3000);
+    }
+    
+    // 채팅 전송
+    sendChat(text) {
+        if (!this.chatRef || !text) return;
+        
+        this.chatRef.push({
+            playerId: this.player.id,
+            playerName: this.player.name,
+            text: text,
+            timestamp: firebase.database.ServerValue.TIMESTAMP
+        });
+        
+        // 자신에게도 말풍선 표시
+        this.player.chatBubble = text;
+        this.player.chatBubbleTime = Date.now();
+        
+        setTimeout(() => {
+            this.player.chatBubble = null;
+        }, 3000);
     }
 }
 
