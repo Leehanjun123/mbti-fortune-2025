@@ -700,7 +700,7 @@
     <script src="js/mbti-battle.js"></script>
     <script src="js/mbti-worldcup.js"></script>
     <script src="js/mbti-metaverse.js"></script>
-    <script src="js/simple-metaverse.js"></script>
+    <script src="js/sims2d-metaverse.js"></script>
     <script src="js/mbti-ai-chat.js"></script>
     <script src="js/mbti-compatibility.js"></script>
     <script src="js/battle-arena-enhanced.js"></script>
@@ -1143,10 +1143,10 @@
         function initSimsMetaverse() {
             const container = document.getElementById('metaverseContent');
             
-            // 간단하고 실용적인 메타버스 시작
-            if (typeof SimpleMBTIMetaverse !== 'undefined') {
-                simpleMeta = new SimpleMBTIMetaverse();
-                simpleMeta.start(container, currentMBTI);
+            // 2D 심즈 스타일 메타버스 시작
+            if (typeof Sims2DMetaverse !== 'undefined') {
+                sims2d = new Sims2DMetaverse();
+                sims2d.start(container, currentMBTI);
             } else {
                 container.innerHTML = `
                     <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: linear-gradient(45deg, #1e1b4b, #312e81); color: white;">
