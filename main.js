@@ -46,7 +46,7 @@ const ScreenManager = {
     },
     
     show(screenId) {
-        console.log(`화면 전환: ${AppState.currentScreen} → ${screenId}`);
+        // Screen transition
         
         // 모든 화면 숨기기
         this.screens.forEach(id => {
@@ -369,16 +369,16 @@ const FortuneManager = {
         const name = AppState.userName || '당신';
         const fortune = this.fortunes[mbti] || this.fortunes['INTJ'];
         
-        console.log('운세 생성:', { mbti, name, fortune });
+        // Fortune generation
         
         // 안전하게 요소 업데이트
         const updateElement = (id, text) => {
             const el = document.getElementById(id);
             if (el) {
                 el.textContent = text;
-                console.log(`✅ ${id} 업데이트: ${text.substring(0, 30)}...`);
+                // Element updated
             } else {
-                console.error(`❌ ${id} 요소를 찾을 수 없음`);
+                // Element not found
             }
         };
         
@@ -391,7 +391,7 @@ const FortuneManager = {
             const el = document.getElementById(id);
             if (el) {
                 el.innerHTML = text;
-                console.log(`✅ ${id} 카테고리 업데이트`);
+                // Category updated
             }
         };
         
@@ -430,15 +430,15 @@ const AdManager = {
     maxRenderAttempts: 5,
     
     init() {
-        console.log('🎯 AdManager 초기화 시작');
+        // AdManager initialization started
         
         // 카카오 SDK 로드 확인
         if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
             try {
                 Kakao.init(window.CONFIG?.KAKAO_APP_KEY || '48c0d88498f6ea2f7e8c8f87654321ab');
-                console.log('✅ 카카오 SDK 초기화 성공');
+                // Kakao SDK initialized successfully
             } catch(e) {
-                console.log('❌ 카카오 SDK 초기화 실패:', e);
+                // Kakao SDK initialization failed
             }
         }
         
@@ -448,7 +448,7 @@ const AdManager = {
     
     loadAdFitScript() {
         if (document.getElementById('kakao-adfit-script')) {
-            console.log('AdFit 스크립트 이미 로드됨');
+            // AdFit script already loaded
             this.isReady = true;
             return;
         }
@@ -459,13 +459,13 @@ const AdManager = {
         script.async = true;
         script.onload = () => {
             this.isReady = true;
-            console.log('✅ AdFit 스크립트 로드 완료');
+            // AdFit script loaded successfully
             
             // 즉시 렌더링 시도
             setTimeout(() => this.render(), 100);
         };
         script.onerror = () => {
-            console.log('❌ AdFit 스크립트 로드 실패');
+            // AdFit script load failed
             this.showFallbackAds();
         };
         document.body.appendChild(script);
@@ -473,7 +473,7 @@ const AdManager = {
     
     render() {
         this.renderAttempts++;
-        console.log(`🔄 광고 렌더링 시도 ${this.renderAttempts}/${this.maxRenderAttempts}`);
+        // Ad rendering attempt
         
         if (!this.isReady && this.renderAttempts < this.maxRenderAttempts) {
             setTimeout(() => this.render(), 1000);
@@ -482,10 +482,10 @@ const AdManager = {
         
         // 모든 광고 영역 찾기
         const adAreas = document.querySelectorAll('.kakao_ad_area');
-        console.log(`📍 광고 영역 ${adAreas.length}개 발견`);
+        // Ad areas found
         
         if (adAreas.length === 0) {
-            console.log('❌ 광고 영역을 찾을 수 없음');
+            // No ad areas found
             return;
         }
         
@@ -504,7 +504,7 @@ const AdManager = {
                 container.style.display = 'flex';
                 container.style.visibility = 'visible';
                 container.style.opacity = '1';
-                console.log(`✅ 광고 컨테이너 ${index + 1} 활성화`);
+                // Ad container activated
             }
         });
         
@@ -512,18 +512,18 @@ const AdManager = {
         try {
             if (typeof window.adsbykakao === 'undefined') {
                 window.adsbykakao = [];
-                console.log('🔧 adsbykakao 객체 수동 생성');
+                // adsbykakao object manually created
             }
             
             // 카카오 애드핏 렌더링
             window.adsbykakao.push({});
-            console.log('🎉 카카오 애드핏 렌더링 완료!');
+            // Kakao AdFit rendering completed
             
             // 2초 후 렌더링 확인
             setTimeout(() => this.verifyAdRendering(), 2000);
             
         } catch(e) {
-            console.log('❌ 광고 렌더링 실패:', e);
+            // Ad rendering failed
             this.showFallbackAds();
         }
     },
@@ -533,9 +533,9 @@ const AdManager = {
         adAreas.forEach((area, index) => {
             const hasContent = area.children.length > 0 || area.innerHTML.trim().length > 0;
             if (hasContent) {
-                console.log(`✅ 광고 ${index + 1} 렌더링 확인됨`);
+                // Ad rendering verified
             } else {
-                console.log(`⚠️ 광고 ${index + 1} 렌더링 미확인 - 플레이스홀더 표시`);
+                // Ad rendering not verified - showing placeholder
                 this.showPlaceholder(area);
             }
         });
@@ -553,7 +553,7 @@ const AdManager = {
     },
     
     showFallbackAds() {
-        console.log('🔄 대체 광고 시스템 활성화');
+        // Fallback ad system activated
         const containers = document.querySelectorAll('.ad-container');
         containers.forEach(container => {
             if (!container.querySelector('.ad-placeholder')) {
@@ -570,22 +570,22 @@ const AdManager = {
 window.MBTIApp = {
     // 시작 화면 함수들
     startMagicalJourney() {
-        console.log('마법같은 여정 시작!');
+        // Magical journey started
         ScreenManager.show('name');
     },
     
     showMBTISelect() {
-        console.log('MBTI 선택 경로');
+        // MBTI selection path
         ScreenManager.show('quickSelect');
     },
     
     showQuickSelect() {
-        console.log('MBTI 빠른 선택');
+        // MBTI quick selection
         ScreenManager.show('quickSelect');
     },
     
     goBack() {
-        console.log('처음으로 돌아가기');
+        // Going back to start
         ScreenManager.show('start');
     },
     
@@ -594,9 +594,9 @@ window.MBTIApp = {
         const nameInput = document.getElementById('nameInput');
         if (nameInput && nameInput.value.trim()) {
             AppState.userName = nameInput.value.trim();
-            console.log('이름 입력됨:', AppState.userName);
-            console.log('skipTest:', AppState.skipTest);
-            console.log('MBTI Type:', AppState.mbtiType);
+            // Name entered
+            // Skip test flag
+            // MBTI type selected
             
             if (AppState.skipTest && AppState.mbtiType) {
                 // MBTI를 이미 선택한 경우 바로 결과로
@@ -611,7 +611,7 @@ window.MBTIApp = {
     
     // MBTI 직접 선택
     selectMBTI(mbti) {
-        console.log('MBTI 선택됨:', mbti);
+        // MBTI selected
         AppState.mbtiType = mbti;
         AppState.skipTest = true;
         ScreenManager.show('name');
@@ -685,7 +685,7 @@ window.MBTIApp = {
                 this.showShareSuccess();
                 
             } catch(e) {
-                console.log('카카오 공유 실패:', e);
+                // Kakao share failed
                 this.fallbackShare(fullMessage);
             }
         } else {
@@ -748,7 +748,7 @@ window.MBTIApp = {
             content.style.maxHeight = content.scrollHeight + 'px';
         }
         
-        console.log('카테고리 토글:', element.querySelector('.category-title')?.textContent);
+        // Category toggled
     },
     
     fallbackShare(text) {
@@ -781,12 +781,12 @@ window.toggleCategory = window.MBTIApp.toggleCategory;
 
 // 추가 필요한 함수들
 window.skipQuestion = function() {
-    console.log('질문 건너뛰기');
+    // Question skipped
     TestManager.skipQuestion();
 };
 
 window.showPremium = function() {
-    console.log('프리미엄 모달 표시 (Jeff Bezos 최적화)');
+    // Premium modal shown (Jeff Bezos optimization)
     const modal = document.getElementById('premiumModal');
     if (modal) {
         modal.style.display = 'flex';
@@ -882,7 +882,7 @@ function showRecentBuyers() {
 }
 
 window.closePremium = function() {
-    console.log('프리미엄 모달 닫기');
+    // Premium modal closed
     const modal = document.getElementById('premiumModal');
     if (modal) {
         modal.style.display = 'none';
@@ -890,17 +890,17 @@ window.closePremium = function() {
 };
 
 window.buyPremium = function() {
-    console.log('프리미엄 구매');
+    // Premium purchased
     alert('프리미엄 기능은 준비 중입니다!');
 };
 
 window.giftPremium = function() {
-    console.log('프리미엄 선물');
+    // Premium gifted
     alert('선물 기능은 준비 중입니다!');
 };
 
 window.openFeedback = function() {
-    console.log('피드백 열기');
+    // Feedback opened
     alert('의견을 보내주세요: mbti2025@example.com');
 };
 
@@ -939,24 +939,24 @@ window.startTest = function() {
 };
 
 window.startFreeTrial = function() {
-    console.log('무료체험 시작');
+    // Free trial started
     alert('7일 무료체험이 시작됩니다! 🎉\n모든 프리미엄 기능을 무료로 체험해보세요.');
     window.closePremium();
 };
 
 window.showPremium = function() {
-    console.log('프리미엄 모달 표시');
+    // Premium modal shown
     // 프리미엄 모달 표시 로직
 };
 
 window.closePremium = function() {
-    console.log('프리미엄 모달 닫기');
+    // Premium modal closed
     // 프리미엄 모달 닫기 로직
 };
 
 // 초기화
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 MBTI 운세 앱 초기화 시작');
+    // MBTI fortune app initialization started
     
     // 화면 관리자 초기화
     ScreenManager.init();
@@ -971,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         ScreenManager.show('start');
         AppState.isInitialized = true;
-        console.log('✅ 앱 초기화 완료');
+        // App initialization completed
     }, 2000);
     
     // 사용자 수 애니메이션
@@ -986,9 +986,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 에러 핸들링
 window.addEventListener('error', function(e) {
-    console.error('전역 에러:', e.error);
+    // Global error occurred
     // 에러가 발생해도 앱은 계속 작동
     return true;
 });
 
-console.log('✅ main.js 로드 완료');
+// main.js loaded

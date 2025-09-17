@@ -333,14 +333,14 @@ const app = {
 //         AccessibilityManager.addFocusIndicators();
 //         AccessibilityManager.enhanceKeyboardNavigation();
 //         
-//         console.log('✅ Enterprise-Grade 초기화 완료');
+//         Enterprise-Grade initialization completed
 //     } catch (error) {
 //         ErrorBoundary.handleError(error, 'DOMContentLoaded');
 //     }
 // });
 
 function initApp() {
-    console.log('🎯 앱 초기화 시작');
+    // App initialization started
     
     // 강제 스크롤 방지 설정
     document.body.style.overflow = 'hidden';
@@ -368,7 +368,7 @@ function initApp() {
     
     // 2초 후 로딩 완료
     setTimeout(() => {
-        console.log('⚡ 로딩 완료, 시작 화면으로 전환');
+        // Loading completed, transitioning to start screen
         
         // 로딩 화면 완전 제거
         const loadingScreen = document.getElementById('loadingScreen');
@@ -446,7 +446,7 @@ const ErrorBoundary = {
             url: window.location.href
         };
         
-        console.error(`[Error Boundary] ${context}:`, errorInfo);
+        // Error boundary triggered
         
         // 치명적 오류 처리
         if (app.errorCount >= app.maxErrors) {
@@ -599,7 +599,7 @@ setInterval(() => {
 // 🚀 화면 전환 (완전 격리 시스템 + Error Boundary)
 function showScreen(screenId) {
     try {
-        console.log(`🔄 화면 전환: ${app.currentScreen} → ${screenId}`);
+        // Screen transition
         
         // 0단계: body와 html 스크롤 강제 방지
         document.body.style.overflow = 'hidden';
@@ -649,7 +649,7 @@ function showScreen(screenId) {
             AccessibilityManager.enhanceKeyboardNavigation();
             
             app.currentScreen = screenId;
-            console.log(`✅ ${screenId} 화면 활성화 완료`);
+            // Screen activation completed
             
             // 화면별 후처리
             setTimeout(() => {
@@ -658,7 +658,7 @@ function showScreen(screenId) {
                 }
             }, 500);
         } else {
-            console.error(`❌ ${screenId}Screen 요소를 찾을 수 없음`);
+            // Screen element not found
             throw new Error(`Screen element not found: ${screenId}Screen`);
         }
     } catch (error) {
@@ -669,11 +669,11 @@ function showScreen(screenId) {
 // 여정 시작 - 이름 입력부터
 // 🎯 마법같은 여정 시작 (Steve Jobs 스타일)
 function startMagicalJourney() {
-    console.log('✨ 마법같은 여정 시작!');
-    console.log('현재 앱 상태:', app);
+    // Magical journey started
+    // Current app state logged
     
     // 테스트로 바로 시작 (MBTI를 모르는 경우)
-    console.log('MBTI 테스트로 시작');
+    // Starting with MBTI test
     app.skipNameInput = false; // 이름 입력은 테스트 후에
     startTest(); // 테스트 시작
     
@@ -685,35 +685,35 @@ function startMagicalJourney() {
 
 // 🧭 테스트 경로 선택 (MBTI 모르는 경우)
 function startTest() {
-    console.log('🧭 테스트 경로 선택됨!');
-    console.log('현재 앱 상태:', app);
+    // Test path selected
+    // Current app state logged
     
     // 이름 입력 화면으로 이동 (기존 플로우)
-    console.log('이름 입력 화면으로 이동 중...');
+    // Moving to name input screen
     showScreen('name');
 }
 
 // ⚡ MBTI 직접 선택 경로 (MBTI 이미 아는 경우)  
 function showMBTISelect() {
-    console.log('⚡ MBTI 직접 선택 경로 선택됨!');
-    console.log('현재 앱 상태:', app);
+    // MBTI direct selection path chosen
+    // Current app state logged
     
     // MBTI 빠른 선택 화면으로 이동
-    console.log('MBTI 빠른 선택 화면으로 이동 중...');
+    // Moving to MBTI quick selection screen
     showQuickSelect(); // 기존 함수 재활용
 }
 
 // 기존 호환성 유지
 function startJourney() {
-    console.log('🚀 시작하기 버튼 클릭됨!');
+    // Start button clicked
     // 기본적으로 테스트 경로로 이동
     startTest();
     
     // 추가 확인
     setTimeout(() => {
         const nameScreen = document.getElementById('nameScreen');
-        console.log('nameScreen 요소:', nameScreen);
-        console.log('nameScreen 클래스:', nameScreen?.className);
+        // nameScreen element found
+        // nameScreen classes logged
     }, 100);
 }
 
@@ -725,14 +725,14 @@ function startJourney() {
 
 // MBTI 빠른 선택 화면
 function showQuickSelect() {
-    console.log('MBTI 빠른 선택 화면으로 이동');
+    // Moving to MBTI quick selection screen
     // 빠른 선택을 위해 바로 MBTI 선택 화면으로
     showScreen('quickSelect');
 }
 
 // MBTI 선택 (빠른 선택)
 function selectMBTI(type) {
-    console.log('MBTI 선택:', type);
+    // MBTI selected
     app.mbtiType = type;
     localStorage.setItem('lastMBTI', type);
     
@@ -771,15 +771,15 @@ function submitName() {
         app.userName = name;
         localStorage.setItem('userName', app.userName);
         
-        console.log('submitName - 이름 저장:', app.userName);
+        // Name saved
         
         // MBTI가 이미 선택되었으면 (빠른 선택 경로) 바로 결과로
         if (app.skipTest && app.mbtiType) {
-            console.log('빠른 선택 경로 - 바로 계산 화면으로');
+            // Quick selection path - directly to calculation screen
             showCalculating();
         } else {
             // 일반 경로 - 테스트 시작
-            console.log('일반 경로 - 테스트 화면으로');
+            // Normal path - to test screen
             showScreen('test');
             loadQuestion();
         }
@@ -881,7 +881,7 @@ function calculateMBTI() {
 function showCalculating() {
     // 사용자 정보가 모두 입력되었는지 확인
     if (!app.mbtiType) {
-        console.log('MBTI가 선택되지 않음, 테스트 화면으로 이동');
+        // MBTI not selected, moving to test screen
         startTest();
         return;
     }
@@ -1113,7 +1113,7 @@ function saveResult() {
 // 통계 업데이트 (더미 함수)
 function updateStatistics(result) {
     // 실제로는 서버로 데이터 전송
-    console.log('Statistics updated:', result);
+    // Statistics updated
 }
 
 // 친구 테스트 만들기
@@ -1239,7 +1239,7 @@ function shareLinkInvite() {
         }).then(() => {
             showToast('초대장을 보냈어요! 🎉');
         }).catch((error) => {
-            console.log('공유 취소:', error);
+            // Share cancelled
         });
     } else {
         // 클립보드에 복사
@@ -1256,10 +1256,10 @@ function initKakaoSDK() {
         const kakaoKey = 'f537696494115d340642edd997dcbca0';
         if (window.Kakao && !window.Kakao.isInitialized()) {
             window.Kakao.init(kakaoKey);
-            console.log('카카오 SDK 초기화 완료');
+            // Kakao SDK initialized
         }
     } catch (error) {
-        console.log('카카오 SDK 초기화 실패 (무시됨):', error.message);
+        // Kakao SDK initialization failed (ignored)
         // SDK 실패해도 앱은 정상 작동
     }
 }
@@ -1510,7 +1510,7 @@ function openFeedback() {
     const feedback = prompt('어떤 점이 좋았나요? 개선할 점이 있나요?');
     if (feedback) {
         // 실제로는 서버로 전송
-        console.log('Feedback:', feedback);
+        // Feedback submitted
         alert('소중한 의견 감사합니다! 더 나은 서비스로 보답하겠습니다.');
     }
 }
@@ -1589,7 +1589,7 @@ function initAds() {
     // 광고 스크립트 에러 핸들링
     window.addEventListener('error', (e) => {
         if (e.message && e.message.includes('adsbygoogle')) {
-            console.log('광고 로딩 에러 - 정상 동작에는 영향 없습니다.');
+            // Ad loading error - no impact on normal operation
         }
     });
 }
@@ -1604,7 +1604,7 @@ function detectAdBlock() {
     
     setTimeout(() => {
         if (testAd.offsetHeight === 0) {
-            console.log('AdBlock detected');
+            // AdBlock detected
             showAdBlockMessage();
         }
         document.body.removeChild(testAd);
@@ -1737,7 +1737,7 @@ function hideFloatingAd() {
 function refreshAds() {
     // 구글 애드센스는 자동 새로고침되므로 수동 새로고침 제거
     // 광고가 이미 로드된 요소는 다시 push하면 에러 발생
-    console.log('광고 자동 새로고침 중...');
+    // Auto-refreshing ads
 }
 
 // 광고 수익 추적
@@ -1794,17 +1794,17 @@ function loadNativeAds() {
 // 스마트 광고 렌더링 함수
 function renderKakaoAds() {
     try {
-        console.log('🎯 광고 렌더링 시작');
+        // Ad rendering started
         
         // 광고 로딩 상태 확인
         if (!window.adLoadState || !window.adLoadState.loaded) {
-            console.log('광고 스크립트 미로드 - 렌더링 스킵');
+            // Ad script not loaded - skipping rendering
             return;
         }
         
         // 모든 카카오 광고 영역 활성화 및 가시성 보장
         const kakaoAds = document.querySelectorAll('.kakao_ad_area');
-        console.log(`광고 영역 ${kakaoAds.length}개 처리 중...`);
+        // Processing ad areas
         
         kakaoAds.forEach((ad, index) => {
             // 강력한 가시성 보장
@@ -1827,7 +1827,7 @@ function renderKakaoAds() {
                 container.style.zIndex = '1000';
             }
             
-            console.log(`광고 영역 ${index + 1} 완전 가시화 완료`);
+            // Ad area fully visible
         });
         
         // 🚀 스마트 adsbykakao 객체 대기 및 렌더링 시스템
@@ -1842,21 +1842,21 @@ function renderKakaoAds() {
                 if (typeof window.adsbykakao !== 'undefined') {
                     // adsbykakao 객체 존재 - 렌더링 실행
                     window.adsbykakao.push({});
-                    console.log(`🎉 카카오 애드핏 렌더링 완료! (${attempts}번째 시도에서 성공)`);
+                    // Kakao AdFit rendering completed
                     return;
                 }
                 
                 if (attempts >= maxAttempts) {
                     // 최대 시도 횟수 도달 - 수동으로 객체 생성
-                    console.log('⚠️ adsbykakao 객체 대기 시간 초과 - 수동 생성');
+                    // adsbykakao object wait timeout - manual creation
                     window.adsbykakao = window.adsbykakao || [];
                     window.adsbykakao.push({});
-                    console.log('🎉 카카오 애드핏 렌더링 완료! (수동 생성)');
+                    // Kakao AdFit rendering completed (manual creation)
                     return;
                 }
                 
                 // 다음 시도 예약
-                console.log(`🔄 adsbykakao 객체 대기 중... (${attempts}/${maxAttempts})`);
+                // Waiting for adsbykakao object
                 setTimeout(tryRender, checkInterval);
             }
             
@@ -1869,10 +1869,7 @@ function renderKakaoAds() {
             kakaoAds.forEach((ad, index) => {
                 // viewport 내 위치 강제 설정
                 const rect = ad.getBoundingClientRect();
-                console.log(`광고 영역 ${index + 1} 위치:`, {
-                    top: rect.top,
-                    left: rect.left,
-                    width: rect.width,
+                // Ad area position logged
                     height: rect.height,
                     visible: rect.top >= 0 && rect.left >= 0 && rect.bottom <= window.innerHeight && rect.right <= window.innerWidth
                 });
@@ -1880,7 +1877,7 @@ function renderKakaoAds() {
                 // 만약 완전히 화면 밖에 있다면 위치 조정
                 if (rect.top < 0 || rect.top > window.innerHeight) {
                     ad.scrollIntoView({ behavior: 'instant', block: 'center' });
-                    console.log(`광고 영역 ${index + 1} 뷰포트 내로 이동 완료`);
+                    // Ad area moved into viewport
                 }
             });
         }, 500);
@@ -1888,7 +1885,7 @@ function renderKakaoAds() {
         // 스마트 렌더링 시작  
         waitForAdsbykakaoAndRender();
     } catch(error) {
-        console.log('광고 렌더링 오류:', error.message);
+        // Ad rendering error
         ErrorBoundary.handleError(error, 'Kakao Ads Rendering');
         // 오류 발생시에도 앱은 정상 동작
     }
@@ -1896,7 +1893,7 @@ function renderKakaoAds() {
 
 // 결과 화면에서 광고 강제 재렌더링
 function forceAdRefresh() {
-    console.log('결과 화면 광고 새로고침');
+    // Result screen ad refresh
     setTimeout(() => {
         renderKakaoAds();
     }, 1000);
@@ -1907,7 +1904,7 @@ const originalShowResult = showResult;
 if (typeof showResult === 'function') {
     showResult = function() {
         originalShowResult.call(this);
-        console.log('결과 화면 표시 완료 - 광고 렌더링 시작');
+        // Result screen displayed - starting ad rendering
         
         // 결과 화면 표시 후 광고 렌더링
         setTimeout(() => {

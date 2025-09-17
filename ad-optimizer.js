@@ -15,7 +15,7 @@ const AdOptimizer = {
                 
                 return originalFetch.apply(this, args).catch(error => {
                     // 429 에러나 기타 광고 에러는 조용히 처리
-                    console.log('광고 요청 처리 중...');
+                    // Ad request processing
                     return new Response('', { status: 200 });
                 });
             }
@@ -42,7 +42,7 @@ const AdOptimizer = {
                     
                     xhr.addEventListener('load', function() {
                         if (xhr.status === 429) {
-                            console.log('광고 서버 일시적 제한 - 자동 재시도 예정');
+                            // Ad server temporarily limited - auto retry scheduled
                         }
                     });
                 }
@@ -70,7 +70,7 @@ const AdOptimizer = {
             originalError.apply(console, args);
         };
         
-        console.log('✨ 광고 최적화 모듈 활성화');
+        // Ad optimization module activated
     },
     
     // 스마트 광고 로딩

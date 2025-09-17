@@ -17,7 +17,7 @@ const AdvancedAnalytics = {
             
             // 중요한 상호작용 로깅
             if (type === 'mbti_selection' || type === 'premium_click') {
-                console.log(`🎯 중요 상호작용: ${type}`, details);
+                // Important interaction tracked
             }
         },
         
@@ -73,7 +73,7 @@ const AdvancedAnalytics = {
             try {
                 observer.observe({ entryTypes: ['paint', 'largest-contentful-paint', 'layout-shift'] });
             } catch (e) {
-                console.warn('Performance Observer not fully supported');
+                // Performance Observer not fully supported
             }
             
             // First Input Delay (FID)
@@ -88,7 +88,7 @@ const AdvancedAnalytics = {
             try {
                 fidObserver.observe({ entryTypes: ['first-input'], buffered: true });
             } catch (e) {
-                console.warn('FID measurement not supported');
+                // FID measurement not supported
             }
         },
         
@@ -346,12 +346,12 @@ const AdvancedAnalytics = {
         link.download = `mbti-analytics-${Date.now()}.json`;
         link.click();
         
-        console.log('📊 분석 데이터 내보내기 완료');
+        // Analytics data export completed
     },
     
     // 초기화
     init() {
-        console.log('📊 고급 분석 시스템 시작');
+        // Advanced analytics system started
         
         // 기본 추적 설정
         this.userBehavior.trackInteraction('page_load', document.body, {
@@ -465,7 +465,7 @@ const AdvancedAnalytics = {
         
         localStorage.setItem('analyticsData', JSON.stringify(existingData));
         
-        console.log('📊 분석 데이터 저장 완료');
+        // Analytics data saved
     },
     
     // 성능 최적화 도우미

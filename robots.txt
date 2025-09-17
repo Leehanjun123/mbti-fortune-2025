@@ -3,9 +3,12 @@
 
 User-agent: *
 Allow: /
+Disallow: /backup/
 Disallow: /api/
 Disallow: /admin/
 Disallow: /private/
+Disallow: /*.js$
+Disallow: /*.json$
 
 # Sitemap location
 Sitemap: https://mbti-destiny.site/sitemap.xml

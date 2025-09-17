@@ -305,7 +305,7 @@ class MBTIClient {
 // 사용 예시
 const client = new MBTIClient('your-api-key');
 const result = await client.analyze(userAnswers);
-console.log(\`당신의 MBTI는 \${result.type}입니다\`);
+// Your MBTI type result logged
         `
     },
     
@@ -448,7 +448,7 @@ console.log(\`당신의 MBTI는 \${result.type}입니다\`);
 // 3줄로 시작하기
 const mbti = new MBTIClient('your-api-key');
 const result = await mbti.analyze(answers);
-console.log(result.type); // "INTJ"
+// Result type: "INTJ"
             </code></pre>
         </div>
         

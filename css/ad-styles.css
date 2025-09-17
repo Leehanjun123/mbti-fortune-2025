@@ -1,0 +1,412 @@
+/* 광고 수익 극대화 스타일 */
+
+/* 광고 슬롯 스타일 */
+.ad-slot {
+    min-height: 250px;
+    background: #f0f0f0;
+    border: 2px dashed #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+    position: relative;
+}
+
+.ad-slot::before {
+    content: "Advertisement";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    font-size: 10px;
+    color: #999;
+}
+
+/* 스티키 광고 */
+.sticky-ad-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 플로팅 광고 */
+.floating-ad {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 160px;
+    height: 600px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    z-index: 1000;
+}
+
+/* 잠긴 콘텐츠 */
+.locked-content {
+    position: relative;
+    padding: 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 15px;
+    color: white;
+}
+
+.blur-text {
+    filter: blur(5px);
+    user-select: none;
+    pointer-events: none;
+}
+
+.unlock-options {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.unlock-options button {
+    display: block;
+    width: 250px;
+    margin: 10px auto;
+    padding: 15px;
+    background: white;
+    color: #667eea;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.unlock-options button:hover {
+    transform: scale(1.05);
+}
+
+/* 전면 광고 */
+.interstitial-ad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-overlay {
+    width: 90%;
+    max-width: 800px;
+    height: 600px;
+    background: white;
+    position: relative;
+}
+
+.close-btn-fake {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: #f44336;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.close-btn-real {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 광고 모달 */
+.ad-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.8);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ad-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.countdown {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 18px;
+}
+
+.fake-video-ad {
+    width: 640px;
+    height: 360px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.skip-button {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    padding: 10px 20px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    border: 1px solid white;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.skip-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 이탈 방지 팝업 */
+.exit-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    75% { transform: translateX(10px); }
+}
+
+.exit-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 500px;
+}
+
+.exit-content h1 {
+    color: #f44336;
+    margin-bottom: 20px;
+}
+
+.exit-options button {
+    display: inline-block;
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.exit-options button:first-child {
+    background: #4CAF50;
+    color: white;
+}
+
+.exit-options button:last-child {
+    background: #ccc;
+    color: #666;
+}
+
+/* 보상 팝업 */
+.reward-popup {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    background: linear-gradient(135deg, #FFD700, #FFA500);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    animation: slideIn 0.5s;
+    z-index: 10000;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(400px); }
+    to { transform: translateX(0); }
+}
+
+.reward-content {
+    color: white;
+    text-align: center;
+}
+
+.reward-content button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background: white;
+    color: #FFA500;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 무한 스크롤 콘텐츠 */
+.content-block {
+    margin: 40px auto;
+    max-width: 800px;
+}
+
+.content-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.content-card h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.stat-item {
+    padding: 10px;
+    margin: 10px 0;
+    background: #f8f8f8;
+    border-left: 4px solid #667eea;
+    border-radius: 5px;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+    .floating-ad {
+        display: none;
+    }
+    
+    .sticky-ad-bottom {
+        height: 80px;
+    }
+    
+    .fake-video-ad {
+        width: 100%;
+        height: 200px;
+    }
+    
+    .ad-slot {
+        min-height: 200px;
+    }
+    
+    /* 모바일에서는 더 많은 광고 */
+    .content-card {
+        margin-bottom: 100px; /* 스티키 광고 공간 */
+    }
+}
+
+/* 다크 패턴 요소 */
+.fake-button {
+    position: relative;
+}
+
+.fake-button::after {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    cursor: pointer;
+    /* 클릭 영역 확대 */
+}
+
+/* 광고 차단기 감지 메시지 */
+.adblock-detected {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    z-index: 9999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.adblock-detected h1 {
+    color: #f44336;
+    margin-bottom: 20px;
+}
+
+/* 네이티브 광고 스타일 (콘텐츠처럼 보이게) */
+.native-ad {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.native-ad .ad-label {
+    font-size: 10px;
+    color: #999;
+    margin-bottom: 10px;
+}
+
+.native-ad h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.native-ad p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.native-ad .cta-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background: #667eea;
+    color: white;
+    text-decoration: none;
+    border-radius: 20px;
+}

@@ -1,7 +1,7 @@
 {
-  "name": "mbti-fortune-2025",
-  "version": "2.1.0",
-  "description": "2025 MBTI 운세 - 3분 만에 알아보는 신년 운세",
+  "name": "mbti-growth-platform",
+  "version": "3.0.0",
+  "description": "MBTI Growth - 성격유형 기반 개인 성장 플랫폼",
   "main": "index.html",
   "scripts": {
     "dev": "webpack serve --mode development",
