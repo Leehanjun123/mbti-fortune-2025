@@ -1,11 +1,11 @@
 {
-  "name": "mbti-ai-chat",
+  "name": "mbti-chat",
   "version": "1.0.0",
-  "description": "MBTI AI Character Chat Platform",
+  "description": "MBTI Character Chat Platform",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'No build needed for this project'",
+    "build": "echo 'Static site - no build required'",
     "dev": "node server.js"
   },
   "dependencies": {
