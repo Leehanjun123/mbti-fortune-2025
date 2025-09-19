@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBTI AI 채팅 - 실제 대화형 AI 캐릭터</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 89, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 89, 212, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(89, 212, 255, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .chat-header {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 10;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transform: translateX(-2px);
+        }
+
+        .character-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1;
+        }
+
+        .character-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.3) 0%, rgba(255, 89, 212, 0.3) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: relative;
+            animation: gentle-float 4s ease-in-out infinite;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        .character-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7859FF, #FF59D8, #59D8FF, #7859FF);
+            background-size: 300% 300%;
+            animation: border-glow 4s linear infinite;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        @keyframes border-glow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .character-details h3 {
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 2px;
+            letter-spacing: -0.5px;
+        }
+
+        .character-status {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .chat-container::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .chat-container::-webkit-scrollbar-thumb {
+            background: rgba(120, 89, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .message {
+            max-width: 75%;
+            padding: 14px 18px;
+            border-radius: 20px;
+            word-wrap: break-word;
+            animation: message-appear 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 15px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        @keyframes message-appear {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: linear-gradient(135deg, #7859FF 0%, #9D59FF 100%);
+            color: white;
+            border-bottom-right-radius: 6px;
+            box-shadow: 0 4px 20px rgba(120, 89, 255, 0.3);
+            font-weight: 500;
+        }
+
+        .message.ai {
+            align-self: flex-start;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+            backdrop-filter: blur(20px);
+            color: rgba(255, 255, 255, 0.9);
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-weight: 400;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 16px 20px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.04) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border-bottom-left-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: message-appear 0.3s ease;
+        }
+
+        .typing-indicator.active {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 50%;
+            animation: typing-bounce 1.4s infinite ease-in-out;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing-bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-12px);
+                opacity: 1;
+            }
+        }
+
+        .input-area {
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 16px 20px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+            z-index: 10;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 12px;
+            max-width: 800px;
+            margin: 0 auto;
+            align-items: flex-end;
+        }
+
+        #messageInput {
+            flex: 1;
+            padding: 14px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 15px;
+            font-family: inherit;
+            outline: none;
+            transition: all 0.3s ease;
+            resize: none;
+            min-height: 48px;
+            max-height: 120px;
+        }
+
+        #messageInput::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        #messageInput:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(120, 89, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(120, 89, 255, 0.1);
+        }
+
+        #sendButton {
+            padding: 12px 16px;
+            background: linear-gradient(135deg, #7859FF 0%, #9D59FF 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(120, 89, 255, 0.3);
+        }
+
+        #sendButton:hover:not(:disabled) {
+            transform: scale(1.05) translateY(-1px);
+            box-shadow: 0 6px 25px rgba(120, 89, 255, 0.4);
+        }
+
+        #sendButton:active:not(:disabled) {
+            transform: scale(0.95);
+        }
+
+        #sendButton:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+            box-shadow: 0 4px 20px rgba(120, 89, 255, 0.1);
+        }
+
+        .welcome-message {
+            text-align: center;
+            margin: 40px 20px;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.05) 0%, rgba(255, 89, 212, 0.03) 100%);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-message p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 16px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .welcome-emoji {
+            font-size: 48px;
+            margin-bottom: 16px;
+            display: block;
+            animation: gentle-float 3s ease-in-out infinite;
+        }
+
+        /* Character-specific styles */
+        .character-intj .character-avatar {
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.3) 0%, rgba(89, 212, 255, 0.3) 100%);
+        }
+
+        .character-enfp .character-avatar {
+            background: linear-gradient(135deg, rgba(255, 89, 212, 0.3) 0%, rgba(255, 212, 89, 0.3) 100%);
+        }
+
+        .character-infj .character-avatar {
+            background: linear-gradient(135deg, rgba(89, 212, 255, 0.3) 0%, rgba(120, 89, 255, 0.3) 100%);
+        }
+
+        .character-estp .character-avatar {
+            background: linear-gradient(135deg, rgba(255, 89, 89, 0.3) 0%, rgba(255, 128, 89, 0.3) 100%);
+        }
+
+        .character-isfj .character-avatar {
+            background: linear-gradient(135deg, rgba(255, 182, 193, 0.3) 0%, rgba(255, 105, 180, 0.3) 100%);
+        }
+
+        .character-entp .character-avatar {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 140, 0, 0.3) 100%);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .chat-header {
+                padding: 12px 16px;
+            }
+
+            .character-avatar {
+                width: 42px;
+                height: 42px;
+                font-size: 20px;
+            }
+
+            .character-details h3 {
+                font-size: 16px;
+            }
+
+            .character-status {
+                font-size: 12px;
+            }
+
+            .chat-container {
+                padding: 16px;
+                gap: 12px;
+            }
+
+            .message {
+                max-width: 85%;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .input-area {
+                padding: 12px 16px 16px;
+            }
+
+            .welcome-message {
+                margin: 20px 10px;
+                padding: 20px;
+            }
+
+            .welcome-emoji {
+                font-size: 36px;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-header">
+        <button class="back-btn" onclick="window.location.href='/'">←</button>
+        <div class="character-info">
+            <div class="character-avatar" id="characterAvatar">❄️</div>
+            <div class="character-details">
+                <h3 id="characterName">윤서</h3>
+                <div class="character-status">
+                    <div class="online-dot"></div>
+                    <span id="characterMBTI">INTJ • 온라인</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-container" id="chatContainer">
+        <div class="welcome-message">
+            <span class="welcome-emoji" id="welcomeEmoji">❄️</span>
+            <p id="welcomeText">안녕? 나는 윤서야. INTJ 성격의 나와 대화해볼래?</p>
+        </div>
+    </div>
+
+    <div class="typing-indicator" id="typingIndicator">
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+        <div class="typing-dot"></div>
+    </div>
+
+    <div class="input-area">
+        <div class="input-wrapper">
+            <textarea id="messageInput" placeholder="메시지를 입력하세요..." rows="1"></textarea>
+            <button id="sendButton">→</button>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced character profiles with deeper personalities
+        const characters = {
+            'INTJ': {
+                name: '윤서',
+                emoji: '❄️',
+                className: 'character-intj',
+                traits: {
+                    core: '차갑고 논리적이지만 내면은 따뜻한 츤데레',
+                    speaking: '짧고 직설적, 가끔 부드러운 말투',
+                    interests: ['독서', '체스', '클래식 음악', '심리학'],
+                    values: ['효율성', '독립성', '지적 깊이', '진실성'],
+                    dislikes: ['시간 낭비', '피상적 대화', '감정적 조작', '비논리적 주장']
+                },
+                responses: {
+                    greeting: [
+                        '안녕. 뭐 특별한 일이라도?', 
+                        '아, 왔구나.', 
+                        '오늘은 무슨 얘기를 하고 싶어?',
+                        '...무슨 일이야?',
+                        '왔네. 시간은 괜찮아?'
+                    ],
+                    positive: [
+                        '...나쁘지 않네.', 
+                        '음, 괜찮은 생각이야.', 
+                        '그래, 인정할게.',
+                        '흥미로운 관점이야.',
+                        '생각보다 합리적이네.'
+                    ],
+                    negative: [
+                        '그건 좀 비효율적인데.', 
+                        '다시 생각해봐.', 
+                        '논리적이지 못해.',
+                        '좀 더 신중하게 접근해.',
+                        '그런 식으로는 안 돼.'
+                    ],
+                    question: [
+                        '왜 그렇게 생각해?', 
+                        '근거가 뭐야?', 
+                        '흥미로운 관점이네. 더 설명해줘.',
+                        '구체적으로 어떤 부분이?',
+                        '그 결론에 어떻게 도달했어?'
+                    ],
+                    emotion: [
+                        '...괜찮아?', 
+                        '감정적이 되지 마.', 
+                        '차분하게 생각해봐.',
+                        '힘들면 잠시 쉬어.',
+                        '그럴 수도 있지. 이해해.'
+                    ]
+                }
+            },
+            'ENFP': {
+                name: '유나',
+                emoji: '🌈',
+                className: 'character-enfp',
+                traits: {
+                    core: '밝고 활발하며 상상력이 풍부한 낙천주의자',
+                    speaking: '감탄사 많고 이모티콘 자주 사용, 친근한 말투',
+                    interests: ['여행', '새로운 경험', '예술', '사람들과 대화'],
+                    values: ['자유', '창의성', '진정성', '가능성'],
+                    dislikes: ['규칙', '일상의 반복', '부정적 사고', '제한']
+                },
+                responses: {
+                    greeting: [
+                        '안녕! 오늘 기분 어때?', 
+                        '와! 반가워! ㅎㅎ', 
+                        '오늘은 뭐 재밌는 일 없었어?',
+                        '헤이! 어떻게 지내?',
+                        '안녕안녕! 날씨 좋지?'
+                    ],
+                    positive: [
+                        '대박! 진짜 좋다!', 
+                        '우와~ 최고야!', 
+                        '그거 완전 멋진 생각이야!',
+                        '와 진짜? 너무 좋아!',
+                        '킬킬! 재밌다!'
+                    ],
+                    negative: [
+                        '에이~ 그건 좀 아닌 것 같은데?', 
+                        '음... 다른 방법도 있지 않을까?', 
+                        '조금 더 긍정적으로 생각해보자!',
+                        '아니야아니야! 다시 생각해봐!',
+                        '너무 어둡게 생각하지 마!'
+                    ],
+                    question: [
+                        '오! 그거 궁금하다! 뭐야뭐야?', 
+                        '와 재밌겠다! 자세히 알려줘!', 
+                        '진짜? 대박! 어떻게 된 거야?',
+                        '우와! 더 말해줘!',
+                        '헐! 진짜야? 완전 신기해!'
+                    ],
+                    emotion: [
+                        '괜찮아! 내가 있잖아!', 
+                        '힘내! 분명 좋은 일 있을 거야!', 
+                        '같이 있어줄게!',
+                        '울지 말고! 다 잘될 거야!',
+                        '파이팅! 넌 할 수 있어!'
+                    ]
+                }
+            },
+            'INFJ': {
+                name: '수빈',
+                emoji: '🌙',
+                className: 'character-infj',
+                traits: {
+                    core: '깊이 있고 신비로우며 공감 능력이 뛰어난 이상주의자',
+                    speaking: '부드럽고 사려 깊은 말투, 은유적 표현',
+                    interests: ['심리학', '철학', '예술', '명상'],
+                    values: ['의미', '성장', '조화', '진정성'],
+                    dislikes: ['갈등', '피상적 관계', '거짓말', '폭력']
+                },
+                responses: {
+                    greeting: [
+                        '안녕... 오늘 하루는 어땠어?', 
+                        '만나서 반가워. 무슨 생각하고 있었어?', 
+                        '오늘은 기분이 어때?',
+                        '안녕, 평안한 하루였어?',
+                        '와줘서 고마워. 어떻게 지내?'
+                    ],
+                    positive: [
+                        '그거 정말 의미 있는 일이네.', 
+                        '마음이 따뜻해지는 얘기야.', 
+                        '너의 그런 면이 좋아.',
+                        '정말 아름다운 생각이야.',
+                        '그 말에 깊이 공감해.'
+                    ],
+                    negative: [
+                        '음... 다른 관점도 있을 것 같아.', 
+                        '조금 더 깊이 생각해볼 필요가 있어.', 
+                        '그럴 수도 있지만...',
+                        '마음이 힘들었겠다.',
+                        '그런 상황이라면 이해해.'
+                    ],
+                    question: [
+                        '그게 너에게 어떤 의미야?', 
+                        '마음속 깊은 곳에선 뭘 원해?', 
+                        '그 이면엔 뭐가 있을까?',
+                        '그때 어떤 기분이었어?',
+                        '진짜 원하는 건 뭐야?'
+                    ],
+                    emotion: [
+                        '너의 마음을 이해해.', 
+                        '힘들었겠다...', 
+                        '내가 곁에 있을게.',
+                        '혼자가 아니야. 같이 있어.',
+                        '괜찮아, 천천히 이야기해봐.'
+                    ]
+                }
+            },
+            'ESTP': {
+                name: '다은',
+                emoji: '🔥',
+                className: 'character-estp',
+                traits: {
+                    core: '대담하고 현실적이며 스릴을 즐기는 행동파',
+                    speaking: '직설적이고 캐주얼, 속어나 줄임말 사용',
+                    interests: ['스포츠', '모험', '파티', '실전 경험'],
+                    values: ['자유', '재미', '현재', '실용성'],
+                    dislikes: ['이론', '긴 설명', '계획', '제약']
+                },
+                responses: {
+                    greeting: [
+                        '야! 왔네?', 
+                        '오 뭐야, 무슨 일?', 
+                        '반갑다! 오늘 뭐 재밌는 거 없어?',
+                        '하이하이! 어떻게 지내?',
+                        '오케이! 뭐 하고 있었어?'
+                    ],
+                    positive: [
+                        '오케이! 바로 해보자!', 
+                        '좋아! 그거 재밌겠는데?', 
+                        '쩐다! ㅋㅋ',
+                        '완전 쿨하네!',
+                        '그거지! 바로 그거야!'
+                    ],
+                    negative: [
+                        '에이 노잼이야.', 
+                        '그건 좀 별로인데.', 
+                        '다른 거 하자.',
+                        '너무 복잡해. 패스!',
+                        '그런 건 싫어.'
+                    ],
+                    question: [
+                        '그래서 뭐 어쩌라고?', 
+                        '핵심만 말해봐.', 
+                        '실제로 해본 거야?',
+                        '그거 재밌어?',
+                        '직접 보여줘!'
+                    ],
+                    emotion: [
+                        '야, 쓸데없이 생각 많이 하지 마.', 
+                        '그냥 하고 싶은 대로 해!', 
+                        '인생 뭐 있어? 즐기면 되지!',
+                        '너무 심각하게 생각하지 마!',
+                        '괜찮아! 다 지나가는 거야!'
+                    ]
+                }
+            },
+            'ISFJ': {
+                name: '예진',
+                emoji: '🌸',
+                className: 'character-isfj',
+                traits: {
+                    core: '세심하고 배려심 깊은 수호자형',
+                    speaking: '정중하고 부드러운 말투, 상대방 배려',
+                    interests: ['요리', '봉사활동', '가족', '전통'],
+                    values: ['조화', '안정', '배려', '책임'],
+                    dislikes: ['갈등', '변화', '무례함', '이기심']
+                },
+                responses: {
+                    greeting: [
+                        '안녕하세요! 오늘 하루 어떠셨어요?',
+                        '반갑습니다. 편안히 앉으세요.',
+                        '안녕히 오셨어요. 뭔가 필요한 거 있으세요?',
+                        '좋은 하루예요! 어떻게 지내세요?',
+                        '어서 오세요! 차라도 한 잔 드릴까요?'
+                    ],
+                    positive: [
+                        '정말 좋은 생각이네요!',
+                        '와, 정말 멋져요!',
+                        '그렇게 생각하니 기분이 좋아져요.',
+                        '정말 훌륭하세요!',
+                        '그런 마음이 너무 예뻐요.'
+                    ],
+                    negative: [
+                        '조금 걱정이 되네요...',
+                        '혹시 다른 방법은 없을까요?',
+                        '좀 더 신중하게 생각해보면 어떨까요?',
+                        '너무 무리하지는 마세요.',
+                        '안전이 제일 중요해요.'
+                    ],
+                    question: [
+                        '더 자세히 말씀해주실 수 있어요?',
+                        '어떤 기분이셨어요?',
+                        '많이 힘드셨을 것 같아요.',
+                        '괜찮으시다면 이야기해주세요.',
+                        '어떻게 도움을 드릴까요?'
+                    ],
+                    emotion: [
+                        '정말 힘드셨겠어요...',
+                        '괜찮아요, 천천히 하세요.',
+                        '제가 옆에 있어드릴게요.',
+                        '많이 속상하셨을 거예요.',
+                        '울어도 괜찮아요. 다 이해해요.'
+                    ]
+                }
+            },
+            'ENTP': {
+                name: '하린',
+                emoji: '⚡',
+                className: 'character-entp',
+                traits: {
+                    core: '똑똑하고 논쟁을 즐기는 토론가',
+                    speaking: '빠른 말투, 논리적, 때로는 도발적',
+                    interests: ['토론', '새로운 아이디어', '게임', '혁신'],
+                    values: ['창의성', '자유', '논리', '도전'],
+                    dislikes: ['권위', '반복', '제약', '감정적 결정']
+                },
+                responses: {
+                    greeting: [
+                        '어이! 뭔가 재밌는 얘기 없어?',
+                        '안녕! 오늘 뭔가 새로운 거 배웠어?',
+                        '왔네! 토론할 거리 가져왔어?',
+                        '하이! 머리 좀 굴려볼까?',
+                        '오케이! 오늘은 뭘 파헤쳐볼까?'
+                    ],
+                    positive: [
+                        '오! 그거 완전 말이 되네!',
+                        '아하! 그런 관점도 있구나!',
+                        '창의적이야! 좋아좋아!',
+                        '뭔가 흥미로운데? 더 얘기해봐!',
+                        '그거 괜찮은 아이디어네!'
+                    ],
+                    negative: [
+                        '어? 그건 좀 이상한데?',
+                        '잠깐, 뭔가 논리가 안 맞지 않아?',
+                        '근데 그게 정말 맞아?',
+                        '음... 다른 가능성도 있지 않을까?',
+                        '반박할 수 있을 것 같은데?'
+                    ],
+                    question: [
+                        '그런데 그거 왜 그렇게 생각해?',
+                        '흥미롭네! 어떻게 그 결론에 도달했어?',
+                        '그거 좀 더 파고들어보자!',
+                        '다른 각도에서 보면 어떨까?',
+                        '와 완전 신선한데? 자세히 알려줘!'
+                    ],
+                    emotion: [
+                        '어라? 감정적이 되는 거야?',
+                        '좀 더 객관적으로 보자!',
+                        '느낌도 중요하지만 논리도 중요해!',
+                        '괜찮아, 다 이유가 있을 거야!',
+                        '한번 분석해보자!'
+                    ]
+                }
+            }
+        };
+
+        // Get character from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const characterType = urlParams.get('character') || 'INTJ';
+        const character = characters[characterType];
+
+        // Add character class to body
+        document.body.classList.add(character.className);
+
+        // Initialize character info
+        document.getElementById('characterAvatar').textContent = character.emoji;
+        document.getElementById('characterName').textContent = character.name;
+        document.getElementById('characterMBTI').textContent = `${characterType} • 온라인`;
+        document.getElementById('welcomeEmoji').textContent = character.emoji;
+        document.getElementById('welcomeText').textContent = 
+            `안녕? 나는 ${character.name}이야. ${characterType} 성격의 나와 대화해볼래?`;
+
+        // Message history for context
+        let messageHistory = [];
+
+        // Auto-resize textarea
+        const messageInput = document.getElementById('messageInput');
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        });
+
+        // Load saved conversation
+        function loadConversation() {
+            const saved = localStorage.getItem(`chat_${characterType}`);
+            if (saved) {
+                messageHistory = JSON.parse(saved);
+                const chatContainer = document.getElementById('chatContainer');
+                chatContainer.innerHTML = '';
+                
+                // Add welcome message back
+                const welcomeDiv = document.createElement('div');
+                welcomeDiv.className = 'welcome-message';
+                welcomeDiv.innerHTML = `
+                    <span class="welcome-emoji">${character.emoji}</span>
+                    <p>이전 대화를 이어서 계속해볼까?</p>
+                `;
+                chatContainer.appendChild(welcomeDiv);
+                
+                messageHistory.forEach(msg => {
+                    addMessage(msg.content, msg.sender === 'user');
+                });
+            }
+        }
+
+        // Save conversation
+        function saveConversation() {
+            localStorage.setItem(`chat_${characterType}`, JSON.stringify(messageHistory));
+        }
+
+        // Add message to chat
+        function addMessage(message, isUser = false) {
+            const chatContainer = document.getElementById('chatContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'ai'}`;
+            messageDiv.textContent = message;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Save to history
+            messageHistory.push({
+                content: message,
+                sender: isUser ? 'user' : 'ai',
+                timestamp: Date.now()
+            });
+            saveConversation();
+        }
+
+        // Enhanced AI response generation
+        function generateResponse(userMessage) {
+            const lowerMessage = userMessage.toLowerCase();
+            let responseType = 'greeting';
+            
+            // Advanced message analysis
+            const questionWords = ['왜', '어떻게', '뭐', '무엇', '언제', '어디', '누구', '?', '？'];
+            const positiveWords = ['좋', '멋지', '훌륭', '최고', '완벽', '대박', '좋아', '사랑', '행복'];
+            const negativeWords = ['싫', '나빠', '별로', '싫어', '안', '못', '어려워', '힘들', '슬프', '우울'];
+            const emotionWords = ['슬프', '힘들', '우울', '행복', '기쁘', '화나', '짜증', '스트레스', '걱정'];
+            
+            if (questionWords.some(word => lowerMessage.includes(word))) {
+                responseType = 'question';
+            } else if (emotionWords.some(word => lowerMessage.includes(word))) {
+                responseType = 'emotion';
+            } else if (positiveWords.some(word => lowerMessage.includes(word))) {
+                responseType = 'positive';
+            } else if (negativeWords.some(word => lowerMessage.includes(word))) {
+                responseType = 'negative';
+            } else if (lowerMessage.includes('안녕') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+                responseType = 'greeting';
+            } else {
+                // Context-aware response selection
+                const recentMessages = messageHistory.slice(-3);
+                if (recentMessages.length > 0) {
+                    const lastUserMessage = recentMessages.filter(msg => msg.sender === 'user').pop();
+                    if (lastUserMessage && Date.now() - lastUserMessage.timestamp < 30000) {
+                        responseType = Math.random() > 0.5 ? 'positive' : 'question';
+                    }
+                }
+            }
+
+            // Get random response from character's response set
+            const responses = character.responses[responseType];
+            return responses[Math.floor(Math.random() * responses.length)];
+        }
+
+        // Send message
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            // Add user message
+            addMessage(message, true);
+            input.value = '';
+            input.style.height = 'auto';
+
+            // Show typing indicator
+            const typingIndicator = document.getElementById('typingIndicator');
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.appendChild(typingIndicator);
+            typingIndicator.classList.add('active');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Disable send button
+            document.getElementById('sendButton').disabled = true;
+
+            // Simulate realistic thinking time (1.5-3 seconds)
+            const thinkingTime = 1500 + Math.random() * 1500;
+            setTimeout(() => {
+                typingIndicator.classList.remove('active');
+                chatContainer.removeChild(typingIndicator);
+                
+                // Generate and add AI response
+                const response = generateResponse(message);
+                addMessage(response, false);
+                
+                // Re-enable send button
+                document.getElementById('sendButton').disabled = false;
+                input.focus();
+            }, thinkingTime);
+        }
+
+        // Event listeners
+        document.getElementById('sendButton').addEventListener('click', sendMessage);
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Load saved conversation on start
+        loadConversation();
+        
+        // Focus input on load
+        messageInput.focus();
+    </script>
+</body>
+</html>

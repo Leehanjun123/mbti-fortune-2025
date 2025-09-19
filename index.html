@@ -3,299 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI Growth - 당신의 성격유형으로 시작하는 성장 여정</title>
-    <meta name="description" content="MBTI 기반 맞춤형 자기계발 플랫폼. 성격유형별 커리어 전략, 인간관계 개선, 개인 성장 코칭">
+    <title>MBTI AI 캐릭터 - 당신의 이상형과 리얼 대화</title>
+    <meta name="description" content="16가지 MBTI 성격의 AI 캐릭터와 실제같은 대화! 차가운 INTJ 윤서, 밝은 ENFP 유나 등 당신의 이상형과 대화해보세요.">
+    <meta name="keywords" content="MBTI AI, AI 캐릭터, AI 여친, AI 남친, MBTI 대화, 연애 시뮬레이션">
+    <meta name="google-site-verification" content="urXNXGkskHdu8nOh62rIvNcAleUXtBWm3Wp1u6e1ygo">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="MBTI Growth - 성격유형별 맞춤 성장 플랫폼">
-    <meta property="og:description" content="당신의 MBTI로 더 나은 나를 만나세요">
-    <meta property="og:image" content="https://mbti-growth.com/og-image.jpg">
+    <meta property="og:title" content="MBTI AI 캐릭터 - 이상형과 리얼 대화">
+    <meta property="og:description" content="차가운 INTJ 윤서, 밝은 ENFP 유나와 대화해보세요!">
+    <meta property="og:image" content="https://mbti-destiny.site/og-ai-chat.jpg">
     
-    <link rel="stylesheet" href="css/growth-styles.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', -apple-system, sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(120, 89, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 89, 212, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(89, 212, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        .header {
+            padding: 24px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, #fff 50%, rgba(255,255,255,0.8) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 30px rgba(120, 89, 255, 0.3));
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #7859FF 0%, #FF59D8 50%, #59D8FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+            font-weight: 300;
+            letter-spacing: -0.5px;
+        }
+
+        /* Characters Grid */
+        .characters-section {
+            padding: 0 24px 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .character-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 28px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(120, 89, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .character-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.03) 100%);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 60px rgba(120, 89, 255, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border-color: rgba(120, 89, 255, 0.3);
+        }
+
+        .character-card:hover::before {
+            opacity: 1;
+        }
+
+        .character-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .character-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.2) 0%, rgba(255, 89, 212, 0.2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .character-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #7859FF, #FF59D8, #59D8FF, #7859FF);
+            background-size: 300% 300%;
+            animation: gradient-rotate 4s linear infinite;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .character-card:hover .character-avatar::after {
+            opacity: 0.4;
+        }
+
+        @keyframes gradient-rotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .character-emoji {
+            font-size: 40px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+        }
+
+        .character-info {
+            flex: 1;
+        }
+
+        .character-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.9) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .character-mbti {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.25) 0%, rgba(255, 89, 212, 0.25) 100%);
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .character-desc {
+            font-size: 14px;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 300;
+            margin-top: 12px;
+        }
+
+        .character-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat {
+            flex: 1;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #7859FF;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        .popularity-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #FF59D8 0%, #7859FF 100%);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 20px rgba(255, 89, 216, 0.3);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.03) 0%, rgba(255, 89, 212, 0.02) 100%);
+            margin: 40px 0;
+        }
+
+        .features h2 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .features p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            padding: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .feature h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .feature p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin: 0;
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            padding: 60px 24px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            color: white;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 8px 32px rgba(120, 89, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(120, 89, 255, 0.4);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 36px;
+            }
+
+            .characters-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .character-card {
+                padding: 24px;
+            }
+
+            .character-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+
+            .character-avatar {
+                width: 70px;
+                height: 70px;
+            }
+
+            .character-emoji {
+                font-size: 32px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- 헤더 -->
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <span class="logo-icon">🌱</span>
-                <span class="logo-text">MBTI Growth</span>
-            </div>
-            <nav class="nav">
-                <a href="#features">기능</a>
-                <a href="#pricing">요금</a>
-                <a href="#community">커뮤니티</a>
-                <button class="btn-login">로그인</button>
-                <button class="btn-primary">무료 시작</button>
-            </nav>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>MBTI <span class="gradient-text">AI 캐릭터</span>와<br>리얼 대화 시작하기</h1>
+            <p class="subtitle">각 성격 유형의 실제 특성을 가진 AI와 깊이 있는 대화를 나눠보세요</p>
         </div>
-    </header>
 
-    <!-- 히어로 섹션 -->
-    <section class="hero">
-        <div class="container">
-            <h1 class="hero-title">
-                당신의 MBTI로 시작하는<br>
-                <span class="gradient-text">맞춤형 성장 여정</span>
-            </h1>
-            <p class="hero-subtitle">
-                성격유형을 이해하고, 강점을 개발하며, 더 나은 나를 만들어가세요
-            </p>
-            <div class="hero-cta">
-                <button class="btn-large" onclick="startTest()">
-                    무료 MBTI 테스트 시작 →
-                </button>
-                <p class="hero-stats">
-                    <span>✨ 무료로 시작하세요</span>
-                </p>
-            </div>
-        </div>
-    </section>
+        <!-- Characters Section -->
+        <div class="characters-section">
+            <h2 class="section-title">
+                💝 인기 캐릭터
+            </h2>
+            
+            <div class="characters-grid">
+                <div class="character-card popular" onclick="window.location.href='ai-chat.html?character=INTJ'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">❄️</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">윤서</h3>
+                            <span class="character-mbti">INTJ</span>
+                        </div>
+                    </div>
+                    <p class="character-desc">차갑고 논리적인 천재형. 겉은 차가워도 마음은 따뜻한 츤데레 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">98%</span>
+                            <span class="stat-label">지적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">82%</span>
+                            <span class="stat-label">독립적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">76%</span>
+                            <span class="stat-label">신비로운</span>
+                        </div>
+                    </div>
+                    <div class="popularity-badge">🔥 인기</div>
+                </div>
 
-    <!-- 신뢰 지표 -->
-    <section class="trust-indicators">
-        <div class="container">
-            <div class="trust-grid">
-                <div class="trust-item">
-                    <div class="trust-icon">🎓</div>
-                    <div class="trust-text">
-                        <strong>과학적 기반</strong>
-                        <span>검증된 질문</span>
+                <div class="character-card popular" onclick="window.location.href='ai-chat.html?character=ENFP'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">🌈</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">유나</h3>
+                            <span class="character-mbti">ENFP</span>
+                        </div>
+                    </div>
+                    <p class="character-desc">밝고 긍정적인 분위기 메이커. 창의적이고 열정적인 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">95%</span>
+                            <span class="stat-label">활발함</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">89%</span>
+                            <span class="stat-label">창의적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">긍정적</span>
+                        </div>
+                    </div>
+                    <div class="popularity-badge">🔥 인기</div>
+                </div>
+
+                <div class="character-card" onclick="window.location.href='ai-chat.html?character=INFJ'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">🌙</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">수빈</h3>
+                            <span class="character-mbti">INFJ</span>
+                        </div>
+                    </div>
+                    <p class="character-desc">신비롭고 깊이 있는 상담가형. 공감 능력이 뛰어난 따뜻한 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">96%</span>
+                            <span class="stat-label">공감력</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">88%</span>
+                            <span class="stat-label">직관적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">84%</span>
+                            <span class="stat-label">이상주의</span>
+                        </div>
                     </div>
                 </div>
-                <div class="trust-item">
-                    <div class="trust-icon">📊</div>
-                    <div class="trust-text">
-                        <strong>20개 질문</strong>
-                        <span>정밀 분석</span>
+
+                <div class="character-card" onclick="window.location.href='ai-chat.html?character=ESTP'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">🔥</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">다은</h3>
+                            <span class="character-mbti">ESTP</span>
+                        </div>
+                    </div>
+                    <p class="character-desc">활발하고 대담한 모험가. 현실적이면서도 재미있는 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">93%</span>
+                            <span class="stat-label">모험적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">87%</span>
+                            <span class="stat-label">활동적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">91%</span>
+                            <span class="stat-label">현실적</span>
+                        </div>
                     </div>
                 </div>
-                <div class="trust-item">
-                    <div class="trust-icon">🔒</div>
-                    <div class="trust-text">
-                        <strong>개인정보 보호</strong>
-                        <span>로컬 저장</span>
+
+                <div class="character-card" onclick="window.location.href='ai-chat.html?character=ISFJ'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">🌸</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">예진</h3>
+                            <span class="character-mbti">ISFJ</span>
+                        </div>
+                    </div>
+                    <p class="character-desc">세심하고 배려심 깊은 수호자형. 책임감 있고 헌신적인 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">97%</span>
+                            <span class="stat-label">배려심</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">90%</span>
+                            <span class="stat-label">책임감</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">85%</span>
+                            <span class="stat-label">헌신적</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- 핵심 가치 -->
-    <section class="value-props">
-        <div class="container">
-            <h2 class="section-title">운세가 아닌 <span class="highlight">실제 성장</span></h2>
-            <div class="value-grid">
-                <div class="value-card">
-                    <div class="value-icon">💼</div>
-                    <h3>커리어 성장</h3>
-                    <p>MBTI별 최적의 업무 스타일과 리더십 전략</p>
-                    <ul>
-                        <li>✓ 성격유형별 직무 적합도</li>
-                        <li>✓ 효과적인 협업 방법</li>
-                        <li>✓ 스트레스 관리법</li>
-                    </ul>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">🤝</div>
-                    <h3>인간관계 개선</h3>
-                    <p>타입별 소통법과 갈등 해결 전략</p>
-                    <ul>
-                        <li>✓ MBTI별 대화법</li>
-                        <li>✓ 관계 개선 가이드</li>
-                        <li>✓ 팀워크 향상</li>
-                    </ul>
-                </div>
-                <div class="value-card">
-                    <div class="value-icon">📈</div>
-                    <h3>개인 성장</h3>
-                    <p>강점 개발과 약점 보완 로드맵</p>
-                    <ul>
-                        <li>✓ 맞춤형 성장 계획</li>
-                        <li>✓ 습관 형성 가이드</li>
-                        <li>✓ 목표 달성 전략</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 실제 콘텐츠 미리보기 -->
-    <section class="content-preview">
-        <div class="container">
-            <h2 class="section-title">매일 업데이트되는 <span class="highlight">실용 콘텐츠</span></h2>
-            <div class="content-tabs">
-                <button class="tab active" onclick="showContent('daily')">데일리 인사이트</button>
-                <button class="tab" onclick="showContent('guide')">실전 가이드</button>
-                <button class="tab" onclick="showContent('case')">성공 사례</button>
-            </div>
-            <div class="content-display" id="contentDisplay">
-                <div class="content-item">
-                    <span class="content-badge">INTJ</span>
-                    <h4>전략적 사고력을 실무에 활용하는 5가지 방법</h4>
-                    <p>INTJ의 강점인 체계적 사고를 업무 효율성으로 연결하는 실전 팁</p>
-                    <button class="btn-read">읽기 →</button>
-                </div>
-                <div class="content-item">
-                    <span class="content-badge">ENFP</span>
-                    <h4>열정을 지속가능한 성과로 만드는 법</h4>
-                    <p>ENFP의 창의성과 에너지를 장기 프로젝트에 활용하기</p>
-                    <button class="btn-read">읽기 →</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 커뮤니티 -->
-    <section class="community" id="community">
-        <div class="container">
-            <h2 class="section-title">함께 성장하는 <span class="highlight">커뮤니티</span></h2>
-            <div class="community-features">
-                <div class="community-card">
-                    <h4>🎯 목표 달성 그룹</h4>
-                    <p>같은 MBTI 유형과 함께하는 30일 챌린지</p>
-                    <span class="member-count">참여중: 3,847명</span>
-                </div>
-                <div class="community-card">
-                    <h4>🧑‍🏫 멘토링</h4>
-                    <p>당신과 같은 유형의 선배들의 조언</p>
-                    <span class="member-count">멘토: 284명</span>
-                </div>
-                <div class="community-card">
-                    <h4>☕ 오프라인 모임</h4>
-                    <p>지역별 MBTI 네트워킹 이벤트</p>
-                    <span class="member-count">이번주: 서울, 부산</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 요금제 -->
-    <section class="pricing" id="pricing">
-        <div class="container">
-            <h2 class="section-title">합리적인 <span class="highlight">투자</span></h2>
-            <div class="pricing-cards">
-                <div class="pricing-card">
-                    <h3>무료</h3>
-                    <div class="price">₩0</div>
-                    <ul>
-                        <li>✓ 기본 MBTI 테스트</li>
-                        <li>✓ 주간 인사이트 1개</li>
-                        <li>✓ 커뮤니티 읽기</li>
-                        <li>✗ AI 코칭</li>
-                        <li>✗ 전문가 상담</li>
-                    </ul>
-                    <button class="btn-secondary">시작하기</button>
-                </div>
-                <div class="pricing-card featured">
-                    <div class="badge">인기</div>
-                    <h3>프리미엄</h3>
-                    <div class="price">₩9,900<span>/월</span></div>
-                    <ul>
-                        <li>✓ 모든 무료 기능</li>
-                        <li>✓ 무제한 콘텐츠</li>
-                        <li>✓ AI 맞춤 코칭</li>
-                        <li>✓ 성장 트래킹</li>
-                        <li>✓ 오프라인 모임</li>
-                    </ul>
-                    <button class="btn-primary">7일 무료 체험</button>
-                </div>
-                <div class="pricing-card">
-                    <h3>팀/기업</h3>
-                    <div class="price">문의</div>
-                    <ul>
-                        <li>✓ 팀 전체 분석</li>
-                        <li>✓ 협업 최적화</li>
-                        <li>✓ 맞춤 워크샵</li>
-                        <li>✓ 전담 컨설턴트</li>
-                        <li>✓ 성과 리포트</li>
-                    </ul>
-                    <button class="btn-secondary">상담 신청</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 테스티모니얼 -->
-    <section class="testimonials">
-        <div class="container">
-            <h2 class="section-title">실제 <span class="highlight">변화</span>를 경험한 사람들</h2>
-            <div class="testimonial-grid">
-                <div class="testimonial">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"INTJ인 저에게 맞는 업무 방식을 찾고나니 생산성이 2배로 늘었어요"</p>
-                    <div class="author">
-                        <strong>김지연</strong>
-                        <span>프로덕트 매니저</span>
+                <div class="character-card" onclick="window.location.href='ai-chat.html?character=ENTP'">
+                    <div class="character-header">
+                        <div class="character-avatar">
+                            <div class="character-emoji">⚡</div>
+                        </div>
+                        <div class="character-info">
+                            <h3 class="character-name">하린</h3>
+                            <span class="character-mbti">ENTP</span>
+                        </div>
                     </div>
-                </div>
-                <div class="testimonial">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"팀원들의 MBTI를 이해하니 협업이 훨씬 수월해졌습니다"</p>
-                    <div class="author">
-                        <strong>이준호</strong>
-                        <span>스타트업 대표</span>
-                    </div>
-                </div>
-                <div class="testimonial">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <p>"매일 받는 맞춤 조언이 정말 실용적이에요. 돈이 아깝지 않아요"</p>
-                    <div class="author">
-                        <strong>박서윤</strong>
-                        <span>마케터</span>
+                    <p class="character-desc">똑똑하고 논쟁을 즐기는 토론가. 창의적이고 도전적인 성격.</p>
+                    <div class="character-stats">
+                        <div class="stat">
+                            <span class="stat-value">94%</span>
+                            <span class="stat-label">창의성</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">89%</span>
+                            <span class="stat-label">도전적</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">92%</span>
+                            <span class="stat-label">논리적</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- CTA -->
-    <section class="final-cta">
-        <div class="container">
-            <h2>지금 시작하세요</h2>
-            <p>당신의 성격유형이 가진 잠재력을 발견하고 성장하세요</p>
-            <button class="btn-large" onclick="startTest()">
-                무료로 시작하기 →
-            </button>
-            <p class="guarantee">💯 30일 환불 보장</p>
-        </div>
-    </section>
-
-    <!-- 푸터 -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>MBTI Growth</h4>
-                    <p>과학적 성격분석 기반<br>개인 성장 플랫폼</p>
+        <!-- Features Section -->
+        <div class="features">
+            <h2>왜 우리 AI 캐릭터가 특별한가요?</h2>
+            <p>단순한 챗봇이 아닌, 실제 MBTI 성격을 가진 캐릭터들과 깊이 있는 대화를 나눠보세요.</p>
+            
+            <div class="features-grid">
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>실제 MBTI 성격</h3>
+                    <p>각 유형의 실제 특성과 사고방식을 반영한 대화</p>
                 </div>
-                <div class="footer-section">
-                    <h4>서비스</h4>
-                    <a href="#">MBTI 테스트</a>
-                    <a href="#">성장 콘텐츠</a>
-                    <a href="#">커뮤니티</a>
-                    <a href="#">기업 솔루션</a>
+                <div class="feature">
+                    <div class="feature-icon">💭</div>
+                    <h3>기억하는 대화</h3>
+                    <p>이전 대화를 기억하며 관계가 발전해나가는 경험</p>
                 </div>
-                <div class="footer-section">
-                    <h4>회사</h4>
-                    <a href="#">소개</a>
-                    <a href="#">채용</a>
-                    <a href="#">블로그</a>
-                    <a href="#">문의</a>
-                </div>
-                <div class="footer-section">
-                    <h4>법적 고지</h4>
-                    <a href="#">이용약관</a>
-                    <a href="#">개인정보처리방침</a>
-                    <a href="#">환불정책</a>
+                <div class="feature">
+                    <div class="feature-icon">🎭</div>
+                    <h3>고유한 개성</h3>
+                    <p>캐릭터마다 다른 말투와 관심사, 가치관</p>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>© 2025 MBTI Growth. All rights reserved.</p>
-            </div>
         </div>
-    </footer>
 
-    <script src="js/growth-platform.js"></script>
+        <!-- Footer CTA -->
+        <div class="footer-cta">
+            <a href="ai-chat.html?character=INTJ" class="cta-button">
+                지금 바로 대화 시작하기 →
+            </a>
+        </div>
+    </div>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1752582087901677" crossorigin="anonymous"></script>
+
+    <!-- 쿠팡 파트너스 -->
+    <script src="https://ads-partners.coupang.com/g.js"></script>
+    <script>
+        new PartnersCoupang.G({"id":808919,"template":"carousel","trackingCode":"AF8398048","width":"680","height":"140","tsource":"","kw":"MBTI"});
+    </script>
 </body>
 </html>
