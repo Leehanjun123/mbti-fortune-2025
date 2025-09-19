@@ -342,6 +342,216 @@
             margin: 0;
         }
 
+        /* Special Character Section */
+        .special-character-section {
+            padding: 60px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.05) 0%, rgba(138, 43, 226, 0.03) 100%);
+            border-top: 1px solid rgba(255, 20, 147, 0.1);
+            border-bottom: 1px solid rgba(255, 20, 147, 0.1);
+        }
+
+        .special-character-card {
+            max-width: 600px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.1) 0%, rgba(138, 43, 226, 0.08) 100%);
+            border-radius: 30px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 20, 147, 0.2);
+        }
+
+        .special-character-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 20, 147, 0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .special-character-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: rgba(255, 20, 147, 0.4);
+            box-shadow: 
+                0 25px 50px rgba(255, 20, 147, 0.3),
+                0 0 80px rgba(255, 20, 147, 0.2),
+                inset 0 0 40px rgba(255, 255, 255, 0.05);
+        }
+
+        .special-character-card:hover::before {
+            opacity: 1;
+        }
+
+        .special-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 20, 147, 0.1), rgba(138, 43, 226, 0.1), rgba(255, 69, 0, 0.1));
+            background-size: 200% 200%;
+            animation: special-bg-move 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        @keyframes special-bg-move {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .special-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .special-avatar {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff1493 0%, #8b2bde 50%, #ff4500 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: special-float 4s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 20, 147, 0.5);
+        }
+
+        .special-avatar::after {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ff1493, #8b2bde, #ff4500, #ff1493);
+            background-size: 300% 300%;
+            animation: special-border-glow 3s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes special-float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-8px) rotate(2deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-4px) rotate(-2deg); }
+        }
+
+        @keyframes special-border-glow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .special-emoji {
+            font-size: 50px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+        }
+
+        .special-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .special-name {
+            font-size: 32px;
+            font-weight: 900;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ff1493 0%, #ffffff 50%, #8b2bde 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .special-type {
+            display: inline-block;
+            background: rgba(255, 20, 147, 0.2);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 20, 147, 0.3);
+            color: #ff1493;
+        }
+
+        .special-desc {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .special-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: rgba(255, 20, 147, 0.15);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 20, 147, 0.2);
+        }
+
+        .special-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff1493 0%, #8b2bde 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            z-index: 3;
+            box-shadow: 0 4px 20px rgba(255, 20, 147, 0.4);
+            animation: special-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes special-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Products Section */
+        .products-section {
+            padding: 60px 24px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.02) 0%, rgba(255, 89, 212, 0.01) 100%);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .coupang-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .coupang-carousel {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         /* Footer CTA */
         .footer-cta {
             padding: 60px 24px;
@@ -586,6 +796,68 @@
             </div>
         </div>
 
+        <!-- Special Character Section -->
+        <div class="special-character-section">
+            <h2 class="section-title">
+                🔥 특별 캐릭터
+            </h2>
+            
+            <div class="special-character-card" onclick="window.location.href='character-suhyun.html'">
+                <div class="special-bg"></div>
+                <div class="special-content">
+                    <div class="special-avatar">
+                        <div class="special-emoji">😈</div>
+                    </div>
+                    <div class="special-info">
+                        <h3 class="special-name">일진녀 수현</h3>
+                        <span class="special-type">카리스마 폭발 • ESTP</span>
+                        <p class="special-desc">학교 최강의 카리스마! 겉은 차가워도 속은 따뜻한 진짜 일진녀</p>
+                        <div class="special-tags">
+                            <span class="tag">💪 강한 카리스마</span>
+                            <span class="tag">😎 솔직한 성격</span>
+                            <span class="tag">🔥 의리파</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="special-badge">SPECIAL</div>
+            </div>
+        </div>
+
+        <!-- Custom Character Section -->  
+        <div class="custom-character-section">
+            <h2 class="section-title">
+                🎨 커스텀 캐릭터
+            </h2>
+            
+            <div class="custom-character-card" id="customCharacterCard">
+                <div class="custom-bg"></div>
+                <div class="custom-content">
+                    <div class="custom-avatar">
+                        <div class="custom-emoji">🎭</div>
+                    </div>
+                    <div class="custom-info">
+                        <h3 class="custom-name">나만의 AI 캐릭터</h3>
+                        <span class="custom-type">프리미엄 전용 • 커스텀</span>
+                        <p class="custom-desc">외모부터 성격까지, 당신만의 특별한 AI 캐릭터를 만들어보세요</p>
+                        <div class="custom-features">
+                            <span class="feature">🎨 외모 커스텀마이징</span>
+                            <span class="feature">💭 성격 설정</span>
+                            <span class="feature">❤️ 관심사 선택</span>
+                        </div>
+                        <div class="custom-buttons">
+                            <button class="custom-create-btn" onclick="createCustomCharacter()">
+                                커스텀 캐릭터 만들기
+                            </button>
+                            <button class="custom-chat-btn" onclick="chatWithCustom()" style="display: none;">
+                                대화 시작하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-badge" id="customBadge">PREMIUM</div>
+            </div>
+        </div>
+
         <!-- Features Section -->
         <div class="features">
             <h2>왜 우리 AI 캐릭터가 특별한가요?</h2>
@@ -610,6 +882,18 @@
             </div>
         </div>
 
+        <!-- Coupang Products Section -->
+        <div class="products-section">
+            <h2 class="section-title">
+                💝 MBTI 커플 추천 상품
+            </h2>
+            <div class="coupang-container">
+                <div class="coupang-carousel" id="coupangCarousel">
+                    <!-- 쿠팡 파트너스 광고가 여기에 로드됩니다 -->
+                </div>
+            </div>
+        </div>
+
         <!-- Footer CTA -->
         <div class="footer-cta">
             <a href="ai-chat.html?character=INTJ" class="cta-button">
@@ -624,7 +908,296 @@
     <!-- 쿠팡 파트너스 -->
     <script src="https://ads-partners.coupang.com/g.js"></script>
     <script>
-        new PartnersCoupang.G({"id":808919,"template":"carousel","trackingCode":"AF8398048","width":"680","height":"140","tsource":"","kw":"MBTI"});
+        // 반응형 쿠팡 광고 설정
+        function loadCoupangAd() {
+            const container = document.getElementById('coupangCarousel');
+            const width = window.innerWidth > 768 ? 800 : Math.min(350, window.innerWidth - 40);
+            const height = window.innerWidth > 768 ? 160 : 140;
+            
+            new PartnersCoupang.G({
+                "id": 808919,
+                "template": "carousel",
+                "trackingCode": "AF8398048",
+                "width": width,
+                "height": height,
+                "tsource": "",
+                "kw": "MBTI"
+            });
+        }
+
+        // 페이지 로드 후 광고 로드
+        window.addEventListener('load', loadCoupangAd);
+        
+        // 윈도우 리사이즈시 광고 재로드
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                const container = document.getElementById('coupangCarousel');
+                container.innerHTML = '';
+                loadCoupangAd();
+            }, 500);
+        });
+        
+        // Custom Character Functions
+        function createCustomCharacter() {
+            // Check if user has premium access
+            if (typeof PremiumSystem !== 'undefined') {
+                const premiumSystem = new PremiumSystem();
+                if (!premiumSystem.canCustomizeCharacter()) {
+                    // Show premium modal
+                    window.open('premium-modal.html', '_blank');
+                    return;
+                }
+            }
+            
+            // Redirect to customizer
+            window.location.href = 'character-customizer.html';
+        }
+        
+        function chatWithCustom() {
+            window.location.href = 'ai-chat.html?character=CUSTOM';
+        }
+        
+        // Check if custom character exists and update UI
+        function checkCustomCharacter() {
+            if (typeof CharacterCustomizer !== 'undefined') {
+                const customizer = new CharacterCustomizer();
+                const customization = customizer.getCustomization('custom');
+                
+                if (customization) {
+                    // Update UI to show existing character
+                    const emoji = document.querySelector('.custom-emoji');
+                    const name = document.querySelector('.custom-name');
+                    const createBtn = document.querySelector('.custom-create-btn');
+                    const chatBtn = document.querySelector('.custom-chat-btn');
+                    const badge = document.getElementById('customBadge');
+                    
+                    if (emoji) emoji.textContent = customization.emoji || '🎭';
+                    if (name) name.textContent = customization.name || '나만의 캐릭터';
+                    if (createBtn) {
+                        createBtn.textContent = '캐릭터 수정하기';
+                        createBtn.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+                    }
+                    if (chatBtn) chatBtn.style.display = 'inline-block';
+                    if (badge) {
+                        badge.textContent = 'CREATED';
+                        badge.style.background = 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)';
+                    }
+                }
+            }
+        }
+        
+        // Load premium system and check character on page load
+        function loadPremiumSystem() {
+            const script = document.createElement('script');
+            script.src = 'premium-system.js';
+            script.onload = checkCustomCharacter;
+            document.head.appendChild(script);
+        }
+        
+        // Add to existing window load event
+        setTimeout(loadPremiumSystem, 1000);
     </script>
+    
+    <!-- Custom Character Styles -->
+    <style>
+        /* Custom Character Section */
+        .custom-character-section {
+            margin: 80px 0;
+            text-align: center;
+        }
+
+        .custom-character-card {
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.08) 0%, rgba(255, 89, 212, 0.05) 100%);
+            border-radius: 25px;
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 600px;
+            border: 1px solid rgba(120, 89, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-character-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(120, 89, 255, 0.15);
+            border-color: rgba(120, 89, 255, 0.4);
+        }
+
+        .custom-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(120, 89, 255, 0.1) 0%, transparent 60%),
+                radial-gradient(circle at 80% 70%, rgba(255, 89, 212, 0.08) 0%, transparent 60%);
+            animation: customFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes customFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(10px, -10px) rotate(1deg); }
+            66% { transform: translate(-8px, 8px) rotate(-1deg); }
+        }
+
+        .custom-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .custom-avatar {
+            flex-shrink: 0;
+        }
+
+        .custom-emoji {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.2) 0%, rgba(255, 89, 212, 0.2) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            animation: customGlow 3s ease-in-out infinite alternate;
+            border: 2px solid rgba(120, 89, 255, 0.3);
+        }
+
+        @keyframes customGlow {
+            0% { box-shadow: 0 0 20px rgba(120, 89, 255, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(255, 89, 212, 0.4); }
+        }
+
+        .custom-info {
+            flex: 1;
+        }
+
+        .custom-name {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .custom-type {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .custom-desc {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .custom-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .custom-features .feature {
+            background: rgba(120, 89, 255, 0.2);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid rgba(120, 89, 255, 0.3);
+        }
+
+        .custom-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .custom-create-btn,
+        .custom-chat-btn {
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(120, 89, 255, 0.3);
+        }
+
+        .custom-create-btn:hover,
+        .custom-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(120, 89, 255, 0.4);
+        }
+
+        .custom-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(120, 89, 255, 0.3);
+        }
+
+        /* Mobile Responsive for Custom Character */
+        @media (max-width: 768px) {
+            .custom-character-card {
+                padding: 25px;
+                margin: 25px 15px;
+            }
+
+            .custom-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
+            }
+
+            .custom-emoji {
+                width: 70px;
+                height: 70px;
+                font-size: 35px;
+            }
+
+            .custom-name {
+                font-size: 20px;
+            }
+
+            .custom-desc {
+                font-size: 14px;
+            }
+
+            .custom-buttons {
+                justify-content: center;
+            }
+
+            .custom-create-btn,
+            .custom-chat-btn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </body>
 </html>

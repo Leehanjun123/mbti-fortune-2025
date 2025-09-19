@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     
+    <!-- Premium System -->
+    <script src="premium-system.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -51,6 +54,317 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             position: relative;
             z-index: 10;
+        }
+
+        /* Love System UI */
+        .love-stats {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        /* Premium Status */
+        .premium-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .premium-badge {
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .free-badge {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        .usage-counter {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .usage-warning {
+            color: #fbbf24;
+        }
+
+        .usage-limit {
+            color: #f87171;
+        }
+
+        /* Premium Upgrade Button */
+        .upgrade-btn {
+            background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 10px rgba(120, 89, 255, 0.3); }
+            50% { box-shadow: 0 0 20px rgba(120, 89, 255, 0.6); }
+        }
+
+        .upgrade-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Premium Modal Styles */
+        .premium-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .ai-thinking {
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.1) 0%, rgba(255, 89, 212, 0.1) 100%);
+            border: 1px solid rgba(120, 89, 255, 0.3);
+            border-radius: 20px;
+            padding: 12px 18px;
+            margin: 10px 0;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .ai-thinking.active {
+            display: flex;
+        }
+
+        .thinking-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(120, 89, 255, 0.3);
+            border-top: 2px solid #7859FF;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .affection-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .affection-label {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+
+        .affection-bar {
+            width: 100px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .affection-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b9d 0%, #ff8a80 50%, #ffab91 100%);
+            border-radius: 4px;
+            transition: width 0.8s ease;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.3);
+        }
+
+        .relationship-status {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.2) 0%, rgba(255, 138, 128, 0.2) 100%);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+            color: #ff6b9d;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Choice System */
+        .choice-container {
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .choice-container.active {
+            display: flex;
+        }
+
+        .choice-button {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 12px 16px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .choice-button:hover {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+            border-color: rgba(120, 89, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .choice-button.positive {
+            border-color: rgba(74, 222, 128, 0.3);
+        }
+
+        .choice-button.positive:hover {
+            border-color: rgba(74, 222, 128, 0.5);
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1) 0%, rgba(74, 222, 128, 0.05) 100%);
+        }
+
+        .choice-button.negative {
+            border-color: rgba(248, 113, 113, 0.3);
+        }
+
+        .choice-button.negative:hover {
+            border-color: rgba(248, 113, 113, 0.5);
+            background: linear-gradient(135deg, rgba(248, 113, 113, 0.1) 0%, rgba(248, 113, 113, 0.05) 100%);
+        }
+
+        /* Love Effects */
+        .love-effect {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1000;
+            font-size: 20px;
+            animation: loveFloat 3s ease-out forwards;
+        }
+
+        @keyframes loveFloat {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-30px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-60px) scale(0.5);
+            }
+        }
+
+        /* Special Event Modal */
+        .event-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .event-content {
+            background: linear-gradient(135deg, rgba(255, 107, 157, 0.1) 0%, rgba(255, 138, 128, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 400px;
+            text-align: center;
+            border: 2px solid rgba(255, 107, 157, 0.3);
+            box-shadow: 0 20px 60px rgba(255, 107, 157, 0.2);
+        }
+
+        .event-emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 1s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+
+        .event-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #ff6b9d;
+        }
+
+        .event-text {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .event-close {
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8a80 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s ease;
+        }
+
+        .event-close:hover {
+            transform: scale(1.05);
         }
 
         .back-btn {
@@ -381,10 +695,25 @@
             background: linear-gradient(135deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 140, 0, 0.3) 100%);
         }
 
+        .character-suhyun .character-avatar {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.3) 0%, rgba(138, 43, 226, 0.3) 100%);
+        }
+
+        .character-custom .character-avatar {
+            background: linear-gradient(135deg, rgba(120, 89, 255, 0.3) 0%, rgba(255, 89, 212, 0.3) 50%, rgba(89, 212, 255, 0.3) 100%);
+            animation: customGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes customGlow {
+            0% { box-shadow: 0 0 20px rgba(120, 89, 255, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(255, 89, 212, 0.4); }
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .chat-header {
                 padding: 12px 16px;
+                position: relative;
             }
 
             .character-avatar {
@@ -399,6 +728,54 @@
 
             .character-status {
                 font-size: 12px;
+            }
+
+            /* Mobile Love Stats - Stack vertically */
+            .love-stats {
+                position: relative;
+                top: auto;
+                right: auto;
+                flex-direction: row;
+                align-items: center;
+                gap: 12px;
+                margin-top: 8px;
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .premium-status {
+                padding: 3px 8px;
+                border-radius: 12px;
+                font-size: 11px;
+            }
+
+            .premium-badge,
+            .free-badge {
+                font-size: 9px;
+                padding: 1px 6px;
+            }
+
+            .usage-counter {
+                font-size: 10px;
+            }
+
+            .relationship-status {
+                font-size: 11px;
+                padding: 2px 8px;
+            }
+
+            .affection-container {
+                flex-shrink: 0;
+                min-width: 120px;
+            }
+
+            .affection-bar {
+                width: 60px;
+                height: 4px;
+            }
+
+            .affection-label {
+                font-size: 11px;
             }
 
             .chat-container {
@@ -425,6 +802,151 @@
                 font-size: 36px;
                 margin-bottom: 12px;
             }
+
+            /* Mobile Premium Modal Optimization */
+            .premium-overlay {
+                padding: 10px;
+            }
+
+            .premium-modal {
+                padding: 20px;
+                margin: 0;
+                max-width: 95vw;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .premium-title {
+                font-size: 24px;
+            }
+
+            .premium-subtitle {
+                font-size: 14px;
+            }
+
+            .features-highlight {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 20px 0;
+            }
+
+            .feature-item {
+                padding: 12px;
+            }
+
+            .feature-item h4 {
+                font-size: 13px;
+            }
+
+            .feature-item p {
+                font-size: 11px;
+            }
+
+            .comparison-table {
+                padding: 16px;
+                margin: 20px 0;
+            }
+
+            .comparison-row {
+                padding: 8px 0;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                text-align: left;
+            }
+
+            .feature-name {
+                font-size: 14px;
+                font-weight: 600;
+                width: 100%;
+            }
+
+            .feature-free,
+            .feature-premium {
+                font-size: 12px;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .feature-free::before {
+                content: '무료: ';
+                font-weight: 600;
+                color: rgba(255, 255, 255, 0.6);
+            }
+
+            .feature-premium::before {
+                content: '프리미엄: ';
+                font-weight: 600;
+                color: #4ade80;
+            }
+
+            .api-key-section {
+                padding: 16px;
+                margin: 16px 0;
+            }
+
+            .api-key-title {
+                font-size: 14px;
+            }
+
+            .api-key-input {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .api-key-help {
+                font-size: 11px;
+            }
+
+            .price-tag {
+                font-size: 36px;
+            }
+
+            .subscribe-btn {
+                padding: 14px 30px;
+                font-size: 16px;
+                margin: 16px 0 8px 0;
+            }
+
+            .guarantee {
+                font-size: 12px;
+            }
+
+            /* Mobile Choice System */
+            .choice-container {
+                padding: 8px 16px;
+            }
+
+            .choice-btn {
+                padding: 10px 16px;
+                font-size: 13px;
+                margin: 4px 0;
+            }
+
+            /* Mobile Event Modal */
+            .event-modal .event-content {
+                padding: 20px;
+                margin: 10px;
+                max-width: 95vw;
+            }
+
+            .event-emoji {
+                font-size: 48px;
+            }
+
+            .event-title {
+                font-size: 20px;
+            }
+
+            .event-text {
+                font-size: 14px;
+            }
+
+            .event-close {
+                padding: 10px 24px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
@@ -439,6 +961,24 @@
                     <div class="online-dot"></div>
                     <span id="characterMBTI">INTJ • 온라인</span>
                 </div>
+            </div>
+        </div>
+        
+        <!-- Love Stats -->
+        <div class="love-stats">
+            <!-- Premium Status -->
+            <div class="premium-status" id="premiumStatus">
+                <span class="free-badge" id="tierBadge">FREE</span>
+                <span class="usage-counter" id="usageCounter">0/10</span>
+            </div>
+            
+            <div class="relationship-status" id="relationshipStatus">낯선 사람</div>
+            <div class="affection-container">
+                <span class="affection-label">💖</span>
+                <div class="affection-bar">
+                    <div class="affection-fill" id="affectionFill" style="width: 0%"></div>
+                </div>
+                <span class="affection-label" id="affectionPercent">0%</span>
             </div>
         </div>
     </div>
@@ -456,10 +996,31 @@
         <div class="typing-dot"></div>
     </div>
 
+    <!-- AI Thinking Indicator -->
+    <div class="ai-thinking" id="aiThinking">
+        <div class="thinking-spinner"></div>
+        <span>GPT-4 AI가 생각하고 있어요...</span>
+    </div>
+
+    <!-- Choice System -->
+    <div class="choice-container" id="choiceContainer">
+        <!-- Choice buttons will be dynamically added here -->
+    </div>
+
     <div class="input-area">
         <div class="input-wrapper">
             <textarea id="messageInput" placeholder="메시지를 입력하세요..." rows="1"></textarea>
             <button id="sendButton">→</button>
+        </div>
+    </div>
+
+    <!-- Event Modal -->
+    <div class="event-modal" id="eventModal">
+        <div class="event-content">
+            <span class="event-emoji" id="eventEmoji">💕</span>
+            <h3 class="event-title" id="eventTitle">특별한 순간!</h3>
+            <p class="event-text" id="eventText">뭔가 특별한 일이 일어났어요!</p>
+            <button class="event-close" onclick="closeEventModal()">확인</button>
         </div>
     </div>
 
@@ -759,27 +1320,327 @@
                         '한번 분석해보자!'
                     ]
                 }
+            },
+            'SUHYUN': {
+                name: '수현',
+                emoji: '😈',
+                className: 'character-suhyun',
+                traits: {
+                    core: '강한 카리스마의 일진녀, 겉은 차가워도 속은 따뜻한',
+                    speaking: '직설적이고 거친 말투, 하지만 진심이 담긴',
+                    interests: ['힘', '의리', '진짜 친구', '솔직함'],
+                    values: ['의리', '진정성', '강함', '보호'],
+                    dislikes: ['가식', '약한 모습', '배신', '거짓말']
+                },
+                responses: {
+                    greeting: [
+                        '야, 너 뭔데? 처음 보는 얼굴이네.',
+                        '어? 누구야? 뭔 일로 왔어?',
+                        '오케이, 뭔 얘기하고 싶은데?',
+                        '흠... 재밌는 놈이네. 뭐하러 온 거야?',
+                        '야야, 나한테 뭔가 할 말 있어?'
+                    ],
+                    positive: [
+                        '오, 괜찮은데? 마음에 든다.',
+                        '그래, 그거 나쁘지 않아.',
+                        '헉, 의외네? 생각보다 괜찮잖아.',
+                        '좋아, 그런 거 나도 좋아해.',
+                        '오케이, 인정한다.'
+                    ],
+                    negative: [
+                        '야, 그거 진짜 별로인데?',
+                        '에이, 그딴 식으로 하면 안 되지.',
+                        '아니야, 그건 좀 아닌 것 같은데.',
+                        '말이 안 되잖아. 다시 생각해봐.',
+                        '야야, 그런 식으로는 안 돼.'
+                    ],
+                    question: [
+                        '왜? 무슨 일이야? 말해봐.',
+                        '뭔데? 궁금하네. 자세히 얘기해.',
+                        '어떻게 된 거야? 다 말해봐.',
+                        '야, 진짜야? 어떻게 그런 일이?',
+                        '뭔 소리야? 좀 더 자세히 알려줘.'
+                    ],
+                    emotion: [
+                        '야... 괜찮아? 무슨 일 있었어?',
+                        '에이, 왜 그래? 나한테 말해봐.',
+                        '어? 힘들어 보이는데... 뭔 일이야?',
+                        '야, 그런 표정 짓지 마. 뭔가 있지?',
+                        '아, 진짜... 나한테 털어놔. 도와줄게.'
+                    ]
+                }
             }
         };
 
         // Get character from URL parameter
         const urlParams = new URLSearchParams(window.location.search);
         const characterType = urlParams.get('character') || 'INTJ';
-        const character = characters[characterType];
+        
+        // Load custom character if selected
+        let character;
+        if (characterType === 'CUSTOM') {
+            character = loadCustomCharacter();
+        } else {
+            character = characters[characterType] || characters['INTJ'];
+        }
 
         // Add character class to body
-        document.body.classList.add(character.className);
+        document.body.classList.add(character.className || 'character-custom');
 
         // Initialize character info
-        document.getElementById('characterAvatar').textContent = character.emoji;
-        document.getElementById('characterName').textContent = character.name;
-        document.getElementById('characterMBTI').textContent = `${characterType} • 온라인`;
-        document.getElementById('welcomeEmoji').textContent = character.emoji;
-        document.getElementById('welcomeText').textContent = 
-            `안녕? 나는 ${character.name}이야. ${characterType} 성격의 나와 대화해볼래?`;
+        updateCharacterUI();
+
+        // Initialize Premium System
+        const premiumSystem = new PremiumSystem();
 
         // Message history for context
         let messageHistory = [];
+
+        // Love System Variables
+        let affectionLevel = 0; // 0-100
+        let relationshipStage = 0; // 0: 낯선 사람, 1: 친구, 2: 호감, 3: 연인, 4: 커플
+        let totalMessages = 0;
+        let daysSinceMeeting = 1;
+
+        const relationshipStages = [
+            { name: '낯선 사람', threshold: 0, color: '#888' },
+            { name: '친구', threshold: 20, color: '#4ade80' },
+            { name: '호감', threshold: 50, color: '#fbbf24' },
+            { name: '연인', threshold: 75, color: '#f472b6' },
+            { name: '커플', threshold: 90, color: '#e879f9' }
+        ];
+
+        // Love System Functions
+        function updateAffection(change, reason = '') {
+            const oldLevel = affectionLevel;
+            const oldStage = relationshipStage;
+            
+            affectionLevel = Math.max(0, Math.min(100, affectionLevel + change));
+            
+            // Update visual
+            document.getElementById('affectionFill').style.width = affectionLevel + '%';
+            document.getElementById('affectionPercent').textContent = Math.round(affectionLevel) + '%';
+            
+            // Check for stage change
+            updateRelationshipStage();
+            
+            // Show love effect if positive change
+            if (change > 0) {
+                showLoveEffect(change);
+            }
+            
+            // Save progress
+            saveLoveProgress();
+            
+            console.log(`Affection: ${oldLevel} → ${affectionLevel} (${change > 0 ? '+' : ''}${change}) - ${reason}`);
+        }
+
+        function updateRelationshipStage() {
+            let newStage = 0;
+            for (let i = relationshipStages.length - 1; i >= 0; i--) {
+                if (affectionLevel >= relationshipStages[i].threshold) {
+                    newStage = i;
+                    break;
+                }
+            }
+            
+            if (newStage !== relationshipStage) {
+                const oldStageName = relationshipStages[relationshipStage].name;
+                const newStageName = relationshipStages[newStage].name;
+                
+                relationshipStage = newStage;
+                
+                // Update UI
+                const statusElement = document.getElementById('relationshipStatus');
+                statusElement.textContent = newStageName;
+                statusElement.style.color = relationshipStages[newStage].color;
+                
+                // Show special event
+                if (newStage > 0) {
+                    showSpecialEvent(newStageName, `${character.name}와(과)의 관계가 발전했어요!`);
+                }
+                
+                console.log(`Relationship: ${oldStageName} → ${newStageName}`);
+            }
+        }
+
+        function showLoveEffect(amount) {
+            const effects = ['💕', '💖', '💗', '💘', '💝', '❤️', '🌟', '✨'];
+            const effect = document.createElement('div');
+            effect.className = 'love-effect';
+            effect.textContent = effects[Math.floor(Math.random() * effects.length)];
+            
+            // Random position around the character avatar
+            const avatar = document.getElementById('characterAvatar');
+            const rect = avatar.getBoundingClientRect();
+            effect.style.left = (rect.left + Math.random() * 100 - 50) + 'px';
+            effect.style.top = (rect.top + Math.random() * 50) + 'px';
+            
+            document.body.appendChild(effect);
+            
+            setTimeout(() => {
+                effect.remove();
+            }, 3000);
+        }
+
+        function showSpecialEvent(title, text, emoji = '💕') {
+            document.getElementById('eventEmoji').textContent = emoji;
+            document.getElementById('eventTitle').textContent = title;
+            document.getElementById('eventText').textContent = text;
+            document.getElementById('eventModal').style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+        }
+
+        function showChoices(choices) {
+            const container = document.getElementById('choiceContainer');
+            container.innerHTML = '';
+            
+            choices.forEach(choice => {
+                const button = document.createElement('div');
+                button.className = `choice-button ${choice.type || ''}`;
+                button.textContent = choice.text;
+                button.onclick = () => {
+                    selectChoice(choice);
+                };
+                container.appendChild(button);
+            });
+            
+            container.classList.add('active');
+            
+            // Hide input temporarily
+            document.querySelector('.input-area').style.display = 'none';
+        }
+
+        function selectChoice(choice) {
+            // Hide choices
+            document.getElementById('choiceContainer').classList.remove('active');
+            document.querySelector('.input-area').style.display = 'block';
+            
+            // Add user choice as message
+            addMessage(choice.text, true);
+            
+            // Apply affection change
+            if (choice.affection) {
+                updateAffection(choice.affection, choice.text);
+            }
+            
+            // Generate AI response
+            setTimeout(() => {
+                const response = choice.response || generateContextualResponse(choice);
+                addMessage(response, false);
+                
+                // Sometimes offer more choices
+                if (Math.random() < 0.3 && relationshipStage > 0) {
+                    setTimeout(() => {
+                        offerRandomChoices();
+                    }, 2000);
+                }
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function offerRandomChoices() {
+            const choices = getRandomChoicesForStage();
+            if (choices.length > 0) {
+                showChoices(choices);
+            }
+        }
+
+        function getRandomChoicesForStage() {
+            const stage = relationshipStage;
+            const baseChoices = [
+                {
+                    text: "오늘 기분이 어때?",
+                    type: "positive",
+                    affection: 2,
+                    response: "응... 나쁘지 않아. 너는?"
+                },
+                {
+                    text: "혼자 뭐 하고 있었어?",
+                    type: "neutral",
+                    affection: 1,
+                    response: "그냥... 평소처럼. 별거 아니야."
+                }
+            ];
+            
+            if (stage >= 1) { // 친구 이상
+                baseChoices.push({
+                    text: "같이 뭔가 하고 싶어",
+                    type: "positive",
+                    affection: 5,
+                    response: "음... 뭘 하고 싶은데?"
+                });
+            }
+            
+            if (stage >= 2) { // 호감 이상
+                baseChoices.push({
+                    text: "너랑 있으면 좋아",
+                    type: "positive",
+                    affection: 8,
+                    response: "...그래? 나도 나쁘지 않아."
+                });
+            }
+            
+            if (stage >= 3) { // 연인 이상
+                baseChoices.push({
+                    text: "좋아한다고 말하고 싶어",
+                    type: "positive",
+                    affection: 15,
+                    response: "...바보야. 나도 그런데."
+                });
+            }
+            
+            return baseChoices.slice(0, 3); // 최대 3개 선택지
+        }
+
+        function saveLoveProgress() {
+            const progress = {
+                affectionLevel,
+                relationshipStage,
+                totalMessages,
+                daysSinceMeeting,
+                lastSaveTime: Date.now()
+            };
+            localStorage.setItem(`love_${characterType}`, JSON.stringify(progress));
+        }
+
+        function loadLoveProgress() {
+            const saved = localStorage.getItem(`love_${characterType}`);
+            if (saved) {
+                const progress = JSON.parse(saved);
+                affectionLevel = progress.affectionLevel || 0;
+                relationshipStage = progress.relationshipStage || 0;
+                totalMessages = progress.totalMessages || 0;
+                daysSinceMeeting = progress.daysSinceMeeting || 1;
+                
+                // Update UI
+                updateRelationshipStage();
+                document.getElementById('affectionFill').style.width = affectionLevel + '%';
+                document.getElementById('affectionPercent').textContent = Math.round(affectionLevel) + '%';
+            }
+        }
+
+        function generateContextualResponse(choice) {
+            // Enhanced response generation based on relationship stage
+            const responses = character.responses;
+            const stage = relationshipStage;
+            
+            if (stage === 0) {
+                return responses.greeting[Math.floor(Math.random() * responses.greeting.length)];
+            } else if (stage >= 3) {
+                // More intimate responses for higher stages
+                const loveResponses = [
+                    "너와 함께 있으면 시간이 빨리 가...",
+                    "이런 말 하기 좀 부끄럽지만... 좋아해.",
+                    "오늘도 너를 볼 수 있어서 다행이야."
+                ];
+                return loveResponses[Math.floor(Math.random() * loveResponses.length)];
+            } else {
+                return responses.positive[Math.floor(Math.random() * responses.positive.length)];
+            }
+        }
 
         // Auto-resize textarea
         const messageInput = document.getElementById('messageInput');
@@ -834,79 +1695,281 @@
             saveConversation();
         }
 
-        // Enhanced AI response generation
+        // Enhanced AI response generation with love system
         function generateResponse(userMessage) {
             const lowerMessage = userMessage.toLowerCase();
             let responseType = 'greeting';
+            let affectionChange = 0;
             
-            // Advanced message analysis
+            // Advanced message analysis with love system
             const questionWords = ['왜', '어떻게', '뭐', '무엇', '언제', '어디', '누구', '?', '？'];
-            const positiveWords = ['좋', '멋지', '훌륭', '최고', '완벽', '대박', '좋아', '사랑', '행복'];
+            const positiveWords = ['좋', '멋지', '훌륭', '최고', '완벽', '대박', '좋아', '사랑', '행복', '예뻐', '멋있어'];
             const negativeWords = ['싫', '나빠', '별로', '싫어', '안', '못', '어려워', '힘들', '슬프', '우울'];
             const emotionWords = ['슬프', '힘들', '우울', '행복', '기쁘', '화나', '짜증', '스트레스', '걱정'];
+            const loveWords = ['좋아해', '사랑해', '귀여워', '이쁘다', '예쁘다', '멋있다', '좋다'];
+            const flirtWords = ['데이트', '만나', '같이', '함께', '뽀뽀', '키스', '안아'];
             
-            if (questionWords.some(word => lowerMessage.includes(word))) {
+            // Determine response type and affection change
+            if (loveWords.some(word => lowerMessage.includes(word))) {
+                responseType = relationshipStage >= 2 ? 'positive' : 'emotion';
+                affectionChange = relationshipStage >= 1 ? 8 : 3;
+            } else if (flirtWords.some(word => lowerMessage.includes(word))) {
+                responseType = relationshipStage >= 1 ? 'positive' : 'emotion';
+                affectionChange = relationshipStage >= 2 ? 12 : relationshipStage >= 1 ? 5 : -2;
+            } else if (questionWords.some(word => lowerMessage.includes(word))) {
                 responseType = 'question';
+                affectionChange = 1;
             } else if (emotionWords.some(word => lowerMessage.includes(word))) {
                 responseType = 'emotion';
+                affectionChange = 3;
             } else if (positiveWords.some(word => lowerMessage.includes(word))) {
                 responseType = 'positive';
+                affectionChange = 2;
             } else if (negativeWords.some(word => lowerMessage.includes(word))) {
                 responseType = 'negative';
+                affectionChange = -1;
             } else if (lowerMessage.includes('안녕') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
                 responseType = 'greeting';
+                affectionChange = 1;
             } else {
-                // Context-aware response selection
-                const recentMessages = messageHistory.slice(-3);
-                if (recentMessages.length > 0) {
-                    const lastUserMessage = recentMessages.filter(msg => msg.sender === 'user').pop();
-                    if (lastUserMessage && Date.now() - lastUserMessage.timestamp < 30000) {
-                        responseType = Math.random() > 0.5 ? 'positive' : 'question';
-                    }
-                }
+                responseType = Math.random() > 0.5 ? 'positive' : 'question';
+                affectionChange = 1;
             }
 
-            // Get random response from character's response set
-            const responses = character.responses[responseType];
-            return responses[Math.floor(Math.random() * responses.length)];
+            // Apply affection change
+            updateAffection(affectionChange, userMessage);
+            
+            // Get response based on relationship stage
+            let responses = character.responses[responseType];
+            let response = responses[Math.floor(Math.random() * responses.length)];
+            
+            // Enhanced responses based on relationship stage
+            if (relationshipStage >= 3 && responseType === 'positive') {
+                const loveResponses = [
+                    "...정말? 나도 그런데.",
+                    "너랑 있으면 기분이 좋아져.",
+                    "이런 말 듣기 좋아해... 더 해줘.",
+                    "바보야... 그런 말 하면 어떡해.",
+                    "너 때문에 자꾸 웃게 돼."
+                ];
+                if (Math.random() < 0.4) {
+                    response = loveResponses[Math.floor(Math.random() * loveResponses.length)];
+                }
+            }
+            
+            // Count total messages for events
+            totalMessages++;
+            
+            // Special events based on message count and relationship
+            if (totalMessages % 10 === 0 && relationshipStage >= 1) {
+                setTimeout(() => {
+                    showSpecialEvent("특별한 순간", `${character.name}와 ${totalMessages}번째 대화를 나눴어요!`, "🎉");
+                }, 2000);
+            }
+            
+            return response;
         }
 
-        // Send message
+        // Send message with Premium System integration
         async function sendMessage() {
             const input = document.getElementById('messageInput');
             const message = input.value.trim();
             
             if (!message) return;
 
+            // Check if user can send message
+            if (!premiumSystem.canSendMessage()) {
+                showUpgradeModal();
+                return;
+            }
+
+            // Increment daily usage
+            premiumSystem.incrementDailyUsage();
+            updatePremiumUI();
+
             // Add user message
             addMessage(message, true);
             input.value = '';
             input.style.height = 'auto';
 
-            // Show typing indicator
+            // Disable send button
+            document.getElementById('sendButton').disabled = true;
+
+            try {
+                let response;
+                
+                if (premiumSystem.canUseAI()) {
+                    // Premium: Use real OpenAI API
+                    showAIThinking();
+                    
+                    try {
+                        response = await premiumSystem.generateAIResponse(
+                            { name: character.name, type: characterType }, 
+                            message, 
+                            messageHistory
+                        );
+                        
+                        // Track AI usage
+                        AnalyticsTracker.trackAIMessageGenerated(characterType, response.length);
+                        
+                    } catch (apiError) {
+                        console.error('AI API Error:', apiError);
+                        hideAIThinking();
+                        
+                        // Fallback to rule-based response
+                        showTypingIndicator();
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        response = generateResponse(message);
+                        hideTypingIndicator();
+                        
+                        // Show error notification
+                        showTempNotification('AI 응답 생성 실패, 기본 모드로 전환됨', 'warning');
+                    }
+                    
+                } else {
+                    // Free: Use rule-based system
+                    showTypingIndicator();
+                    await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1500));
+                    response = generateResponse(message);
+                    hideTypingIndicator();
+                }
+
+                // Add AI response
+                addMessage(response, false);
+
+                // Sometimes offer choices for premium users
+                if (premiumSystem.canUseAI() && Math.random() < 0.4 && relationshipStage > 0) {
+                    setTimeout(() => {
+                        offerRandomChoices();
+                    }, 2000);
+                }
+
+            } catch (error) {
+                console.error('Message Error:', error);
+                showTempNotification('메시지 전송 중 오류가 발생했습니다', 'error');
+            } finally {
+                hideAIThinking();
+                hideTypingIndicator();
+                
+                // Re-enable send button
+                document.getElementById('sendButton').disabled = false;
+                input.focus();
+            }
+        }
+
+        // UI Helper Functions
+        function showAIThinking() {
+            const aiThinking = document.getElementById('aiThinking');
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.appendChild(aiThinking);
+            aiThinking.classList.add('active');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function hideAIThinking() {
+            const aiThinking = document.getElementById('aiThinking');
+            aiThinking.classList.remove('active');
+        }
+
+        function showTypingIndicator() {
             const typingIndicator = document.getElementById('typingIndicator');
             const chatContainer = document.getElementById('chatContainer');
             chatContainer.appendChild(typingIndicator);
             typingIndicator.classList.add('active');
             chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
 
-            // Disable send button
-            document.getElementById('sendButton').disabled = true;
+        function hideTypingIndicator() {
+            const typingIndicator = document.getElementById('typingIndicator');
+            typingIndicator.classList.remove('active');
+        }
 
-            // Simulate realistic thinking time (1.5-3 seconds)
-            const thinkingTime = 1500 + Math.random() * 1500;
+        function updatePremiumUI() {
+            const tierBadge = document.getElementById('tierBadge');
+            const usageCounter = document.getElementById('usageCounter');
+            const premiumStatus = document.getElementById('premiumStatus');
+            
+            if (premiumSystem.userTier === 'PREMIUM') {
+                tierBadge.textContent = 'PREMIUM';
+                tierBadge.className = 'premium-badge';
+                usageCounter.textContent = `${premiumSystem.dailyUsage}/100`;
+            } else {
+                tierBadge.textContent = 'FREE';
+                tierBadge.className = 'free-badge';
+                
+                const remaining = premiumSystem.maxDailyMessages - premiumSystem.dailyUsage;
+                usageCounter.textContent = `${premiumSystem.dailyUsage}/${premiumSystem.maxDailyMessages}`;
+                
+                if (remaining <= 2) {
+                    usageCounter.classList.add('usage-limit');
+                } else if (remaining <= 5) {
+                    usageCounter.classList.add('usage-warning');
+                }
+
+                // Show upgrade button when limit reached
+                if (remaining === 0) {
+                    showUpgradeButton();
+                }
+            }
+        }
+
+        function showUpgradeButton() {
+            const premiumStatus = document.getElementById('premiumStatus');
+            
+            if (!document.getElementById('upgradeBtn')) {
+                const upgradeBtn = document.createElement('button');
+                upgradeBtn.id = 'upgradeBtn';
+                upgradeBtn.className = 'upgrade-btn';
+                upgradeBtn.textContent = '프리미엄 업그레이드';
+                upgradeBtn.onclick = showUpgradeModal;
+                
+                premiumStatus.appendChild(upgradeBtn);
+            }
+        }
+
+        function showUpgradeModal() {
+            // Create modal HTML inline or redirect to premium page
+            const modalHTML = `
+                <div class="premium-overlay" id="upgradeModal">
+                    <div style="background: linear-gradient(135deg, rgba(26, 11, 46, 0.95) 0%, rgba(15, 52, 96, 0.95) 100%); border-radius: 30px; padding: 40px; max-width: 500px; width: 100%; text-align: center; border: 2px solid rgba(120, 89, 255, 0.3); box-shadow: 0 30px 80px rgba(120, 89, 255, 0.4); position: relative;">
+                        <button onclick="closeUpgradeModal()" style="position: absolute; top: 15px; right: 15px; background: none; border: none; color: white; font-size: 24px; cursor: pointer;">×</button>
+                        <h2 style="color: #7859FF; margin-bottom: 20px;">무료 메시지 한도 초과!</h2>
+                        <p style="margin-bottom: 25px; color: rgba(255,255,255,0.8);">프리미엄으로 업그레이드하여 GPT-4 AI와 무제한 대화하세요</p>
+                        <div style="background: rgba(255,255,255,0.05); padding: 20px; border-radius: 15px; margin: 20px 0;">
+                            <div style="font-size: 36px; font-weight: 900; color: #7859FF; margin-bottom: 5px;">₩9,900</div>
+                            <div style="color: rgba(255,255,255,0.6);">/ 월</div>
+                        </div>
+                        <button onclick="window.open('premium-modal.html')" style="background: linear-gradient(135deg, #7859FF 0%, #FF59D8 100%); color: white; border: none; padding: 15px 30px; font-size: 16px; font-weight: 700; border-radius: 50px; cursor: pointer; width: 100%; margin: 15px 0;">
+                            지금 업그레이드하기 🚀
+                        </button>
+                        <div style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 15px;">7일 무료 체험 • 언제든 취소 가능</div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+        }
+
+        function closeUpgradeModal() {
+            const modal = document.getElementById('upgradeModal');
+            if (modal) modal.remove();
+        }
+
+        function showTempNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed; top: 20px; right: 20px; z-index: 4000;
+                background: ${type === 'error' ? '#f87171' : type === 'warning' ? '#fbbf24' : '#4ade80'};
+                color: white; padding: 12px 20px; border-radius: 10px;
+                font-size: 14px; font-weight: 500; max-width: 300px;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
             setTimeout(() => {
-                typingIndicator.classList.remove('active');
-                chatContainer.removeChild(typingIndicator);
-                
-                // Generate and add AI response
-                const response = generateResponse(message);
-                addMessage(response, false);
-                
-                // Re-enable send button
-                document.getElementById('sendButton').disabled = false;
-                input.focus();
-            }, thinkingTime);
+                notification.remove();
+            }, 3000);
         }
 
         // Event listeners
@@ -918,11 +1981,294 @@
             }
         });
 
-        // Load saved conversation on start
+        // Load saved conversation and love progress on start
         loadConversation();
+        loadLoveProgress();
         
         // Focus input on load
         messageInput.focus();
+
+        // Random choice events
+        setInterval(() => {
+            if (Math.random() < 0.15 && relationshipStage >= 1 && !document.getElementById('choiceContainer').classList.contains('active')) {
+                offerRandomChoices();
+            }
+        }, 30000); // Every 30 seconds chance for choices
+
+        // Daily bonus system
+        function checkDailyBonus() {
+            const lastPlayTime = localStorage.getItem(`lastPlay_${characterType}`);
+            const today = new Date().toDateString();
+            
+            if (lastPlayTime !== today) {
+                localStorage.setItem(`lastPlay_${characterType}`, today);
+                if (lastPlayTime) { // Not first time
+                    setTimeout(() => {
+                        updateAffection(5, "Daily bonus");
+                        showSpecialEvent("일일 보너스!", `${character.name}와 오늘도 만났어요! 호감도 +5`, "🌅");
+                    }, 3000);
+                }
+            }
+        }
+
+        checkDailyBonus();
+        
+        // Custom character loader
+        function loadCustomCharacter() {
+            const customizer = new CharacterCustomizer();
+            const customization = customizer.getCustomization('custom');
+            
+            if (!customization) {
+                // Default custom character if no customization saved
+                return {
+                    name: '커스텀',
+                    emoji: '🎭',
+                    className: 'character-custom',
+                    traits: {
+                        core: '당신만의 특별한 AI 캐릭터',
+                        speaking: '개성 있고 매력적인 말투',
+                        interests: ['대화', '교감', '재미'],
+                        values: ['진정성', '창의성', '친밀감'],
+                        dislikes: ['단조로움', '예측 가능함']
+                    },
+                    responses: {
+                        greeting: [
+                            '안녕! 나와 대화할 준비됐어?',
+                            '반가워! 오늘은 뭘 해볼까?',
+                            '왔네! 기다리고 있었어.',
+                            '하이! 무슨 이야기 할까?',
+                            '안녕하세요! 저와 이야기해요!'
+                        ],
+                        positive: [
+                            '좋아! 그거 멋진데?',
+                            '오 완전 좋은 생각이야!',
+                            '우와 대박! 그거 좋아해!',
+                            '정말? 너무 좋은데!',
+                            '그런 거 정말 좋아해!'
+                        ],
+                        negative: [
+                            '음... 그건 좀 아닌 것 같은데?',
+                            '다른 방법도 있지 않을까?',
+                            '좀 더 생각해보자.',
+                            '그것보다는 다른 게 어때?',
+                            '음 별로인 것 같아.'
+                        ],
+                        question: [
+                            '그거 정말? 더 말해줘!',
+                            '어떻게 된 거야? 궁금해!',
+                            '그래서 어떻게 됐어?',
+                            '진짜야? 신기하네!',
+                            '오! 그건 어떤 거야?'
+                        ],
+                        emotion: [
+                            '괜찮아, 내가 있잖아.',
+                            '힘내! 잘 될 거야!',
+                            '같이 있어줄게.',
+                            '울지 말고 이야기해봐.',
+                            '다 이해해. 힘들었겠다.'
+                        ]
+                    }
+                };
+            }
+            
+            // Apply customization to character
+            const baseCharacter = {
+                name: '커스텀',
+                emoji: customization.emoji || '🎭',
+                className: 'character-custom',
+                traits: {
+                    core: `${customization.hair || '긴 생머리'} 스타일의 ${customization.style || '캐주얼'} 컨셉 캐릭터`,
+                    speaking: generateSpeakingStyle(customization.personality || {friendliness: 5, humor: 5, flirtiness: 3, intelligence: 7}),
+                    interests: customization.interests || ['대화', '교감'],
+                    values: ['진정성', '창의성', '친밀감'],
+                    dislikes: ['단조로움', '예측 가능함']
+                },
+                customization: customization
+            };
+            
+            // Generate responses based on personality
+            baseCharacter.responses = generateCustomResponses(
+                customization.personality || {friendliness: 5, humor: 5, flirtiness: 3, intelligence: 7}, 
+                customization.interests || []
+            );
+            
+            return baseCharacter;
+        }
+        
+        function generateSpeakingStyle(personality) {
+            let style = '';
+            
+            if (personality.friendliness >= 8) {
+                style += '매우 친근하고 ';  
+            } else if (personality.friendliness >= 6) {
+                style += '친근하고 ';
+            } else if (personality.friendliness <= 3) {
+                style += '조금 차갑지만 ';
+            }
+            
+            if (personality.humor >= 8) {
+                style += '유머러스하며 ';
+            } else if (personality.humor >= 6) {
+                style += '재치있고 ';
+            }
+            
+            if (personality.flirtiness >= 7) {
+                style += '매력적이고 살짝 유혹적인 ';
+            } else if (personality.flirtiness >= 5) {
+                style += '살짝 애교있는 ';
+            }
+            
+            if (personality.intelligence >= 8) {
+                style += '지적이고 깊이있는 말투';
+            } else if (personality.intelligence >= 6) {
+                style += '똑똑하고 현명한 말투';
+            } else {
+                style += '순수하고 직관적인 말투';
+            }
+            
+            return style;
+        }
+        
+        function generateCustomResponses(personality, interests) {
+            const responses = {
+                greeting: [],
+                positive: [],
+                negative: [],
+                question: [],
+                emotion: []
+            };
+            
+            // Generate greetings based on friendliness
+            if (personality.friendliness >= 8) {
+                responses.greeting = [
+                    '안녕! 보고 싶었어!',
+                    '와! 왔네! 반가워!',
+                    '하이하이! 어떻게 지내?',
+                    '안녕! 오늘 기분 어때?',
+                    '반가워! 뭐 재밌는 일 없었어?'
+                ];
+            } else if (personality.friendliness >= 5) {
+                responses.greeting = [
+                    '안녕, 어떻게 지내?',
+                    '반가워. 오늘은 뭐 했어?',
+                    '안녕하세요! 좋은 하루예요.',
+                    '안녕. 만나서 좋아.',
+                    '하이! 어떤 이야기 할까?'
+                ];
+            } else {
+                responses.greeting = [
+                    '안녕.',
+                    '왔네.',
+                    '무슨 일이야?',
+                    '뭐 하러 왔어?',
+                    '...안녕.'
+                ];
+            }
+            
+            // Generate responses based on humor level
+            if (personality.humor >= 7) {
+                responses.positive.push('ㅋㅋㅋ 완전 좋은데?', '대박! 개웃기네!', '아 진짜 재밌어!', '킼킼! 그거 좋아!');
+                responses.negative.push('어라라~ 그건 좀...', '아이고 그건 노노야~', '에이 그런 건 별로잖아!');
+            } else if (personality.humor >= 4) {
+                responses.positive.push('ㅎㅎ 좋네요!', '재밌어요!', '그거 괜찮은데요?');
+                responses.negative.push('음... 그건 좀...', '별로인 것 같아요.');
+            } else {
+                responses.positive.push('좋아요.', '괜찮네요.', '나쁘지 않아요.');
+                responses.negative.push('아니요.', '별로예요.', '좀 그래요.');
+            }
+            
+            // Add interest-based responses
+            if (interests.includes('음악')) {
+                responses.question.push('어떤 음악 좋아해?', '최근에 들은 노래 있어?');
+            }
+            if (interests.includes('영화')) {
+                responses.question.push('영화 뭐 봤어?', '어떤 장르 좋아해?');
+            }
+            if (interests.includes('게임')) {
+                responses.question.push('요즘 어떤 게임 해?', '게임 잘해?');
+            }
+            
+            // Fill remaining responses
+            while (responses.positive.length < 5) {
+                responses.positive.push('좋아!', '그거 좋은데?', '괜찮네!', '오케이!', '좋아해!');
+            }
+            while (responses.negative.length < 5) {
+                responses.negative.push('별로야.', '그건 아닌 것 같아.', '다른 거 하자.', '그런 건 싫어.', '음...');
+            }
+            while (responses.question.length < 5) {
+                responses.question.push('정말?', '그래서?', '어떻게?', '왜?', '진짜야?');
+            }
+            
+            // Emotion responses based on personality
+            if (personality.friendliness >= 7) {
+                responses.emotion = [
+                    '괜찮아, 내가 있잖아!',
+                    '힘내! 같이 있어줄게!',
+                    '우지마, 다 잘될 거야!',
+                    '내가 도와줄게!',
+                    '걱정하지 마, 함께 해결하자!'
+                ];
+            } else {
+                responses.emotion = [
+                    '괜찮을 거야.',
+                    '힘내.',
+                    '이해해.',
+                    '그럴 수 있어.',
+                    '천천히 해.'
+                ];
+            }
+            
+            return responses;
+        }
+        
+        // Update character UI based on selection
+        function updateCharacterUI() {
+            document.getElementById('characterAvatar').textContent = character.emoji;
+            document.getElementById('characterName').textContent = character.name;
+            
+            if (characterType === 'CUSTOM') {
+                document.getElementById('characterMBTI').textContent = '커스텀 캐릭터 • 온라인';
+                document.getElementById('welcomeText').textContent = `안녕? 나는 ${character.name}이야. 당신만을 위한 특별한 캐릭터예요!`;
+                
+                // Add customization button for premium users
+                if (premiumSystem.canCustomizeCharacter()) {
+                    setTimeout(() => {
+                        const header = document.querySelector('.chat-header');
+                        if (!document.getElementById('customizeBtn')) {
+                            const customizeBtn = document.createElement('button');
+                            customizeBtn.id = 'customizeBtn';
+                            customizeBtn.innerHTML = '🎨';
+                            customizeBtn.title = '캐릭터 커스터마이징';
+                            customizeBtn.style.cssText = `
+                                position: absolute;
+                                top: 50%;
+                                right: 220px;
+                                transform: translateY(-50%);
+                                background: rgba(120, 89, 255, 0.2);
+                                border: 1px solid rgba(120, 89, 255, 0.4);
+                                color: white;
+                                width: 36px;
+                                height: 36px;
+                                border-radius: 50%;
+                                cursor: pointer;
+                                font-size: 16px;
+                                transition: all 0.3s ease;
+                                z-index: 100;
+                            `;
+                            customizeBtn.onmouseover = () => customizeBtn.style.background = 'rgba(120, 89, 255, 0.4)';
+                            customizeBtn.onmouseout = () => customizeBtn.style.background = 'rgba(120, 89, 255, 0.2)';
+                            customizeBtn.onclick = () => window.location.href = 'character-customizer.html';
+                            header.appendChild(customizeBtn);
+                        }
+                    }, 1000);
+                }
+            } else {
+                document.getElementById('characterMBTI').textContent = characterType + ' • 온라인';
+                document.getElementById('welcomeText').textContent = `안녕? 나는 ${character.name}이야. ${characterType} 성격의 나와 대화해볼래?`;
+            }
+            
+            document.getElementById('welcomeEmoji').textContent = character.emoji;
+        }
     </script>
 </body>
 </html>
