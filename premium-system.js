@@ -61,8 +61,47 @@ class PremiumSystem {
 
     // OpenAI API Integration
     async generateAIResponse(character, userMessage, conversationHistory) {
+        // 먼저 Railway 서버 API 사용 시도
+        const useServerAPI = true; // Railway 배포시 true로 설정
+        
+        if (useServerAPI) {
+            try {
+                // Railway 서버의 API 엔드포인트 호출
+                const apiUrl = window.location.hostname === 'localhost' 
+                    ? 'http://localhost:3000/api/chat'  // 로컬 개발
+                    : '/api/chat';  // Railway 배포
+                    
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        character: character,
+                        userMessage: userMessage,
+                        messages: this.formatConversationHistory('', conversationHistory, userMessage).slice(1, -1)
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // 사용량 추적
+                    if (data.usage) {
+                        const estimatedCost = (data.usage.total_tokens / 1000) * 0.03;
+                        this.trackAPIUsage(data.usage.total_tokens, estimatedCost);
+                    }
+                    
+                    return data.response;
+                }
+            } catch (error) {
+                console.log('Server API failed, falling back to user API key');
+            }
+        }
+        
+        // 서버 API 실패시 사용자 API 키 사용
         if (!this.getOpenAIKey()) {
-            throw new Error('OpenAI API key not configured');
+            throw new Error('AI 서비스를 사용할 수 없습니다');
         }
 
         if (this.userTier === 'FREE') {
