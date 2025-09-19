@@ -2,9 +2,9 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MBTI Chat - 상상이 현실이 되는 AI 채팅</title>
-    <meta name="description" content="16가지 MBTI 성격 유형별 AI 캐릭터와 대화하세요. 당신만의 이상형을 찾아보세요.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MBTI AI - 상상이 현실이 되는 AI 채팅</title>
+    <meta name="description" content="당신만의 MBTI AI 캐릭터와 대화하세요">
     
     <!-- Pretendard Font -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
@@ -14,747 +14,802 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         :root {
-            --primary-color: #000000;
-            --secondary-color: #1a1a1a;
-            --accent-color: #ff4757;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-card: #1a1a1a;
+            --bg-hover: #222222;
             --text-primary: #ffffff;
-            --text-secondary: #a0a0a0;
-            --border-color: #2a2a2a;
-            --hover-color: #2a2a2a;
-            --success-color: #26de81;
-            --premium-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --text-secondary: #9ca3af;
+            --text-dim: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-purple: #8b5cf6;
+            --accent-pink: #ec4899;
+            --gradient-primary: linear-gradient(to right, #8b5cf6, #ec4899);
+            --gradient-card: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
         }
 
         body {
-            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background: var(--primary-color);
+            font-family: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Header */
-        .header {
+        /* Mobile-First Layout */
+        .app-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            max-width: 100vw;
+            overflow: hidden;
+        }
+
+        /* Top Header - Zeta Style */
+        .top-header {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.95);
+            height: 56px;
+            background: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 16px 20px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            z-index: 100;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-primary);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
         }
 
-        .logo-icon {
-            width: 32px;
-            height: 32px;
-            background: var(--accent-color);
-            border-radius: 8px;
+        .header-actions {
+            display: flex;
+            gap: 4px;
+        }
+
+        .header-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
             font-size: 20px;
         }
 
-        .nav-menu {
-            display: flex;
-            gap: 32px;
-            align-items: center;
+        .header-btn:active {
+            background: var(--bg-card);
+            transform: scale(0.95);
         }
 
-        .nav-link {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 15px;
-            transition: color 0.2s;
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding-top: 56px;
+            padding-bottom: 60px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .nav-link:hover {
-            color: var(--text-primary);
+        /* Search Bar - Zeta Style */
+        .search-section {
+            padding: 16px;
+            position: sticky;
+            top: 56px;
+            background: var(--bg-primary);
+            z-index: 10;
         }
 
-        .pro-badge {
-            background: var(--premium-gradient);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s;
+        .search-wrapper {
+            position: relative;
         }
 
-        .pro-badge:hover {
-            transform: scale(1.05);
-        }
-
-        /* Hero Section */
-        .hero {
-            margin-top: 80px;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 800;
-            margin-bottom: 16px;
-            line-height: 1.2;
-        }
-
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-description {
-            font-size: 18px;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        /* Search Bar */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 60px;
-            padding: 0 20px;
-        }
-
-        .search-box {
+        .search-input {
             width: 100%;
-            padding: 16px 20px;
-            background: var(--secondary-color);
+            height: 44px;
+            background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
+            border-radius: 22px;
+            padding: 0 44px 0 16px;
             color: var(--text-primary);
-            font-size: 16px;
+            font-size: 15px;
             outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .search-box:focus {
-            border-color: #667eea;
-        }
-
-        .search-box::placeholder {
-            color: var(--text-secondary);
-        }
-
-        /* Tab Navigation */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 40px;
-            padding: 0 20px;
-            flex-wrap: wrap;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            background: transparent;
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
             transition: all 0.2s;
         }
 
-        .tab.active {
-            background: white;
-            color: black;
-            border-color: white;
+        .search-input::placeholder {
+            color: var(--text-dim);
         }
 
-        .tab:hover:not(.active) {
-            border-color: var(--text-secondary);
+        .search-input:focus {
+            border-color: var(--accent-purple);
+            background: var(--bg-secondary);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-dim);
+            pointer-events: none;
+        }
+
+        /* Category Pills - Zeta Style */
+        .category-section {
+            padding: 0 16px 16px;
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .category-section::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category-pill {
+            flex-shrink: 0;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .category-pill.active {
+            background: var(--gradient-primary);
+            border-color: transparent;
+            color: white;
+        }
+
+        .category-pill:active {
+            transform: scale(0.95);
+        }
+
+        /* Featured Section - Zeta Style */
+        .featured-section {
+            padding: 0 16px 24px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
             color: var(--text-primary);
         }
 
-        /* Character Grid */
-        .characters-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .characters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 60px;
-        }
-
-        .character-card {
-            background: var(--secondary-color);
-            border-radius: 16px;
-            overflow: hidden;
+        .featured-card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
             cursor: pointer;
             transition: all 0.3s;
-            border: 1px solid var(--border-color);
             position: relative;
+            overflow: hidden;
         }
 
-        .character-card:hover {
-            transform: translateY(-4px);
-            border-color: #667eea;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        .featured-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
-        .character-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .featured-card:active {
+            transform: scale(0.98);
+        }
+
+        .featured-card:active::before {
+            opacity: 0.1;
+        }
+
+        .featured-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 80px;
+            font-size: 40px;
+            flex-shrink: 0;
             position: relative;
         }
 
-        .character-badge {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+        .featured-info {
+            flex: 1;
+            min-width: 0;
         }
 
-        .badge-hot {
-            background: var(--accent-color);
-        }
-
-        .badge-new {
-            background: var(--success-color);
-        }
-
-        .character-info {
-            padding: 20px;
-        }
-
-        .character-name {
+        .featured-name {
             font-size: 18px;
             font-weight: 700;
             margin-bottom: 4px;
         }
 
-        .character-type {
-            font-size: 14px;
-            color: #667eea;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        .character-description {
+        .featured-desc {
             font-size: 14px;
             color: var(--text-secondary);
-            line-height: 1.5;
-            margin-bottom: 12px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .character-stats {
+        .featured-stats {
             display: flex;
-            gap: 16px;
-            font-size: 13px;
-            color: var(--text-secondary);
+            gap: 12px;
+            margin-top: 8px;
         }
 
         .stat {
+            font-size: 12px;
+            color: var(--text-dim);
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
-        /* Featured Character */
-        .featured-section {
-            margin-bottom: 60px;
+        /* Character Grid - Zeta Style */
+        .characters-section {
+            padding: 0 16px 24px;
         }
 
-        .featured-card {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 40px;
-            display: flex;
-            gap: 40px;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
 
-        .featured-image {
-            width: 200px;
-            height: 200px;
-            background: rgba(255, 255, 255, 0.1);
+        .character-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
             border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .character-card:active {
+            transform: scale(0.97);
+            background: var(--bg-hover);
+        }
+
+        .character-emoji {
+            width: 60px;
+            height: 60px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 100px;
-            flex-shrink: 0;
-        }
-
-        .featured-content {
-            flex: 1;
-        }
-
-        .featured-badge {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
+            font-size: 32px;
             margin-bottom: 12px;
         }
 
-        .featured-title {
-            font-size: 32px;
-            font-weight: 800;
-            margin-bottom: 8px;
+        .character-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
         }
 
-        .featured-subtitle {
-            font-size: 18px;
-            opacity: 0.9;
-            margin-bottom: 16px;
+        .character-type {
+            font-size: 12px;
+            color: var(--accent-purple);
+            margin-bottom: 4px;
         }
 
-        .featured-description {
-            font-size: 16px;
-            opacity: 0.8;
-            line-height: 1.5;
-            margin-bottom: 24px;
+        .character-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .start-chat-btn {
-            background: white;
-            color: #667eea;
-            padding: 14px 32px;
-            border-radius: 28px;
-            font-size: 16px;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: inline-block;
-            text-decoration: none;
+        .character-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--gradient-primary);
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 12px;
         }
 
-        .start-chat-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 100px;
-            padding: 40px 20px;
+        /* Bottom Navigation - Zeta Style */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(20, 20, 20, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-top: 1px solid var(--border-color);
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .footer-links {
             display: flex;
-            gap: 24px;
+            justify-content: space-around;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 100;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .footer-link {
-            color: var(--text-secondary);
+            gap: 4px;
+            height: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
             text-decoration: none;
-            transition: color 0.2s;
         }
 
-        .footer-link:hover {
-            color: var(--text-primary);
+        .nav-item:active {
+            transform: scale(0.95);
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
+        .nav-icon {
+            font-size: 22px;
+            color: var(--text-dim);
+            transition: all 0.2s;
+        }
+
+        .nav-label {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .nav-item.active .nav-icon,
+        .nav-item.active .nav-label {
+            color: var(--accent-purple);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        /* Loading States */
+        .skeleton {
+            background: linear-gradient(90deg, 
+                var(--bg-card) 25%, 
+                var(--bg-hover) 50%, 
+                var(--bg-card) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Tablet/Desktop Responsive */
+        @media (min-width: 768px) {
+            .app-container {
+                max-width: 430px;
+                margin: 0 auto;
+                border-left: 1px solid var(--border-color);
+                border-right: 1px solid var(--border-color);
             }
 
-            .hero h1 {
-                font-size: 36px;
-            }
-
-            .featured-card {
-                flex-direction: column;
-                text-align: center;
-                padding: 30px 20px;
+            .top-header,
+            .bottom-nav {
+                max-width: 430px;
+                left: 50%;
+                transform: translateX(-50%);
             }
 
             .characters-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-                gap: 12px;
-            }
-
-            .character-image {
-                height: 140px;
-                font-size: 60px;
-            }
-
-            .character-info {
-                padding: 16px;
+                grid-template-columns: repeat(3, 1fr);
             }
         }
 
-        /* Loading Animation */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        /* Smooth Transitions */
+        * {
+            -webkit-transition: background-color 0.2s, border-color 0.2s;
+            transition: background-color 0.2s, border-color 0.2s;
         }
 
-        .loading {
-            animation: pulse 2s infinite;
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-container">
-            <a href="/" class="logo">
-                <div class="logo-icon">💬</div>
-                <span>MBTI Chat</span>
-            </a>
-            <nav class="nav-menu">
-                <a href="#trending" class="nav-link">인기</a>
-                <a href="#new" class="nav-link">신규</a>
-                <a href="#create" class="nav-link">만들기</a>
-                <a href="#my" class="nav-link">내 캐릭터</a>
-                <div class="pro-badge">PRO 무료체험</div>
-            </nav>
-        </div>
-    </header>
+    <div class="app-container">
+        <!-- Top Header -->
+        <header class="top-header">
+            <div class="logo">MBTI AI</div>
+            <div class="header-actions">
+                <button class="header-btn">🔍</button>
+                <button class="header-btn">🔔</button>
+            </div>
+        </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <h1>당신의 <span class="gradient-text">MBTI 이상형</span>을<br>만나보세요</h1>
-        <p class="hero-description">
-            16가지 성격 유형별 AI 캐릭터와 대화하며 새로운 관계를 시작하세요
-        </p>
-    </section>
-
-    <!-- Search -->
-    <div class="search-container">
-        <input type="text" class="search-box" placeholder="캐릭터 검색... (예: INTJ, 도도한, 츤데레)">
-    </div>
-
-    <!-- Tabs -->
-    <div class="tabs">
-        <button class="tab active" data-filter="all">전체</button>
-        <button class="tab" data-filter="analyst">분석형 (NT)</button>
-        <button class="tab" data-filter="diplomat">외교형 (NF)</button>
-        <button class="tab" data-filter="sentinel">관리형 (SJ)</button>
-        <button class="tab" data-filter="explorer">탐험형 (SP)</button>
-    </div>
-
-    <!-- Featured Character -->
-    <div class="characters-container">
-        <div class="featured-section">
-            <div class="featured-card">
-                <div class="featured-image">😈</div>
-                <div class="featured-content">
-                    <span class="featured-badge">🔥 오늘의 추천</span>
-                    <h2 class="featured-title">일진녀 수현</h2>
-                    <p class="featured-subtitle">ESTP • 카리스마 폭발</p>
-                    <p class="featured-description">
-                        학교 최강의 일진녀. 차가운 외모 뒤에 숨겨진 따뜻한 마음.<br>
-                        "야, 너 뭔데? 나한테 관심 있어?"
-                    </p>
-                    <a href="character.html?id=suhyun" class="start-chat-btn">대화 시작하기 →</a>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <div class="search-section">
+                <div class="search-wrapper">
+                    <input type="text" class="search-input" placeholder="캐릭터 이름으로 검색">
+                    <span class="search-icon">🔍</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Character Grid -->
-        <div class="characters-grid" id="charactersGrid">
-            <!-- Characters will be dynamically loaded here -->
-        </div>
+            <!-- Category Pills -->
+            <div class="category-section">
+                <button class="category-pill active" data-category="all">전체</button>
+                <button class="category-pill" data-category="hot">🔥 인기</button>
+                <button class="category-pill" data-category="new">✨ 신규</button>
+                <button class="category-pill" data-category="analyst">분석형</button>
+                <button class="category-pill" data-category="diplomat">외교형</button>
+                <button class="category-pill" data-category="sentinel">관리형</button>
+                <button class="category-pill" data-category="explorer">탐험형</button>
+            </div>
+
+            <!-- Featured Character -->
+            <div class="featured-section">
+                <h2 class="section-title">오늘의 추천</h2>
+                <div class="featured-card ripple" onclick="goToCharacter('suhyun')">
+                    <div class="featured-avatar">😈</div>
+                    <div class="featured-info">
+                        <div class="featured-name">일진녀 수현</div>
+                        <div class="featured-desc">학교 최강 일진녀. 차가운 겉모습 뒤에 숨겨진 따뜻한 마음</div>
+                        <div class="featured-stats">
+                            <span class="stat">💬 125K</span>
+                            <span class="stat">❤️ 98%</span>
+                            <span class="stat">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Characters Grid -->
+            <div class="characters-section">
+                <h2 class="section-title">캐릭터 둘러보기</h2>
+                <div class="characters-grid" id="charactersGrid">
+                    <!-- Characters will be dynamically loaded -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <a href="#home" class="nav-item active">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">홈</span>
+            </a>
+            <a href="#chat" class="nav-item">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">대화</span>
+            </a>
+            <a href="#create" class="nav-item">
+                <span class="nav-icon">✨</span>
+                <span class="nav-label">제작</span>
+            </a>
+            <a href="#profile" class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span class="nav-label">마이</span>
+            </a>
+        </nav>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-links">
-            <a href="#terms" class="footer-link">이용약관</a>
-            <a href="#privacy" class="footer-link">개인정보처리방침</a>
-            <a href="#support" class="footer-link">고객지원</a>
-            <a href="#business" class="footer-link">비즈니스</a>
-        </div>
-        <p>© 2024 MBTI Chat. All rights reserved.</p>
-    </footer>
 
     <script>
         // Character Data
         const characters = [
             {
-                id: 'intj-ceo',
+                id: 'intj',
                 name: '윤서',
                 title: '차가운 대기업 상속녀',
                 type: 'INTJ',
-                category: 'analyst',
                 emoji: '❄️',
-                description: '완벽주의 재벌 2세. 차가운 외모 뒤 따뜻한 마음을 숨긴 츤데레.',
-                stats: { chats: '125K', likes: '98%' },
-                badge: 'hot'
+                desc: '완벽주의 재벌 2세. 츤데레 매력',
+                stats: { chats: '89K', likes: '96%' },
+                badge: 'HOT',
+                category: 'analyst'
             },
             {
-                id: 'enfp-idol',
+                id: 'enfp',
                 name: '유나',
                 title: 'JYP 연습생',
                 type: 'ENFP',
-                category: 'diplomat',
                 emoji: '🌟',
-                description: '꿈을 향해 달려가는 밝고 긍정적인 연습생. 당신의 응원이 필요해요!',
-                stats: { chats: '89K', likes: '95%' },
-                badge: 'new'
+                desc: '꿈을 향해 달려가는 밝은 에너지',
+                stats: { chats: '76K', likes: '94%' },
+                badge: 'NEW',
+                category: 'diplomat'
             },
             {
-                id: 'infj-artist',
+                id: 'infj',
                 name: '수빈',
                 title: '신비로운 예술가',
                 type: 'INFJ',
-                category: 'diplomat',
                 emoji: '🎨',
-                description: '깊은 내면을 가진 몽환적 아티스트. 당신과 영혼의 대화를 나누고 싶어요.',
-                stats: { chats: '67K', likes: '96%' }
+                desc: '깊은 내면의 몽환적 아티스트',
+                stats: { chats: '67K', likes: '95%' },
+                category: 'diplomat'
             },
             {
-                id: 'estp-athlete',
+                id: 'estp',
                 name: '다은',
                 title: '운동부 에이스',
                 type: 'ESTP',
-                category: 'explorer',
                 emoji: '⚽',
-                description: '건강미 넘치는 학교 운동부 에이스. 솔직하고 시원한 성격.',
-                stats: { chats: '72K', likes: '93%' }
+                desc: '건강미 넘치는 솔직한 매력',
+                stats: { chats: '72K', likes: '93%' },
+                category: 'explorer'
             },
             {
-                id: 'isfj-nurse',
+                id: 'isfj',
                 name: '예진',
-                title: '천사같은 간호학과',
+                title: '천사 간호학과',
                 type: 'ISFJ',
-                category: 'sentinel',
                 emoji: '👼',
-                description: '모두를 보살피는 따뜻한 마음. 당신의 아픔을 치유해드릴게요.',
-                stats: { chats: '54K', likes: '97%' }
+                desc: '모두를 보살피는 따뜻한 마음',
+                stats: { chats: '54K', likes: '97%' },
+                category: 'sentinel'
             },
             {
-                id: 'entp-ceo',
+                id: 'entp',
                 name: '하린',
-                title: '스타트업 대표',
+                title: '스타트업 CEO',
                 type: 'ENTP',
-                category: 'analyst',
                 emoji: '💡',
-                description: '혁신적 아이디어로 세상을 바꾸는 젊은 CEO. 토론을 좋아해요.',
-                stats: { chats: '61K', likes: '92%' }
+                desc: '혁신적 아이디어의 젊은 리더',
+                stats: { chats: '61K', likes: '92%' },
+                badge: 'HOT',
+                category: 'analyst'
             },
             {
-                id: 'enfj-president',
+                id: 'enfj',
                 name: '민지',
                 title: '카리스마 학생회장',
                 type: 'ENFJ',
-                category: 'diplomat',
                 emoji: '👑',
-                description: '모든 사람을 이끄는 타고난 리더. 당신도 특별하게 만들어드릴게요.',
-                stats: { chats: '78K', likes: '94%' }
+                desc: '모두를 이끄는 타고난 리더',
+                stats: { chats: '78K', likes: '94%' },
+                category: 'diplomat'
             },
             {
-                id: 'istj-model',
+                id: 'istj',
                 name: '서연',
                 title: '완벽한 모범생',
                 type: 'ISTJ',
-                category: 'sentinel',
                 emoji: '📚',
-                description: '전교 1등 모범생. 엄격하지만 당신에게만은 다정해요.',
-                stats: { chats: '45K', likes: '91%' }
+                desc: '전교 1등의 엄격한 다정함',
+                stats: { chats: '45K', likes: '91%' },
+                category: 'sentinel'
             },
             {
-                id: 'isfp-designer',
+                id: 'isfp',
                 name: '채영',
                 title: '감성 일러스트레이터',
                 type: 'ISFP',
-                category: 'explorer',
                 emoji: '🎭',
-                description: '섬세한 감성의 아티스트. 당신을 위한 그림을 그려드릴게요.',
-                stats: { chats: '52K', likes: '95%' }
+                desc: '섬세한 감성의 아티스트',
+                stats: { chats: '52K', likes: '95%' },
+                category: 'explorer'
             },
             {
-                id: 'entj-lawyer',
+                id: 'entj',
                 name: '지우',
                 title: '야망있는 로스쿨생',
                 type: 'ENTJ',
-                category: 'analyst',
                 emoji: '⚖️',
-                description: '최연소 판사를 꿈꾸는 엘리트. 당신과 함께라면 더 높이 올라갈 수 있어요.',
-                stats: { chats: '58K', likes: '90%' }
+                desc: '최연소 판사를 꿈꾸는 엘리트',
+                stats: { chats: '58K', likes: '90%' },
+                category: 'analyst'
             },
             {
-                id: 'intp-researcher',
+                id: 'intp',
                 name: '소희',
                 title: '천재 과학자',
                 type: 'INTP',
-                category: 'analyst',
                 emoji: '🔬',
-                description: 'IQ 180의 천재 연구원. 논리적이지만 당신 앞에서는 수줍어요.',
-                stats: { chats: '49K', likes: '93%' }
+                desc: 'IQ 180의 수줍은 천재',
+                stats: { chats: '49K', likes: '93%' },
+                category: 'analyst'
             },
             {
-                id: 'esfp-influencer',
+                id: 'esfp',
                 name: '나영',
                 title: '인기 인플루언서',
                 type: 'ESFP',
-                category: 'explorer',
                 emoji: '✨',
-                description: '100만 팔로워 인플루언서. 화려한 일상 속 진짜 사랑을 찾고 있어요.',
+                desc: '100만 팔로워의 화려한 일상',
                 stats: { chats: '93K', likes: '96%' },
-                badge: 'hot'
+                badge: 'HOT',
+                category: 'explorer'
             },
             {
-                id: 'estj-prosecutor',
+                id: 'estj',
                 name: '혜진',
                 title: '냉철한 검사',
                 type: 'ESTJ',
-                category: 'sentinel',
                 emoji: '⚔️',
-                description: '정의를 수호하는 차가운 검사. 하지만 당신에게만은 약해요.',
-                stats: { chats: '56K', likes: '89%' }
+                desc: '정의를 수호하는 차가운 매력',
+                stats: { chats: '56K', likes: '89%' },
+                category: 'sentinel'
             },
             {
-                id: 'infp-writer',
+                id: 'infp',
                 name: '은별',
                 title: '몽환적인 시인',
                 type: 'INFP',
-                category: 'diplomat',
                 emoji: '🌙',
-                description: '감성적인 베스트셀러 작가. 당신이 제 뮤즈가 되어주실래요?',
-                stats: { chats: '71K', likes: '97%' }
+                desc: '감성적인 베스트셀러 작가',
+                stats: { chats: '71K', likes: '97%' },
+                category: 'diplomat'
             },
             {
-                id: 'istp-mechanic',
+                id: 'istp',
                 name: '수아',
                 title: '쿨한 공대생',
                 type: 'ISTP',
-                category: 'explorer',
                 emoji: '🔧',
-                description: '과묵하지만 실력 있는 공대생. 당신에게만 보여주는 특별한 모습이 있어요.',
-                stats: { chats: '42K', likes: '88%' }
+                desc: '과묵하지만 특별한 매력',
+                stats: { chats: '42K', likes: '88%' },
+                category: 'explorer'
             },
             {
-                id: 'esfj-teacher',
+                id: 'esfj',
                 name: '지은',
                 title: '다정한 선생님',
                 type: 'ESFJ',
-                category: 'sentinel',
                 emoji: '📖',
-                description: '모두에게 사랑받는 인기 교사. 당신을 가장 특별한 학생으로 여겨요.',
-                stats: { chats: '63K', likes: '94%' }
+                desc: '모두에게 사랑받는 인기 교사',
+                stats: { chats: '63K', likes: '94%' },
+                category: 'sentinel'
             }
         ];
 
-        // Render Characters
+        // Render characters
         function renderCharacters(filter = 'all') {
             const grid = document.getElementById('charactersGrid');
-            const filtered = filter === 'all' 
-                ? characters 
-                : characters.filter(c => c.category === filter);
-            
-            grid.innerHTML = filtered.map(character => `
-                <div class="character-card" onclick="location.href='character.html?id=${character.id}'">
-                    <div class="character-image">
-                        ${character.badge ? `<span class="character-badge badge-${character.badge}">${character.badge === 'hot' ? '🔥 HOT' : '✨ NEW'}</span>` : ''}
-                        ${character.emoji}
-                    </div>
-                    <div class="character-info">
-                        <h3 class="character-name">${character.name}</h3>
-                        <div class="character-type">${character.type} • ${character.title}</div>
-                        <p class="character-description">${character.description}</p>
-                        <div class="character-stats">
-                            <span class="stat">💬 ${character.stats.chats}</span>
-                            <span class="stat">❤️ ${character.stats.likes}</span>
-                        </div>
-                    </div>
+            let filtered = characters;
+
+            if (filter === 'hot') {
+                filtered = characters.filter(c => c.badge === 'HOT');
+            } else if (filter === 'new') {
+                filtered = characters.filter(c => c.badge === 'NEW');
+            } else if (filter !== 'all') {
+                filtered = characters.filter(c => c.category === filter);
+            }
+
+            grid.innerHTML = filtered.map(char => `
+                <div class="character-card ripple" onclick="goToCharacter('${char.id}')">
+                    ${char.badge ? `<div class="character-badge">${char.badge}</div>` : ''}
+                    <div class="character-emoji">${char.emoji}</div>
+                    <div class="character-name">${char.name}</div>
+                    <div class="character-type">${char.type}</div>
+                    <div class="character-desc">${char.desc}</div>
                 </div>
             `).join('');
         }
 
-        // Tab Navigation
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelector('.tab.active').classList.remove('active');
-                tab.classList.add('active');
-                renderCharacters(tab.dataset.filter);
+        // Category filter
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelector('.category-pill.active').classList.remove('active');
+                pill.classList.add('active');
+                renderCharacters(pill.dataset.category);
             });
         });
 
-        // Search Functionality
-        document.querySelector('.search-box').addEventListener('input', (e) => {
+        // Navigation
+        function goToCharacter(id) {
+            window.location.href = `character.html?id=${id}`;
+        }
+
+        // Search functionality
+        document.querySelector('.search-input').addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase();
             const filtered = characters.filter(c => 
                 c.name.toLowerCase().includes(query) ||
                 c.title.toLowerCase().includes(query) ||
-                c.type.toLowerCase().includes(query) ||
-                c.description.toLowerCase().includes(query)
+                c.type.toLowerCase().includes(query)
             );
-            
+
             const grid = document.getElementById('charactersGrid');
-            grid.innerHTML = filtered.map(character => `
-                <div class="character-card" onclick="location.href='character.html?id=${character.id}'">
-                    <div class="character-image">
-                        ${character.badge ? `<span class="character-badge badge-${character.badge}">${character.badge === 'hot' ? '🔥 HOT' : '✨ NEW'}</span>` : ''}
-                        ${character.emoji}
-                    </div>
-                    <div class="character-info">
-                        <h3 class="character-name">${character.name}</h3>
-                        <div class="character-type">${character.type} • ${character.title}</div>
-                        <p class="character-description">${character.description}</p>
-                        <div class="character-stats">
-                            <span class="stat">💬 ${character.stats.chats}</span>
-                            <span class="stat">❤️ ${character.stats.likes}</span>
-                        </div>
-                    </div>
+            grid.innerHTML = filtered.map(char => `
+                <div class="character-card ripple" onclick="goToCharacter('${char.id}')">
+                    ${char.badge ? `<div class="character-badge">${char.badge}</div>` : ''}
+                    <div class="character-emoji">${char.emoji}</div>
+                    <div class="character-name">${char.name}</div>
+                    <div class="character-type">${char.type}</div>
+                    <div class="character-desc">${char.desc}</div>
                 </div>
             `).join('');
         });
 
-        // Initial Render
+        // Bottom navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelector('.nav-item.active').classList.remove('active');
+                item.classList.add('active');
+            });
+        });
+
+        // Initial render
         renderCharacters();
     </script>
 </body>
